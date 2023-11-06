@@ -1,3 +1,8 @@
+package view;
+
+import controller.WorldController;
+import model.Model;
+
 public class WorldView {
     private Model model;
     private WorldController controller;
