@@ -1,3 +1,5 @@
+package view;
+
 public class GameWindow {
     private static GameWindow instance = null;
     private GameWindow() {}
