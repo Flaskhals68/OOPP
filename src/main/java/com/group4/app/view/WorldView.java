@@ -1,7 +1,7 @@
-package view;
+package src.main.java.com.group4.app.view;
 
-import controller.WorldController;
-import model.Model;
+import src.main.java.com.group4.app.controller.WorldController;
+import src.main.java.com.group4.app.model.Model;
 
 public class WorldView {
     private Model model;
