@@ -1,8 +1,3 @@
-package view;
-
-import controller.HudController;
-import model.Model;
-
 public class HudView {
     private Model model;
     private HudController controller;
