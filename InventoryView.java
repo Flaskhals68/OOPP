@@ -1,8 +1,3 @@
-package view;
-
-import controller.InventoryController;
-import model.Model;
-
 public class InventoryView {
     private Model model;
     private InventoryController controller;
