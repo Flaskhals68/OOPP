@@ -9,7 +9,6 @@ import view.WorldView;
 
 public class App {
     public static void main(String[] args) {
-        GameWindow gw = GameWindow.getInstance();
         Model model = new Model();
 
         WorldController worldController = new WorldController();
@@ -20,5 +19,7 @@ public class App {
         
         HudController hudController = new HudController();
         HudView HudView = new HudView(model, hudController);
+
+        GameWindow gw = GameWindow.getInstance();
     }
 }
