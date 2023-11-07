@@ -1,7 +1,7 @@
 package model;
 
 class Sword extends Weapon{
-    Sword() {
-        super("Sword", 7, true);
+    Sword(String name, int attackDamage) {
+        super(name, attackDamage, true);
     }
 }
