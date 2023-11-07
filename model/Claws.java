@@ -1,7 +1,7 @@
 package model;
 
 class Claws extends Weapon{
-    Claws() {
-        super("Claws", 6, false);
+    Claws(String name, int attackDamage) {
+        super(name, attackDamage, false, "Claws");
     }
 }
