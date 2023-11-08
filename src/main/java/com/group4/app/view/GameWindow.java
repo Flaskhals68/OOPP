@@ -1,4 +1,4 @@
-package view;
+package com.group4.app.view;
 
 import javax.swing.*;
 
