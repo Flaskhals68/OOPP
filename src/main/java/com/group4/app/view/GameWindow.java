@@ -1,4 +1,4 @@
-package view;
+package com.group4.app.view;
 
 public class GameWindow {
     private static GameWindow instance = null;

@@ -1,7 +1,7 @@
-package view;
+package com.group4.app.view;
 
-import controller.HudController;
-import model.Model;
+import com.group4.app.controller.HudController;
+import com.group4.app.model.Model;
 
 public class HudView {
     private Model model;
