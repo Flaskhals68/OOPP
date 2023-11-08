@@ -27,6 +27,4 @@ public class Entity {
     public Tile getTile() {
         return new Tile(this.world, getXPos(), getYPos());
     }
-    
-    
 }
