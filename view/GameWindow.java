@@ -10,14 +10,12 @@ import java.util.List;
  * This is the frame where every other panel is added to
  */
 public class GameWindow extends JFrame{
-    //TODO add a list of JPanel
-    List<JPanel> panelList = new ArrayList<JPanel>();
+    private List<JPanel> panelList = new ArrayList<JPanel>();
     private static GameWindow instance = null;
 
     private GameWindow() {
         initComponents();
     }
-
     
     public static GameWindow getInstance() {
         if (instance == null) {
@@ -46,7 +44,7 @@ public class GameWindow extends JFrame{
     //Initially draws the panels
     private void drawPanels(){
         for(JPanel panel : panelList){
-            panel.paint(getGraphics());
+            panel.repaint();
         }
     }
 
@@ -58,6 +56,7 @@ public class GameWindow extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((dim.width/2-this.getSize().width/2), (dim.height/2-this.getSize().height/2));
+        setResizable(false);
     }
 
 
