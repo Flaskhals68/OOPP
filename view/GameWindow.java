@@ -1,35 +1,24 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.JFrame;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
- * This is the frame where every other panel is drawn on. 
- * Should draw each view. 
+ * This is the frame where every other panel is added to
  */
 public class GameWindow extends JFrame{
+    //TODO add a list of JPanel
+    List<JPanel> panelList = new ArrayList<JPanel>();
     private static GameWindow instance = null;
-    private HudView hudView;
-    private InventoryView inventoryView;
-    private WorldView worldView;
 
     private GameWindow() {
         initComponents();
     }
 
-    //TODO should make so that each view gets added to the frame
-    private void initComponents (){
-        setTitle("GAME");
-        setPreferredSize(new Dimension(1280,720));
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation((dim.width/2-this.getSize().width/2), (dim.height/2-this.getSize().height/2));
-    }
-
+    
     public static GameWindow getInstance() {
         if (instance == null) {
             return new GameWindow();
@@ -38,6 +27,40 @@ public class GameWindow extends JFrame{
             return GameWindow.instance;
         }
     }
+
+    private void initComponents (){
+        initGameWindow();
+        addPanels();
+        drawPanels();
+        setVisible(true);
+        
+    }
+
+    //Adds the panels
+    private void addPanels(){
+        for(JPanel panel : panelList){
+            add(panel);
+        }
+    }
+
+    //Initially draws the panels
+    private void drawPanels(){
+        for(JPanel panel : panelList){
+            panel.paint(getGraphics());
+        }
+    }
+
+    //TODO experiment with layout.
+    private void initGameWindow(){
+        setTitle("GAME");
+        setSize(1280, 720);
+        setLayout(new FlowLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((dim.width/2-this.getSize().width/2), (dim.height/2-this.getSize().height/2));
+    }
+
+
 
 
 }
