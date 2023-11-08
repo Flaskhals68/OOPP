@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO Add obeserver
 /*
  * This is the frame where every other panel is added to
  */
