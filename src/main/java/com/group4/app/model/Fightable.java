@@ -1,4 +1,4 @@
-package model;
+package com.group4.app.model;
 
 public interface Fightable {
     int getAttackDamage();
