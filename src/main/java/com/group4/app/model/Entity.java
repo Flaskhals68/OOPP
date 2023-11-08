@@ -1,15 +1,21 @@
 package com.group4.app.model;
 
 public class Entity {
+    private String id;
     private Tile tile;
-    private World world;
 
-    public Entity() {
-        this(null);
+    public Entity(String id) {
+        this.id = id;
+        this.tile = null;
     }
 
-    public Entity(Tile tile) {
+    public Entity(String id, Tile tile) {
+        this.id = id;
         this.tile = tile;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public int getXPos() {
@@ -25,6 +31,11 @@ public class Entity {
      * @return
      */
     public Tile getTile() {
-        return new Tile(this.world, getXPos(), getYPos());
+        return this.tile;
+    }
+
+    public void setTile(Tile tile) {
+        tile.removeOccupant(this);
+        this.tile = tile;
     }
 }
