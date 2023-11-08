@@ -2,10 +2,12 @@ package com.group4.app.model;
 
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.io.IOException;
 
 public class Tile implements Serializable {
-    private World world;
-    private ArrayList<Tile> neighbors;
+    private static final long serialVersionUID = 1L;
+    private transient World world;
+    private transient ArrayList<Tile> neighbors;
     private int xPos;
     private int yPos;
     //private ArrayList<Entity> occupants;
@@ -16,6 +18,14 @@ public class Tile implements Serializable {
         this.yPos = yPos;
         // this.occupants = new ArrayList<Entity>();
         this.neighbors = this.calculateNeighbors();
+    }
+
+    public void setWorld(World next){
+        this.world = next;
+    }
+
+    public World getWorld(){
+        return this.world;
     }
 
     public void setXPos(int next){
