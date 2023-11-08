@@ -26,7 +26,7 @@ public class GameWindow extends JFrame{
         }
     }
 
-    private void initComponents (){
+    private void initComponents(){
         initGameWindow();
         addPanels();
         drawPanels();
