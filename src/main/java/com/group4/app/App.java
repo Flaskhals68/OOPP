@@ -4,6 +4,7 @@ import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
 import com.group4.app.controller.WorldController;
 import com.group4.app.model.Model;
+import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.InventoryView;
 import com.group4.app.view.WorldView;
@@ -20,5 +21,7 @@ public class App {
         
         HudController hudController = new HudController();
         HudView HudView = new HudView(model, hudController);
+
+        GameWindow gw = GameWindow.getInstance();
     }
 }
