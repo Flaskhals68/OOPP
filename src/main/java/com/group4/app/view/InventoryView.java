@@ -1,7 +1,7 @@
-package view;
+package com.group4.app.view;
 
-import controller.InventoryController;
-import model.Model;
+import com.group4.app.controller.InventoryController;
+import com.group4.app.model.Model;
 
 public class InventoryView {
     private Model model;
