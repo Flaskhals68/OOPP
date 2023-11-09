@@ -24,9 +24,6 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
     this(id, hp, null, tile);
   }
 
-  /**
-   * Return copy of HealthBar object 
-   */
   @Override
   public void move(Tile tile) {
     // TODO: Add restraints to where player can move
