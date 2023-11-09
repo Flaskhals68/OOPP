@@ -39,6 +39,10 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
     throw new UnsupportedOperationException("Method 'getLegalMoves()' not implemented");
   }
 
+  public void setWeapon(Weapon weapon) {
+    this.weapon = weapon;
+  }
+
   @Override
   public void attack(IAttackable other) {
     other.takeHit(this.getDamage());
