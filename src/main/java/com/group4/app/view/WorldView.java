@@ -38,7 +38,7 @@ public class WorldView extends JPanel{
     }
 
     /**
-     * Initiates the worldView by drawing everything.
+     * Initiates the worldView by drawing all the components.
      */
     private void initComponents(){
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -75,7 +75,6 @@ public class WorldView extends JPanel{
                 tileConstraints.gridx = j;
                 tileConstraints.gridy = i;
                 add(createTile(Color.gray, j, i), tileConstraints);
-                
             }
         }
     }
