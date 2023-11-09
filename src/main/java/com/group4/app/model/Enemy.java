@@ -1,6 +1,10 @@
 package com.group4.app.model;
 
-public class Enemy extends Entity implements IAttackable, ICanAttack{
+import jdk.jshell.spi.ExecutionControl;
+
+import java.util.List;
+
+public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     private final String name;
     private final Weapon weapon;
     private int hp;
@@ -33,5 +37,16 @@ public class Enemy extends Entity implements IAttackable, ICanAttack{
     @Override
     public int getDamage() {
         return weapon.getAttack();
+    }
+
+    @Override
+    public void move(Tile tile) {
+        // TODO not implemented yet
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public List<Tile> getLegalMoves() {
+        return null;
     }
 }
