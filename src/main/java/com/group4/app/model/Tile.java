@@ -20,6 +20,10 @@ public class Tile implements Serializable {
         this.calculateNeighbors();
     }
 
+    public World getWorld(){
+        return this.world;
+    }
+
     public void setXPos(int next){
         this.xPos = next;
     }
