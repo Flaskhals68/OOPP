@@ -1,5 +1,11 @@
 package com.group4.app.testmodel;
 
+import org.junit.jupiter.api.Test;
+
 public class TestEnemy {
-    // TODO write tests
+
+    @Test
+    public void test_constructor(){
+
+    }
 }

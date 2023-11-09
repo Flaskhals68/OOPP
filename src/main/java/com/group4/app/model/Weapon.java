@@ -7,7 +7,7 @@ abstract class Weapon {
     private final boolean isLootable;
 
     private final String type;
-    Weapon(String name, int attack, boolean isLootable, String type){
+    public Weapon(String name, int attack, boolean isLootable, String type){
         this.name = name;
         this.attack = attack;
         this.isLootable = isLootable;

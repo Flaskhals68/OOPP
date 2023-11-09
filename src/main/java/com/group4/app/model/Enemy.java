@@ -1,10 +1,10 @@
 package com.group4.app.model;
 
-class Enemy extends Entity implements IAttackable, ICanAttack{
+public class Enemy extends Entity implements IAttackable, ICanAttack{
     private final String name;
     private final Weapon weapon;
     private int hp;
-    Enemy(String id, String name, Weapon weapon, int hp){
+    public Enemy(String id, String name, Weapon weapon, int hp){
         super(id);
         this.name = name;
         this.weapon = weapon;
