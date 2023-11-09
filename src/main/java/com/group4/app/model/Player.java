@@ -3,18 +3,21 @@ package com.group4.app.model;
 import java.util.List;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
-  private int hp;
+  private HealthBar hp;
 
   public Player(String id, int hp, Tile tile) {
     super(id, tile);
-    this.hp = hp;
+    this.hp = new HealthBar(hp);
   }
 
   public Player(String id, int hp) {
     this(id, hp, null);
   }
 
-  public int getHp() { return this.hp; }
+  /**
+   * Return copy of HealthBar object 
+   */
+  public HealthBar getHp() { return new HealthBar(hp.getMax()); }
 
   @Override
   public void move(Tile tile) {
@@ -46,5 +49,5 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   }
 
   @Override
-  public int getHitPoints() { return hp; }
+  public int getHitPoints() { return hp.getCurrent(); }
 }
