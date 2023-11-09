@@ -19,8 +19,12 @@ public class HealthBar {
 
     public int getCurrent() { return current; }
 
-    public void reduceCurrent(int val) {
-        current -= val;
+    /**
+     * Reduce the current hp by the given damage
+     * @param damage to be taken
+     */
+    public void reduceCurrent(int damage) {
+        current -= damage;
         if (current < 0) current = 0;
     }
 
