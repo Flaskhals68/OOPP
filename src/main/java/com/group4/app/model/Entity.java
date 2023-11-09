@@ -35,7 +35,12 @@ public class Entity {
     }
 
     public void setTile(Tile tile) {
-        tile.removeOccupant(this);
+        // tile.removeOccupant(this);
         this.tile = tile;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
