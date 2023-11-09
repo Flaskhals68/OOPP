@@ -51,19 +51,11 @@ public class WorldView extends JPanel{
 
     private void drawTile(){
         // Should return where the player is.
-        // Tile playerTile = model.getPlayerTile();
-
-        // int xStart = playerTile.getXPos() - 4;
-        // int xEnd = playerTile.getXPos() + 4;
-
-        // int yStart = playerTile.getYPos() - 4;
-        // int yEnd = playerTile.getYPos() + 4;
-
-        
+        Tile playerTile = model.getPlayerTile();
 
         // Test
-        int playerX = 0;
-        int playerY = 0;
+        int playerX = playerTile.getXPos();
+        int playerY = playerTile.getYPos();
 
         int xStart = Math.max(playerX - 4,0);
         int xEnd = Math.min(playerX + 4, WIDTH);
