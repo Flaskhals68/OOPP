@@ -12,7 +12,7 @@ public class TestEnemy {
     public void test_constructor(){
         Enemy enemy = new Enemy("Zombie", "Bob", WeaponFactory.createClaws(),10);
         assertEquals(enemy.getName(), "Bob");
-        assertEquals(enemy.getDamage(), 3);
+        assertEquals(enemy.getDamage(), 4);
         assertEquals(enemy.getHitPoints(), 10);
     }
 }
