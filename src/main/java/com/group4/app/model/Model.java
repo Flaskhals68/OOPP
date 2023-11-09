@@ -52,7 +52,7 @@ public class Model {
         return this.player.getWorld().getTile(xPos, yPos);
     }
 
-    public Tile getPlayerTile(int xPos, int yPos){
+    public Tile getPlayerTile(){
         return this.player.getTile();
     }
 
