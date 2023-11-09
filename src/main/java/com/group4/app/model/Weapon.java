@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
-abstract class Weapon {
+public class Weapon {
 
     private final int attack;
     private final String name;

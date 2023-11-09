@@ -1,30 +1,30 @@
 package com.group4.app.testmodel;
 
-import com.group4.app.model.Claws;
-import com.group4.app.model.Sword;
+import com.group4.app.model.Weapon;
+import com.group4.app.model.WeaponFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestWeapon {
+public class TestWeaponFactory {
     @Test
     public void testSwordConstructor() {
-        Sword sword = new Sword("Excalibur", 10);
-        assertEquals(sword.getName(), "Excalibur");
-        assertEquals(sword.getAttack(), 10);
+        Weapon sword = WeaponFactory.createSword();
+        assertEquals(sword.getName(), "Basic Sword");
+        assertEquals(sword.getAttack(), 8);
     }
 
     @Test
     public void testClawsConstructor() {
-        Claws claw = new Claws("Basic claws", 3);
-        assertEquals(claw.getName(), "Basic claws");
-        assertEquals(claw.getAttack(), 3);
+        Weapon claw = WeaponFactory.createClaws();
+        assertEquals(claw.getName(), "Basic Claws");
+        assertEquals(claw.getAttack(), 4);
     }
 
     @Test
     public void testWeaponAdditionalMethods() {
-        Sword sword = new Sword("Excalibur", 10);
+        Weapon sword = WeaponFactory.createSword();
         assertTrue(sword.getLootable());
         assertEquals(sword.getType(), "Sword");
     }

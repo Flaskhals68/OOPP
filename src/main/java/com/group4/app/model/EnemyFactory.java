@@ -2,9 +2,9 @@ package com.group4.app.model;
 
 class EnemyFactory {
     Enemy createSkeleton() {
-        return new Enemy("Skeleton", "Bob", new Sword("Steel Sword", 5), 10);
+        return new Enemy("Skeleton", "Bob", WeaponFactory.createSword(), 10);
     }
     Enemy createZombie() {
-        return new Enemy("Zombie", "Steven", new Claws("Blunt Claws", 3), 15);
+        return new Enemy("Zombie", "Steven", WeaponFactory.createClaws(), 15);
     }
 }
