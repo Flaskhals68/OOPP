@@ -1,15 +1,16 @@
 package com.group4.app.model;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 public class World implements Serializable{
-    private Tile[][] tileMatrix;
     private String uniqueID;
+    private Tile[][] tiles;
 
     public World(int size){
         this.uniqueID = UUID.randomUUID().toString();
-        this.tileMatrix = new Tile[size][size];
+        this.tiles = new Tile[size][size];
     }
 
     public String getId(){
@@ -17,10 +18,18 @@ public class World implements Serializable{
     }
 
     public Tile getTile(int xPos, int yPos){
-        return this.tileMatrix[xPos][yPos];
+        return this.tiles[xPos][yPos];
+    }
+
+    public Set<Entity> getEntities(int xPos, int yPos){
+        return this.tiles[xPos][yPos].getEntities();
     }
 
     public void addTile(Tile tile){
-        this.tileMatrix[tile.getXPos()][tile.getYPos()] = tile;
+        this.tiles[tile.getXPos()][tile.getYPos()] = tile;
+    }
+
+    public void addEntity(Entity entity, int xPos, int yPos){
+        this.tiles[xPos][yPos].addEntity(entity);
     }
 }

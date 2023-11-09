@@ -2,7 +2,6 @@ package com.group4.app.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.io.Serializable;
 
 public class Tile implements Serializable {
@@ -10,13 +9,13 @@ public class Tile implements Serializable {
     private Set<Tile> neighbors;
     private int xPos;
     private int yPos;
-    private Set<Entity> occupants;
+    private Set<Entity> entities;
 
     public Tile(World world, int xPos, int yPos){
         this.world = world;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.occupants = new HashSet<Entity>();
+        this.entities = new HashSet<Entity>();
         this.calculateNeighbors();
     }
 
@@ -40,12 +39,16 @@ public class Tile implements Serializable {
         return yPos;
     }
 
-    public void addOccupant(Entity occupant){
-       this.occupants.add(occupant);
+    public void addEntity(Entity entity){
+       this.entities.add(entity);
     }
 
-    public void removeOccupant(Entity occupant){
-       this.occupants.remove(occupant);
+    public Set<Entity> getEntities(){
+        return this.entities;
+    }
+
+    public void removeEntity(Entity entity){
+       this.entities.remove(entity);
     }
 
     public Set<Tile> getNeighbors(){
