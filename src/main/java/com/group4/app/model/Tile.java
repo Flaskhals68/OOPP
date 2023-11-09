@@ -2,7 +2,6 @@ package com.group4.app.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.io.Serializable;
 
 public class Tile implements Serializable {

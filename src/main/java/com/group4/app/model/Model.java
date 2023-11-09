@@ -1,10 +1,7 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.group4.app.view.GameWindow;
 
 public class Model {
     private static Model instance = null;
