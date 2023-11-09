@@ -39,6 +39,10 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
         return weapon.getAttack();
     }
 
+    public String getName(){
+        return name;
+    }
+
     @Override
     public void move(Tile tile) {
         // TODO not implemented yet

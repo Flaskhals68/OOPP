@@ -14,18 +14,18 @@ abstract class Weapon {
         this.type = type;
     }
 
-    int getAttack() {
+    public int getAttack() {
         return attack;
     }
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    boolean getLootable() {
+    public boolean getLootable() {
         return isLootable;
     }
 
-    String getType() {
+    public String getType() {
         return type;
     }
 }
