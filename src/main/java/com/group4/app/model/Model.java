@@ -27,10 +27,9 @@ public class Model {
         World floor0 = new World(100);
         addBasicMap(floor0, 10);
         
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,0););
+        this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,0));
 
         this.floors.put(floor0.getId(), floor0);
-
     }
 
     private void addBasicMap(World world, int size){
