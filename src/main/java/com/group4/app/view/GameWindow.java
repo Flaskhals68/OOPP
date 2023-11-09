@@ -14,13 +14,14 @@ public class GameWindow extends JFrame{
     private List<JPanel> panelList = new ArrayList<JPanel>();
     private static GameWindow instance = null;
 
-    private GameWindow() {
+    private GameWindow(List<JPanel> panelList) {
+        this.panelList = panelList;
         initComponents();
     }
     
-    public static GameWindow getInstance() {
+    public static GameWindow getInstance(List<JPanel> panelList) {
         if (instance == null) {
-            return new GameWindow();
+            return new GameWindow(panelList);
         }
         else {
             return GameWindow.instance;

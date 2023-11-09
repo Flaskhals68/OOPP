@@ -26,7 +26,10 @@ public class App {
         
         HudController hudController = new HudController();
         HudView HudView = new HudView(model, hudController);
-    
-        GameWindow gw = GameWindow.getInstance();
+        
+        List<JPanel> pl = new ArrayList<JPanel>();
+        pl.add(worldView);
+
+        GameWindow gw = GameWindow.getInstance(pl);
     }
 }

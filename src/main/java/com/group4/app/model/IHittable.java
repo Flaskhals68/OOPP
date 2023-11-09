@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
-public interface IAttackable {
+public interface IHittable {
     void takeHit(int damage);
     int getHitPoints();
 }

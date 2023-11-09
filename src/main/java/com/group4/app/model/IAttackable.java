@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
-public interface ICanAttack {
+public interface IAttackable {
     void attack(IHittable entity);
     int getDamage();
 }
