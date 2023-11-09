@@ -36,14 +36,15 @@ public class GameWindow extends JFrame{
         
     }
 
-    //Adds the panels
     private void addPanels(){
         for(JPanel panel : panelList){
             add(panel);
         }
     }
 
-    //Initially draws the panels
+    /**
+     * Initially draws the panels
+     */
     private void drawPanels(){
         for(JPanel panel : panelList){
             panel.repaint();

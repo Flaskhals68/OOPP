@@ -27,8 +27,6 @@ public class WorldView extends JPanel{
     private static final int WIDTH = 400;
     private static final int TILE_WIDHT = WIDTH/NUMBER_OF_TILES;
     private static final int TILE_HEIGHT = HEIGHT/NUMBER_OF_TILES;
-    private static final int SCREEN_MIDDLE_X = (WIDTH/2);
-    private static final int SCREEN_MIDDLE_Y = (HEIGHT/2);
 
     //Contains the id:s of all possible entities.
 
@@ -64,22 +62,19 @@ public class WorldView extends JPanel{
         int yEnd = Math.min(playerY + 4, HEIGHT);
 
         GridBagConstraints tileConstraints = new GridBagConstraints();
-        tileConstraints.gridx = playerX;
-        tileConstraints.gridy = playerY;
-        tileConstraints.gridheight = 1;
-        tileConstraints.gridwidth = 1;
         
-        add(createTile(Color.blue), tileConstraints);
-
-
         //draws the tiles to the correct position relative to the player. 
         for(int i = yStart; i <= yEnd; i++ ){
             for(int j = xStart; j <= xEnd; j++){
                 if(i == playerY && j == playerX){
+                    tileConstraints.gridx = playerX;
+                    tileConstraints.gridy = playerY;
+                    add(createTile(Color.blue, j, i), tileConstraints);
                     continue;
                 }
                 tileConstraints.gridx = j;
                 tileConstraints.gridy = i;
+                add(createTile(Color.gray, j, i), tileConstraints);
                 
             }
         }
@@ -88,12 +83,12 @@ public class WorldView extends JPanel{
     /**
      * Create the look of the tile and create the actual tile object.
      */
-    private JPanel createTile(Color color){
+    private JPanel createTile(Color color, int x, int y){
         //TODO add some way to know which entity is on the tile
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
         tileView.setBackground(color);
-        tileView.setBorder(BorderFactory.createLineBorder(Color.white));
+        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray));
         return tileView;
     }
 
