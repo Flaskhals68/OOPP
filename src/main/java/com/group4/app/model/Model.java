@@ -1,10 +1,8 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.group4.app.view.GameWindow;
+import java.util.Set;
 
 public class Model {
     private static Model instance = null;
@@ -44,20 +42,16 @@ public class Model {
         return this.floors.get(id);
     }
 
-    private World getWorld(World floor){
-        return this.floors.get(floor.getId());
+    public Player getPlayer(){
+        return this.player;
     }
 
-    public Tile getTile(int xPos, int yPos){
-        return this.player.getWorld().getTile(xPos, yPos);
+    public Set<Entity> getEntities(String floorId, int xPos, int yPos){
+        return getTile(floorId, xPos, yPos).getEntities();
     }
 
-    public Tile getPlayerTile(int xPos, int yPos){
+    public Tile getPlayerTile(){
         return this.player.getTile();
-    }
-
-    public Tile getTile(World floor, int xPos, int yPos){
-        return this.getWorld(floor).getTile(xPos, yPos);
     }
 
     public Tile getTile(String floorId, int xPos, int yPos){
