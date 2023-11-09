@@ -80,7 +80,7 @@ public class WorldView extends JPanel{
                 }
                 tileConstraints.gridx = j;
                 tileConstraints.gridy = i;
-                add(createTile(Color.gray),tileConstraints);
+                
             }
         }
     }
@@ -89,6 +89,7 @@ public class WorldView extends JPanel{
      * Create the look of the tile and create the actual tile object.
      */
     private JPanel createTile(Color color){
+        //TODO add some way to know which entity is on the tile
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
         tileView.setBackground(color);
