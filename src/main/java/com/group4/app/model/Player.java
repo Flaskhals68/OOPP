@@ -16,6 +16,10 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   public int getHp() { return this.hp; }
 
+  public World getWorld(){
+    return this.getTile().getWorld();
+  }
+
   @Override
   public void move(Tile tile) {
     throw new UnsupportedOperationException("Unimplemented method 'takeHit'");
