@@ -22,10 +22,11 @@ import com.group4.app.model.Tile;
 public class WorldView extends JPanel{
     private Model model;
     private WorldController controller;
+    private static final int NUMBER_OF_TILES = 10;
     private static final int HEIGHT = 400;
     private static final int WIDTH = 400;
-    private static final int TILE_WIDHT = WIDTH/10;
-    private static final int TILE_HEIGHT = HEIGHT/10;
+    private static final int TILE_WIDHT = WIDTH/NUMBER_OF_TILES;
+    private static final int TILE_HEIGHT = HEIGHT/NUMBER_OF_TILES;
     private static final int SCREEN_MIDDLE_X = (WIDTH/2);
     private static final int SCREEN_MIDDLE_Y = (HEIGHT/2);
 
@@ -52,7 +53,7 @@ public class WorldView extends JPanel{
     private void drawTile(){
         // Should return where the player is.
         Tile playerTile = model.getPlayerTile();
-        
+
         int playerX = playerTile.getXPos();
         int playerY = playerTile.getYPos();
 
@@ -70,6 +71,8 @@ public class WorldView extends JPanel{
         
         add(createTile(Color.blue), tileConstraints);
 
+
+        //draws the tiles to the correct position relative to the player. 
         for(int i = yStart; i <= yEnd; i++ ){
             for(int j = xStart; j <= xEnd; j++){
                 if(i == playerY && j == playerX){
@@ -77,14 +80,13 @@ public class WorldView extends JPanel{
                 }
                 tileConstraints.gridx = j;
                 tileConstraints.gridy = i;
-                add(createTile(Color.red),tileConstraints);
+                add(createTile(Color.gray),tileConstraints);
             }
-            
         }
     }
 
     /**
-     * Create the look of the tile
+     * Create the look of the tile and create the actual tile object.
      */
     private JPanel createTile(Color color){
         JPanel tileView = new JPanel();
@@ -94,17 +96,15 @@ public class WorldView extends JPanel{
         return tileView;
     }
 
-    
-
     //TODO this should redraw each entity and tile on the world map
     @Override
     protected void paintComponent(Graphics g){
+        drawTile();
         super.paintComponent(g);
     }
-
     
     /* 
-    //FIXME
+    //FIXME 
     @Override
     public void update(){
         System.out.println("Yo jag ritar ut en world");

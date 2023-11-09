@@ -26,7 +26,8 @@ public class App {
         
         HudController hudController = new HudController();
         HudView HudView = new HudView(model, hudController);
-        
+
+        //TODO add the rest of the views.
         List<JPanel> pl = new ArrayList<JPanel>();
         pl.add(worldView);
 
