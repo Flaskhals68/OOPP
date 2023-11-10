@@ -29,6 +29,9 @@ public class WorldView extends JPanel{
     private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW;
 
+    //map to include each id and it's corresponding sprite.
+    private Map<String, JPanel> spriteMap;
+
     //Contains the id:s of all possible entities.
 
     
@@ -81,7 +84,7 @@ public class WorldView extends JPanel{
     }
 
     /**
-     * Create the look of the tile and create the actual tile object.
+     * Create the actual tile object and it's enteties.
      */
     private JPanel createTile(Color color, int x, int y){
         //TODO add some way to know which entity is on the tile
