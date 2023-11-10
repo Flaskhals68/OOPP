@@ -28,8 +28,12 @@ public class HealthBar {
         if (current < 0) current = 0;
     }
 
-    @Override
-    public int hashCode() {
-        return max;
+    /**
+     * Increase current hp up to the given max
+     * @param amount
+     */
+    public void increaseCurrent(int amount) {
+        current += amount;
+        if (current > max) current = max;
     }
 }
