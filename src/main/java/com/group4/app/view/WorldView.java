@@ -27,7 +27,7 @@ public class WorldView extends JPanel{
     private static final int HEIGHT = 400;
     private static final int WIDTH = 400;
     private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
-    private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW;
+    private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW; 
 
     //map to include each id and it's corresponding sprite.
     private Map<String, JPanel> spriteMap;
@@ -45,14 +45,16 @@ public class WorldView extends JPanel{
      * Initiates the worldView by drawing all the components.
      */
     private void initComponents(){
+        EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
+        Map<String, JPanel> entityMap = entityPanelMap.getMap();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
-        drawTile();
+        drawTile(entityMap);
         
     }
 
-    private void drawTile(){
+    private void drawTile(Map<String, JPanel> entityMap){
         // Should return where the player is.
         Tile playerTile = model.getPlayerTile();
 
