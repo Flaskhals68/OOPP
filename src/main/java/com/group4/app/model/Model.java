@@ -28,6 +28,8 @@ public class Model {
         addBasicMap(floor0, 10);
         
         this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,0));
+        Enemy e = EnemyFactory.createZombie();
+        floor0.getTile(3, 3).addOccupant(e);
 
         this.floors.put(floor0.getId(), floor0);
     }

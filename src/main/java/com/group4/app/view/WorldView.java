@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import com.group4.app.controller.WorldController;
+import com.group4.app.model.Entity;
 import com.group4.app.model.Model;
 import com.group4.app.model.Tile;
 
@@ -75,12 +76,23 @@ public class WorldView extends JPanel{
                 if(i == playerY && j == playerX){
                     tileConstraints.gridx = playerX;
                     tileConstraints.gridy = playerY;
-                    add(createTile(Color.blue, j, i), tileConstraints);
+                    add(createTile(Color.blue), tileConstraints);
                     continue;
                 }
+                if (model.getTile(j, i).getOccupants().isEmpty() == false) {
+                    for(Entity e : model.getTile(j, i).getOccupants()){
+                        tileConstraints.gridx = j;
+                        tileConstraints.gridy = i;
+                        System.out.println(e.getId());
+                        JPanel p = entityMap.get(e.getId());
+                        add(p, tileConstraints);
+                    }
+                    continue;
+                }
+                
                 tileConstraints.gridx = j;
                 tileConstraints.gridy = i;
-                add(createTile(Color.gray, j, i), tileConstraints);
+                add(createTile(Color.gray), tileConstraints);
             }
         }
     }
@@ -88,7 +100,7 @@ public class WorldView extends JPanel{
     /**
      * Create the actual tile object and it's enteties.
      */
-    private JPanel createTile(Color color, int x, int y){
+    private JPanel createTile(Color color){
         //TODO add some way to know which entity is on the tile
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
@@ -100,7 +112,7 @@ public class WorldView extends JPanel{
     //TODO this should redraw each entity and tile on the world map
     @Override
     protected void paintComponent(Graphics g){
-        drawTile();
+        //drawTile();
         super.paintComponent(g);
     }
     
