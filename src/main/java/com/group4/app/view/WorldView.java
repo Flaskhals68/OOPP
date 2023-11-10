@@ -22,11 +22,12 @@ import com.group4.app.model.Tile;
 public class WorldView extends JPanel{
     private Model model;
     private WorldController controller;
-    private static final int NUMBER_OF_TILES = 10;
+    private static final int MAX_NUMBER_OF_TILES_PER_ROW = 10;
+    private static final int TILES_DRAWN_FROM_PLAYER = MAX_NUMBER_OF_TILES_PER_ROW/2 - 1;
     private static final int HEIGHT = 400;
     private static final int WIDTH = 400;
-    private static final int TILE_WIDHT = WIDTH/NUMBER_OF_TILES;
-    private static final int TILE_HEIGHT = HEIGHT/NUMBER_OF_TILES;
+    private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
+    private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW;
 
     //Contains the id:s of all possible entities.
 
@@ -55,11 +56,11 @@ public class WorldView extends JPanel{
         int playerX = playerTile.getXPos();
         int playerY = playerTile.getYPos();
 
-        int xStart = Math.max(playerX - 4,0);
-        int xEnd = Math.min(playerX + 4, WIDTH);
+        int xStart = Math.max(playerX - TILES_DRAWN_FROM_PLAYER,0);
+        int xEnd = Math.min(playerX + TILES_DRAWN_FROM_PLAYER, WIDTH);
 
-        int yStart = Math.max(playerY - 4, 0);
-        int yEnd = Math.min(playerY + 4, HEIGHT);
+        int yStart = Math.max(playerY - TILES_DRAWN_FROM_PLAYER, 0);
+        int yEnd = Math.min(playerY + TILES_DRAWN_FROM_PLAYER, HEIGHT);
 
         GridBagConstraints tileConstraints = new GridBagConstraints();
         
