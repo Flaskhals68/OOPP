@@ -19,7 +19,8 @@ public class GameWindow extends JFrame{
     
     public static GameWindow getInstance() {
         if (instance == null) {
-            return new GameWindow();
+            instance = new GameWindow();
+            return instance;
         }
         else {
             return GameWindow.instance;
