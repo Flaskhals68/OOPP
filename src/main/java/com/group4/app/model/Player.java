@@ -32,8 +32,8 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   public void move(Tile tile) {
     // TODO: Add restraints to where player can move
     Tile currentTile = getTile();
-    currentTile.removeOccupant(this);
-    tile.addOccupant(this);
+    currentTile.removeEntity(this);
+    tile.addEntity(this);
     setTile(tile);
   }
 
