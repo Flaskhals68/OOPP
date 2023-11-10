@@ -13,7 +13,8 @@ public class Model {
     
     public static Model getInstance(){
         if (instance == null) {
-            return new Model();
+            instance = new Model();
+            return instance;
         }
         else {
             return Model.instance;
@@ -22,24 +23,26 @@ public class Model {
 
     public Model(){
         this.floors = new HashMap<String, World>();
-        World floor0 = new World(100);
-        addBasicMap(floor0, 10);
-        
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,0));
-
-        this.floors.put(floor0.getId(), floor0);
     }
 
-    private void addBasicMap(World world, int size){
+    public void addBasicMap(int size){
+        World world = new World(100);
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
-                world.addTile(new Tile(world, x, y));
+                world.addTile(new Tile(world.getId(), x, y));
             }
         }
+        this.player = new Player(PLAYER_ID, 100, world.getId(), 0, 0);
+
+        this.floors.put(world.getId(), world);
     }
 
-    private World getWorld(String id){
-        return this.floors.get(id);
+    private World getWorld(String floorId){
+        return this.floors.get(floorId);
+    }
+
+    public void addWorld(World world){
+        this.floors.put(world.getId(), world);
     }
 
     public Player getPlayer(){
@@ -48,10 +51,6 @@ public class Model {
 
     public Set<Entity> getEntities(String floorId, int xPos, int yPos){
         return getTile(floorId, xPos, yPos).getEntities();
-    }
-
-    public Tile getPlayerTile(){
-        return this.player.getTile();
     }
 
     public Tile getTile(String floorId, int xPos, int yPos){

@@ -5,20 +5,17 @@ import java.util.List;
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
   private int hp;
 
-  public Player(String id, int hp, Tile tile) {
-    super(id, tile);
+  public Player(String id, int hp, String floorId, int xPos, int yPos) {
+    super(id, floorId, xPos, yPos);
     this.hp = hp;
   }
 
   public Player(String id, int hp) {
-    this(id, hp, null);
+    super(id);
+    this.hp = hp;
   }
 
   public int getHp() { return this.hp; }
-
-  public World getWorld(){
-    return this.getTile().getWorld();
-  }
 
   @Override
   public void move(Tile tile) {
