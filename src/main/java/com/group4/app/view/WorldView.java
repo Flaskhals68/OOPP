@@ -47,15 +47,14 @@ public class WorldView extends JPanel{
      */
     private void initComponents(){
         EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
-        Map<String, JPanel> entityMap = entityPanelMap.getMap();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
-        drawTile(entityMap);
+        drawTile(entityPanelMap);
         
     }
 
-    private void drawTile(Map<String, JPanel> entityMap){
+    private void drawTile(EntityPanelGenerator entityPanelGenerator){
         // Should return where the player is.
         Tile playerTile = model.getPlayerTile();
 
@@ -74,17 +73,19 @@ public class WorldView extends JPanel{
         for(int i = yStart; i <= yEnd; i++ ){
             for(int j = xStart; j <= xEnd; j++){
                 if(i == playerY && j == playerX){
-                    tileConstraints.gridx = playerX;
-                    tileConstraints.gridy = playerY;
-                    add(createTile(Color.blue), tileConstraints);
+                    for(Entity e : playerTile.getOccupants()){
+                        tileConstraints.gridx = playerX;
+                        tileConstraints.gridy = playerY;
+                        JPanel p = entityPanelGenerator.getJPanel(e.getId());
+                        add(p, tileConstraints);
+                    }
                     continue;
                 }
                 if (model.getTile(j, i).getOccupants().isEmpty() == false) {
                     for(Entity e : model.getTile(j, i).getOccupants()){
                         tileConstraints.gridx = j;
                         tileConstraints.gridy = i;
-                        System.out.println(e.getId());
-                        JPanel p = entityMap.get(e.getId());
+                        JPanel p = entityPanelGenerator.getJPanel(e.getId());
                         add(p, tileConstraints);
                     }
                     continue;

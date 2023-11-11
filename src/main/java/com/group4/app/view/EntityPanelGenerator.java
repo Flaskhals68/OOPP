@@ -26,9 +26,23 @@ public class EntityPanelGenerator{
         }
     }
 
-    public Map<String, JPanel> getMap(){
-        Map<String, JPanel> entityPanelMapCopy = entityPanelMap;
-        return entityPanelMapCopy;
+    /**
+     * Takes in an id as a key and returns a copy of the corresponding JPanel value the entity panel map
+     */
+    public JPanel getJPanel(String key){
+        JPanel jp = createCopy(entityPanelMap.get(key));
+        return jp;
+    }
+
+    /**
+     * This copies a JPanel and returns it.
+     * @return a copy of the parameter
+     */
+    private JPanel createCopy(JPanel jPanel){
+        JPanel copiedPanel = new JPanel();
+        copiedPanel.setPreferredSize(jPanel.getPreferredSize());
+        copiedPanel.setBackground(jPanel.getBackground());
+        return copiedPanel;
     }
 
     private ArrayList<JPanel> createEntityPanels(Color[] colorArray2) {
@@ -37,8 +51,7 @@ public class EntityPanelGenerator{
             JPanel p = new JPanel();
             p.setPreferredSize(new Dimension(tile_width, tile_height));
             p.setBackground(colorArray2[i]);
-            panels.add(p);
-            
+            panels.add(p);            
         }
         return panels;
     }

@@ -25,11 +25,11 @@ public class Model {
     public Model(){
         this.floors = new HashMap<String, World>();
         World floor0 = new World(100);
-        addBasicMap(floor0, 10);
+        addBasicMap(floor0, 100);
         
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,0));
-        Enemy e = EnemyFactory.createZombie();
-        floor0.getTile(3, 3).addOccupant(e);
+        this.player = new Player(PLAYER_ID, 100, floor0.getTile(6,6));
+
+        floor0.getTile(6, 6).addOccupant(player);
 
         this.floors.put(floor0.getId(), floor0);
     }
