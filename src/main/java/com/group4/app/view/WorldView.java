@@ -23,19 +23,23 @@ import com.group4.app.model.Tile;
 public class WorldView extends JPanel{
     private Model model;
     private WorldController controller;
+
+    //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static final int MAX_NUMBER_OF_TILES_PER_ROW = 10;
     private static final int TILES_DRAWN_FROM_PLAYER = MAX_NUMBER_OF_TILES_PER_ROW/2 - 1;
+
+    // Dimensions of the actual worldView Panel
     private static final int HEIGHT = 500;
     private static final int WIDTH = 500;
+
+    // Max dimensions of each tile
     private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW; 
+
+    private GridBagConstraints tileConstraints = new GridBagConstraints();
+
+    // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
-
-    //map to include each id and it's corresponding sprite.
-    private Map<String, JPanel> spriteMap;
-
-    //Contains the id:s of all possible entities.
-
     
     public WorldView(Model model, WorldController controller) {
         this.model = model;
@@ -44,7 +48,7 @@ public class WorldView extends JPanel{
     }
 
     /**
-     * Initiates the worldView by drawing all the components.
+     * Initiates the worldView by setting up it's look and adding the tiles that should be added initially.
      */
     private void initComponents(){
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -54,8 +58,15 @@ public class WorldView extends JPanel{
         
     }
 
+    /**
+     * Calculates which tiles should be drawn by getting the player's position and drawing 
+     * the corresponding tiles around that position. Takes a EntetyPanelGenerator as a parameter
+     * to be able to draw the tiles and, if there are any, the enteties located at that tile.
+     * @param entityPanelGenerator
+     */
     private void drawTile(EntityPanelGenerator entityPanelGenerator){
         // Should return where the player is.
+        System.out.println("Jag har tirt");
         Tile playerTile = model.getPlayerTile();
 
         int playerX = playerTile.getXPos();
@@ -66,8 +77,6 @@ public class WorldView extends JPanel{
 
         int yStart = Math.max(playerY - TILES_DRAWN_FROM_PLAYER, 0);
         int yEnd = Math.min(playerY + TILES_DRAWN_FROM_PLAYER, HEIGHT);
-
-        GridBagConstraints tileConstraints = new GridBagConstraints();
         
         //draws the tiles to the correct position relative to the player. 
         for(int i = yStart; i <= yEnd; i++ ){
@@ -92,7 +101,7 @@ public class WorldView extends JPanel{
         }
 
     /**
-     * Create the actual tile object and it's enteties.
+     * Create the actual tile panel and add it's enteties to it.
      */
     private JPanel createTile(Model model, int x, int y){
         JPanel tileView = new JPanel();
