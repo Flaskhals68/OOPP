@@ -21,7 +21,8 @@ public class GameWindow extends JFrame{
     
     public static GameWindow getInstance(List<JPanel> panelList) {
         if (instance == null) {
-            return new GameWindow(panelList);
+            instance = new GameWindow(panelList);
+            return instance;
         }
         else {
             return GameWindow.instance;
