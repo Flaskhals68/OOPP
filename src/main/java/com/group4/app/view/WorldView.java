@@ -25,8 +25,8 @@ public class WorldView extends JPanel{
     private WorldController controller;
     private static final int MAX_NUMBER_OF_TILES_PER_ROW = 10;
     private static final int TILES_DRAWN_FROM_PLAYER = MAX_NUMBER_OF_TILES_PER_ROW/2 - 1;
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 400;
+    private static final int HEIGHT = 500;
+    private static final int WIDTH = 500;
     private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW; 
     private static final EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
@@ -117,8 +117,9 @@ public class WorldView extends JPanel{
         super.paintComponent(g);
     }
     
-    /* 
+    
     //FIXME 
+    /* 
     @Override
     public void update(){
         System.out.println("Yo jag ritar ut en world");

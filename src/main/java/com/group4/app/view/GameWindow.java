@@ -13,6 +13,10 @@ import java.util.List;
 public class GameWindow extends JFrame{
     private List<JPanel> panelList = new ArrayList<JPanel>();
     private static GameWindow instance = null;
+    private static int SCREEN_WIDTH = 1280;
+    private static int SCREEN_HEIGHT = 720;
+    private static String title = "GAME";
+    private static Color backGroundColor = Color.darkGray;
 
     private GameWindow(List<JPanel> panelList) {
         this.panelList = panelList;
@@ -54,8 +58,9 @@ public class GameWindow extends JFrame{
 
     //TODO experiment with layout.
     private void initGameWindow(){
-        setTitle("GAME");
-        setSize(1280, 720);
+        setTitle(title);
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        setBackground(backGroundColor);
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

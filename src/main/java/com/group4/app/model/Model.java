@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.view.GameWindow;
+import com.group4.app.view.WorldView;
+
 public class Model {
     private static Model instance = null;
     private Player player;
@@ -22,6 +25,7 @@ public class Model {
     }
 
     public Model(){
+        //Test World
         this.floors = new HashMap<String, World>();
         World floor0 = new World(100);
         addBasicMap(floor0, 100);
@@ -56,7 +60,7 @@ public class Model {
         return this.player;
     }
 
-    // Why did this need the world id as parameter, the view should not know about this? problem in the merge maybe
+    // Why did this need the world id as parameter, the view should not know about this? problem in the merge maybe, Removed the world parameter
     public Set<Entity> getEntities(int xPos, int yPos){
         return getTile(currentWorld.getId(), xPos, yPos).getEntities();
     }
@@ -65,7 +69,7 @@ public class Model {
         return this.player.getTile();
     }
 
-    // same here.
+    // same here. Maybe remove?
     public Tile getTile(String floorId, int xPos, int yPos){
         return this.getWorld(floorId).getTile(xPos, yPos);
     }
