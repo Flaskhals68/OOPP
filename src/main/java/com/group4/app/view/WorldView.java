@@ -29,6 +29,7 @@ public class WorldView extends JPanel{
     private static final int WIDTH = 400;
     private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW; 
+    private static final EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
     //map to include each id and it's corresponding sprite.
     private Map<String, JPanel> spriteMap;
@@ -46,7 +47,6 @@ public class WorldView extends JPanel{
      * Initiates the worldView by drawing all the components.
      */
     private void initComponents(){
-        EntityPanelGenerator entityPanelMap = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
@@ -73,40 +73,40 @@ public class WorldView extends JPanel{
         for(int i = yStart; i <= yEnd; i++ ){
             for(int j = xStart; j <= xEnd; j++){
                 if(i == playerY && j == playerX){
-                    for(Entity e : playerTile.getOccupants()){
-                        tileConstraints.gridx = playerX;
-                        tileConstraints.gridy = playerY;
-                        JPanel p = entityPanelGenerator.getJPanel(e.getId());
-                        add(p, tileConstraints);
-                    }
+                    tileConstraints.gridx = playerX;
+                    tileConstraints.gridy = playerY;
+                    JPanel playerPanel = createTile(model, playerX, playerY);
+                    add(playerPanel, tileConstraints);
                     continue;
                 }
-                if (model.getTile(j, i).getOccupants().isEmpty() == false) {
-                    for(Entity e : model.getTile(j, i).getOccupants()){
-                        tileConstraints.gridx = j;
-                        tileConstraints.gridy = i;
-                        JPanel p = entityPanelGenerator.getJPanel(e.getId());
-                        add(p, tileConstraints);
-                    }
+                else{
+                    JPanel entityPanel = createTile(model, j, i);
+                    tileConstraints.gridx = j;
+                    tileConstraints.gridy = i;
+                    add(entityPanel, tileConstraints);
                     continue;
+
                 }
-                
-                tileConstraints.gridx = j;
-                tileConstraints.gridy = i;
-                add(createTile(Color.gray), tileConstraints);
+                }
             }
         }
-    }
 
     /**
      * Create the actual tile object and it's enteties.
      */
-    private JPanel createTile(Color color){
-        //TODO add some way to know which entity is on the tile
+    private JPanel createTile(Model model, int x, int y){
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
-        tileView.setBackground(color);
+        tileView.setBackground(Color.gray);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray));
+
+        if (model.getEntities(x, y).isEmpty() == false) {
+            for(Entity e : model.getEntities(x, y)){
+                JPanel p = entityPanelMap.getJPanel(e.getId());
+                tileView.add(p);
+                }
+            }
+
         return tileView;
     }
 

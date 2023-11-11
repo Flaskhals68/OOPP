@@ -51,10 +51,6 @@ public class Tile implements Serializable {
        this.entities.remove(entity);
     }
 
-    public Set<Entity> getOccupants(){
-        return occupants;
-    }
-
     public Set<Tile> getNeighbors(){
         return neighbors;
     }

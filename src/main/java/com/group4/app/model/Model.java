@@ -8,6 +8,7 @@ public class Model {
     private static Model instance = null;
     private Player player;
     private Map<String, World> floors;
+    private World currentWorld;
 
     private static final String PLAYER_ID = "player";
     
@@ -24,10 +25,12 @@ public class Model {
         this.floors = new HashMap<String, World>();
         World floor0 = new World(100);
         addBasicMap(floor0, 100);
+        setCurrentWorld(floor0);
         
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(6,6));
-
-        floor0.getTile(6, 6).addOccupant(player);
+        this.player = new Player(PLAYER_ID, 100, floor0.getTile(1,1));
+        Enemy e = EnemyFactory.createZombie();
+        floor0.getTile(4, 2).addEntity(e);
+        floor0.getTile(player.getXPos(), player.getYPos()).addEntity(player);
 
         this.floors.put(floor0.getId(), floor0);
     }
@@ -44,19 +47,28 @@ public class Model {
         return this.floors.get(id);
     }
 
+    // temp fix to test view.
+    private void setCurrentWorld(World world){
+        this.currentWorld = world;
+    }
+
     public Player getPlayer(){
         return this.player;
     }
 
-    public Set<Entity> getEntities(String floorId, int xPos, int yPos){
-        return getTile(floorId, xPos, yPos).getEntities();
+    // Why did this need the world id as parameter, the view should not know about this? problem in the merge maybe
+    public Set<Entity> getEntities(int xPos, int yPos){
+        return getTile(currentWorld.getId(), xPos, yPos).getEntities();
     }
 
     public Tile getPlayerTile(){
         return this.player.getTile();
     }
 
+    // same here.
     public Tile getTile(String floorId, int xPos, int yPos){
         return this.getWorld(floorId).getTile(xPos, yPos);
     }
+
+    
 }
