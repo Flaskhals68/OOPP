@@ -1,15 +1,19 @@
 package com.group4.app.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
   private HealthBar hp;
   private Weapon weapon;
+  private Inventory inv;
 
   public Player(String id, int hp, Weapon weapon, Tile tile) {
     super(id, tile);
     this.hp = new HealthBar(hp);
     this.weapon = weapon;
+    this.inv = new Inventory();
   }
 
   public Player(String id, int hp) {
@@ -64,4 +68,19 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   @Override
   public int getHitPoints() { return hp.getCurrent(); }
+
+  /**
+   * Should make it easy to draw inventory in the view later
+   * @return HashMap with item names as keys, and amount of that item as values
+   */
+  public HashMap<String, Integer> getInventory() {
+    HashMap<String, Stack<IInventoriable>> og_hashmap = inv.getItems();
+    HashMap<String, Integer> return_hashmap = new HashMap<>();
+
+    // Should count how many of each item there exist. To make drawing them simple
+    og_hashmap.forEach((key, value) -> {
+      return_hashmap.put(key, value.size());
+    });
+    return return_hashmap;
+  }
 }
