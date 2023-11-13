@@ -15,6 +15,7 @@ public class Entity implements IPositionable {
         this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
+        Model.getInstance().getTile(floorId, xPos, yPos).addEntity(this);
     }
 
     public void setPosition(String floorId, int xPos, int yPos) {

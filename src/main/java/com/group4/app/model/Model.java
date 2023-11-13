@@ -32,7 +32,7 @@ public class Model {
                 world.addTile(new Tile(world.getId(), x, y));
             }
         }
-        this.player = new Player(PLAYER_ID, 100, world.getId(), 0, 0);
+        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
 
         this.floors.put(world.getId(), world);
     }
