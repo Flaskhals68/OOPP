@@ -1,6 +1,8 @@
 package com.group4.app.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -57,8 +59,15 @@ public class Model {
         return getTile(floorId, xPos, yPos).getEntities();
     }
 
-    public Set<IDrawable> getDrawables(String floorId, int xPos, int yPos){
-        return getTile(floorId, xPos, yPos).getEntities();
+    public List<IDrawable> getDrawables(String floorId, int xPos, int yPos){
+        IDrawable[] entities = getEntities(floorId, xPos, yPos).toArray(new IDrawable[0]);
+        IDrawable tile = getTile(floorId, xPos, yPos);
+        ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
+        drawables.add(tile);
+        for (IDrawable entity : entities){
+            drawables.add(entity);
+        }
+        return drawables;
     }
 
     public void addEntity(Entity entity, String floorId, int xPos, int yPos){
