@@ -30,7 +30,7 @@ public class Weapon implements IInventoriable {
     }
 
     @Override
-    public void use(Player player) {
-
+    public void use(Entity entity) {
+        //TODO implement this
     }
 }
