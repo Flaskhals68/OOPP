@@ -5,18 +5,23 @@ import java.util.Set;
 import java.io.Serializable;
 
 public class Tile implements IDrawable {
+    private String id;
     private String floor;
     private Set<Tile> neighbors;
     private int xPos;
     private int yPos;
     private Set<Entity> entities;
 
-    public Tile(String floorId, int xPos, int yPos){
+    public Tile(String id, String floorId, int xPos, int yPos){
         this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
         this.entities = new HashSet<Entity>();
         this.calculateNeighbors();
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public void setFloor(String floorId){

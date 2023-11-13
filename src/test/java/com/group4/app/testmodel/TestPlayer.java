@@ -18,7 +18,7 @@ public class TestPlayer {
     public void testConstructors() {
         World world = new World(2);
         Model.getInstance().addWorld(world);
-        Tile t1 = new Tile(world.getId(), 0, 0);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
         Player player = new Player("player", 10, null, world.getId(), 0, 0);
         assertEquals("player", player.getId());
@@ -27,14 +27,14 @@ public class TestPlayer {
         Weapon weapon = WeaponFactory.createSword();
         world = new World(2);
         Model.getInstance().addWorld(world);
-        t1 = new Tile(world.getId(), 0, 0);
+        t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
         player = new Player("player", 10, weapon, world.getId(), 0, 0);
         assertEquals(weapon.getAttack(), player.getDamage());
 
         world = new World(2);
         Model.getInstance().addWorld(world);
-        t1 = new Tile(world.getId(), 0, 0);
+        t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
         player = new Player("player", 10, weapon, world.getId(), 0, 0);
         assertEquals("player", player.getId());
@@ -46,9 +46,9 @@ public class TestPlayer {
     public void testMove() {
         World world = new World(2);
         Model.getInstance().addWorld(world);
-        Tile t1 = new Tile(world.getId(), 0, 0);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        Tile t2 = new Tile(world.getId(), 0, 1);
+        Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t2);
         Player p = new Player("player", 10, null, world.getId(), 0, 0);
         p.move(0, 1);

@@ -29,7 +29,7 @@ public class Model {
         World world = new World(100);
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
-                world.addTile(new Tile(world.getId(), x, y));
+                world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
         this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
