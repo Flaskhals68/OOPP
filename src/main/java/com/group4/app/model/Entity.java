@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
-public class Entity implements IPositionable {
+public class Entity implements IDrawable {
     private String id;
     private String floor;
     private int xPos;
@@ -15,12 +15,12 @@ public class Entity implements IPositionable {
         this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
-        Model.getInstance().getTile(floorId, xPos, yPos).addEntity(this);
+        Model.getInstance().addEntity(this, floorId, xPos, yPos);
     }
 
     public void setPosition(String floorId, int xPos, int yPos) {
-        Model.getInstance().getTile(floorId, this.xPos, this.yPos).removeEntity(this);
-        Model.getInstance().getTile(floorId, xPos, yPos).addEntity(this);
+        Model.getInstance().removeEntity(this);
+        Model.getInstance().addEntity(this, floorId, xPos, yPos);
         this.xPos = xPos;
         this.yPos = yPos;
     }

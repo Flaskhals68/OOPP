@@ -21,7 +21,7 @@ public class Model {
         }
     }
 
-    public Model(){
+    private Model(){
         this.floors = new HashMap<String, World>();
     }
 
@@ -37,23 +37,35 @@ public class Model {
         this.floors.put(world.getId(), world);
     }
 
-    private World getWorld(String floorId){
-        return this.floors.get(floorId);
-    }
-
     public void addWorld(World world){
         this.floors.put(world.getId(), world);
+    }
+
+    private World getWorld(String floorId){
+        return this.floors.get(floorId);
     }
 
     public Player getPlayer(){
         return this.player;
     }
 
+    public Tile getTile(String floorId, int xPos, int yPos){
+        return this.getWorld(floorId).getTile(xPos, yPos);
+    }
+
     public Set<Entity> getEntities(String floorId, int xPos, int yPos){
         return getTile(floorId, xPos, yPos).getEntities();
     }
 
-    public Tile getTile(String floorId, int xPos, int yPos){
-        return this.getWorld(floorId).getTile(xPos, yPos);
+    public Set<IDrawable> getDrawables(String floorId, int xPos, int yPos){
+        return getTile(floorId, xPos, yPos).getEntities();
+    }
+
+    public void addEntity(Entity entity, String floorId, int xPos, int yPos){
+        this.getWorld(floorId).addEntity(entity, xPos, yPos);
+    }
+
+    public void removeEntity(Entity entity){
+        this.getWorld(entity.getFloor()).removeEntity(entity);
     }
 }

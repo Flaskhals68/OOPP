@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.io.Serializable;
 
-public class Tile implements IPositionable, Serializable {
+public class Tile implements IDrawable {
     private String floor;
     private Set<Tile> neighbors;
     private int xPos;
@@ -55,6 +55,16 @@ public class Tile implements IPositionable, Serializable {
        this.entities.remove(entity);
     }
 
+    public void addNeighbors(Tile neighbor){
+        this.neighbors.add(neighbor);
+    }
+
+    public void addNeighbors(Tile[] neighbors){
+        for (Tile neighbor : neighbors){
+            this.neighbors.add(neighbor);
+        }
+    }
+
     public Set<Tile> getNeighbors(){
         return neighbors;
     }
@@ -74,16 +84,6 @@ public class Tile implements IPositionable, Serializable {
                 }
                 
             }
-        }
-    }
-
-    public void addNeighbors(Tile neighbor){
-        this.neighbors.add(neighbor);
-    }
-
-    public void addNeighbors(Tile[] neighbors){
-        for (Tile neighbor : neighbors){
-            this.neighbors.add(neighbor);
         }
     }
 
