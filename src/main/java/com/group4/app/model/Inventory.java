@@ -1,6 +1,5 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -42,7 +41,13 @@ public class Inventory {
         } else {
             throw new IllegalArgumentException("Item does not exist in inventory");
         }
-
+    }
+    /**
+     * Use this to draw inventory later
+     * @return Hashmap with items
+     */
+    public HashMap<String, Stack<IInventoriable>> getItems() {
+        return items;
     }
 
 }
