@@ -7,18 +7,18 @@ import java.util.List;
 public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     private final String name;
     private final Weapon weapon;
-    private int hp;
-    public Enemy(String id, String name, Weapon weapon, int hp){
+    private HealthBar hp;
+    public Enemy(String id, String name, Weapon weapon, int maxHp){
         super(id);
         this.name = name;
         this.weapon = weapon;
-        this.hp = hp;
+        this.hp = new HealthBar(maxHp);
     }
 
     @Override
     public void takeHit(int damage) {
-        hp = hp - damage;
-        if(hp <= 0) {
+        hp.reduceCurrent(damage);
+        if(hp.getCurrent() == 0) {
             // TODO Add some logic for removing enemy if dead
             System.out.println("Dead");
         }
@@ -26,7 +26,7 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
 
     @Override
     public int getHitPoints() {
-        return hp;
+        return hp.getCurrent();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     }
 
     @Override
-    public void move(Tile tile) {
+    public void move(int xPos, int yPos) {
         // TODO not implemented yet
         throw new UnsupportedOperationException("Not implemented yet");
     }

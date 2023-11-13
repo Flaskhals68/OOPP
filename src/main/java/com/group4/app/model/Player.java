@@ -3,49 +3,51 @@ package com.group4.app.model;
 import java.util.List;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
-  private int hp;
+  private HealthBar hp;
+  private Weapon weapon;
 
-  public Player(String id, int hp, String floorId, int xPos, int yPos) {
+  public Player(String id, int hp, Weapon weapon, String floorId, int xPos, int yPos) {
     super(id, floorId, xPos, yPos);
-    this.hp = hp;
+    this.hp = new HealthBar(hp);
+    this.weapon = weapon;
   }
-
-  public Player(String id, int hp) {
-    super(id);
-    this.hp = hp;
-  }
-
-  public int getHp() { return this.hp; }
 
   @Override
-  public void move(Tile tile) {
-    throw new UnsupportedOperationException("Unimplemented method 'takeHit'");
+  public void move(int xPos, int yPos) {
+    // TODO: Add restraints to where player can move
+    Tile currentTile = Model.getInstance().getTile(this.getFloor(), this.getXPos(), this.getYPos());
+    currentTile.removeEntity(this);
+    
+    this.setPosition(getFloor(), xPos, yPos);
+    Tile newTile = Model.getInstance().getTile(this.getFloor(), this.getXPos(), this.getYPos());
+    newTile.addEntity(this);
   }
 
   @Override
   public List<Tile> getLegalMoves() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getLegalMoves'");
+    // TODO: Implement logic for getting legal moves
+    throw new UnsupportedOperationException("Method 'getLegalMoves()' not implemented");
+  }
+
+  public void setWeapon(Weapon weapon) {
+    this.weapon = weapon;
   }
 
   @Override
-  public void attack(IAttackable entity) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'attack'");
+  public void attack(IAttackable other) {
+    other.takeHit(this.getDamage());
   }
 
   @Override
   public int getDamage() {
-    // TODO Implement method when weapon support exists
-    throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
+    return weapon.getAttack();
   }
 
   @Override
   public void takeHit(int damage) {
-    // TODO Implement method when weapon support exists
-    throw new UnsupportedOperationException("Unimplemented method 'takeHit'");
+    hp.reduceCurrent(damage);
   }
 
   @Override
-  public int getHitPoints() { return hp; }
+  public int getHitPoints() { return hp.getCurrent(); }
 }
