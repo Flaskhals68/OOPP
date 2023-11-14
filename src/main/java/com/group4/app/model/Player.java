@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
+public class Player extends Entity implements IAttackable, ICanAttack, IMovable, IUser {
   private HealthBar hp;
   private Weapon weapon;
   private Inventory inv;
@@ -48,6 +48,10 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   }
 
   public void setWeapon(Weapon weapon) {
+    // Puts current weapon in inventory if player already has one
+    if (this.weapon != null) {
+      inv.addItem(this.weapon);
+    }
     this.weapon = weapon;
   }
 
@@ -68,6 +72,15 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   @Override
   public int getHitPoints() { return hp.getCurrent(); }
+
+  /**
+   * Use this in model later to fetch (and remove) a specific item to from a players inventory
+   * @param name name of the item you would like to fetch from the inventory
+   * @return the item object
+   */
+  public IInventoriable fetchItemFromInventory(String name) {
+    return inv.getItem(name);
+  }
 
   /**
    * Should make it easy to draw inventory in the view later
