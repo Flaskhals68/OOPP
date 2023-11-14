@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
 public interface IInventoriable {
-    void use(Entity entity);
+    void use(IUser user);
     String getName();
 }
