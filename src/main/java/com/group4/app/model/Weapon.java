@@ -1,6 +1,6 @@
 package com.group4.app.model;
 
-public class Weapon {
+public class Weapon implements IInventoriable {
 
     private final int attack;
     private final String name;
@@ -27,5 +27,10 @@ public class Weapon {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public void use(Entity entity) {
+        //TODO implement this
     }
 }

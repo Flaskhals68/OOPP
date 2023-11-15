@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-public class World implements Serializable{
+public class World {
     private String uniqueID;
     private Tile[][] tiles;
 
@@ -30,6 +30,10 @@ public class World implements Serializable{
     }
 
     public void addEntity(Entity entity, int xPos, int yPos){
-        this.tiles[xPos][yPos].addEntity(entity);
+        this.getTile(xPos, yPos).addEntity(entity);
+    }
+
+    public void removeEntity(Entity entity){
+        this.getTile(entity.getXPos(), entity.getYPos()).removeEntity(entity);
     }
 }
