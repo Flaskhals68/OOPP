@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 
 public class EntityPanelGenerator{
     private Map<String, JPanel> entityPanelMap = new HashMap<>();
-    private String[] idArray = {"Zombie", "Skeleton", "player"};
-    private Color[] colorArray = {Color.green, Color.lightGray, Color.blue};
+    private String[] idArray = {"sand","stone", "Zombie", "Skeleton", "player"};
+    private Color[] colorArray = {Color.yellow, Color.gray, Color.green, Color.lightGray, Color.blue};
     private int tile_width;
     private int tile_height;
 
@@ -45,6 +45,9 @@ public class EntityPanelGenerator{
         return copiedPanel;
     }
 
+    /**
+     * Creates panels with the corresponding colors
+     */
     private ArrayList<JPanel> createEntityPanels(Color[] colorArray2) {
         ArrayList<JPanel> panels = new ArrayList<>();
         for(int i = 0; i < colorArray2.length; i++){

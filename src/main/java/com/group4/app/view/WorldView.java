@@ -9,14 +9,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 
 import com.group4.app.controller.WorldController;
 import com.group4.app.model.Entity;
+import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.Tile;
 
@@ -25,8 +29,11 @@ public class WorldView extends JPanel{
     private Model model;
     private WorldController controller;
 
+    //TODO implement zoom?
+    private static float zoom = 1;
+
     //Specifies how many tiles at maximum are allowed to be displayed per row.
-    private static final int MAX_NUMBER_OF_TILES_PER_ROW = 11;
+    private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
     private static final int TILES_DRAWN_FROM_PLAYER = 5;
 
     // Dimensions of the actual worldView Panel
@@ -46,6 +53,7 @@ public class WorldView extends JPanel{
         this.model = model;
         this.controller = controller;
         initComponents();
+
     }
 
     /**
@@ -66,11 +74,8 @@ public class WorldView extends JPanel{
      * @param entityPanelGenerator
      */
     private void drawTile(EntityPanelGenerator entityPanelGenerator){
-        // Should return where the player is.
-        Tile playerTile = model.getPlayerTile();
-
-        int playerX = playerTile.getXPos();
-        int playerY = playerTile.getYPos();
+        int playerX = model.getPlayerX();
+        int playerY = model.getPlayerY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
@@ -84,9 +89,8 @@ public class WorldView extends JPanel{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 int y = actualY + i;
-                //FIXME how to get the bounds of the world instead?
                 try{
-                    JPanel entityPanel = createTile(model, x, y, Color.gray);
+                    JLayeredPane entityPanel = createTile(model, x, y);
                     tileConstraints.gridx = j;
                     tileConstraints.gridy = i;
                     add(entityPanel, tileConstraints);
@@ -103,7 +107,10 @@ public class WorldView extends JPanel{
 
 
     
-
+    /**
+     * Creates the tiles that represent the void in the world
+     * @return a black tile
+     */
     private JPanel createEmptyTile(){
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
@@ -115,27 +122,34 @@ public class WorldView extends JPanel{
     /**
      * Create the actual tile panel and add it's enteties to it.
      */
-    private JPanel createTile(Model model, int x, int y, Color c){
-        JPanel tileView = new JPanel();
+    private JLayeredPane createTile(Model model, int x, int y){
+        int borderWidth = 1;
+
+        // Makes sure that the components get added inside the border of the JLayerPane
+        int innerWidth = TILE_WIDHT - 2 * borderWidth;
+        int innerHeight = TILE_HEIGHT - 2 * borderWidth;
+
+        JLayeredPane tileView = new JLayeredPane();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
-        tileView.setBackground(c);
-        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray));
-        tileView.setLayout(new GridLayout());
+        tileView.setBackground(Color.white);
+        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
 
-        if (model.getEntities(x, y).isEmpty() == false) {
-            for(Entity e : model.getEntities(x, y)){
+        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
+        int layerIndex = 0;
+        if (drawables.isEmpty() == false) {
+            for(int i = drawables.size()-1; i >= 0; i-- ){
+                IDrawable e = drawables.get(i);
                 JPanel p = entityPanelGenerator.getJPanel(e.getId());
-                tileView.add(p);
-                }
+                tileView.add(p, layerIndex++);
+                p.setBounds(borderWidth,borderWidth, innerWidth, innerHeight);
             }
-
+            }
         return tileView;
     }
 
-    //TODO this should redraw each entity and tile on the world map
     @Override
     protected void paintComponent(Graphics g){
-        //drawTile();
+        drawTile(entityPanelGenerator);
         super.paintComponent(g);
     }
 

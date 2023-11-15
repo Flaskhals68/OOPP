@@ -13,6 +13,7 @@ public class Tile implements IDrawable {
     private Set<Entity> entities;
 
     public Tile(String id, String floorId, int xPos, int yPos){
+        this.id = id;
         this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
