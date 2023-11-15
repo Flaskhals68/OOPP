@@ -15,12 +15,9 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   @Override
   public void move(int xPos, int yPos) {
     // TODO: Add restraints to where player can move
-    Tile currentTile = Model.getInstance().getTile(this.getFloor(), this.getXPos(), this.getYPos());
-    currentTile.removeEntity(this);
-    
+    Model.getInstance().removeEntity(this);
     this.setPosition(getFloor(), xPos, yPos);
-    Tile newTile = Model.getInstance().getTile(this.getFloor(), this.getXPos(), this.getYPos());
-    newTile.addEntity(this);
+    Model.getInstance().addEntity(this, getFloor(), xPos, yPos);
   }
 
   @Override
