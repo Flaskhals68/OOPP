@@ -1,12 +1,12 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
+
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
@@ -22,6 +22,12 @@ public class PathfindingHelper {
         }
     }
 
+    /**
+     * Get all tiles that can be reached from specified tile with given amounts of steps
+     * @param tile
+     * @param steps
+     * @return Set of Points with all legal coordinates
+     */
     public static Set<Point2D> getSurrounding(Tile tile, int steps) {
         // Perform depth-first search to find all tiles in range of given steps
         Set<Tile> visited = new HashSet<>();
@@ -83,6 +89,7 @@ public class PathfindingHelper {
         }
 
         private Set<Edge> initOutgoingEdges(Tile tile) {
+            if (tile == null) throw new IllegalArgumentException("Tile cannot be null");
             Set<Edge> outgoingEdges = new HashSet<>();
             for (Tile neighbor : tile.getNeighbors()) {
                 Edge e = new Edge(tile, neighbor);
@@ -148,15 +155,12 @@ public class PathfindingHelper {
     }
     
     private static List<Tile> extractPath(AStarEntry entry) {
+        if (entry == null) throw new IllegalArgumentException("entry must not be null");
         LinkedList<Tile> path = new LinkedList<>();
         while (entry.backPointer != null) {
             path.addFirst(entry.getCurrent());
             entry = entry.getBackPointer();
         }
         return path;
-    }
-
-    public static void main(String[] args) {
-        
     }
 }
