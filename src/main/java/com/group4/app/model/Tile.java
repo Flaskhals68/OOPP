@@ -4,23 +4,32 @@ import java.util.HashSet;
 import java.util.Set;
 import java.io.Serializable;
 
-public class Tile implements Serializable {
-    private World world;
+public class Tile implements IDrawable {
+    private String id;
+    private String floor;
     private Set<Tile> neighbors;
     private int xPos;
     private int yPos;
     private Set<Entity> entities;
 
-    public Tile(World world, int xPos, int yPos){
-        this.world = world;
+    public Tile(String id, String floorId, int xPos, int yPos){
+        this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
         this.entities = new HashSet<Entity>();
         this.calculateNeighbors();
     }
 
-    public World getWorld(){
-        return this.world;
+    public String getId(){
+        return this.id;
+    }
+
+    public void setFloor(String floorId){
+        this.floor = floorId;
+    }
+
+    public String getFloor(){
+        return this.floor;
     }
 
     public void setXPos(int next){
@@ -51,6 +60,16 @@ public class Tile implements Serializable {
        this.entities.remove(entity);
     }
 
+    public void addNeighbors(Tile neighbor){
+        this.neighbors.add(neighbor);
+    }
+
+    public void addNeighbors(Tile[] neighbors){
+        for (Tile neighbor : neighbors){
+            this.neighbors.add(neighbor);
+        }
+    }
+
     public Set<Tile> getNeighbors(){
         return neighbors;
     }
@@ -60,7 +79,7 @@ public class Tile implements Serializable {
         for (int x=-1; x<2; x++){
             for (int y=-1; y<2; y++){
                 try {
-                    Tile tile = this.world.getTile(this.xPos+x, this.yPos+y);
+                    Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);
@@ -73,21 +92,11 @@ public class Tile implements Serializable {
         }
     }
 
-    public void addNeighbors(Tile neighbor){
-        this.neighbors.add(neighbor);
-    }
-
-    public void addNeighbors(Tile[] neighbors){
-        for (Tile neighbor : neighbors){
-            this.neighbors.add(neighbor);
-        }
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((world == null) ? 0 : world.hashCode());
+        result = prime * result + ((floor == null) ? 0 : floor.hashCode());
         result = prime * result + xPos;
         result = prime * result + yPos;
         return result;
@@ -102,15 +111,10 @@ public class Tile implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Tile other = (Tile) obj;
-        if (world == null) {
-            if (other.world != null)
+        if (floor == null) {
+            if (other.floor != null)
                 return false;
-        } else if (!world.equals(other.world))
-            return false;
-        if (neighbors == null) {
-            if (other.neighbors != null)
-                return false;
-        } else if (!neighbors.equals(other.neighbors))
+        } else if (!floor.equals(other.floor))
             return false;
         if (xPos != other.xPos)
             return false;

@@ -1,6 +1,8 @@
 package com.group4.app.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,42 +19,36 @@ public class Model {
     
     public static Model getInstance(){
         if (instance == null) {
-            return new Model();
+            instance = new Model();
+            return instance;
         }
         else {
             return Model.instance;
         }
     }
 
-    public Model(){
-        //Test World
+    private Model(){
         this.floors = new HashMap<String, World>();
-        World floor0 = new World(100);
-        addBasicMap(floor0, 100);
-        setCurrentWorld(floor0);
-        
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(96,0));
-        Enemy e = EnemyFactory.createZombie();
-        floor0.getTile(5, 2).addEntity(e);
-
-        Enemy e2 = EnemyFactory.createSkeleton();
-        floor0.getTile(2, 2).addEntity(e2);
-
-        floor0.getTile(player.getXPos(), player.getYPos()).addEntity(player);
-
-        this.floors.put(floor0.getId(), floor0);
     }
 
-    private void addBasicMap(World world, int size){
+    public void addBasicMap(int size){
+        World world = new World(100);
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
-                world.addTile(new Tile(world, x, y));
+                world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
+        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
+
+        this.floors.put(world.getId(), world);
     }
 
-    private World getWorld(String id){
-        return this.floors.get(id);
+    public void addWorld(World world){
+        this.floors.put(world.getId(), world);
+    }
+
+    private World getWorld(String floorId){
+        return this.floors.get(floorId);
     }
 
     // temp fix to test view.
@@ -64,18 +60,31 @@ public class Model {
         return this.player;
     }
 
-    // Why did this need the world id as parameter, the view should not know about this? problem in the merge maybe, Removed the world parameter
-    public Set<Entity> getEntities(int xPos, int yPos){
-        return getTile(currentWorld.getId(), xPos, yPos).getEntities();
-    }
-
-    public Tile getPlayerTile(){
-        return this.player.getTile();
-    }
-
-    // same here. Maybe remove?
     public Tile getTile(String floorId, int xPos, int yPos){
         return this.getWorld(floorId).getTile(xPos, yPos);
+    }
+
+    public Set<Entity> getEntities(String floorId, int xPos, int yPos){
+        return getTile(floorId, xPos, yPos).getEntities();
+    }
+
+    public List<IDrawable> getDrawables(String floorId, int xPos, int yPos){
+        IDrawable[] entities = getEntities(floorId, xPos, yPos).toArray(new IDrawable[0]);
+        IDrawable tile = getTile(floorId, xPos, yPos);
+        ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
+        drawables.add(tile);
+        for (IDrawable entity : entities){
+            drawables.add(entity);
+        }
+        return drawables;
+    }
+
+    public void addEntity(Entity entity, String floorId, int xPos, int yPos){
+        this.getWorld(floorId).addEntity(entity, xPos, yPos);
+    }
+
+    public void removeEntity(Entity entity){
+        this.getWorld(entity.getFloor()).removeEntity(entity);
     }
 
     

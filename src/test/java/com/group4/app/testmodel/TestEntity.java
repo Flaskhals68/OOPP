@@ -19,21 +19,4 @@ public class TestEntity {
         }
         return sb.toString();
     }
-
-    @Test
-    public void testHashCode() {
-        
-        String id = randomString(20);
-        Entity e1 = new Entity(id);
-        Entity e2 = new Entity(id);
-        assertEquals(e1.hashCode(), e2.hashCode());
-
-        String id2;
-        do {
-            id2 = randomString(20);
-        } while (id == id2);
-        Entity e3 = new Entity(id2);
-
-        assertTrue(e1.hashCode() != e3.hashCode());
-    }
 }

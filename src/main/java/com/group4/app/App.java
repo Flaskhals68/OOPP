@@ -16,7 +16,7 @@ import com.group4.app.view.WorldView;
 
 public class App {
     public static void main(String[] args) {
-        Model model = new Model();
+        Model model = Model.getInstance();
 
         WorldController worldController = new WorldController();
         WorldView worldView = new WorldView(model, worldController);
