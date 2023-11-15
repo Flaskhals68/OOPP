@@ -2,13 +2,15 @@ package com.group4.app.model;
 
 import java.util.List;
 
-public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
-  private HealthBar hp;
+public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker {
+  private ResourceBar hp;
+  private ResourceBar ap;
   private Weapon weapon;
 
-  public Player(String id, int hp, Weapon weapon, String floorId, int xPos, int yPos) {
+  public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
     super(id, floorId, xPos, yPos);
-    this.hp = new HealthBar(hp);
+    this.hp = new ResourceBar(hp);
+    this.ap = new ResourceBar(ap);
     this.weapon = weapon;
   }
 
@@ -47,4 +49,30 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   @Override
   public int getHitPoints() { return hp.getCurrent(); }
+
+  public void startTurn(){
+    Model.getInstance().startPlayerTurn();
+  }
+
+  private void endTurn(){
+    Model.getInstance().endPlayerTurn();
+  }
+
+  public int getAp(){
+    return this.ap.getCurrent();
+  }
+
+  public void refillAp(){
+    this.ap.setCurrent(this.ap.getMax());
+  }
+
+  public void useAp(int amount){
+    if (this.ap.getCurrent() < amount) {
+      throw new IllegalArgumentException();
+    }
+    this.ap.reduceCurrent(amount);
+    if (this.ap.getCurrent() <= 0){
+      this.endTurn();
+    }
+  }
 }

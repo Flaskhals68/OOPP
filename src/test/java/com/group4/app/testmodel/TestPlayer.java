@@ -20,7 +20,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        Player player = new Player("player", 10, null, world.getId(), 0, 0);
+        Player player = new Player("player", 10, 3, null, world.getId(), 0, 0);
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
 
@@ -29,14 +29,14 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        player = new Player("player", 10, weapon, world.getId(), 0, 0);
+        player = new Player("player", 10, 3, weapon, world.getId(), 0, 0);
         assertEquals(weapon.getAttack(), player.getDamage());
 
         world = new World(2);
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        player = new Player("player", 10, weapon, world.getId(), 0, 0);
+        player = new Player("player", 10, 3, weapon, world.getId(), 0, 0);
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
         assertEquals(weapon.getAttack(), player.getDamage());
@@ -50,7 +50,7 @@ public class TestPlayer {
         world.addTile(t1);
         Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t2);
-        Player p = new Player("player", 10, null, world.getId(), 0, 0);
+        Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
         p.move(0, 1);
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};

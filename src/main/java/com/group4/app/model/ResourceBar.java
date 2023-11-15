@@ -1,10 +1,10 @@
 package com.group4.app.model;
 
-public class HealthBar {
+public class ResourceBar {
     private int max;
     private int current;
 
-    public HealthBar(int max) {
+    public ResourceBar(int max) {
         this.max = max;
         this.current = max;
     }
@@ -20,11 +20,11 @@ public class HealthBar {
     public int getCurrent() { return current; }
 
     /**
-     * Reduce the current hp by the given damage
+     * Reduce the current amount by the given amount
      * @param damage to be taken
      */
-    public void reduceCurrent(int damage) {
-        current -= damage;
+    public void reduceCurrent(int reduction) {
+        current -= reduction;
         if (current < 0) current = 0;
     }
 
@@ -32,8 +32,8 @@ public class HealthBar {
      * Increase current hp up to the given max
      * @param amount
      */
-    public void increaseCurrent(int amount) {
-        current += amount;
+    public void increaseCurrent(int increase) {
+        current += increase;
         if (current > max) current = max;
     }
 }

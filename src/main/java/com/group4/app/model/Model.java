@@ -9,6 +9,8 @@ import java.util.Set;
 public class Model {
     private static Model instance = null;
     private Player player;
+    private TurnHandler turnHandler;
+    private Boolean isPlayerTurn;
     private Map<String, World> floors;
 
     private static final String PLAYER_ID = "player";
@@ -25,6 +27,8 @@ public class Model {
 
     private Model(){
         this.floors = new HashMap<String, World>();
+        this.isPlayerTurn = false;
+        this.turnHandler = new TurnHandler();
     }
 
     public void addBasicMap(int size){
@@ -34,7 +38,7 @@ public class Model {
                 world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
-        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
+        this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 0, 0);
 
         this.floors.put(world.getId(), world);
     }
@@ -76,5 +80,34 @@ public class Model {
 
     public void removeEntity(Entity entity){
         this.getWorld(entity.getFloor()).removeEntity(entity);
+    }
+
+    public void startPlayerTurn(){
+        this.isPlayerTurn = true;
+    }
+
+    public void endPlayerTurn(){
+        this.isPlayerTurn = false;
+        this.turnHandler.endTurn();
+    }
+
+    public boolean isPlayerTurn(){
+        return this.isPlayerTurn;
+    }
+
+    public void addToTurnOrder(ITurnTaker turnTaker){
+        this.turnHandler.add(turnTaker);
+    }
+
+    public void removeFromTurnOrder(ITurnTaker turnTaker){
+        this.turnHandler.remove(turnTaker);
+    }
+
+    public void startTurn(){
+        this.turnHandler.startTurn();
+    }
+
+    public void endTurn(){
+        this.turnHandler.endTurn();
     }
 }
