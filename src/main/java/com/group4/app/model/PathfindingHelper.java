@@ -155,4 +155,8 @@ public class PathfindingHelper {
         }
         return path;
     }
+
+    public static void main(String[] args) {
+        
+    }
 }

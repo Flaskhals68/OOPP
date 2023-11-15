@@ -33,18 +33,20 @@ public class TestPathFinderHelper {
     private static void addBasicMap(World world, int size){
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
-                world.addTile(new Tile(world, x, y));
+                world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
     }
 
     @Test
     public void testGetSurrounding() {
+        int size = 10;
         int startX = 3;
         int startY = 3;
         Model model = Model.getInstance();
-        World world = new World(100);
-        addBasicMap(world, 10);
+        World world = new World(10);
+        model.addWorld(world);
+        addBasicMap(world, size);
         Set<Point2D> testSet = debugAddBasicMap(startX, startY);
         Tile startingTile = world.getTile(startX, startY);
         Set<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
@@ -53,13 +55,11 @@ public class TestPathFinderHelper {
 
     @Test
     public void testGetShortestPath() {
+        Model model = Model.getInstance();
         World world = new World(5);
+        model.addWorld(world);
         int size = 5;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                world.addTile(new Tile(world, i, j));
-            }
-        }
+        addBasicMap(world, size);
         Tile start = world.getTile(0, 3);
         Tile end = world.getTile(4, 3);
         List<Tile> path = PathfindingHelper.getShortestPath(start, end);
