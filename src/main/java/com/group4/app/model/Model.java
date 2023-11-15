@@ -31,7 +31,7 @@ public class Model {
         addBasicMap(floor0, 100);
         setCurrentWorld(floor0);
         
-        this.player = new Player(PLAYER_ID, 100, floor0.getTile(0,99));
+        this.player = new Player(PLAYER_ID, 100, floor0.getTile(96,0));
         Enemy e = EnemyFactory.createZombie();
         floor0.getTile(5, 2).addEntity(e);
 

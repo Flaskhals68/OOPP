@@ -85,16 +85,16 @@ public class WorldView extends JPanel{
                 int x = actualX + j;
                 int y = actualY + i;
                 //FIXME how to get the bounds of the world instead?
-                if (x >= 100 || x < 0 || y >= 100 || y < 0) {
-                    tileConstraints.gridx = j;
-                    tileConstraints.gridy = i;
-                    add(createEmptyTile(), tileConstraints);
-                }
-                else{
+                try{
                     JPanel entityPanel = createTile(model, x, y, Color.gray);
                     tileConstraints.gridx = j;
                     tileConstraints.gridy = i;
                     add(entityPanel, tileConstraints);
+                }
+                catch(ArrayIndexOutOfBoundsException e){
+                    tileConstraints.gridx = j;
+                    tileConstraints.gridy = i;
+                    add(createEmptyTile(), tileConstraints);
                 }
             }
             }
