@@ -34,7 +34,6 @@ public class PathfindingHelper {
             if (!visited.add(entry.tile)) continue; 
 
             Point2D p = new Point(entry.tile.getXPos(), entry.tile.getYPos());
-            // if (p.getX() == tile.getXPos() && p.getY() == tile.getYPos()) continue;
             positions.add(p);
 
             if (entry.remainingSteps > 0) {
@@ -100,12 +99,10 @@ public class PathfindingHelper {
         }
 
         public Tile getCurrent() { return current; }
-        public Edge getLastEdge() { return lastEdge; }
         public AStarEntry getBackPointer() { return backPointer; }
         public double getCostToHere() { return costToHere; }
         public double getGuessedCost() { return guessedCost; }
         public Set<Edge> getOutgoingEdges() { return outgoingEdges; }
-        public double getWeight() { return lastEdge.getWeight(); }
     }
 
     /**
@@ -134,14 +131,14 @@ public class PathfindingHelper {
             for (Edge edge : entry.getOutgoingEdges()) {
                 double costToHere = entry.getCostToHere() + edge.getWeight();
                 double guessedCost = entry.getCostToHere() + guessCost(edge.getEnd(), goal);
-                AStarEntry newEntry = new AStarEntry(entry.getCurrent(), edge, entry, costToHere, guessedCost);
+                AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
                 pq.add(newEntry);
             }
             visited.add(entry.current);
         }
 
         // If no path was found
-        return null;
+        throw new IllegalArgumentException("No path between tiles exists");
     }
     
     private static double guessCost(Tile current, Tile goal) {
@@ -157,20 +154,5 @@ public class PathfindingHelper {
             entry = entry.getBackPointer();
         }
         return path;
-    }
-
-    // For debugging
-    public static void main(String[] args) {
-        int size = 10;
-        Model model = Model.getInstance();
-        World world = new World(size);
-        
-        Tile start = world.getTile(0, 5);
-        Tile end = world.getTile(9, 5);
-        List<Tile> path = PathfindingHelper.getShortestPath(start, end);
-
-        for (Tile tile : path) {
-            System.out.println(tile.getXPos() + " : " + tile.getYPos());
-        }
     }
 }

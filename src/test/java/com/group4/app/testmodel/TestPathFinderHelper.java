@@ -50,4 +50,26 @@ public class TestPathFinderHelper {
         Set<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
         assertTrue(testSet.equals(legalPositions));
     }
+
+    @Test
+    public void testGetShortestPath() {
+        World world = new World(5);
+        int size = 5;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                world.addTile(new Tile(world, i, j));
+            }
+        }
+        Tile start = world.getTile(0, 3);
+        Tile end = world.getTile(4, 3);
+        List<Tile> path = PathfindingHelper.getShortestPath(start, end);
+
+        LinkedList<Tile> correctPath = new LinkedList<>();
+        correctPath.addFirst(world.getTile(4, 3));
+        correctPath.addFirst(world.getTile(3, 3));
+        correctPath.addFirst(world.getTile(2, 3));
+        correctPath.addFirst(world.getTile(1, 3));
+
+        assertEquals(correctPath, path);
+    }
 }
