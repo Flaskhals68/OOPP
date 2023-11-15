@@ -1,10 +1,6 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Model {
     private static Model instance = null;
@@ -76,5 +72,20 @@ public class Model {
 
     public void removeEntity(Entity entity){
         this.getWorld(entity.getFloor()).removeEntity(entity);
+    }
+
+    public void performAttackAction(ICanAttack attacker, IAttackable victim) {
+        int xDiff = Math.abs(attacker.getXPos() - victim.getXPos());
+        int yDiff = Math.abs(attacker.getYPos() - victim.getYPos());
+
+        // TODO This upper portion might not work? Ask about comparing strings.
+        if(!attacker.getFloor().equals(victim.getFloor())) {
+            throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
+        } else if(xDiff <= 1 && yDiff <= 1) {
+            victim.takeHit(attacker.getDamage());
+        } else {
+            throw new IllegalArgumentException("Attacker is out of range");
+        }
+
     }
 }
