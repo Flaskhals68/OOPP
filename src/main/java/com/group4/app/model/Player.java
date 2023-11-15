@@ -9,36 +9,19 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
   private Weapon weapon;
   private Inventory inv;
 
-  public Player(String id, int hp, Weapon weapon, Tile tile) {
-    super(id, tile);
+  public Player(String id, int hp, Weapon weapon, String floorId, int xPos, int yPos) {
+    super(id, floorId, xPos, yPos);
     this.hp = new HealthBar(hp);
     this.weapon = weapon;
     this.inv = new Inventory();
   }
 
-  public Player(String id, int hp) {
-    this(id, hp, null, null);
-  }
-
-  public Player(String id, int hp, Weapon weapon) {
-    this(id, hp, weapon, null);
-  }
-
-  public Player(String id, int hp, Tile tile) {
-    this(id, hp, null, tile);
-  }
-
-  public World getWorld(){
-    return this.getTile().getWorld();
-  }
-
   @Override
-  public void move(Tile tile) {
+  public void move(int xPos, int yPos) {
     // TODO: Add restraints to where player can move
-    Tile currentTile = getTile();
-    currentTile.removeEntity(this);
-    tile.addEntity(this);
-    setTile(tile);
+    Model.getInstance().removeEntity(this);
+    this.setPosition(getFloor(), xPos, yPos);
+    Model.getInstance().addEntity(this, getFloor(), xPos, yPos);
   }
 
   @Override

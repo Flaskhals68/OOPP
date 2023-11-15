@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
+import com.group4.app.model.Model;
 import com.group4.app.model.Tile;
 import com.group4.app.model.World;
 
@@ -21,7 +22,8 @@ public class TestWorld
     public void testAddTileInside()
     {
         World world = new World(101);
-        Tile tile = new Tile(world, 100, 100);
+        Model.getInstance().addWorld(world);
+        Tile tile = new Tile("stone", world.getId(), 100, 100);
         world.addTile(tile);
 
         assertEquals(world.getTile(100, 100), tile);
@@ -31,15 +33,18 @@ public class TestWorld
     public void testAddTileOutside()
     {
         World world = new World(101);
+        Model.getInstance().addWorld(world);
+        Tile tile = new Tile("stone", world.getId(), 101, 101);
 
-        assertThrows(ArrayIndexOutOfBoundsException.class, ()->{world.addTile(new Tile(world, 101, 101));});
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()->{world.addTile(tile);});
     }
 
     @Test
     public void testConstructor0()
     {
         World world = new World(101);
-        world.addTile(new Tile(world, 1, 1));
+        Model.getInstance().addWorld(world);
+        world.addTile(new Tile("stone", world.getId(), 1, 1));
 
         assertFalse(world.getTile(1, 1) == null);
     }
