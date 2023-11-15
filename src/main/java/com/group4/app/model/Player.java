@@ -65,11 +65,15 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
     return inv.getItem(name);
   }
 
+  public void addItemToInventory(IInventoriable item) {
+    inv.addItem(item);
+  }
+
   /**
    * Should make it easy to draw inventory in the view later
    * @return HashMap with item names as keys, and amount of that item as values
    */
-  public HashMap<String, Integer> getInventory() {
+  public HashMap<String, Integer> getInventoryItems() {
     HashMap<String, Stack<IInventoriable>> og_hashmap = inv.getItems();
     HashMap<String, Integer> return_hashmap = new HashMap<>();
 

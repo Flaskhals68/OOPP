@@ -12,6 +12,8 @@ import com.group4.app.model.Weapon;
 import com.group4.app.model.WeaponFactory;
 import com.group4.app.model.World;
 
+import java.util.HashMap;
+
 
 public class TestPlayer {
     @Test
@@ -57,5 +59,43 @@ public class TestPlayer {
         assertEquals(pos1[0], pos2[0]);
         assertEquals(pos1[1], pos2[1]);
         assertTrue(t2.getEntities().contains(p));
+    }
+
+    @Test
+    public void testFetchItemFromInventory() {
+
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, null, world.getId(), 0, 0);
+
+        Weapon testItem = WeaponFactory.createSword();
+
+        p.addItemToInventory(testItem);
+
+        assertEquals(p.fetchItemFromInventory(testItem.getName()), testItem);
+    }
+
+    @Test
+    public void testGetInventoryItems() {
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, null, world.getId(), 0, 0);
+
+        for(int i = 0; i<4; i++) {
+            p.addItemToInventory(WeaponFactory.createSword());
+            if (i >= 1) {
+                p.addItemToInventory(WeaponFactory.createClaws());
+            }
+        }
+
+        HashMap<String, Integer> test_map = p.getInventoryItems();
+
+        assertEquals(4, test_map.get("Basic Sword"));
+        assertEquals(3, test_map.get("Basic Claws"));
+
     }
 }
