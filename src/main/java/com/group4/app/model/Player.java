@@ -2,6 +2,7 @@ package com.group4.app.model;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, IUser {
@@ -77,14 +78,14 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
      *
      * @return HashMap with item names as keys, and amount of that item as values
      */
-    public HashMap<String, Integer> getInventoryItems() {
-        HashMap<String, Stack<IInventoriable>> og_hashmap = inv.getItems();
-        HashMap<String, Integer> return_hashmap = new HashMap<>();
+    public Map<String, Integer> getInventoryItems() {
+        Map<String, Stack<IInventoriable>> ogMap = inv.getItems();
+        Map<String, Integer> returnMap = new HashMap<>();
 
         // Should count how many of each item there exist. To make drawing them simple
-        og_hashmap.forEach((key, value) -> {
-            return_hashmap.put(key, value.size());
+        ogMap.forEach((key, value) -> {
+            returnMap.put(key, value.size());
         });
-        return return_hashmap;
+        return returnMap;
     }
 }

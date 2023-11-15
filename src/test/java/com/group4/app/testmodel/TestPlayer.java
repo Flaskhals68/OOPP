@@ -13,6 +13,7 @@ import com.group4.app.model.WeaponFactory;
 import com.group4.app.model.World;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class TestPlayer {
@@ -92,10 +93,10 @@ public class TestPlayer {
             }
         }
 
-        HashMap<String, Integer> test_map = p.getInventoryItems();
+        Map<String, Integer> testMap = p.getInventoryItems();
 
-        assertEquals(4, test_map.get("Basic Sword"));
-        assertEquals(3, test_map.get("Basic Claws"));
+        assertEquals(4, testMap.get("Basic Sword"));
+        assertEquals(3, testMap.get("Basic Claws"));
     }
 
     @Test
