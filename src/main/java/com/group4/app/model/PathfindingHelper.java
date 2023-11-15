@@ -66,7 +66,7 @@ public class PathfindingHelper {
         public int getWeight() { return weight; }
     }
 
-    private static class AStarEntry {
+    private static class AStarEntry implements Comparable<AStarEntry> {
         private Tile current;
         private Edge lastEdge;
         private AStarEntry backPointer;
@@ -83,13 +83,20 @@ public class PathfindingHelper {
             this.outgoingEdges = initOutgoingEdges(current);
         }
 
-        private Set<Edge> initOutgoingEdges(Tile current) {
+        private Set<Edge> initOutgoingEdges(Tile tile) {
             Set<Edge> outgoingEdges = new HashSet<>();
-            for (Tile neigbor : current.getNeighbors()) {
-                Edge e = new Edge(current, neigbor);
+            for (Tile neighbor : tile.getNeighbors()) {
+                Edge e = new Edge(tile, neighbor);
                 outgoingEdges.add(e);
             }
             return outgoingEdges;
+        }
+
+        @Override
+        public int compareTo(AStarEntry other) {
+            if (this.getGuessedCost() < other.getGuessedCost()) { return -1; }
+            if (this.getGuessedCost() > other.getGuessedCost()) { return 1; }
+            else return 0;
         }
 
         public Tile getCurrent() { return current; }
@@ -158,14 +165,12 @@ public class PathfindingHelper {
         Model model = Model.getInstance();
         World world = new World(size);
         
-        for (int x = 0; x<size; x++) {
-            for (int y = 0; y<size; y++) {
-                world.addTile(new Tile(world, x, y));
-            }
-        }
-        
-        Tile start = new Tile(world, 0, 5);
-        Tile end = new Tile(world, 9, 5);
+        Tile start = world.getTile(0, 5);
+        Tile end = world.getTile(9, 5);
         List<Tile> path = PathfindingHelper.getShortestPath(start, end);
+
+        for (Tile tile : path) {
+            System.out.println(tile.getXPos() + " : " + tile.getYPos());
+        }
     }
 }
