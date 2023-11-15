@@ -74,11 +74,16 @@ public class Model {
         this.getWorld(entity.getFloor()).removeEntity(entity);
     }
 
+    /**
+     * Only implemented for melee weapons currently,
+     * but should be relatively simple to adapt for ranged as well in the future
+     * @param attacker the entity doing the attacking
+     * @param victim the entity getting hit
+     */
     public void performAttackAction(ICanAttack attacker, IAttackable victim) {
         int xDiff = Math.abs(attacker.getXPos() - victim.getXPos());
         int yDiff = Math.abs(attacker.getYPos() - victim.getYPos());
 
-        // TODO This upper portion might not work? Ask about comparing strings.
         if(!attacker.getFloor().equals(victim.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
         } else if(xDiff <= 1 && yDiff <= 1) {
