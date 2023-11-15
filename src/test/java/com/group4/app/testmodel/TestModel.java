@@ -23,8 +23,9 @@ public class TestModel {
         Enemy e = EnemyFactory.createZombie();
         e.setPosition(world.getId(), 3, 1);
 
+        int hpBeforeAttack = e.getHitPoints();
         model.performAttackAction(p, e);
 
-        assertEquals(e.getHitPoints() - p.getDamage(), e.getHitPoints());
+        assertEquals(hpBeforeAttack - p.getDamage(), e.getHitPoints());
     }
 }
