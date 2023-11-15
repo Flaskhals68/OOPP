@@ -74,7 +74,7 @@ public class TestPlayer {
 
         p.addItemToInventory(testItem);
 
-        assertEquals(p.fetchItemFromInventory(testItem.getName()), testItem);
+        assertEquals(p.fetchItemFromInventory(testItem.getName()).getName(), testItem.getName());
     }
 
     @Test
@@ -96,6 +96,21 @@ public class TestPlayer {
 
         assertEquals(4, test_map.get("Basic Sword"));
         assertEquals(3, test_map.get("Basic Claws"));
+    }
 
+    @Test
+    public void setWeapon() {
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, WeaponFactory.createSword(), world.getId(), 0, 0);
+
+        Weapon basic_claws = WeaponFactory.createClaws();
+
+        p.setWeapon(basic_claws);
+
+        assertEquals(basic_claws.getAttack(), p.getDamage());
+        assertEquals(p.fetchItemFromInventory("Basic Sword").getName(), "Basic Sword");
     }
 }
