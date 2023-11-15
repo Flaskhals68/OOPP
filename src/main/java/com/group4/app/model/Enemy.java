@@ -44,7 +44,7 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     }
 
     @Override
-    public void move(Tile tile) {
+    public void move(int xPos, int yPos) {
         // TODO not implemented yet
         throw new UnsupportedOperationException("Not implemented yet");
     }
