@@ -36,7 +36,13 @@ public class Model {
         this.addWorld(world);
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
-                world.addTile(new Tile("stone", world.getId(), x, y));
+                double r = Math.random();
+                if(r> 0.5){
+                    world.addTile(new Tile("stone", world.getId(), x, y));
+                }
+                else{
+                    world.addTile(new Tile("sand", world.getId(), x, y));
+                }
             }
         }
         this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
