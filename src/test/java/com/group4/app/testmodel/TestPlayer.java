@@ -13,6 +13,9 @@ import com.group4.app.model.Weapon;
 import com.group4.app.model.WeaponFactory;
 import com.group4.app.model.World;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class TestPlayer {
     @Test
@@ -21,7 +24,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        Player player = new Player("player", 10, null, world.getId(), 0, 0);
+        Player player = new Player("player", 10, 3, null, world.getId(), 0, 0);
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
 
@@ -30,14 +33,14 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        player = new Player("player", 10, weapon, world.getId(), 0, 0);
+        player = new Player("player", 10, 3, weapon, world.getId(), 0, 0);
         assertEquals(weapon.getAttack(), player.getDamage());
 
         world = new World(2);
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        player = new Player("player", 10, weapon, world.getId(), 0, 0);
+        player = new Player("player", 10, 3, weapon, world.getId(), 0, 0);
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
         assertEquals(weapon.getAttack(), player.getDamage());
@@ -51,9 +54,8 @@ public class TestPlayer {
         Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t1);
         world.addTile(t2);
-        t1.addNeighbors(t2);
-        Player p = new Player("player", 10, null, world.getId(), 0, 0);
-        p.move(new Position(0, 1));
+        Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
+        p.move(0, 1);
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
         assertEquals(pos1[0], pos2[0]);
@@ -76,5 +78,58 @@ public class TestPlayer {
         assertThrows(IllegalArgumentException.class, () -> {
             p.move(new Position(9, 9));
         });
+    }
+
+    @Test
+    public void testFetchItemFromInventory() {
+
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
+
+        Weapon testItem = WeaponFactory.createSword();
+
+        p.addItemToInventory(testItem);
+
+        assertEquals(p.fetchItemFromInventory(testItem.getName()).getName(), testItem.getName());
+    }
+
+    @Test
+    public void testGetInventoryItems() {
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
+
+        for(int i = 0; i<4; i++) {
+            p.addItemToInventory(WeaponFactory.createSword());
+            if (i >= 1) {
+                p.addItemToInventory(WeaponFactory.createClaws());
+            }
+        }
+
+        Map<String, Integer> testMap = p.getInventoryItems();
+
+        assertEquals(4, testMap.get("Basic Sword"));
+        assertEquals(3, testMap.get("Basic Claws"));
+    }
+
+    @Test
+    public void setWeapon() {
+        World world = new World(2);
+        Model.getInstance().addWorld(world);
+        Tile t1 = new Tile("stone", world.getId(), 0, 0);
+        world.addTile(t1);
+        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 0, 0);
+
+        Weapon basic_claws = WeaponFactory.createClaws();
+
+        p.setWeapon(basic_claws);
+
+        assertEquals(basic_claws.getAttack(), p.getDamage());
+        assertEquals(p.fetchItemFromInventory("Basic Sword").getName(), "Basic Sword");
     }
 }
