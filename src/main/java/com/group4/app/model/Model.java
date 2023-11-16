@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.awt.geom.Point2D;
+
 public class Model {
     private static Model instance = null;
     private Player player;
@@ -76,5 +78,9 @@ public class Model {
 
     public void removeEntity(Entity entity){
         this.getWorld(entity.getFloor()).removeEntity(entity);
+    }
+
+    public void movePlayer(Coordinate pos) {
+        player.move(pos);
     }
 }

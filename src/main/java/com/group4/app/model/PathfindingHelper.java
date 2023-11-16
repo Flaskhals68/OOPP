@@ -29,18 +29,18 @@ public class PathfindingHelper {
      * @param steps
      * @return Set of Points with all legal coordinates
      */
-    public static Set<Point2D> getSurrounding(Tile tile, int steps) {
+    public static Set<Coordinate> getSurrounding(Tile tile, int steps) {
         // Perform depth-first search to find all tiles in range of given steps
         Set<Tile> visited = new HashSet<>();
         Stack<Entry> stack = new Stack<>();
-        Set<Point2D> positions = new HashSet<>();
+        Set<Coordinate> positions = new HashSet<>();
 
         stack.push(new Entry(tile, steps));
         while (!stack.isEmpty()) {
             Entry entry = stack.pop();
             if (!visited.add(entry.tile)) continue; 
 
-            Point2D p = new Point(entry.tile.getXPos(), entry.tile.getYPos());
+            Coordinate p = new Coordinate(entry.tile.getXPos(), entry.tile.getYPos());
             positions.add(p);
 
             if (entry.remainingSteps > 0) {
@@ -72,6 +72,9 @@ public class PathfindingHelper {
         public int getWeight() { return weight; }
     }
 
+    /**
+     * Helper class for storing entries in PriorityQueue
+     */
     private static class AStarEntry implements Comparable<AStarEntry> {
         private Tile current;
         private Edge lastEdge;
@@ -119,7 +122,7 @@ public class PathfindingHelper {
      * @param goal
      * @return List representing the shortest path between two tiles
      */
-    public static List<Point2D> getShortestPath(Tile start, Tile goal) {
+    public static List<Coordinate> getShortestPath(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
         return extractPath(finalEntry);  
     }
@@ -130,9 +133,9 @@ public class PathfindingHelper {
      * @param goal
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
-    public static List<Point2D> getPathNextTo(Tile start, Tile goal) {
+    public static List<Coordinate> getPathNextTo(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
-        List<Point2D> path = extractPath(finalEntry);
+        List<Coordinate> path = extractPath(finalEntry);
         path.remove(path.size()-1);
         return path;
     }
@@ -168,12 +171,12 @@ public class PathfindingHelper {
         return Math.sqrt( dx*dx + dy*dy );
     }
     
-    private static List<Point2D> extractPath(AStarEntry entry) {
+    private static List<Coordinate> extractPath(AStarEntry entry) {
         if (entry == null) throw new IllegalArgumentException("entry must not be null");
-        LinkedList<Point2D> path = new LinkedList<>();
+        LinkedList<Coordinate> path = new LinkedList<>();
         while (entry.backPointer != null) {
             Tile current = entry.getCurrent();
-            path.addFirst(new Point(current.getXPos(), current.getYPos()));
+            path.addFirst(new Coordinate(current.getXPos(), current.getYPos()));
             entry = entry.getBackPointer();
         }
         return path;

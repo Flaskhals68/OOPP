@@ -46,13 +46,13 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     }
 
     @Override
-    public void move(int xPos, int yPos) {
+    public void move(Coordinate pos) {
         // TODO not implemented yet
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
-    public Set<Point2D> getLegalMoves() {
+    public Set<Coordinate> getLegalMoves() {
         return null;
     }
 }

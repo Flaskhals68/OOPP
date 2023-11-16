@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
+import com.group4.app.model.Coordinate;
 import com.group4.app.model.Model;
 import com.group4.app.model.Player;
 import com.group4.app.model.Tile;
@@ -47,11 +48,12 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", world.getId(), 0, 0);
-        world.addTile(t1);
         Tile t2 = new Tile("stone", world.getId(), 0, 1);
+        world.addTile(t1);
         world.addTile(t2);
+        t1.addNeighbors(t2);
         Player p = new Player("player", 10, null, world.getId(), 0, 0);
-        p.move(0, 1);
+        p.move(new Coordinate(0, 1));
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
         assertEquals(pos1[0], pos2[0]);
@@ -72,7 +74,7 @@ public class TestPlayer {
         Player p = new Player("player", 10, null, world.getId(), 0, 0);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            p.move(9, 9);
+            p.move(new Coordinate(9, 9));
         });
     }
 }
