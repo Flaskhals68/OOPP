@@ -19,7 +19,6 @@ public class EntityPanelGenerator{
     public EntityPanelGenerator(int tile_height, int tile_width){
         this.tile_height = tile_height;
         this.tile_width = tile_width;
-        this.entityPanelMap = entityPanelMap;
         ArrayList<JPanel> panels = createEntityPanels(colorArray);
         for(int i = 0; i < idArray.length; i++){
             entityPanelMap.put(idArray[i], panels.get(i));
