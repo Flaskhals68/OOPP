@@ -34,7 +34,6 @@ public class WorldView extends JPanel{
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
-    private static final int TILES_DRAWN_FROM_PLAYER = 5;
 
     // Dimensions of the actual worldView Panel
     private static final int HEIGHT = 500;
