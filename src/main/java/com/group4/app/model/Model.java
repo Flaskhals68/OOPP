@@ -11,6 +11,7 @@ import com.group4.app.view.WorldView;
 
 public class Model {
     private static Model instance = null;
+    private List<IModelObserver> observers;
     private Player player;
     private TurnHandler turnHandler;
     private Boolean isPlayerTurn;
@@ -30,6 +31,7 @@ public class Model {
     }
 
     private Model(){
+        this.observers = new ArrayList<IModelObserver>();
         this.floors = new HashMap<String, World>();
         this.isPlayerTurn = false;
         this.turnHandler = new TurnHandler();
@@ -130,7 +132,21 @@ public class Model {
     public void movePlayer(int xPos, int yPos){
         this.player.move(xPos, yPos);
     }
-    
+
+    public void addObserver(IModelObserver observer){
+        this.observers.add(observer);
+    }
+
+    public void removeObserver(IModelObserver observer){
+        this.observers.remove(observer);
+    }
+
+    public void updateObservers(){
+        for (IModelObserver observer : this.observers){
+            observer.update();
+        }
+    }
+
     /**
      * Only implemented for melee weapons currently,
      * but should be relatively simple to adapt for ranged as well in the future
