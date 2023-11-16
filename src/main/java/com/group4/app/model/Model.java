@@ -39,7 +39,9 @@ public class Model {
                 world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
-        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 99, 0);
+        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
+        Enemy e = EnemyFactory.createSkeleton();
+        addEntity(e, world.getId(), 2, 2);
         addEntity(player, world.getId(), player.getXPos(), player.getYPos());
     }
 
@@ -92,6 +94,10 @@ public class Model {
 
     public void removeEntity(Entity entity){
         this.getWorld(entity.getFloor()).removeEntity(entity);
+    }
+
+    public void movePlayer(int x, int y){
+        player.move(x, y);
     }
 
     

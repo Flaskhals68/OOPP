@@ -116,7 +116,6 @@ public class WorldView extends JPanel{
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
         tileView.setBackground(Color.BLACK);
-        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray));
         return tileView;
     }
 
@@ -138,7 +137,7 @@ public class WorldView extends JPanel{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                JLayeredPane clickLayeredPane  = (JLayeredPane) e.getSource();
+                Model.getInstance().movePlayer(x, y);
                 update();
             }
         });
@@ -158,16 +157,16 @@ public class WorldView extends JPanel{
 
     @Override
     protected void paintComponent(Graphics g){
-        drawTile(entityPanelGenerator);
         super.paintComponent(g);
     }
 
 
     //TODO FIXME
-
     public void update(){
-        System.out.println("Yo jag ritar ut en world");
-        this.repaint();
+        removeAll();
+        drawTile(entityPanelGenerator);
+        revalidate();
+        repaint();
     }
     
 
