@@ -1,6 +1,9 @@
 package com.group4.app.model;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
     private ResourceBar hp;
@@ -21,7 +24,7 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
         Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
         Set<Position> legalMoves = getLegalMoves();
         if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
-        throw new IllegalArgumentException("Illegal move");
+            throw new IllegalArgumentException("Illegal move");
         }
 
         Model.getInstance().removeEntity(this);

@@ -51,11 +51,11 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", world.getId(), 0, 0);
-        Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t1);
+        Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t2);
         Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
-        p.move(0, 1);
+        p.move(new Position(0, 1));
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
         assertEquals(pos1[0], pos2[0]);
@@ -73,7 +73,7 @@ public class TestPlayer {
                 world.addTile(new Tile("stone", world.getId(), i, j));
             }
         }
-        Player p = new Player("player", 10, null, world.getId(), 0, 0);
+        Player p = new Player("player", 10, 5, null, world.getId(), 0, 0);
 
         assertThrows(IllegalArgumentException.class, () -> {
             p.move(new Position(9, 9));
