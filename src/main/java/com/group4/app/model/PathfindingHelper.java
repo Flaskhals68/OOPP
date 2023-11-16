@@ -29,11 +29,11 @@ public class PathfindingHelper {
      * @param steps
      * @return Set of Points with all legal coordinates
      */
-    public static List<Point2D> getSurrounding(Tile tile, int steps) {
+    public static Set<Point2D> getSurrounding(Tile tile, int steps) {
         // Perform depth-first search to find all tiles in range of given steps
         Set<Tile> visited = new HashSet<>();
         Stack<Entry> stack = new Stack<>();
-        List<Point2D> positions = new ArrayList<>();
+        Set<Point2D> positions = new HashSet<>();
 
         stack.push(new Entry(tile, steps));
         while (!stack.isEmpty()) {

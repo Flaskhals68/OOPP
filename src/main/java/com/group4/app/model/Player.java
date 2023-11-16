@@ -1,7 +1,9 @@
 package com.group4.app.model;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Set;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
   private HealthBar hp;
@@ -15,14 +17,19 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   @Override
   public void move(int xPos, int yPos) {
-    // TODO: Add restraints to where player can move
+    Tile target = Model.getInstance().getTile(getFloor(), xPos, yPos);
+    Set<Point2D> legalMoves = getLegalMoves();
+    if (!legalMoves.contains(new Point(target.getXPos(), target.getYPos()))) {
+      throw new IllegalArgumentException("Illegal move");
+    }
+
     Model.getInstance().removeEntity(this);
     this.setPosition(getFloor(), xPos, yPos);
     Model.getInstance().addEntity(this, getFloor(), xPos, yPos);
   }
 
   @Override
-    public List<Point2D> getLegalMoves() {
+    public Set<Point2D> getLegalMoves() {
       // TODO: Implement logic for getting legal moves
       return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getYPos(), getYPos()), 5);
     }

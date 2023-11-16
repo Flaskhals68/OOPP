@@ -58,4 +58,21 @@ public class TestPlayer {
         assertEquals(pos1[1], pos2[1]);
         assertTrue(t2.getEntities().contains(p));
     }
+
+    @Test
+    public void testIllegalMove() {
+        Model model = Model.getInstance();
+        World world = new World(10);
+        model.addWorld(world);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                world.addTile(new Tile("stone", world.getId(), i, j));
+            }
+        }
+        Player p = new Player("player", 10, null, world.getId(), 0, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            p.move(9, 9);
+        });
+    }
 }

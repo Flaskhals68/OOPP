@@ -20,8 +20,8 @@ import com.group4.app.model.World;
 
 public class TestPathFinderHelper {
     // Only for debugging purposes
-    private static List<Point2D> debugAddBasicMap(int startX, int startY) {
-        List<Point2D> positions = new ArrayList<>();
+    private static Set<Point2D> debugAddBasicMap(int startX, int startY) {
+        Set<Point2D> positions = new HashSet<>();
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 positions.add(new Point(startX + x, startY + y));
@@ -47,9 +47,9 @@ public class TestPathFinderHelper {
         World world = new World(10);
         model.addWorld(world);
         addBasicMap(world, size);
-        List<Point2D> correctPositions = debugAddBasicMap(startX, startY);
+        Set<Point2D> correctPositions = debugAddBasicMap(startX, startY);
         Tile startingTile = world.getTile(startX, startY);
-        List<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
+        Set<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
         assertTrue(legalPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
     }
 
@@ -70,9 +70,7 @@ public class TestPathFinderHelper {
         correctPath.addFirst(new Point(2, 3));
         correctPath.addFirst(new Point(1, 3));
 
-        for (int i = 0; i < correctPath.size(); i++) {
-            assertTrue(correctPath.get(i).equals(correctPath.get(i)));
-        }
+        assertEquals(correctPath, path);
     }
 
     @Test
@@ -84,17 +82,13 @@ public class TestPathFinderHelper {
         addBasicMap(world, size);
         Tile start = world.getTile(0, 3);
         Tile end = world.getTile(4, 3);
-        List<Point2D> path = PathfindingHelper.getShortestPath(start, end);
+        List<Point2D> path = PathfindingHelper.getPathNextTo(start, end);
         LinkedList<Point2D> correctPath = new LinkedList<>();
-        
         
         correctPath.addFirst(new Point(3, 3));
         correctPath.addFirst(new Point(2, 3));
         correctPath.addFirst(new Point(1, 3));
-
-        for (int i = 0; i < correctPath.size(); i++) {
-            assertTrue(correctPath.get(i).equals(path.get(i)));
-        }
         
+        assertEquals(correctPath, path);
     }
 }
