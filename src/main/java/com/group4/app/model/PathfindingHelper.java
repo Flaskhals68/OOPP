@@ -1,5 +1,6 @@
 package com.group4.app.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -28,11 +29,11 @@ public class PathfindingHelper {
      * @param steps
      * @return Set of Points with all legal coordinates
      */
-    public static Set<Point2D> getSurrounding(Tile tile, int steps) {
+    public static List<Point2D> getSurrounding(Tile tile, int steps) {
         // Perform depth-first search to find all tiles in range of given steps
         Set<Tile> visited = new HashSet<>();
         Stack<Entry> stack = new Stack<>();
-        Set<Point2D> positions = new HashSet<>();
+        List<Point2D> positions = new ArrayList<>();
 
         stack.push(new Entry(tile, steps));
         while (!stack.isEmpty()) {
@@ -121,6 +122,19 @@ public class PathfindingHelper {
     public static List<Tile> getShortestPath(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
         return extractPath(finalEntry);  
+    }
+
+    /**
+     * Get the shortest path from start to position next to goal
+     * @param start
+     * @param goal
+     * @return List of tiles representing the shortest path between start and tile next to goal
+     */
+    public static List<Tile> getPathNextTo(Tile start, Tile goal) {
+        AStarEntry finalEntry = aStarSearch(start, goal);
+        List<Tile> path = extractPath(finalEntry);
+        path.remove(path.size()-1);
+        return path;
     }
 
     private static AStarEntry aStarSearch(Tile start, Tile goal) {

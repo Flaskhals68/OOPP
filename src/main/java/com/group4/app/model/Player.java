@@ -23,6 +23,7 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   @Override
   public List<Tile> getLegalMoves() {
     // TODO: Implement logic for getting legal moves
+    
     throw new UnsupportedOperationException("Method 'getLegalMoves()' not implemented");
   }
 

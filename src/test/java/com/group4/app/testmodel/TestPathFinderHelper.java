@@ -20,8 +20,8 @@ import com.group4.app.model.World;
 
 public class TestPathFinderHelper {
     // Only for debugging purposes
-    private static Set<Point2D> debugAddBasicMap(int startX, int startY) {
-        Set<Point2D> positions = new HashSet<>();
+    private static List<Point2D> debugAddBasicMap(int startX, int startY) {
+        List<Point2D> positions = new ArrayList<>();
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
                 positions.add(new Point(startX + x, startY + y));
@@ -47,10 +47,10 @@ public class TestPathFinderHelper {
         World world = new World(10);
         model.addWorld(world);
         addBasicMap(world, size);
-        Set<Point2D> testSet = debugAddBasicMap(startX, startY);
+        List<Point2D> correctPositions = debugAddBasicMap(startX, startY);
         Tile startingTile = world.getTile(startX, startY);
-        Set<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
-        assertTrue(testSet.equals(legalPositions));
+        List<Point2D> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
+        assertTrue(legalPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
     }
 
     @Test
