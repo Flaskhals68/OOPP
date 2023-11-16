@@ -88,7 +88,7 @@ public class Model {
 
     public void endPlayerTurn(){
         this.isPlayerTurn = false;
-        this.turnHandler.endTurn();
+        this.endTurn();
     }
 
     public boolean isPlayerTurn(){
@@ -109,5 +109,9 @@ public class Model {
 
     public void endTurn(){
         this.turnHandler.endTurn();
+    }
+
+    public void movePlayer(int xPos, int yPos){
+        this.player.move(xPos, yPos);
     }
 }

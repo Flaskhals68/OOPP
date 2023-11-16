@@ -71,8 +71,8 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
       throw new IllegalArgumentException();
     }
     this.ap.reduceCurrent(amount);
-    if (this.ap.getCurrent() <= 0){
-      this.endTurn();
-    }
+    // if (this.ap.getCurrent() <= 0){
+    //   this.endTurn();
+    // }
   }
 }
