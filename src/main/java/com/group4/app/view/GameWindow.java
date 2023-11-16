@@ -18,7 +18,7 @@ public class GameWindow extends JFrame implements IModelObserver{
     private static int SCREEN_WIDTH = 1280;
     private static int SCREEN_HEIGHT = 720;
     private static String title = "GAME";
-    private static Color backGroundColor = Color.darkGray;
+    private static Color backGroundColor = Color.black;
 
     private GameWindow(List<IGameView> panelList) {
         this.panelList = panelList;

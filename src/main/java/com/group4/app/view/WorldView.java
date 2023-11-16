@@ -135,6 +135,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
 
+        //FIXME should be in controller
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
