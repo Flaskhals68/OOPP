@@ -72,4 +72,24 @@ public class TestModel {
 
         assertTrue(ex.getMessage().contains("Attacker and victim are on different floors/worlds"));
     }
+
+    @Test
+    public void testNPCAttack() {
+        World world = new World(4);
+        Model.getInstance().addWorld(world);
+        Model model = Model.getInstance();
+        Tile pTile = new Tile("stone", world.getId(), 2, 2);
+        world.addTile(pTile);
+        Tile eTile = new Tile("stone", world.getId(), 3, 1);
+        world.addTile(eTile);
+
+        Player p = new Player("player", 10, WeaponFactory.createSword(), world.getId(), 2,2);
+        Enemy e = EnemyFactory.createZombie();
+        e.setPosition(world.getId(), 3, 1);
+
+        int hpBeforeAttack = p.getHitPoints();
+        model.performAttackAction(e, p);
+
+        assertEquals(hpBeforeAttack - e.getDamage(), p.getHitPoints());
+    }
 }
