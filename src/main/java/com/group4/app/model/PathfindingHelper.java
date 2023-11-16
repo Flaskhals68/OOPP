@@ -119,7 +119,7 @@ public class PathfindingHelper {
      * @param goal
      * @return List representing the shortest path between two tiles
      */
-    public static List<Tile> getShortestPath(Tile start, Tile goal) {
+    public static List<Point2D> getShortestPath(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
         return extractPath(finalEntry);  
     }
@@ -130,9 +130,9 @@ public class PathfindingHelper {
      * @param goal
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
-    public static List<Tile> getPathNextTo(Tile start, Tile goal) {
+    public static List<Point2D> getPathNextTo(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
-        List<Tile> path = extractPath(finalEntry);
+        List<Point2D> path = extractPath(finalEntry);
         path.remove(path.size()-1);
         return path;
     }
@@ -168,11 +168,12 @@ public class PathfindingHelper {
         return Math.sqrt( dx*dx + dy*dy );
     }
     
-    private static List<Tile> extractPath(AStarEntry entry) {
+    private static List<Point2D> extractPath(AStarEntry entry) {
         if (entry == null) throw new IllegalArgumentException("entry must not be null");
-        LinkedList<Tile> path = new LinkedList<>();
+        LinkedList<Point2D> path = new LinkedList<>();
         while (entry.backPointer != null) {
-            path.addFirst(entry.getCurrent());
+            Tile current = entry.getCurrent();
+            path.addFirst(new Point(current.getXPos(), current.getYPos()));
             entry = entry.getBackPointer();
         }
         return path;

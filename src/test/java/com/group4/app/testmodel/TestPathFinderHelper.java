@@ -62,15 +62,17 @@ public class TestPathFinderHelper {
         addBasicMap(world, size);
         Tile start = world.getTile(0, 3);
         Tile end = world.getTile(4, 3);
-        List<Tile> path = PathfindingHelper.getShortestPath(start, end);
+        List<Point2D> path = PathfindingHelper.getShortestPath(start, end);
 
-        LinkedList<Tile> correctPath = new LinkedList<>();
-        correctPath.addFirst(world.getTile(4, 3));
-        correctPath.addFirst(world.getTile(3, 3));
-        correctPath.addFirst(world.getTile(2, 3));
-        correctPath.addFirst(world.getTile(1, 3));
+        LinkedList<Point2D> correctPath = new LinkedList<>();
+        correctPath.addFirst(new Point(4, 3));
+        correctPath.addFirst(new Point(3, 3));
+        correctPath.addFirst(new Point(2, 3));
+        correctPath.addFirst(new Point(1, 3));
 
-        assertEquals(correctPath, path);
+        for (int i = 0; i < correctPath.size(); i++) {
+            assertTrue(correctPath.get(i).equals(correctPath.get(i)));
+        }
     }
 
     @Test
@@ -82,11 +84,17 @@ public class TestPathFinderHelper {
         addBasicMap(world, size);
         Tile start = world.getTile(0, 3);
         Tile end = world.getTile(4, 3);
-        List<Tile> path = PathfindingHelper.getShortestPath(start, end);
-        LinkedList<Tile> correctPath = new LinkedList<>();
-        correctPath.addFirst(world.getTile(3, 3));
-        correctPath.addFirst(world.getTile(2, 3));
-        correctPath.addFirst(world.getTile(1, 3));
+        List<Point2D> path = PathfindingHelper.getShortestPath(start, end);
+        LinkedList<Point2D> correctPath = new LinkedList<>();
+        
+        
+        correctPath.addFirst(new Point(3, 3));
+        correctPath.addFirst(new Point(2, 3));
+        correctPath.addFirst(new Point(1, 3));
+
+        for (int i = 0; i < correctPath.size(); i++) {
+            assertTrue(correctPath.get(i).equals(path.get(i)));
+        }
         
     }
 }

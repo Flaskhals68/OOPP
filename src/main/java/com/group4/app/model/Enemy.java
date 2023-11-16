@@ -2,6 +2,7 @@ package com.group4.app.model;
 
 import jdk.jshell.spi.ExecutionControl;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 
 public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
@@ -50,7 +51,7 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable{
     }
 
     @Override
-    public List<Tile> getLegalMoves() {
+    public List<Point2D> getLegalMoves() {
         return null;
     }
 }

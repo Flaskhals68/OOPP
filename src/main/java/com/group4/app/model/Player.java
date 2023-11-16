@@ -1,5 +1,6 @@
 package com.group4.app.model;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable {
@@ -21,11 +22,10 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
   }
 
   @Override
-  public List<Tile> getLegalMoves() {
-    // TODO: Implement logic for getting legal moves
-    
-    throw new UnsupportedOperationException("Method 'getLegalMoves()' not implemented");
-  }
+    public List<Point2D> getLegalMoves() {
+      // TODO: Implement logic for getting legal moves
+      return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getYPos(), getYPos()), 5);
+    }
 
   public void setWeapon(Weapon weapon) {
     this.weapon = weapon;
