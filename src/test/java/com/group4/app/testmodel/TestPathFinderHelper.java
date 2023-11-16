@@ -72,4 +72,21 @@ public class TestPathFinderHelper {
 
         assertEquals(correctPath, path);
     }
+
+    @Test
+    public void testGetPathNextTo() {
+        Model model = Model.getInstance();
+        World world = new World(5);
+        model.addWorld(world);
+        int size = 5;
+        addBasicMap(world, size);
+        Tile start = world.getTile(0, 3);
+        Tile end = world.getTile(4, 3);
+        List<Tile> path = PathfindingHelper.getShortestPath(start, end);
+        LinkedList<Tile> correctPath = new LinkedList<>();
+        correctPath.addFirst(world.getTile(3, 3));
+        correctPath.addFirst(world.getTile(2, 3));
+        correctPath.addFirst(world.getTile(1, 3));
+        
+    }
 }
