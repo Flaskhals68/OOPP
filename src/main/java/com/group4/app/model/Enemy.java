@@ -4,9 +4,10 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.util.List;
 
-public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker{
+public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser{
     private final String name;
-    private final Weapon weapon;
+    private Weapon weapon;
+    private Inventory inv;
     private ResourceBar hp;
     private ResourceBar ap;
     public Enemy(String id, String name, Weapon weapon, int maxHp, int maxAp){
@@ -15,6 +16,7 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
         this.weapon = weapon;
         this.hp = new ResourceBar(maxHp);
         this.ap = new ResourceBar(maxAp);
+        this.inv = new Inventory();
     }
 
     @Override
@@ -80,5 +82,10 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
         if (this.ap.getCurrent() <= 0){
             this.endTurn();
         }
+    }
+
+    @Override
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 }
