@@ -4,16 +4,18 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.util.List;
 
-public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, IUser{
+public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser{
     private final String name;
     private Weapon weapon;
     private Inventory inv;
-    private HealthBar hp;
-    public Enemy(String id, String name, Weapon weapon, int maxHp){
+    private ResourceBar hp;
+    private ResourceBar ap;
+    public Enemy(String id, String name, Weapon weapon, int maxHp, int maxAp){
         super(id);
         this.name = name;
         this.weapon = weapon;
-        this.hp = new HealthBar(maxHp);
+        this.hp = new ResourceBar(maxHp);
+        this.ap = new ResourceBar(maxAp);
         this.inv = new Inventory();
     }
 
@@ -54,6 +56,32 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
     @Override
     public List<Tile> getLegalMoves() {
         return null;
+    }
+
+    public void startTurn(){
+        this.useAp(this.ap.getMax());
+    }
+
+    public int getAp(){
+        return this.ap.getCurrent();
+    }
+
+    private void endTurn(){
+        Model.getInstance().endTurn();
+    }
+
+    public void refillAp(){
+    this.ap.setCurrent(this.ap.getMax());
+    }
+    
+    public void useAp(int amount){
+        if (this.ap.getCurrent() < amount) {
+            throw new IllegalArgumentException();
+        }
+        this.ap.reduceCurrent(amount);
+        if (this.ap.getCurrent() <= 0){
+            this.endTurn();
+        }
     }
 
     @Override

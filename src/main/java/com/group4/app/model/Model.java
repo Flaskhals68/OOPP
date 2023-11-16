@@ -12,6 +12,8 @@ import com.group4.app.view.WorldView;
 public class Model {
     private static Model instance = null;
     private Player player;
+    private TurnHandler turnHandler;
+    private Boolean isPlayerTurn;
     private Map<String, World> floors;
     private World currentWorld;
 
@@ -29,6 +31,8 @@ public class Model {
 
     private Model(){
         this.floors = new HashMap<String, World>();
+        this.isPlayerTurn = false;
+        this.turnHandler = new TurnHandler();
     }
 
     public void addBasicMap(int size){
@@ -39,7 +43,7 @@ public class Model {
                 world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
-        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 99, 0);
+        this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 99, 0);
         addEntity(player, world.getId(), player.getXPos(), player.getYPos());
     }
 
@@ -94,6 +98,38 @@ public class Model {
         this.getWorld(entity.getFloor()).removeEntity(entity);
     }
 
+    public void startPlayerTurn(){
+        this.isPlayerTurn = true;
+    }
+
+    public void endPlayerTurn(){
+        this.isPlayerTurn = false;
+        this.endTurn();
+    }
+
+    public boolean isPlayerTurn(){
+        return this.isPlayerTurn;
+    }
+
+    public void addToTurnOrder(ITurnTaker turnTaker){
+        this.turnHandler.add(turnTaker);
+    }
+
+    public void removeFromTurnOrder(ITurnTaker turnTaker){
+        this.turnHandler.remove(turnTaker);
+    }
+
+    public void startTurn(){
+        this.turnHandler.startTurn();
+    }
+
+    public void endTurn(){
+        this.turnHandler.endTurn();
+    }
+
+    public void movePlayer(int xPos, int yPos){
+        this.player.move(xPos, yPos);
+      
     /**
      * Only implemented for melee weapons currently,
      * but should be relatively simple to adapt for ranged as well in the future
@@ -111,6 +147,5 @@ public class Model {
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
-
     }
 }
