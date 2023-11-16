@@ -132,21 +132,6 @@ public class Model {
     public void movePlayer(int xPos, int yPos){
         this.player.move(xPos, yPos);
     }
-
-    public void addObserver(IModelObserver observer){
-        this.observers.add(observer);
-    }
-
-    public void removeObserver(IModelObserver observer){
-        this.observers.remove(observer);
-    }
-
-    public void updateObservers(){
-        for (IModelObserver observer : this.observers){
-            observer.update();
-        }
-    }
-
     /**
      * Only implemented for melee weapons currently,
      * but should be relatively simple to adapt for ranged as well in the future
@@ -164,6 +149,5 @@ public class Model {
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
-
     }
 }
