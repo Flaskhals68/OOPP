@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -133,6 +135,14 @@ public class WorldView extends JPanel{
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
 
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                JLayeredPane clickLayeredPane  = (JLayeredPane) e.getSource();
+                update();
+            }
+        });
+
         List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
@@ -154,11 +164,12 @@ public class WorldView extends JPanel{
 
 
     //TODO FIXME
-    /*
-    @Override
+
     public void update(){
         System.out.println("Yo jag ritar ut en world");
         this.repaint();
     }
-    */
+    
+
+
 }
