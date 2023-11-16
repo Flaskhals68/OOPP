@@ -30,7 +30,7 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable 
 
   @Override
     public Set<Point2D> getLegalMoves() {
-      // TODO: Implement logic for getting legal moves
+      // TODO: Change to use players actionpoints instead of static value
       return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getYPos(), getYPos()), 5);
     }
 
