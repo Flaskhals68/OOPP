@@ -1,17 +1,17 @@
 package com.group4.app.model;
 
-public class Coordinate {
+public class Position {
     private int x;
     private int y;
 
-    public Coordinate(int x, int y) {
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Coordinate(Coordinate cord) {
-        this.x = cord.getX();
-        this.y = cord.getY();
+    public Position(Position pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
     }
 
     public int getX() { return x; }
@@ -21,9 +21,9 @@ public class Coordinate {
     /**
      * @return Copy of coordinate
      */
-    public Coordinate getCoordinate() { return new Coordinate(this); }
+    public Position getPos() { return new Position(this); }
 
-    public void setCoordinate(Coordinate cord) { 
+    public void setPos(Position cord) { 
         this.x = cord.getX();
         this.y = cord.getY(); 
     }
@@ -45,7 +45,7 @@ public class Coordinate {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Coordinate other = (Coordinate) obj;
+        Position other = (Position) obj;
         if (x != other.x)
             return false;
         if (y != other.y)

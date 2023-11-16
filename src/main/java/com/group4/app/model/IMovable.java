@@ -9,10 +9,10 @@ public interface IMovable {
      * Move entity to tile
      * @param tile
      */
-    void move(Coordinate pos);
+    void move(Position pos);
 
     /**
      * Return list of all legal tiles entity can move to
      */
-    Set<Coordinate> getLegalMoves();
+    Set<Position> getLegalMoves();
 }

@@ -27,20 +27,20 @@ public class PathfindingHelper {
      * Get all tiles that can be reached from specified tile with given amounts of steps
      * @param tile
      * @param steps
-     * @return Set of Points with all legal coordinates
+     * @return Set of Points with all legal positions
      */
-    public static Set<Coordinate> getSurrounding(Tile tile, int steps) {
+    public static Set<Position> getSurrounding(Tile tile, int steps) {
         // Perform depth-first search to find all tiles in range of given steps
         Set<Tile> visited = new HashSet<>();
         Stack<Entry> stack = new Stack<>();
-        Set<Coordinate> positions = new HashSet<>();
+        Set<Position> positions = new HashSet<>();
 
         stack.push(new Entry(tile, steps));
         while (!stack.isEmpty()) {
             Entry entry = stack.pop();
             if (!visited.add(entry.tile)) continue; 
 
-            Coordinate p = new Coordinate(entry.tile.getXPos(), entry.tile.getYPos());
+            Position p = new Position(entry.tile.getXPos(), entry.tile.getYPos());
             positions.add(p);
 
             if (entry.remainingSteps > 0) {
@@ -122,7 +122,7 @@ public class PathfindingHelper {
      * @param goal
      * @return List representing the shortest path between two tiles
      */
-    public static List<Coordinate> getShortestPath(Tile start, Tile goal) {
+    public static List<Position> getShortestPath(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
         return extractPath(finalEntry);  
     }
@@ -133,9 +133,9 @@ public class PathfindingHelper {
      * @param goal
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
-    public static List<Coordinate> getPathNextTo(Tile start, Tile goal) {
+    public static List<Position> getPathNextTo(Tile start, Tile goal) {
         AStarEntry finalEntry = aStarSearch(start, goal);
-        List<Coordinate> path = extractPath(finalEntry);
+        List<Position> path = extractPath(finalEntry);
         path.remove(path.size()-1);
         return path;
     }
@@ -171,12 +171,12 @@ public class PathfindingHelper {
         return Math.sqrt( dx*dx + dy*dy );
     }
     
-    private static List<Coordinate> extractPath(AStarEntry entry) {
+    private static List<Position> extractPath(AStarEntry entry) {
         if (entry == null) throw new IllegalArgumentException("entry must not be null");
-        LinkedList<Coordinate> path = new LinkedList<>();
+        LinkedList<Position> path = new LinkedList<>();
         while (entry.backPointer != null) {
             Tile current = entry.getCurrent();
-            path.addFirst(new Coordinate(current.getXPos(), current.getYPos()));
+            path.addFirst(new Position(current.getXPos(), current.getYPos()));
             entry = entry.getBackPointer();
         }
         return path;
