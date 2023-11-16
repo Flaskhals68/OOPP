@@ -29,8 +29,12 @@ public class Weapon implements IInventoriable {
         return type;
     }
 
+    /**
+     * Since this is a weapon, use simply equips the weapon
+     * @param user the user that would like to equip this weapon
+     */
     @Override
-    public void use(Entity entity) {
-        //TODO implement this
+    public void use(IUser user) {
+        user.setWeapon(this);
     }
 }
