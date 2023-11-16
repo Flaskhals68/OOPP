@@ -19,7 +19,7 @@ public class TestModel {
         Tile eTile = new Tile("stone", world.getId(), 3, 1);
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, WeaponFactory.createSword(), world.getId(), 2,2);
+        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
         Enemy e = EnemyFactory.createZombie();
         e.setPosition(world.getId(), 3, 1);
 
@@ -39,7 +39,7 @@ public class TestModel {
         Tile eTile = new Tile("stone", world.getId(), 0, 0);
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, WeaponFactory.createSword(), world.getId(), 2,2);
+        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
         Enemy e = EnemyFactory.createZombie();
         e.setPosition(world.getId(), 0, 0);
 
@@ -62,7 +62,7 @@ public class TestModel {
         Tile eTile = new Tile("stone", world2.getId(), 3, 1);
         world2.addTile(eTile);
 
-        Player p = new Player("player", 10, WeaponFactory.createSword(), world1.getId(), 2,2);
+        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world1.getId(), 2,2);
         Enemy e = EnemyFactory.createZombie();
         e.setPosition(world2.getId(), 3, 1);
 
@@ -83,7 +83,7 @@ public class TestModel {
         Tile eTile = new Tile("stone", world.getId(), 3, 1);
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, WeaponFactory.createSword(), world.getId(), 2,2);
+        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
         Enemy e = EnemyFactory.createZombie();
         e.setPosition(world.getId(), 3, 1);
 
