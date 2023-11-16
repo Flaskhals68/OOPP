@@ -6,20 +6,26 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO Add obeserver
 /*
  * This is the frame where every other panel is added to
  */
 public class GameWindow extends JFrame{
     private List<JPanel> panelList = new ArrayList<JPanel>();
     private static GameWindow instance = null;
+    private static int SCREEN_WIDTH = 1280;
+    private static int SCREEN_HEIGHT = 720;
+    private static String title = "GAME";
+    private static Color backGroundColor = Color.darkGray;
 
-    private GameWindow() {
+    private GameWindow(List<JPanel> panelList) {
+        this.panelList = panelList;
         initComponents();
     }
     
-    public static GameWindow getInstance() {
+    public static GameWindow getInstance(List<JPanel> panelList) {
         if (instance == null) {
-            instance = new GameWindow();
+            instance = new GameWindow(panelList);
             return instance;
         }
         else {
@@ -35,14 +41,15 @@ public class GameWindow extends JFrame{
         
     }
 
-    //Adds the panels
     private void addPanels(){
         for(JPanel panel : panelList){
             add(panel);
         }
     }
 
-    //Initially draws the panels
+    /**
+     * Initially draws the panels
+     */
     private void drawPanels(){
         for(JPanel panel : panelList){
             panel.repaint();
@@ -51,8 +58,9 @@ public class GameWindow extends JFrame{
 
     //TODO experiment with layout.
     private void initGameWindow(){
-        setTitle("GAME");
-        setSize(1280, 720);
+        setTitle(title);
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        setBackground(backGroundColor);
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

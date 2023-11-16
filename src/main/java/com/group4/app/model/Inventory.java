@@ -21,7 +21,7 @@ public class Inventory {
         } else {
             items.put(item.getName(), new Stack<IInventoriable>());
             Stack<IInventoriable> stack = items.get(item.getName());
-            stack.add(item);
+            stack.push(item);
         }
     }
 
