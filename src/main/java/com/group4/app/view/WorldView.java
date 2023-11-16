@@ -23,16 +23,17 @@ import javax.swing.OverlayLayout;
 import com.group4.app.controller.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
+import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.Tile;
 
 //FIXME implement Observer pattern
-public class WorldView extends JPanel{
+public class WorldView extends JPanel implements IGameView{
     private Model model;
     private WorldController controller;
 
     //TODO implement zoom?
-    private static float zoom = 2;
+    private static float zoom = 1;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -137,8 +138,8 @@ public class WorldView extends JPanel{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                Model.getInstance().movePlayer(x, y);
-                update();
+                model.movePlayer(x, y);
+                model.updateObservers();
             }
         });
 
@@ -156,19 +157,15 @@ public class WorldView extends JPanel{
     }
 
     @Override
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-    }
-
-
-    //TODO FIXME
-    public void update(){
+    public void updateView() {
         removeAll();
         drawTile(entityPanelGenerator);
         revalidate();
         repaint();
     }
-    
 
+    public JPanel getView(){
+        return this;
+    }
 
 }

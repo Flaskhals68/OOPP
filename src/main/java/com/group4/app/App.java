@@ -11,6 +11,7 @@ import com.group4.app.controller.WorldController;
 import com.group4.app.model.Model;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
+import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
 import com.group4.app.view.WorldView;
 
@@ -29,9 +30,11 @@ public class App {
         HudView HudView = new HudView(model, hudController);
 
         //TODO add the rest of the views.
-        List<JPanel> pl = new ArrayList<JPanel>();
+        List<IGameView> pl = new ArrayList<IGameView>();
         pl.add(worldView);
 
         GameWindow gw = GameWindow.getInstance(pl);
+
+        model.addObserver(gw);
     }
 }
