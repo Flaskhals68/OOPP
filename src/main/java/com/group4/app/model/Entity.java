@@ -1,5 +1,7 @@
 package com.group4.app.model;
 
+import java.util.Objects;
+
 public class Entity implements IDrawable {
     private String id;
     private String floor;
@@ -19,8 +21,11 @@ public class Entity implements IDrawable {
     }
 
     public void setPosition(String floorId, int xPos, int yPos) {
-        Model.getInstance().removeEntity(this);
+        if(this.floor != null) {
+            Model.getInstance().removeEntity(this);
+        }
         Model.getInstance().addEntity(this, floorId, xPos, yPos);
+        this.floor = floorId;
         this.xPos = xPos;
         this.yPos = yPos;
     }

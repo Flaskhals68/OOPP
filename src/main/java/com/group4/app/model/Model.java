@@ -98,8 +98,6 @@ public class Model {
         this.getWorld(entity.getFloor()).removeEntity(entity);
     }
 
-    
-
     public void startPlayerTurn(){
         this.isPlayerTurn = true;
     }
@@ -131,5 +129,25 @@ public class Model {
 
     public void movePlayer(int xPos, int yPos){
         this.player.move(xPos, yPos);
+    }
+    
+    /**
+     * Only implemented for melee weapons currently,
+     * but should be relatively simple to adapt for ranged as well in the future
+     * @param attacker the entity doing the attacking
+     * @param victim the entity getting hit
+     */
+    public void performAttackAction(ICanAttack attacker, IAttackable victim) {
+        int xDiff = Math.abs(attacker.getXPos() - victim.getXPos());
+        int yDiff = Math.abs(attacker.getYPos() - victim.getYPos());
+
+        if(!attacker.getFloor().equals(victim.getFloor())) {
+            throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
+        } else if(xDiff <= 1 && yDiff <= 1) {
+            victim.takeHit(attacker.getDamage());
+        } else {
+            throw new IllegalArgumentException("Attacker is out of range");
+        }
+
     }
 }
