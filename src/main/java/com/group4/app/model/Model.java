@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.view.GameWindow;
+import com.group4.app.view.WorldView;
+
 public class Model {
     private static Model instance = null;
     private Player player;
     private Map<String, World> floors;
+    private World currentWorld;
 
     private static final String PLAYER_ID = "player";
     
@@ -29,14 +33,14 @@ public class Model {
 
     public void addBasicMap(int size){
         World world = new World(100);
+        this.addWorld(world);
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 world.addTile(new Tile("stone", world.getId(), x, y));
             }
         }
-        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 0, 0);
-
-        this.floors.put(world.getId(), world);
+        this.player = new Player(PLAYER_ID, 100, null, world.getId(), 99, 0);
+        addEntity(player, world.getId(), player.getXPos(), player.getYPos());
     }
 
     public void addWorld(World world){
@@ -47,8 +51,20 @@ public class Model {
         return this.floors.get(floorId);
     }
 
+    public String getPlayerFloor(){
+        return player.getFloor();
+    }
+
     public Player getPlayer(){
         return this.player;
+    }
+
+    public int getPlayerX(){
+        return this.player.getXPos();
+    }
+
+    public int getPlayerY(){
+        return this.player.getYPos();
     }
 
     public Tile getTile(String floorId, int xPos, int yPos){
@@ -77,4 +93,6 @@ public class Model {
     public void removeEntity(Entity entity){
         this.getWorld(entity.getFloor()).removeEntity(entity);
     }
+
+    
 }
