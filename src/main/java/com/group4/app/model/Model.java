@@ -164,6 +164,5 @@ public class Model {
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
-
     }
 }

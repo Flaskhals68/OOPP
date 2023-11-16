@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
     private ResourceBar hp;
-  private ResourceBar ap;
+    private ResourceBar ap;
     private Weapon weapon;
     private Inventory inv;
 
@@ -61,31 +61,31 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
         return hp.getCurrent();
     }
 
-  public void startTurn(){
-    Model.getInstance().startPlayerTurn();
-  }
-
-  private void endTurn(){
-    Model.getInstance().endPlayerTurn();
-  }
-
-  public int getAp(){
-    return this.ap.getCurrent();
-  }
-
-  public void refillAp(){
-    this.ap.setCurrent(this.ap.getMax());
-  }
-
-  public void useAp(int amount){
-    if (this.ap.getCurrent() < amount) {
-      throw new IllegalArgumentException();
+    public void startTurn() {
+        Model.getInstance().startPlayerTurn();
     }
-    this.ap.reduceCurrent(amount);
-    // if (this.ap.getCurrent() <= 0){
-    //   this.endTurn();
-    // }
-  }
+
+    private void endTurn() {
+        Model.getInstance().endPlayerTurn();
+    }
+
+    public int getAp() {
+        return this.ap.getCurrent();
+    }
+
+    public void refillAp() {
+        this.ap.setCurrent(this.ap.getMax());
+    }
+
+    public void useAp(int amount) {
+        if (this.ap.getCurrent() < amount) {
+            throw new IllegalArgumentException();
+        }
+        this.ap.reduceCurrent(amount);
+        // if (this.ap.getCurrent() <= 0){
+        //   this.endTurn();
+        // }
+    }
 
     /**
      * Use this in model later to fetch (and remove) a specific item to from a players inventory
