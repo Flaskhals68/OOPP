@@ -33,7 +33,7 @@ public class WorldView extends JPanel implements IGameView{
     private WorldController controller;
 
     //TODO implement zoom?
-    private static float zoom = 1;
+    private static float zoom = 2;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -98,6 +98,11 @@ public class WorldView extends JPanel implements IGameView{
                     add(entityPanel, tileConstraints);
                 }
                 catch(ArrayIndexOutOfBoundsException e){
+                    tileConstraints.gridx = j;
+                    tileConstraints.gridy = i;
+                    add(createEmptyTile(), tileConstraints);
+                }
+                catch(NullPointerException e){
                     tileConstraints.gridx = j;
                     tileConstraints.gridy = i;
                     add(createEmptyTile(), tileConstraints);

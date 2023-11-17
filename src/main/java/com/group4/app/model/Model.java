@@ -40,16 +40,17 @@ public class Model {
     public void addBasicMap(int size){
         World world = new World(100);
         this.addWorld(world);
+        world.addTile(new Tile("stone", world.getId(), 0, 0));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.97){
+                if(r> 0.1){
                     world.addTile(new Tile("stone", world.getId(), x, y));
-                    Enemy e = EnemyFactory.createZombie();
-                    addEntity(e, world.getId(), x, y);
-                }
-                else{
-                    world.addTile(new Tile("stone", world.getId(), x, y));
+                    r = Math.random();
+                    if(r > 0.98){
+                        Enemy e = EnemyFactory.createZombie();
+                        addEntity(e, world.getId(), x, y);
+                    }
                 }
             }
         }
