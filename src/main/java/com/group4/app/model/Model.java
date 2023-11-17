@@ -43,11 +43,13 @@ public class Model {
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.5){
+                if(r> 0.97){
                     world.addTile(new Tile("stone", world.getId(), x, y));
+                    Enemy e = EnemyFactory.createZombie();
+                    addEntity(e, world.getId(), x, y);
                 }
                 else{
-                    world.addTile(new Tile("sand", world.getId(), x, y));
+                    world.addTile(new Tile("stone", world.getId(), x, y));
                 }
             }
         }

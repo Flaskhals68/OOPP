@@ -13,21 +13,21 @@ import java.util.List;
  * This is the frame where every other panel is added to
  */
 public class GameWindow extends JFrame implements IModelObserver{
-    private List<IGameView> panelList = new ArrayList<IGameView>();
+    private List<IGameView> viewList = new ArrayList<IGameView>();
     private static GameWindow instance = null;
     private static int SCREEN_WIDTH = 1280;
     private static int SCREEN_HEIGHT = 720;
     private static String title = "GAME";
     private static Color backGroundColor = Color.black;
 
-    private GameWindow(List<IGameView> panelList) {
-        this.panelList = panelList;
+    private GameWindow(List<IGameView> viewList) {
+        this.viewList = viewList;
         initComponents();
     }
     
-    public static GameWindow getInstance(List<IGameView> panelList) {
+    public static GameWindow getInstance(List<IGameView> viewList) {
         if (instance == null) {
-            instance = new GameWindow(panelList);
+            instance = new GameWindow(viewList);
             return instance;
         }
         else {
@@ -44,7 +44,7 @@ public class GameWindow extends JFrame implements IModelObserver{
     }
 
     private void addViews(){
-        for(IGameView panel : panelList){
+        for(IGameView panel : viewList){
             add(panel.getView());
         }
     }
@@ -53,8 +53,8 @@ public class GameWindow extends JFrame implements IModelObserver{
      * Initially draws the panels
      */
     private void drawViews(){
-        for(IGameView panel : panelList){
-            panel.repaint();
+        for(IGameView view : viewList){
+            view.repaint();
         }
     }
 
@@ -73,7 +73,7 @@ public class GameWindow extends JFrame implements IModelObserver{
     @Override
     public void update() {
         // TODO Auto-generated method stub
-        for(IGameView view : panelList){
+        for(IGameView view : viewList){
             view.updateView();
         }
 
