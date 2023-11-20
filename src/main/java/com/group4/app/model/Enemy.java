@@ -24,8 +24,10 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
     @Override
     public void takeHit(int damage) {
         hp.reduceCurrent(damage);
-        if(hp.getCurrent() == 0) {
+        if(hp.getCurrent() <= 0) {
             // TODO Add some logic for removing enemy if dead
+            // TODO : XP currently flat number. Fix this to scale.
+            Model.getInstance().getPlayer().giveXP(1);
             System.out.println("Dead");
         }
     }

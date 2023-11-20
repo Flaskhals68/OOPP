@@ -8,6 +8,8 @@ import java.util.Stack;
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
     private ResourceBar hp;
     private ResourceBar ap;
+    private ResourceBar xp;
+    private int level;
     private Weapon weapon;
     private Inventory inv;
 
@@ -15,8 +17,25 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
         super(id, floorId, xPos, yPos);
         this.hp = new ResourceBar(hp);
         this.ap = new ResourceBar(ap);
+        this.xp = new ResourceBar(10);
         this.weapon = weapon;
         this.inv = new Inventory();
+        this.level = 1;
+    }
+
+    public void giveXP(int amount) {
+        xp.increaseCurrent(amount);
+        if (xp.getCurrent() == xp.getMax()) {
+            levelUp();
+        }
+    }
+
+    private void levelUp() {
+        level += 1;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
   @Override
