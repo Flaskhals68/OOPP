@@ -8,8 +8,9 @@ public class Attributes {
     private int meleeWeaponSkill;
     private int rangedWeaponSkill;
 
-    public Attributes(int meleeWeaponSkill, int str, int dex, int con, int per) {
+    public Attributes(int meleeWeaponSkill, int rangedWeaponSkill, int str, int dex, int con, int per) {
         this.meleeWeaponSkill = meleeWeaponSkill;
+        this.rangedWeaponSkill = rangedWeaponSkill;
         this.strength = str;
         this.dexterity = dex;
         this.constitution = con;
@@ -55,4 +56,14 @@ public class Attributes {
     public void setRangedWeaponSkill(int rangedWeaponSkill) {
         this.rangedWeaponSkill = rangedWeaponSkill;
     }
+
+    public int getMeleeWeaponSkill() {
+        return meleeWeaponSkill;
+    }
+
+    public int getRangedWeaponSkill() {
+        return rangedWeaponSkill;
+    }
+
+
 }
