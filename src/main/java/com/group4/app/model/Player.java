@@ -21,6 +21,19 @@ public class Player extends FightingEntity {
         if (xp.getCurrent() == xp.getMax()) {
             levelUp();
         }
+        Model.getInstance().removeEntity(this);
+        this.setPosition(getFloor(), pos.getX(), pos.getY());
+        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+  }
+
+    @Override
+    public Set<Position> getLegalMoves() {
+        // TODO: Change to use players actionpoints instead of static value
+        return Model.getInstance().getSurrounding(getPos(), 5);
+    }
+
+    private Position getPos() {
+        return new Position(getXPos(), getYPos());
     }
 
     private void levelUp() {
