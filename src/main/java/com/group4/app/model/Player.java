@@ -11,8 +11,8 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
     private Weapon weapon;
     private Inventory inv;
 
-    public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
-        super(id, floorId, xPos, yPos);
+    public Player(String id, int hp, int ap, Weapon weapon, String floorId, Position pos) {
+        super(id, floorId, pos);
         this.hp = new ResourceBar(hp);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;

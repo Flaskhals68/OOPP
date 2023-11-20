@@ -5,19 +5,17 @@ import java.util.Objects;
 public class Entity implements IDrawable {
     private String id;
     private String floor;
-    private int xPos;
-    private int yPos;
+    private Position pos;
 
     public Entity(String id) {
         this.id = id;
     }
 
-    public Entity(String id, String floorId, int xPos, int yPos) {
+    public Entity(String id, String floorId, Position pos) {
         this.id = id;
         this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        Model.getInstance().addEntity(this, floorId, xPos, yPos);
+        this.pos = pos;
+        Model.getInstance().addEntity(this, floorId, pos.getX(), pos.getY());
     }
 
     public void setPosition(String floorId, int xPos, int yPos) {
@@ -26,8 +24,7 @@ public class Entity implements IDrawable {
         }
         Model.getInstance().addEntity(this, floorId, xPos, yPos);
         this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.pos = new Position(xPos, yPos);
     }
 
     public String getId() {
@@ -47,18 +44,18 @@ public class Entity implements IDrawable {
     }
 
     public int getXPos() {
-        return xPos;
+        return pos.getX();
     }
 
     public void setXPos(int xPos) {
-        this.xPos = xPos;
+        this.pos = new Position(xPos, pos.getY());
     }
 
     public int getYPos() {
-        return yPos;
+        return pos.getY();
     }
 
     public void setYPos(int yPos) {
-        this.yPos = yPos;
+        this.pos = new Position(pos.getX(), yPos);
     }
 }
