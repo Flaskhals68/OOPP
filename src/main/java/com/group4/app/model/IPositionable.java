@@ -1,10 +1,7 @@
 package com.group4.app.model;
 
-public interface IPositionable {
-    String getFloor();
+public interface IPositionable extends IHasPosition {
     void setFloor(String floorId);
-    int getXPos();
     void setXPos(int xPos);
-    int getYPos();
     void setYPos(int yPos);
 }
