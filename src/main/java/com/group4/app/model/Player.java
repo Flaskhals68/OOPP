@@ -35,7 +35,11 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
     @Override
     public Set<Position> getLegalMoves() {
         // TODO: Change to use players actionpoints instead of static value
-        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getXPos(), getYPos()), 5);
+        return Model.getInstance().getSurrounding(getPos(), 5);
+    }
+
+    private Position getPos() {
+        return new Position(getXPos(), getYPos());
     }
 
     public void setWeapon(Weapon weapon) {
