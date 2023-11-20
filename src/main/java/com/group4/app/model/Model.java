@@ -45,7 +45,7 @@ public class Model {
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.1){
+                if(r> 0.0){
                     world.addTile(new Tile("stone", world.getId(), x, y));
                     r = Math.random();
                     if(r > 0.98){

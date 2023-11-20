@@ -11,6 +11,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +28,7 @@ import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
+import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 
@@ -32,6 +36,7 @@ import com.group4.app.model.Tile;
 public class WorldView extends JPanel implements IGameView{
     private Model model;
     private WorldController controller;
+    private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
 
     //TODO implement zoom?
     private static float zoom = 2;
@@ -96,6 +101,7 @@ public class WorldView extends JPanel implements IGameView{
                 tileConstraints.gridx = j;
                 if(model.isValidCoordinates(x, y)){
                     JLayeredPane entityPanel = createTile(model, x, y);
+                    renderedTiles.put(new Position(x,y), entityPanel);
                     add(entityPanel, tileConstraints);
                 }
                 else{
@@ -156,10 +162,22 @@ public class WorldView extends JPanel implements IGameView{
         return tileView;
     }
 
+    //FIXME 
+    private void colorBorders(Set<Position> positions){
+        for(Position pos : positions){
+            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.red, 1));
+        }
+
+    }
+
     @Override
     public void updateView() {
         removeAll();
         drawTile(entityPanelGenerator);
+
+        //FIXME 
+        colorBorders(PathfindingHelper.getSurrounding(model.getTile(model.getPlayerFloor(), model.getPlayerX(), model.getPlayerY()), 5));
+
         revalidate();
         repaint();
     }
