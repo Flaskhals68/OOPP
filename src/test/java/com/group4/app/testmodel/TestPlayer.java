@@ -43,7 +43,7 @@ public class TestPlayer {
         player = new Player("player", 3, weapon, world.getId(), 0, 0);
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
-        assertEquals(weapon.getAttack(), player.getDamage());
+        assertEquals(weapon.getAttack() + 5, player.getDamage());
     } 
 
     @Test
