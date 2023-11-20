@@ -25,6 +25,7 @@ import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
+import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 
 //FIXME implement Observer pattern
@@ -137,7 +138,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                model.movePlayer(x, y);
+                model.movePlayer(new Position(x,y));
                 model.updateObservers();
             }
         });
