@@ -55,7 +55,7 @@ public class Model {
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 0, 0);
+        this.player = new Player(PLAYER_ID, 3, null, world.getId(), 0, 0);
         addEntity(player, world.getId(), player.getXPos(), player.getYPos());
     }
 

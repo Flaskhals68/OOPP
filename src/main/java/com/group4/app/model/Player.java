@@ -10,7 +10,7 @@ public class Player extends FightingEntity {
 
     private ResourceBar xp;
 
-    public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
+    public Player(String id, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
         super(id, floorId, xPos, yPos, ap, weapon, new Attributes(50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
 
