@@ -67,11 +67,34 @@ public abstract class FightingEntity extends Entity implements IAttackable, ICan
         this.weapon = weapon;
     }
 
+    /**
+     * Should be called when the entity attacks another entity, determines if attack hits or not
+     * @param other the entity that is being attacked
+     */
     @Override
     public void attack(IAttackable other) {
-        other.takeHit(this.getDamage());
+        // Roll 100 sided dice, if roll is less than or equal to hit chance, hit
+        int roll = (int) (Math.random() * 100);
+        if (weapon.getIsRanged()) {
+            if(roll <= attributes.getRangedWeaponSkill()) {
+                other.takeHit(this.getDamage());
+            } else {
+                // TODO: Probably add some notification to the player that the attack missed other than console message
+                System.out.println("Missed");
+            }
+        } else {
+            if(roll <= attributes.getMeleeWeaponSkill()) {
+                other.takeHit(this.getDamage());
+            } else {
+                System.out.println("Missed");
+            }
+        }
     }
 
+    /**
+     * Should be called when attack will land, determines how much damage the attack will do
+     * @return the amount of damage the attack will do
+     */
     @Override
     public int getDamage() {
         if(weapon.getIsRanged()){

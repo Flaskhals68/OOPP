@@ -197,7 +197,7 @@ public class Model {
         if(!attacker.getFloor().equals(victim.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
         } else if(xDiff <= 1 && yDiff <= 1) {
-            victim.takeHit(attacker.getDamage());
+            attacker.attack(victim);
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
