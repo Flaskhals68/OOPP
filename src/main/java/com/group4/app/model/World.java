@@ -17,6 +17,14 @@ public class World {
         return this.uniqueID;
     }
 
+    public int getWorldHeight(){
+        return tiles[0].length;
+    }
+
+    public int getWorldWidth(){
+        return tiles.length;
+    }
+
     public Tile getTile(int xPos, int yPos){
         return this.tiles[xPos][yPos];
     }

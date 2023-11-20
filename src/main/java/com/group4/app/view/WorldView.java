@@ -88,30 +88,23 @@ public class WorldView extends JPanel implements IGameView{
         int actualY = playerY - centerY;
 
         for(int i = 0; i < MAX_NUMBER_OF_TILES_PER_ROW; i++ ){
+            int y = actualY + i;
+            tileConstraints.gridy = i;
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
-                int y = actualY + i;
-                try{
+                tileConstraints.gridx = j;
+                if(model.isValidCoordinates(x, y)){
                     JLayeredPane entityPanel = createTile(model, x, y);
-                    tileConstraints.gridx = j;
-                    tileConstraints.gridy = i;
                     add(entityPanel, tileConstraints);
                 }
-                catch(ArrayIndexOutOfBoundsException e){
-                    tileConstraints.gridx = j;
-                    tileConstraints.gridy = i;
-                    add(createEmptyTile(), tileConstraints);
+                else{
+                     add(createEmptyTile(), tileConstraints);
                 }
-                catch(NullPointerException e){
-                    tileConstraints.gridx = j;
-                    tileConstraints.gridy = i;
-                    add(createEmptyTile(), tileConstraints);
+                   
                 }
-            }
-            }
 
+            }
         }
-
 
     
     /**
