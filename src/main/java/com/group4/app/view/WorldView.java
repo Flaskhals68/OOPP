@@ -93,7 +93,6 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                //FIXME Should not use try-catch here. 
                 if(model.isValidCoordinates(x, y)){
                     JLayeredPane entityPanel = createTile(model, x, y);
                     add(entityPanel, tileConstraints);
