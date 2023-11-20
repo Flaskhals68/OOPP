@@ -1,9 +1,5 @@
 package com.group4.app.model;
 
-import jdk.jshell.spi.ExecutionControl;
-
-import java.awt.geom.Point2D;
-import java.util.List;
 import java.util.Set;
 
 public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser{
@@ -12,11 +8,15 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
     private Inventory inv;
     private ResourceBar hp;
     private ResourceBar ap;
-    public Enemy(String id, String name, Weapon weapon, int maxHp, int maxAp){
+    private Attributes attributes;
+    private int level;
+    public Enemy(String id, String name, Weapon weapon, int maxAp, Attributes attr, int level){
         super(id);
         this.name = name;
         this.weapon = weapon;
-        this.hp = new ResourceBar(maxHp);
+        this.attributes = attr;
+        this.hp = new ResourceBar(attr.getConstitution()/5);
+        this.level = level;
         this.ap = new ResourceBar(maxAp);
         this.inv = new Inventory();
     }
@@ -44,7 +44,11 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
 
     @Override
     public int getDamage() {
-        return weapon.getAttack();
+        if(weapon.getIsRanged()){
+            return weapon.getAttack() + attributes.getDexterity()/10;
+        } else {
+            return weapon.getAttack() + attributes.getStrength()/10;
+        }
     }
 
     public String getName(){

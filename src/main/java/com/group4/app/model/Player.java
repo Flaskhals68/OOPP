@@ -1,5 +1,6 @@
 package com.group4.app.model;
 
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,10 +13,12 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
     private int level;
     private Weapon weapon;
     private Inventory inv;
+    private Attributes attributes;
 
     public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
         super(id, floorId, xPos, yPos);
-        this.hp = new ResourceBar(hp);
+        this.attributes = new Attributes(50, 50, 50, 50, 50);
+        this.hp = new ResourceBar(attributes.getConstitution()/5);
         this.ap = new ResourceBar(ap);
         this.xp = new ResourceBar(10);
         this.weapon = weapon;
@@ -72,7 +75,11 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
 
     @Override
     public int getDamage() {
-        return weapon.getAttack();
+        if(weapon.getIsRanged()){
+            return weapon.getAttack() + attributes.getDexterity()/10;
+        } else {
+            return weapon.getAttack() + attributes.getStrength()/10;
+        }
     }
 
     @Override

@@ -13,14 +13,14 @@ public class TestEnemyFactory {
     public void testCreateZombie() {
         Enemy zombie = EnemyFactory.createZombie();
         Weapon zombie_claws = WeaponFactory.createClaws();
-        assertEquals(zombie.getDamage(), zombie_claws.getAttack());
-        assertEquals(zombie.getId(), "Zombie");
+        assertEquals(zombie_claws.getAttack() + 1, zombie.getDamage());
+        assertEquals("Zombie", zombie.getId());
     }
 
     @Test
     public void testCreateSkeleton() {
         Enemy skeleton = EnemyFactory.createSkeleton();
         Weapon skeleton_sword = WeaponFactory.createSword();
-        assertEquals(skeleton.getDamage(), skeleton_sword.getAttack());
+        assertEquals(skeleton_sword.getAttack() + 3, skeleton.getDamage());
     }
 }
