@@ -2,6 +2,8 @@ package com.group4.app.view;
 
 import javax.swing.*;
 
+import com.group4.app.model.IModelObserver;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +12,22 @@ import java.util.List;
 /*
  * This is the frame where every other panel is added to
  */
-public class GameWindow extends JFrame{
-    private List<JPanel> panelList = new ArrayList<JPanel>();
+public class GameWindow extends JFrame implements IModelObserver{
+    private List<IGameView> viewList = new ArrayList<IGameView>();
     private static GameWindow instance = null;
     private static int SCREEN_WIDTH = 1280;
     private static int SCREEN_HEIGHT = 720;
     private static String title = "GAME";
-    private static Color backGroundColor = Color.darkGray;
+    private static Color backGroundColor = Color.black;
 
-    private GameWindow(List<JPanel> panelList) {
-        this.panelList = panelList;
+    private GameWindow(List<IGameView> viewList) {
+        this.viewList = viewList;
         initComponents();
     }
     
-    public static GameWindow getInstance(List<JPanel> panelList) {
+    public static GameWindow getInstance(List<IGameView> viewList) {
         if (instance == null) {
-            instance = new GameWindow(panelList);
+            instance = new GameWindow(viewList);
             return instance;
         }
         else {
@@ -35,24 +37,24 @@ public class GameWindow extends JFrame{
 
     private void initComponents(){
         initGameWindow();
-        addPanels();
-        drawPanels();
+        addViews();
+        drawViews();
         setVisible(true);
         
     }
 
-    private void addPanels(){
-        for(JPanel panel : panelList){
-            add(panel);
+    private void addViews(){
+        for(IGameView panel : viewList){
+            add(panel.getView());
         }
     }
 
     /**
      * Initially draws the panels
      */
-    private void drawPanels(){
-        for(JPanel panel : panelList){
-            panel.repaint();
+    private void drawViews(){
+        for(IGameView view : viewList){
+            view.repaint();
         }
     }
 
@@ -68,6 +70,14 @@ public class GameWindow extends JFrame{
         setResizable(false);
     }
 
+    @Override
+    public void update() {
+        // TODO Auto-generated method stub
+        for(IGameView view : viewList){
+            view.updateView();
+        }
+
+    }
 
 
 

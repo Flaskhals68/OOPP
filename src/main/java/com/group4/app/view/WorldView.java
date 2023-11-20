@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,16 +23,17 @@ import javax.swing.OverlayLayout;
 import com.group4.app.controller.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
+import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.Tile;
 
 //FIXME implement Observer pattern
-public class WorldView extends JPanel{
+public class WorldView extends JPanel implements IGameView{
     private Model model;
     private WorldController controller;
 
     //TODO implement zoom?
-    private static float zoom = 1;
+    private static float zoom = 2;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -99,6 +102,11 @@ public class WorldView extends JPanel{
                     tileConstraints.gridy = i;
                     add(createEmptyTile(), tileConstraints);
                 }
+                catch(NullPointerException e){
+                    tileConstraints.gridx = j;
+                    tileConstraints.gridy = i;
+                    add(createEmptyTile(), tileConstraints);
+                }
             }
             }
 
@@ -114,7 +122,6 @@ public class WorldView extends JPanel{
         JPanel tileView = new JPanel();
         tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
         tileView.setBackground(Color.BLACK);
-        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray));
         return tileView;
     }
 
@@ -133,6 +140,15 @@ public class WorldView extends JPanel{
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
 
+        //FIXME should be in controller
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                model.movePlayer(x, y);
+                model.updateObservers();
+            }
+        });
+
         List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
@@ -147,18 +163,15 @@ public class WorldView extends JPanel{
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    public void updateView() {
+        removeAll();
         drawTile(entityPanelGenerator);
-        super.paintComponent(g);
+        revalidate();
+        repaint();
     }
 
-
-    //TODO FIXME
-    /*
-    @Override
-    public void update(){
-        System.out.println("Yo jag ritar ut en world");
-        this.repaint();
+    public JPanel getView(){
+        return this;
     }
-    */
+
 }
