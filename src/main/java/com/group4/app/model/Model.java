@@ -202,4 +202,8 @@ public class Model {
             throw new IllegalArgumentException("Attacker is out of range");
         }
     }
+
+    public Set<Position> getSurrounding(Position pos, int steps) {
+        return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos.getX(), pos.getY()), steps);
+    }
 }
