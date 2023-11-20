@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
@@ -34,7 +35,6 @@ import com.group4.app.model.Tile;
 
 //FIXME implement Observer pattern
 public class WorldView extends JPanel implements IGameView{
-    private Model model;
     private WorldController controller;
     private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
 
@@ -57,8 +57,7 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView(Model model, WorldController controller) {
-        this.model = model;
+    public WorldView(WorldController controller) {
         this.controller = controller;
         initComponents();
 
@@ -82,8 +81,8 @@ public class WorldView extends JPanel implements IGameView{
      * @param entityPanelGenerator
      */
     private void drawTile(EntityPanelGenerator entityPanelGenerator){
-        int playerX = model.getPlayerX();
-        int playerY = model.getPlayerY();
+        int playerX = controller.getPlayerX();
+        int playerY = controller.getPlayerY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
@@ -99,8 +98,8 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                if(model.isValidCoordinates(x, y)){
-                    JLayeredPane entityPanel = createTile(model, x, y);
+                if(controller.isValidCoordinates(x, y)){
+                    JLayeredPane entityPanel = createTile(x, y);
                     renderedTiles.put(new Position(x,y), entityPanel);
                     add(entityPanel, tileConstraints);
                 }
@@ -128,7 +127,7 @@ public class WorldView extends JPanel implements IGameView{
     /**
      * Create the actual tile panel and add it's enteties to it.
      */
-    private JLayeredPane createTile(Model model, int x, int y){
+    private JLayeredPane createTile(int x, int y){
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane
@@ -144,18 +143,18 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                model.movePlayer(new Position(x,y));
-                model.updateObservers();
+                controller.movePlayer(x, y);
             }
         });
 
-        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
+        List<IDrawable> drawables = controller.getDrawables(x, y);
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
             for(int i = drawables.size()-1; i >= 0; i-- ){
                 IDrawable e = drawables.get(i);
                 JPanel p = entityPanelGenerator.getJPanel(e.getId());
                 tileView.add(p, layerIndex++);
+                
                 p.setBounds(borderWidth,borderWidth, innerWidth, innerHeight);
             }
             }
@@ -165,7 +164,7 @@ public class WorldView extends JPanel implements IGameView{
     //FIXME 
     private void colorBorders(Set<Position> positions){
         for(Position pos : positions){
-            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.red, 1));
+            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.yellow, 1));
         }
 
     }
@@ -176,7 +175,7 @@ public class WorldView extends JPanel implements IGameView{
         drawTile(entityPanelGenerator);
 
         //FIXME 
-        colorBorders(PathfindingHelper.getSurrounding(model.getTile(model.getPlayerFloor(), model.getPlayerX(), model.getPlayerY()), 5));
+        colorBorders(controller.getLegalMoves());
 
         revalidate();
         repaint();
