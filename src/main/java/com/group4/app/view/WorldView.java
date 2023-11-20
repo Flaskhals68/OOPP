@@ -71,6 +71,8 @@ public class WorldView extends JPanel implements IGameView{
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         drawTile(entityPanelGenerator);
+        colorBorders(controller.getLegalMoves());
+
 
     }
 
@@ -139,7 +141,6 @@ public class WorldView extends JPanel implements IGameView{
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
 
-        //FIXME should be in controller
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
@@ -155,16 +156,19 @@ public class WorldView extends JPanel implements IGameView{
                 JPanel p = entityPanelGenerator.getJPanel(e.getId());
                 tileView.add(p, layerIndex++);
                 
-                p.setBounds(borderWidth,borderWidth, innerWidth, innerHeight);
+                p.setBounds(borderWidth, borderWidth, innerWidth, innerHeight);
             }
             }
         return tileView;
     }
 
-    //FIXME 
+    /**
+     * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes. 
+     * @param positions set of positions
+     */ 
     private void colorBorders(Set<Position> positions){
         for(Position pos : positions){
-            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.yellow, 1));
+            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
         }
 
     }
@@ -173,14 +177,12 @@ public class WorldView extends JPanel implements IGameView{
     public void updateView() {
         removeAll();
         drawTile(entityPanelGenerator);
-
-        //FIXME 
         colorBorders(controller.getLegalMoves());
-
         revalidate();
         repaint();
     }
 
+    @Override
     public JPanel getView(){
         return this;
     }
