@@ -129,8 +129,8 @@ public class Model {
         this.turnHandler.endTurn();
     }
 
-    public void movePlayer(int xPos, int yPos){
-        this.player.move(xPos, yPos);
+    public void movePlayer(Position pos){
+        this.player.move(pos);
     }
 
     public void addObserver(IModelObserver observer){

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
+import com.group4.app.model.Position;
 import com.group4.app.model.Model;
 import com.group4.app.model.Player;
 import com.group4.app.model.Tile;
@@ -54,12 +55,29 @@ public class TestPlayer {
         Tile t2 = new Tile("stone", world.getId(), 0, 1);
         world.addTile(t2);
         Player p = new Player("player", 10, 3, null, world.getId(), 0, 0);
-        p.move(0, 1);
+        p.move(new Position(0, 1));
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
         assertEquals(pos1[0], pos2[0]);
         assertEquals(pos1[1], pos2[1]);
         assertTrue(t2.getEntities().contains(p));
+    }
+
+    @Test
+    public void testIllegalMove() {
+        Model model = Model.getInstance();
+        World world = new World(10);
+        model.addWorld(world);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                world.addTile(new Tile("stone", world.getId(), i, j));
+            }
+        }
+        Player p = new Player("player", 10, 5, null, world.getId(), 0, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            p.move(new Position(9, 9));
+        });
     }
 
     @Test

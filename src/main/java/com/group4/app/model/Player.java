@@ -1,8 +1,8 @@
 package com.group4.app.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
@@ -19,18 +19,23 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
         this.inv = new Inventory();
     }
 
-    @Override
-    public void move(int xPos, int yPos) {
-        // TODO: Add restraints to where player can move
+  @Override
+  public void move(Position pos) {
+        Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
+        Set<Position> legalMoves = getLegalMoves();
+        if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
+            throw new IllegalArgumentException("Illegal move");
+        }
+
         Model.getInstance().removeEntity(this);
-        this.setPosition(getFloor(), xPos, yPos);
-        Model.getInstance().addEntity(this, getFloor(), xPos, yPos);
-    }
+        this.setPosition(getFloor(), pos.getX(), pos.getY());
+        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+  }
 
     @Override
-    public List<Tile> getLegalMoves() {
-        // TODO: Implement logic for getting legal moves
-        throw new UnsupportedOperationException("Method 'getLegalMoves()' not implemented");
+    public Set<Position> getLegalMoves() {
+        // TODO: Change to use players actionpoints instead of static value
+        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getYPos(), getYPos()), 5);
     }
 
     public void setWeapon(Weapon weapon) {

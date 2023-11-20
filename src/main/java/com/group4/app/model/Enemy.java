@@ -2,7 +2,9 @@ package com.group4.app.model;
 
 import jdk.jshell.spi.ExecutionControl;
 
+import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Set;
 
 public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser{
     private final String name;
@@ -48,13 +50,13 @@ public class Enemy extends Entity implements IAttackable, ICanAttack, IMovable, 
     }
 
     @Override
-    public void move(int xPos, int yPos) {
+    public void move(Position pos) {
         // TODO not implemented yet
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
-    public List<Tile> getLegalMoves() {
+    public Set<Position> getLegalMoves() {
         return null;
     }
 
