@@ -21,7 +21,7 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
 
   @Override
   public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
+        Tile target = Model.getInstance().getTile(getFloor(), pos);
         Set<Position> legalMoves = getLegalMoves();
         if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
             throw new IllegalArgumentException("Illegal move");
@@ -29,17 +29,13 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
 
         Model.getInstance().removeEntity(this);
         this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+        Model.getInstance().addEntity(this, getFloor(), pos);
   }
 
     @Override
     public Set<Position> getLegalMoves() {
         // TODO: Change to use players actionpoints instead of static value
         return Model.getInstance().getSurrounding(getPos(), 5);
-    }
-
-    private Position getPos() {
-        return new Position(getXPos(), getYPos());
     }
 
     public void setWeapon(Weapon weapon) {

@@ -94,7 +94,7 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                if(model.isValidCoordinates(x, y)){
+                if(model.isValidCoordinates(new Position(x, y))) {
                     JLayeredPane entityPanel = createTile(model, x, y);
                     add(entityPanel, tileConstraints);
                 }
@@ -102,10 +102,10 @@ public class WorldView extends JPanel implements IGameView{
                      add(createEmptyTile(), tileConstraints);
                 }
                    
-                }
-
             }
+
         }
+    }
 
     
     /**
@@ -143,7 +143,7 @@ public class WorldView extends JPanel implements IGameView{
             }
         });
 
-        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
+        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), new Position(x, y));
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
             for(int i = drawables.size()-1; i >= 0; i-- ){

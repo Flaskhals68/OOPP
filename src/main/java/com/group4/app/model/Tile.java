@@ -80,7 +80,8 @@ public class Tile implements IDrawable {
         for (int x=-1; x<2; x++){
             for (int y=-1; y<2; y++){
                 try {
-                    Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
+                    // Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
+                    Tile tile = Model.getInstance().getTile(floor, new Position(xPos+x, yPos+y));
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);

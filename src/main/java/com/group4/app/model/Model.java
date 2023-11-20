@@ -50,13 +50,13 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie();
-                        addEntity(e, world.getId(), x, y);
+                        addEntity(e, world.getId(), new Position(x, y));
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), new Position(0, 0));
-        addEntity(player, world.getId(), player.getXPos(), player.getYPos());
+        addEntity(player, world.getId(), player.getPos());
     }
 
     public void addWorld(World world){
@@ -83,17 +83,17 @@ public class Model {
         return this.player.getYPos();
     }
 
-    public Tile getTile(String floorId, int xPos, int yPos){
-        return this.getWorld(floorId).getTile(xPos, yPos);
+    public Tile getTile(String floorId, Position pos){
+        return this.getWorld(floorId).getTile(pos);
     }
 
-    public Set<Entity> getEntities(String floorId, int xPos, int yPos){
-        return getTile(floorId, xPos, yPos).getEntities();
+    public Set<Entity> getEntities(String floorId, Position pos){
+        return getTile(floorId, pos).getEntities();
     }
 
-    public List<IDrawable> getDrawables(String floorId, int xPos, int yPos){
-        IDrawable[] entities = getEntities(floorId, xPos, yPos).toArray(new IDrawable[0]);
-        IDrawable tile = getTile(floorId, xPos, yPos);
+    public List<IDrawable> getDrawables(String floorId, Position pos){
+        IDrawable[] entities = getEntities(floorId, pos).toArray(new IDrawable[0]);
+        IDrawable tile = getTile(floorId, pos);
         ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
         drawables.add(tile);
         for (IDrawable entity : entities){
@@ -102,8 +102,8 @@ public class Model {
         return drawables;
     }
 
-    public void addEntity(Entity entity, String floorId, int xPos, int yPos){
-        this.getWorld(floorId).addEntity(entity, xPos, yPos);
+    public void addEntity(Entity entity, String floorId, Position pos){
+        this.getWorld(floorId).addEntity(entity, pos);
     }
 
     public void removeEntity(Entity entity){
@@ -142,12 +142,12 @@ public class Model {
      * @return Returns true if the given x and y positions are within the bounds of the current world, and
      * if a tile exists at the given position. If not, return false.
      */
-    public boolean isValidCoordinates(int x, int y){
-        if(x < 0 || x > getWorld(getCurrentWorldId()).getWorldWidth()-1 || y <0 || y > getWorld(getCurrentWorldId()).getWorldHeight() - 1){
+    public boolean isValidCoordinates(Position pos){
+        if(pos.getX() < 0 || pos.getX() > getWorld(getCurrentWorldId()).getWorldWidth()-1 || pos.getY() <0 || pos.getY() > getWorld(getCurrentWorldId()).getWorldHeight() - 1){
             return false;
         }
         else{
-            if(getTile(getCurrentWorldId(), x, y) == null){
+            if(getTile(getCurrentWorldId(), pos) == null){
                 return false;
             }
             return true;
@@ -204,6 +204,6 @@ public class Model {
     }
 
     public Set<Position> getSurrounding(Position pos, int steps) {
-        return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos.getX(), pos.getY()), steps);
+        return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos), steps);
     }
 }
