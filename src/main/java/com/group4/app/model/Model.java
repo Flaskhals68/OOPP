@@ -45,7 +45,7 @@ public class Model {
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.3){
+                if(r> 0.1){
                     world.addTile(new Tile("stone", world.getId(), x, y));
                     r = Math.random();
                     if(r > 0.98){
@@ -201,9 +201,5 @@ public class Model {
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
-    }
-
-    public Set<Position> getSurrounding(Position pos, int steps) {
-        return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos.getX(), pos.getY()), steps);
     }
 }
