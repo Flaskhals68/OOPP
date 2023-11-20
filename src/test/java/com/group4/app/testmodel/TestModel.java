@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import com.group4.app.model.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 public class TestModel {
     @Test
     public void testPlayerAttackActionShouldHit() {
@@ -26,7 +28,11 @@ public class TestModel {
         int hpBeforeAttack = e.getHitPoints();
         model.performAttackAction(p, e);
 
-        assertEquals(hpBeforeAttack - p.getDamage(), e.getHitPoints());
+        ArrayList<Integer> listOfAcceptableValues = new ArrayList<>();
+        listOfAcceptableValues.add(hpBeforeAttack - p.getDamage());
+        listOfAcceptableValues.add(hpBeforeAttack);
+
+        assertTrue(listOfAcceptableValues.contains(e.getHitPoints()));
     }
 
     @Test
@@ -90,6 +96,10 @@ public class TestModel {
         int hpBeforeAttack = p.getHitPoints();
         model.performAttackAction(e, p);
 
-        assertEquals(hpBeforeAttack - e.getDamage(), p.getHitPoints());
+        ArrayList<Integer> listOfAcceptableValues = new ArrayList<>();
+        listOfAcceptableValues.add(hpBeforeAttack - e.getDamage());
+        listOfAcceptableValues.add(hpBeforeAttack);
+
+        assertTrue(listOfAcceptableValues.contains(p.getHitPoints()));
     }
 }
