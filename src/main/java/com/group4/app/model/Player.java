@@ -31,6 +31,7 @@ public class Player extends FightingEntity {
     @Override
     public void startTurn() {
         Model.getInstance().startPlayerTurn();
+        // TODO : Implement player turn
     }
 
     @Override
