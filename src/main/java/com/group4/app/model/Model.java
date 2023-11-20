@@ -39,7 +39,8 @@ public class Model {
 
     public void addBasicMap(int size){
         World world = new World(100);
-        this.addWorld(world);
+        currentWorld = world;
+        this.addWorld(currentWorld);
         world.addTile(new Tile("stone", world.getId(), 0, 0));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
@@ -124,6 +125,33 @@ public class Model {
 
     public void addToTurnOrder(ITurnTaker turnTaker){
         this.turnHandler.add(turnTaker);
+    }
+
+    /**
+     * 
+     * @return the id of the current world.
+     */
+    private String getCurrentWorldId(){
+        return this.currentWorld.getId();
+    }
+
+    /**
+     * Checks if the given coordinates are valid.
+     * @param x
+     * @param y
+     * @return Returns true if the given x and y positions are within the bounds of the current world, and
+     * if a tile exists at the given position. If not, return false.
+     */
+    public boolean isValidCoordinates(int x, int y){
+        if(x < 0 || x > getWorld(getCurrentWorldId()).getWorldWidth()-1 || y <0 || y > getWorld(getCurrentWorldId()).getWorldHeight() - 1){
+            return false;
+        }
+        else{
+            if(getTile(getCurrentWorldId(), x, y) == null){
+                return false;
+            }
+            return true;
+        }
     }
 
     public void removeFromTurnOrder(ITurnTaker turnTaker){
