@@ -33,7 +33,6 @@ import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 
-//FIXME implement Observer pattern
 public class WorldView extends JPanel implements IGameView{
     private WorldController controller;
     private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
