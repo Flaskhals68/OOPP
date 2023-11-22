@@ -13,7 +13,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public Creature(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, floorId, xPos, yPos);
         this.attributes = attr;
-        this.hp = new ResourceBar(attributes.getConstitution()/5);
+        this.hp = new ResourceBar(attributes.getStat("constitution")/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
         this.inv = new Inventory();
@@ -23,7 +23,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public Creature(String id, int ap, Weapon weapon, Attributes attr, int level) {
         super(id);
         this.attributes = attr;
-        this.hp = new ResourceBar(attributes.getConstitution()/5);
+        this.hp = new ResourceBar(attributes.getStat("constitution")/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
         this.inv = new Inventory();
@@ -77,14 +77,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         // Roll 100 sided dice, if roll is less than or equal to hit chance, hit
         int roll = new Random().nextInt(100) + 1;
         if (weapon.getIsRanged()) {
-            if(roll <= attributes.getRangedWeaponSkill()) {
+            if(roll <= attributes.getStat("rangedWeaponSkill")) {
                 other.takeHit(this.getDamage());
             } else {
                 // TODO: Probably add some notification to the player that the attack missed other than console message
                 System.out.println("Missed");
             }
         } else {
-            if(roll <= attributes.getMeleeWeaponSkill()) {
+            if(roll <= attributes.getStat("meleeWeaponSkill")) {
                 other.takeHit(this.getDamage());
             } else {
                 System.out.println("Missed");
@@ -106,11 +106,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     }
 
     private int calculateBonusDamageRanged() {
-        return attributes.getDexterity()/10;
+        return attributes.getStat("dexterity")/10;
     }
 
     private int calculateBonusDamageMelee() {
-        return attributes.getStrength()/10;
+        return attributes.getStat("strength")/10;
     }
 
     /**
@@ -182,5 +182,9 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             returnMap.put(key, value.size());
         });
         return returnMap;
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
     }
 }

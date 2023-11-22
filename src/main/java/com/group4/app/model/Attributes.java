@@ -1,5 +1,7 @@
 package com.group4.app.model;
 
+import java.util.HashMap;
+
 public class Attributes {
     private int strength;
     private int dexterity;
@@ -7,62 +9,23 @@ public class Attributes {
     private int perception;
     private int meleeWeaponSkill;
     private int rangedWeaponSkill;
+    private HashMap<String, Integer> stats;
 
     public Attributes(int meleeWeaponSkill, int rangedWeaponSkill, int str, int dex, int con, int per) {
-        this.meleeWeaponSkill = meleeWeaponSkill;
-        this.rangedWeaponSkill = rangedWeaponSkill;
-        this.strength = str;
-        this.dexterity = dex;
-        this.constitution = con;
-        this.perception = per;
+        this.stats.put("strength", str);
+        this.stats.put("dexterity", dex);
+        this.stats.put("constitution", con);
+        this.stats.put("perception", per);
+        this.stats.put("meleeWeaponSkill", meleeWeaponSkill);
+        this.stats.put("rangedWeaponSkill", rangedWeaponSkill);
     }
 
-    public int getStrength() {
-        return strength;
+    public int getStat(String stat) {
+        return this.stats.getOrDefault(stat, 0);
     }
 
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public int getPerception() {
-        return perception;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-
-    public void setConstitution(int constitution) {
-        this.constitution = constitution;
-    }
-
-    public void setPerception(int perception) {
-        this.perception = perception;
-    }
-
-    public void setMeleeWeaponSkill(int meleeWeaponSkill) {
-        this.meleeWeaponSkill = meleeWeaponSkill;
-    }
-
-    public void setRangedWeaponSkill(int rangedWeaponSkill) {
-        this.rangedWeaponSkill = rangedWeaponSkill;
-    }
-
-    public int getMeleeWeaponSkill() {
-        return meleeWeaponSkill;
-    }
-
-    public int getRangedWeaponSkill() {
-        return rangedWeaponSkill;
+    public void levelUpStat(String stat) {
+        this.stats.put(stat, this.stats.get(stat) + 10);
     }
 
 
