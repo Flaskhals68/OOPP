@@ -1,124 +1,77 @@
 package com.group4.app.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
 
-public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
-    private ResourceBar hp;
-    private ResourceBar ap;
-    private Weapon weapon;
-    private Inventory inv;
+import org.w3c.dom.Attr;
 
-    public Player(String id, int hp, int ap, Weapon weapon, String floorId, Position pos) {
-        super(id, floorId, pos);
-        this.hp = new ResourceBar(hp);
-        this.ap = new ResourceBar(ap);
-        this.weapon = weapon;
-        this.inv = new Inventory();
+import java.util.Random;
+
+public class Player extends Creature {
+
+    private ResourceBar xp;
+    private Attributes attributes;
+
+    public Player(String id, int ap, Weapon weapon, String floorId, Position pos) {
+        super(id, floorId, pos, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+        this.xp = new ResourceBar(10);
     }
 
-  @Override
-  public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos);
-        Set<Position> legalMoves = getLegalMoves();
-        if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
-            throw new IllegalArgumentException("Illegal move");
+    public void giveXP(int amount) {
+        xp.increaseCurrent(amount);
+        if (xp.getCurrent() == xp.getMax()) {
+            levelUp();
+            xp.setCurrent(0);
         }
-
-        Model.getInstance().removeEntity(this);
-        this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().addEntity(this, getFloor(), pos);
-  }
-
-    @Override
-    public Set<Position> getLegalMoves() {
-        // TODO: Change to use players actionpoints instead of static value
-        return Model.getInstance().getSurrounding(getPos(), 5);
     }
 
-    public void setWeapon(Weapon weapon) {
-        // Puts current weapon in inventory if player already has one
-        if (this.weapon != null) {
-            inv.addItem(this.weapon);
+
+    /**
+     * Current implementation before we have a proper level up system
+     * TODO: We want the player to be able to decide themselves what to increase!
+     */
+    private void levelUp() {
+        this.setLevel(this.getLevel() + 1);
+        Attributes attr = this.getAttributes();
+
+        switch (new Random().nextInt(6)) {
+            case 0:
+                attr.levelUpStat("strength");
+                break;
+            case 1:
+                attr.levelUpStat("dexterity");
+                break;
+            case 2:
+                attr.levelUpStat("constitution");
+                break;
+            case 3:
+                attr.levelUpStat("perception");
+                break;
+            case 4:
+                attr.levelUpStat("meleeWeaponSkill");
+                break;
+            case 5:
+                attr.levelUpStat("rangedWeaponSkill");
+                break;
+            default:
+                break;
         }
-        this.weapon = weapon;
     }
+
 
     @Override
-    public void attack(IAttackable other) {
-        other.takeHit(this.getDamage());
-    }
-
-    @Override
-    public int getDamage() {
-        return weapon.getAttack();
-    }
-
-    @Override
-    public void takeHit(int damage) {
-        hp.reduceCurrent(damage);
-    }
-
-    @Override
-    public int getHitPoints() {
-        return hp.getCurrent();
-    }
-
     public void startTurn() {
         Model.getInstance().startPlayerTurn();
+        // TODO : Implement player turn
     }
 
-    private void endTurn() {
+    @Override
+    public void endTurn() {
         Model.getInstance().endPlayerTurn();
     }
 
-    public int getAp() {
-        return this.ap.getCurrent();
-    }
 
-    public void refillAp() {
-        this.ap.setCurrent(this.ap.getMax());
-    }
-
-    public void useAp(int amount) {
-        if (this.ap.getCurrent() < amount) {
-            throw new IllegalArgumentException();
-        }
-        this.ap.reduceCurrent(amount);
-        // if (this.ap.getCurrent() <= 0){
-        //   this.endTurn();
-        // }
-    }
-
-    /**
-     * Use this in model later to fetch (and remove) a specific item to from a players inventory
-     *
-     * @param name name of the item you would like to fetch from the inventory
-     * @return the item object
-     */
-    public IInventoriable fetchItemFromInventory(String name) {
-        return inv.getItem(name);
-    }
-
-    public void addItemToInventory(IInventoriable item) {
-        inv.addItem(item);
-    }
-
-    /**
-     * Should make it easy to draw inventory in the view later
-     *
-     * @return HashMap with item names as keys, and amount of that item as values
-     */
-    public Map<String, Integer> getInventoryItems() {
-        Map<String, Stack<IInventoriable>> ogMap = inv.getItems();
-        Map<String, Integer> returnMap = new HashMap<>();
-
-        // Should count how many of each item there exist. To make drawing them simple
-        ogMap.forEach((key, value) -> {
-            returnMap.put(key, value.size());
-        });
-        return returnMap;
+    @Override
+    public void death() {
+        // TODO : Implement player death
+        System.out.println("Player died");
     }
 }
