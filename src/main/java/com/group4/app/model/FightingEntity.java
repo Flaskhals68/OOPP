@@ -1,9 +1,6 @@
 package com.group4.app.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public abstract class FightingEntity extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
 
@@ -78,7 +75,7 @@ public abstract class FightingEntity extends Entity implements IAttackable, ICan
     @Override
     public void attack(IAttackable other) {
         // Roll 100 sided dice, if roll is less than or equal to hit chance, hit
-        int roll = (int) (Math.random() * 100);
+        int roll = new Random().nextInt(100) + 1;
         if (weapon.getIsRanged()) {
             if(roll <= attributes.getRangedWeaponSkill()) {
                 other.takeHit(this.getDamage());
