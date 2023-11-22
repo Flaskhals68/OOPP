@@ -12,6 +12,7 @@ public class Attributes {
     private HashMap<String, Integer> stats;
 
     public Attributes(int meleeWeaponSkill, int rangedWeaponSkill, int str, int dex, int con, int per) {
+        this.stats = new HashMap<>();
         this.stats.put("strength", str);
         this.stats.put("dexterity", dex);
         this.stats.put("constitution", con);
