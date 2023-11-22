@@ -10,8 +10,8 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Weapon weapon;
     private Inventory inv;
     private Attributes attributes;
-    public Creature(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id, floorId, xPos, yPos);
+    public Creature(String id, String floorId, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
+        super(id, floorId, pos);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getStat("constitution")/5);
         this.ap = new ResourceBar(ap);
@@ -39,7 +39,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     @Override
     public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
+        Tile target = Model.getInstance().getTile(getFloor(), pos);
         Set<Position> legalMoves = getLegalMoves();
         if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
             throw new IllegalArgumentException("Illegal move");
@@ -47,7 +47,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
         Model.getInstance().removeEntity(this);
         this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+        Model.getInstance().addEntity(this, getFloor(), pos);
     }
 
     @Override
@@ -56,7 +56,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         return Model.getInstance().getSurrounding(getPos(), 5);
     }
 
-    private Position getPos() {
+    public Position getPos() {
         return new Position(getXPos(), getYPos());
     }
 

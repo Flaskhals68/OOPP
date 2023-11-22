@@ -34,7 +34,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
-        player = new Player("player", 3, weapon, world.getId(), 0, 0);
+        player = new Player("player", 3, weapon, world.getId(), new Position(0, 0));
         assertEquals(weapon.getAttack(), player.getDamage());
 
         world = new World(2);
