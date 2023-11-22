@@ -14,7 +14,7 @@ import com.group4.app.model.Position;
 
 public class WorldController {
     
-    Model model;
+    private Model model;
 
     public WorldController(Model model){
         this.model = model;
@@ -42,6 +42,10 @@ public class WorldController {
 
     public void movePlayer(int x, int y){
         // gets the path
+        Position targePosition  = new Position(x, y);
+        if(!getLegalMoves().contains(targePosition)){
+            throw new IllegalArgumentException("Tile out of range");
+        }
         List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), model.getTile(model.getPlayerFloor(), x,y));
         
         // moves the player the first step to remove delay
@@ -49,8 +53,9 @@ public class WorldController {
         model.updateObservers();
 
         // creates and starts the timer.
-        Timer movementTimer = new Timer(500, null);
+        Timer movementTimer = new Timer(100, null);
         movementTimer.start();
+        timerDone = false;
         movementTimer.addActionListener(new ActionListener() {
             private int currentPosIndex = 1;
             @Override
