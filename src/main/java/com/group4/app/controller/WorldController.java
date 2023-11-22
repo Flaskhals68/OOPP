@@ -55,7 +55,6 @@ public class WorldController {
         // creates and starts the timer.
         Timer movementTimer = new Timer(100, null);
         movementTimer.start();
-        timerDone = false;
         movementTimer.addActionListener(new ActionListener() {
             private int currentPosIndex = 1;
             @Override
