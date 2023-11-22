@@ -29,7 +29,7 @@ public class Player extends Creature {
      * TODO: We want the player to be able to decide themselves what to increase!
      */
     private void levelUp() {
-        this.setLevel(this.getLevel());
+        this.setLevel(this.getLevel() + 1);
         Attributes attr = this.getAttributes();
 
         switch (new Random().nextInt(6)) {
