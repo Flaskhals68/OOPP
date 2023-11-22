@@ -2,7 +2,7 @@ package com.group4.app.model;
 
 import java.util.*;
 
-public abstract class FightingEntity extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
+public abstract class Creature extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
 
     private ResourceBar hp;
     private ResourceBar ap;
@@ -10,7 +10,7 @@ public abstract class FightingEntity extends Entity implements IAttackable, ICan
     private Weapon weapon;
     private Inventory inv;
     private Attributes attributes;
-    public FightingEntity(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
+    public Creature(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, floorId, xPos, yPos);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getConstitution()/5);
@@ -20,7 +20,7 @@ public abstract class FightingEntity extends Entity implements IAttackable, ICan
         this.level = level;
     }
 
-    public FightingEntity(String id, int ap, Weapon weapon, Attributes attr, int level) {
+    public Creature(String id, int ap, Weapon weapon, Attributes attr, int level) {
         super(id);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getConstitution()/5);

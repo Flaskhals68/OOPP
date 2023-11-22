@@ -1,8 +1,6 @@
 package com.group4.app.model;
 
-import java.util.Set;
-
-public class Enemy extends FightingEntity {
+public class Enemy extends Creature {
     private final String name;
 
     public Enemy(String id, String name, Weapon weapon, int maxAp, Attributes attr, int level) {

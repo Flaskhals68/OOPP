@@ -1,12 +1,7 @@
 package com.group4.app.model;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-
-public class Player extends FightingEntity {
+public class Player extends Creature {
 
     private ResourceBar xp;
 
