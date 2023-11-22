@@ -206,4 +206,8 @@ public class Model {
     public Set<Position> getSurrounding(Position pos, int steps) {
         return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos.getX(), pos.getY()), steps);
     }
+
+    public void giveExperience(int xp) {
+        player.giveXP(xp);
+    }
 }

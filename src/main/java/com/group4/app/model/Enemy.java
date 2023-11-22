@@ -25,7 +25,7 @@ public class Enemy extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement enemy death
-        Model.getInstance().getPlayer().giveXP(1);
+        // TODO : Implement the rest of enemy death
+        Model.getInstance().giveExperience(1);
     }
 }
