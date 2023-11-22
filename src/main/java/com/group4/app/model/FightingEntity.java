@@ -99,10 +99,18 @@ public abstract class FightingEntity extends Entity implements IAttackable, ICan
     @Override
     public int getDamage() {
         if(weapon.getIsRanged()){
-            return weapon.getAttack() + attributes.getDexterity()/10;
+            return weapon.getAttack() + calculateBonusDamageRanged();
         } else {
-            return weapon.getAttack() + attributes.getStrength()/10;
+            return weapon.getAttack() + calculateBonusDamageMelee();
         }
+    }
+
+    private int calculateBonusDamageRanged() {
+        return attributes.getDexterity()/10;
+    }
+
+    private int calculateBonusDamageMelee() {
+        return attributes.getStrength()/10;
     }
 
     /**
