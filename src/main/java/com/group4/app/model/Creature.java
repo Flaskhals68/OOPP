@@ -33,9 +33,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public int getLevel() {
         return level;
     }
-    public void setLevel(int lvl) {
-        this.level = lvl;
-    }
 
     @Override
     public void move(Position pos) {
