@@ -1,5 +1,7 @@
 package com.group4.app.model;
 
+import org.w3c.dom.Attr;
+
 import java.util.HashMap;
 
 public class Attributes {
@@ -9,23 +11,23 @@ public class Attributes {
     private int perception;
     private int meleeWeaponSkill;
     private int rangedWeaponSkill;
-    private HashMap<String, Integer> stats;
+    private HashMap<AttributeType, Integer> stats;
 
     public Attributes(int meleeWeaponSkill, int rangedWeaponSkill, int str, int dex, int con, int per) {
         this.stats = new HashMap<>();
-        this.stats.put("strength", str);
-        this.stats.put("dexterity", dex);
-        this.stats.put("constitution", con);
-        this.stats.put("perception", per);
-        this.stats.put("meleeWeaponSkill", meleeWeaponSkill);
-        this.stats.put("rangedWeaponSkill", rangedWeaponSkill);
+        this.stats.put(AttributeType.STRENGTH, str);
+        this.stats.put(AttributeType.DEXTERITY, dex);
+        this.stats.put(AttributeType.CONSTITUTION, con);
+        this.stats.put(AttributeType.PERCEPTION, per);
+        this.stats.put(AttributeType.MELEE_WEAPON_SKILL, meleeWeaponSkill);
+        this.stats.put(AttributeType.RANGED_WEAPON_SKILL, rangedWeaponSkill);
     }
 
-    public int getStat(String stat) {
-        return this.stats.getOrDefault(stat, 0);
+    public int getStat(AttributeType stat) {
+        return stats.get(stat);
     }
 
-    public void levelUpStat(String stat) {
+    public void levelUpStat(AttributeType stat) {
         this.stats.put(stat, this.stats.get(stat) + 10);
     }
 
