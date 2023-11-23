@@ -147,6 +147,21 @@ public class WorldView extends JPanel implements IGameView{
             }
         });
 
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e){
+                controller.mouseHover(x, y);
+            }
+        });
+
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e){
+                controller.mouseExited();
+            }
+        });
+
+
         List<IDrawable> drawables = controller.getDrawables(x, y);
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {

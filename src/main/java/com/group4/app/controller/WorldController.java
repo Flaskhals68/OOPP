@@ -17,6 +17,9 @@ public class WorldController {
     
     private Model model;
     private Set<Position> highlightedPositions;
+    private boolean movementTimerFlag;
+    private boolean hoverTimerFlag;
+    private Timer hoverTimer =  new Timer(0, null);
 
     public WorldController(Model model){
         this.model = model;
@@ -48,11 +51,13 @@ public class WorldController {
     }
 
     public void movePlayer(int x, int y){
-        // gets the path
+        hoverTimerFlag = false;
+        
         Position targePosition  = new Position(x, y);
         if(!getLegalMoves().contains(targePosition)){
             throw new IllegalArgumentException("Tile out of range");
         }
+        
         List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), model.getTile(model.getPlayerFloor(), x,y));
 
         highlightedPositions = new HashSet<Position>();
@@ -68,6 +73,7 @@ public class WorldController {
         // creates and starts the timer.
         Timer movementTimer = new Timer(500, null);
         movementTimer.start();
+        movementTimerFlag = true;
         movementTimer.addActionListener(new ActionListener() {
             private int currentPosIndex = 1;
             @Override
@@ -82,11 +88,50 @@ public class WorldController {
                 else{
                     highlightedPositions = getLegalMoves();
                     model.updateObservers();
+                    movementTimerFlag = false;
                     movementTimer.stop();
                 }
             }
         });
         
         
+    }
+
+    public void mouseHover(int x, int y){
+        
+        Position targetPosition  = new Position(x, y);
+        List<Position> updatedPositions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(), getPlayerY()), model.getTile(model.getPlayerFloor(), x, y));
+
+        if(!movementTimerFlag && !hoverTimerFlag){
+            if(getLegalMoves().contains(targetPosition)){
+                highlightedPositions = new HashSet<>(updatedPositions);
+                model.updateObservers();
+                hoverTimerFlag = true;
+                hoverTimer.start();
+                hoverTimer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                        highlightedPositions = new HashSet<>(updatedPositions);
+                        model.updateObservers();
+                    }
+                });
+                hoverTimer.stop();
+            }
+            else{
+                highlightedPositions = getLegalMoves();
+                model.updateObservers();
+                throw new IllegalArgumentException("Tile out of range");
+            }
+        }
+        else if(movementTimerFlag){
+            throw new IllegalStateException("Movement in progress, tiles not highlighted");
+        }        
+    }
+
+    public void mouseExited(){
+        if(hoverTimerFlag){
+            hoverTimerFlag = false;
+            hoverTimer.stop();
+        }
     }
 }
