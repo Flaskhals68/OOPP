@@ -82,16 +82,4 @@ public class TestPathFinderHelper {
         
         assertEquals(correctPath, path);
     }
-
-    public static void main(String[] args) {
-        int startX = 3;
-        int startY = 3;
-        Model model = Model.getInstance();
-        model.addBasicMap(10, 0);
-        String worldId = model.getCurrentWorldId();
-        Set<Position> correctPositions = debugAddBasicMap(startX, startY);
-        Tile startingTile = model.getTile(worldId, new Position(startX, startY));
-        Set<Position> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
-        assertTrue(legalPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
-    }
 }
