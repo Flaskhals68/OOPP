@@ -34,22 +34,22 @@ public class Player extends Creature {
 
         switch (new Random().nextInt(6)) {
             case 0:
-                attr.levelUpStat("strength");
+                attr.levelUpStat(AttributeType.STRENGTH);
                 break;
             case 1:
-                attr.levelUpStat("dexterity");
+                attr.levelUpStat(AttributeType.DEXTERITY);
                 break;
             case 2:
-                attr.levelUpStat("constitution");
+                attr.levelUpStat(AttributeType.CONSTITUTION);
                 break;
             case 3:
-                attr.levelUpStat("perception");
+                attr.levelUpStat(AttributeType.PERCEPTION);
                 break;
             case 4:
-                attr.levelUpStat("meleeWeaponSkill");
+                attr.levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
                 break;
             case 5:
-                attr.levelUpStat("rangedWeaponSkill");
+                attr.levelUpStat(AttributeType.RANGED_WEAPON_SKILL);
                 break;
             default:
                 break;
