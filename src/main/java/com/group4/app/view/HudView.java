@@ -61,14 +61,6 @@ public class HudView extends JPanel implements IGameView {
     private void createBtns(Font font) {
         List<JComponent> btnList = new ArrayList<>();
 
-        // JComponent attackBtn = new JPanel();
-        // JLabel attackLabel = new JLabel("Attack");
-        // attackLabel.setFont(font);
-        // attackBtn.add(attackLabel);
-        // btnList.add(attackBtn);
-        // attackBtn.setBackground(Color.RED);
-        // components.add(attackBtn);
-
         JComponent attackBtn = new AttackButton("Attack", font, controller);
         btnList.add(attackBtn);
         components.add(attackBtn);
@@ -88,16 +80,10 @@ public class HudView extends JPanel implements IGameView {
         }
     }
 
-    private void enableComponents() {
-        for (JComponent component : components) {
-            component.enable();
-        }
-    }
-
     @Override
     public void updateView() {
         removeAll();
-        enableComponents();
+        addComponents();
         revalidate();
         repaint();
         
@@ -107,6 +93,4 @@ public class HudView extends JPanel implements IGameView {
     public JPanel getView() {
         return this;
     }
-
-
 }
