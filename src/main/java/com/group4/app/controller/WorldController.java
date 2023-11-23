@@ -2,6 +2,7 @@ package com.group4.app.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,9 +16,11 @@ import com.group4.app.model.Position;
 public class WorldController {
     
     private Model model;
+    private Set<Position> highlightedPositions;
 
     public WorldController(Model model){
         this.model = model;
+        this.highlightedPositions = getLegalMoves();
     }
 
     public List<IDrawable> getDrawables(int x, int y){
@@ -40,6 +43,10 @@ public class WorldController {
         return PathfindingHelper.getSurrounding(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), 5);
     }
 
+    public Set<Position> getHighlightedPositions(){
+        return this.highlightedPositions;
+    }
+
     public void movePlayer(int x, int y){
         // gets the path
         Position targePosition  = new Position(x, y);
@@ -47,13 +54,19 @@ public class WorldController {
             throw new IllegalArgumentException("Tile out of range");
         }
         List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), model.getTile(model.getPlayerFloor(), x,y));
+
+        highlightedPositions = new HashSet<Position>();
+        for(Position p : positions){
+            highlightedPositions.add(p);
+        }
         
         // moves the player the first step to remove delay
         model.movePlayer(positions.get(0));
+        highlightedPositions.remove(positions.get(0));
         model.updateObservers();
 
         // creates and starts the timer.
-        Timer movementTimer = new Timer(100, null);
+        Timer movementTimer = new Timer(500, null);
         movementTimer.start();
         movementTimer.addActionListener(new ActionListener() {
             private int currentPosIndex = 1;
@@ -62,10 +75,13 @@ public class WorldController {
                 // if done with iterating through the positions, stop the timer. 
                 if(currentPosIndex < positions.size()){
                     model.movePlayer(positions.get(currentPosIndex));
+                    highlightedPositions.remove(positions.get(currentPosIndex));
                     model.updateObservers();
                     currentPosIndex++;
                 }
                 else{
+                    highlightedPositions = getLegalMoves();
+                    model.updateObservers();
                     movementTimer.stop();
                 }
             }

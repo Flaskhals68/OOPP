@@ -176,7 +176,7 @@ public class WorldView extends JPanel implements IGameView{
     public void updateView() {
         removeAll();
         drawTile(entityPanelGenerator);
-        colorBorders(controller.getLegalMoves());
+        colorBorders(controller.getHighlightedPositions());
         revalidate();
         repaint();
     }
