@@ -96,7 +96,6 @@ public class HudView extends JPanel implements IGameView {
 
     @Override
     public void updateView() {
-        // TODO Auto-generated method stub
         removeAll();
         enableComponents();
         revalidate();
