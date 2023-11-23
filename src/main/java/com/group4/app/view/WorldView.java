@@ -35,10 +35,12 @@ import com.group4.app.model.Tile;
 
 public class WorldView extends JPanel implements IGameView{
     private WorldController controller;
+
+    //TODO why is this used?
     private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
 
     //TODO implement zoom?
-    private static float zoom = 2;
+    private static float zoom = 1;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -69,19 +71,19 @@ public class WorldView extends JPanel implements IGameView{
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
-        drawTile(entityPanelGenerator);
+        addTiles(entityPanelGenerator);
         colorBorders(controller.getLegalMoves());
 
 
     }
 
     /**
-     * Calculates which tiles should be drawn by getting the player's position and drawing
+     * Calculates which tiles should be added by getting the player's position and adding
      * the corresponding tiles around that position. Takes a EntetyPanelGenerator as a parameter
      * to be able to draw the tiles and, if there are any, the enteties located at that tile.
      * @param entityPanelGenerator
      */
-    private void drawTile(EntityPanelGenerator entityPanelGenerator){
+    private void addTiles(EntityPanelGenerator entityPanelGenerator){
         int playerX = controller.getPlayerX();
         int playerY = controller.getPlayerY();
 
@@ -190,7 +192,7 @@ public class WorldView extends JPanel implements IGameView{
     @Override
     public void updateView() {
         removeAll();
-        drawTile(entityPanelGenerator);
+        addTiles(entityPanelGenerator);
         colorBorders(controller.getHighlightedPositions());
         revalidate();
         repaint();

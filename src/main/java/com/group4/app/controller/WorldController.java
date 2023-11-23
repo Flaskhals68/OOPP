@@ -67,7 +67,7 @@ public class WorldController {
         model.updateObservers();
 
         // creates and starts the timer.
-        Timer movementTimer = new Timer(500, null);
+        Timer movementTimer = new Timer(100, null);
         movementTimer.start();
         movementTimerFlag = true;
         movementTimer.addActionListener(new ActionListener() {
