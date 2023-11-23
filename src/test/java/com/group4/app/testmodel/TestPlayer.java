@@ -24,7 +24,6 @@ public class TestPlayer {
         Tile t1 = new Tile("stone", world.getId(), new Position(0, 0));
         world.addTile(t1);
         Player player = new Player("player", 3, null, world.getId(), new Position(0, 0));
-        // Player p = new Player(null, 0, 0, null, null, null)
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
 
@@ -41,14 +40,12 @@ public class TestPlayer {
 
     @Test
     public void testMove() {
-        World world = new World(2);
-        Model.getInstance().addWorld(world);
-        // Model.getInstance().addBasicMap(2);
-        Tile t1 = new Tile("stone", world.getId(), new Position(0, 0));
-        world.addTile(t1);
-        Tile t2 = new Tile("stone", world.getId(), new Position(0, 1));
-        world.addTile(t2);
-        Player p = new Player("player", 3, null, world.getId(), new Position(0, 0));
+        Model.getInstance().addBasicMap(2);
+        String worldId = Model.getInstance().getCurrentWorldId();
+        Tile t1 = new Tile("stone", worldId, new Position(0, 0));
+        // world.addTile(t1);
+        Tile t2 = Model.getInstance().getTile(worldId, new Position(0, 1));
+        Player p = new Player("player", 3, null, worldId, new Position(0, 0));
         p.move(new Position(0, 1));
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
@@ -59,15 +56,9 @@ public class TestPlayer {
 
     @Test
     public void testIllegalMove() {
-        Model model = Model.getInstance();
-        World world = new World(10);
-        model.addWorld(world);
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                world.addTile(new Tile("stone", world.getId(), new Position(i, j)));
-            }
-        }
-        Player p = new Player("player", 5, null, world.getId(), new Position(0, 0));
+        Model.getInstance().addBasicMap(10);
+        String worldId = Model.getInstance().getCurrentWorldId();
+        Player p = new Player("player", 5, null, worldId, new Position(0, 0));
 
         assertThrows(IllegalArgumentException.class, () -> {
             p.move(new Position(9, 9));

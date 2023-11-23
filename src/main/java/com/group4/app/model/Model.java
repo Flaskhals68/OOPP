@@ -131,7 +131,7 @@ public class Model {
      * 
      * @return the id of the current world.
      */
-    private String getCurrentWorldId(){
+    public String getCurrentWorldId(){
         return this.currentWorld.getId();
     }
 
