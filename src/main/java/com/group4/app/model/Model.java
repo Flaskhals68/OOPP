@@ -61,6 +61,9 @@ public class Model {
 
     public void addWorld(World world){
         this.floors.put(world.getId(), world);
+        if (this.currentWorld == null){
+            this.currentWorld = world;
+        }
     }
 
     private World getWorld(String floorId){

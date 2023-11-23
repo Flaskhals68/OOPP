@@ -74,4 +74,18 @@ public class Player extends Creature {
         // TODO : Implement player death
         System.out.println("Player died");
     }
+
+    public static void main(String[] args) {
+        Model model = Model.getInstance();
+        World world = new World(10);
+        model.addWorld(world);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                world.addTile(new Tile("stone", world.getId(), i, j));
+            }
+        }
+        Player p = new Player("player", 5, null, world.getId(), new Position(0, 0));
+
+        p.move(new Position(9, 9));
+    }
 }

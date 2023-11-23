@@ -13,7 +13,6 @@ import com.group4.app.model.Weapon;
 import com.group4.app.model.WeaponFactory;
 import com.group4.app.model.World;
 
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -49,9 +48,9 @@ public class TestPlayer {
 
     @Test
     public void testMove() {
-        Model model = Model.getInstance();
         World world = new World(2);
         Model.getInstance().addWorld(world);
+        // Model.getInstance().addBasicMap(2);
         Tile t1 = new Tile("stone", world.getId(), 0, 0);
         world.addTile(t1);
         Tile t2 = new Tile("stone", world.getId(), 0, 1);
