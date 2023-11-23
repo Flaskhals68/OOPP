@@ -18,8 +18,7 @@ public class WorldController {
     private Model model;
     private Set<Position> highlightedPositions;
     private boolean movementTimerFlag;
-    private boolean hoverTimerFlag;
-    private Timer hoverTimer =  new Timer(0, null);
+    private boolean hoverFlag;
 
     public WorldController(Model model){
         this.model = model;
@@ -51,19 +50,16 @@ public class WorldController {
     }
 
     public void movePlayer(int x, int y){
-        hoverTimerFlag = false;
-        
+
         Position targePosition  = new Position(x, y);
         if(!getLegalMoves().contains(targePosition)){
             throw new IllegalArgumentException("Tile out of range");
         }
         
+        //FIXME dont get straight from internal model classes
         List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), model.getTile(model.getPlayerFloor(), x,y));
 
-        highlightedPositions = new HashSet<Position>();
-        for(Position p : positions){
-            highlightedPositions.add(p);
-        }
+        highlightedPositions = new HashSet<Position>(positions);
         
         // moves the player the first step to remove delay
         model.movePlayer(positions.get(0));
@@ -97,25 +93,23 @@ public class WorldController {
         
     }
 
+    /**
+     * Should run when hovering over a tile, updates the positions to be highlighted when hovering over a tile that is within legal movement range.
+     * If hovering over a tile that is out of range it throws an IllegalArgumentException.
+     * If a movement is happening at the same time when hovering, it throws an IllegalStateException
+     * @param x
+     * @param y
+     */
     public void mouseHover(int x, int y){
-        
         Position targetPosition  = new Position(x, y);
-        List<Position> updatedPositions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(), getPlayerY()), model.getTile(model.getPlayerFloor(), x, y));
 
-        if(!movementTimerFlag && !hoverTimerFlag){
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(), getPlayerY()), model.getTile(model.getPlayerFloor(), x, y));
+
+        if(!movementTimerFlag && !hoverFlag){
             if(getLegalMoves().contains(targetPosition)){
-                highlightedPositions = new HashSet<>(updatedPositions);
+                hoverFlag = true;
+                highlightedPositions = new HashSet<>(positions);
                 model.updateObservers();
-                hoverTimerFlag = true;
-                hoverTimer.start();
-                hoverTimer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
-                        highlightedPositions = new HashSet<>(updatedPositions);
-                        model.updateObservers();
-                    }
-                });
-                hoverTimer.stop();
             }
             else{
                 highlightedPositions = getLegalMoves();
@@ -128,10 +122,12 @@ public class WorldController {
         }        
     }
 
+    /**
+     * When exiting a tile, a flag is set to false to indicate that the tile has been left.
+     */
     public void mouseExited(){
-        if(hoverTimerFlag){
-            hoverTimerFlag = false;
-            hoverTimer.stop();
+        if(hoverFlag){
+            hoverFlag = false;
         }
     }
 }
