@@ -10,7 +10,7 @@ public class ResourceBar {
     }
 
     public void setCurrent(int current) {
-        this.current = Math.max(current, this.max); 
+        this.current = Math.min(current, this.max);
     }
 
     public void setMax(int max) { this.max = max; }
@@ -21,7 +21,7 @@ public class ResourceBar {
 
     /**
      * Reduce the current amount by the given amount
-     * @param damage to be taken
+     * @param reduction amount to be reduced
      */
     public void reduceCurrent(int reduction) {
         current -= reduction;
@@ -30,7 +30,7 @@ public class ResourceBar {
 
     /**
      * Increase current hp up to the given max
-     * @param amount
+     * @param increase amount to be increased
      */
     public void increaseCurrent(int increase) {
         current += increase;

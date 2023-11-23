@@ -55,7 +55,7 @@ public class Model {
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 0, 0);
+        this.player = new Player(PLAYER_ID, 3, null, world.getId(), 0, 0);
         addEntity(player, world.getId(), player.getXPos(), player.getYPos());
     }
 
@@ -197,7 +197,7 @@ public class Model {
         if(!attacker.getFloor().equals(victim.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
         } else if(xDiff <= 1 && yDiff <= 1) {
-            victim.takeHit(attacker.getDamage());
+            attacker.attack(victim);
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
@@ -205,5 +205,9 @@ public class Model {
 
     public Set<Position> getSurrounding(Position pos, int steps) {
         return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos.getX(), pos.getY()), steps);
+    }
+
+    public void giveExperience(int xp) {
+        player.giveXP(xp);
     }
 }

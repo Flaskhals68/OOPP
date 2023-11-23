@@ -5,13 +5,15 @@ public class Weapon implements IInventoriable {
     private final int attack;
     private final String name;
     private final boolean isLootable;
+    private final boolean isRanged;
 
     private final String type;
-    public Weapon(String name, int attack, boolean isLootable, String type){
+    public Weapon(String name, int attack, boolean isLootable, String type, Boolean isRanged){
         this.name = name;
         this.attack = attack;
         this.isLootable = isLootable;
         this.type = type;
+        this.isRanged = isRanged;
     }
 
     public int getAttack() {
@@ -23,6 +25,10 @@ public class Weapon implements IInventoriable {
 
     public boolean getLootable() {
         return isLootable;
+    }
+
+    public boolean getIsRanged() {
+        return isRanged;
     }
 
     public String getType() {
