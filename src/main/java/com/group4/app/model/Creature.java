@@ -8,6 +8,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private ResourceBar ap;
     private int level;
     private Weapon weapon;
+    private Armour armour;
     private Inventory inv;
     private Attributes attributes;
     public Creature(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
@@ -16,6 +17,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.hp = new ResourceBar(attributes.getStat("constitution")/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
+        this.armour = ArmourFactory.createArmour(ArmourType.NONE, level);
         this.inv = new Inventory();
         this.level = level;
     }
@@ -66,6 +68,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             inv.addItem(this.weapon);
         }
         this.weapon = weapon;
+    }
+
+    public void setArmour(Armour armour) {
+        // Puts current armour in inventory if player already has one
+        if (!armour.getType().equals(ArmourType.NONE)) {
+            inv.addItem(this.armour);
+        }
+        this.armour = armour;
     }
 
     /**
@@ -124,6 +134,15 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         if (hp.getCurrent() <= 0) {
             this.death();
         }
+    }
+
+    private int getDamageReduction() {
+        if(armour.getType().equals(ArmourType.MEDIUM)) {
+            return armour.getDefence() + Math.max(attributes.getStat("dexterity")/10, 3);
+        } else if(armour.getType().equals(ArmourType.HEAVY)) {
+            return armour.getDefence();
+        }
+        return armour.getDefence() + attributes.getStat("dexterity")/10;
     }
 
     /**
