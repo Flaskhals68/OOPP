@@ -8,15 +8,13 @@ public class Tile implements IDrawable {
     private String id;
     private String floor;
     private Set<Tile> neighbors;
-    private int xPos;
-    private int yPos;
+    private Position pos;
     private Set<Entity> entities;
 
-    public Tile(String id, String floorId, int xPos, int yPos){
+    public Tile(String id, String floorId, Position pos){
         this.id = id;
         this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.pos = pos;
         this.entities = new HashSet<Entity>();
         this.calculateNeighbors();
     }
@@ -33,20 +31,16 @@ public class Tile implements IDrawable {
         return this.floor;
     }
 
-    public void setXPos(int next){
-        this.xPos = next;
-    }
-
     public int getXPos(){
-        return xPos;
-    }
-
-    public void setYPos(int next){
-        this.yPos = next;
+        return pos.getX();
     }
 
     public int getYPos(){
-        return yPos;
+        return pos.getY();
+    }
+
+    public void setPos(Position pos){
+        this.pos = pos;
     }
 
     public void addEntity(Entity entity){
@@ -81,7 +75,7 @@ public class Tile implements IDrawable {
             for (int y=-1; y<2; y++){
                 try {
                     // Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
-                    Tile tile = Model.getInstance().getTile(floor, new Position(xPos+x, yPos+y));
+                    Tile tile = Model.getInstance().getTile(floor, new Position(getXPos()+x, getYPos()+y));
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);
@@ -99,8 +93,8 @@ public class Tile implements IDrawable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((floor == null) ? 0 : floor.hashCode());
-        result = prime * result + xPos;
-        result = prime * result + yPos;
+        result = prime * result + getXPos();
+        result = prime * result + getXPos();
         return result;
     }
 
@@ -118,9 +112,9 @@ public class Tile implements IDrawable {
                 return false;
         } else if (!floor.equals(other.floor))
             return false;
-        if (xPos != other.xPos)
+        if (getXPos() != other.getXPos())
             return false;
-        if (yPos != other.yPos)
+        if (getYPos() != other.getYPos())
             return false;
         return true;
     }

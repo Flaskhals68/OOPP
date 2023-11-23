@@ -29,8 +29,8 @@ public class World {
         return this.tiles[pos.getX()][pos.getY()];
     }
 
-    public Set<Entity> getEntities(int xPos, int yPos){
-        return this.tiles[xPos][yPos].getEntities();
+    public Set<Entity> getEntities(Position pos){
+        return this.tiles[pos.getX()][pos.getY()].getEntities();
     }
 
     public void addTile(Tile tile){

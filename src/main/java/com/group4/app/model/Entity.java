@@ -18,13 +18,13 @@ public class Entity implements IDrawable {
         Model.getInstance().addEntity(this, floorId, pos);
     }
 
-    public void setPosition(String floorId, int xPos, int yPos) {
+    public void setPosition(String floorId, Position pos) {
         if(this.floor != null) {
             Model.getInstance().removeEntity(this);
         }
         Model.getInstance().addEntity(this, floorId, pos);
         this.floor = floorId;
-        this.pos = new Position(xPos, yPos);
+        this.pos = pos;
     }
 
     public String getId() {
@@ -47,19 +47,15 @@ public class Entity implements IDrawable {
         return pos.getX();
     }
 
-    public void setXPos(int xPos) {
-        this.pos = new Position(xPos, pos.getY());
-    }
-
     public int getYPos() {
         return pos.getY();
     }
 
-    public void setYPos(int yPos) {
-        this.pos = new Position(pos.getX(), yPos);
-    }
-
     public Position getPos() {
         return this.pos;
+    }
+
+    public void setPos(Position pos) {
+        this.pos = pos;
     }
 }
