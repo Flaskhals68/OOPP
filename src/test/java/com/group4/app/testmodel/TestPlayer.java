@@ -40,7 +40,7 @@ public class TestPlayer {
 
     @Test
     public void testMove() {
-        Model.getInstance().addBasicMap(2);
+        Model.getInstance().addBasicMap(2, 0);
         String worldId = Model.getInstance().getCurrentWorldId();
         Tile t1 = new Tile("stone", worldId, new Position(0, 0));
         // world.addTile(t1);
@@ -56,7 +56,7 @@ public class TestPlayer {
 
     @Test
     public void testIllegalMove() {
-        Model.getInstance().addBasicMap(10);
+        Model.getInstance().addBasicMap(10, 0);
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 5, null, worldId, new Position(0, 0));
 

@@ -34,7 +34,7 @@ public class Model {
         this.turnHandler = new TurnHandler();
     }
 
-    public void addBasicMap(int size){
+    public void addBasicMap(int size, double emptyChance){
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
@@ -42,7 +42,7 @@ public class Model {
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.1){
+                if(r> emptyChance){
                     world.addTile(new Tile("stone", world.getId(), new Position(x, y)));
                     r = Math.random();
                     if(r > 0.98){
@@ -54,6 +54,10 @@ public class Model {
         }
         this.player = new Player(PLAYER_ID, 3, null, world.getId(), new Position(0, 0));
         addEntity(player, world.getId(), player.getPos());
+    }
+
+    public void addBasicMap(int size) {
+        addBasicMap(size, 0.1);
     }
 
     public void addWorld(World world){
