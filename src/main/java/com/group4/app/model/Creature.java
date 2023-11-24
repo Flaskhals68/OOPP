@@ -138,11 +138,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     private int getDamageReduction() {
         if(armour.getType().equals(ArmourType.MEDIUM)) {
-            return armour.getDefence() + Math.max(attributes.getStat("dexterity")/10, 3);
+            // Damage reduction from medium maxed if at 60 dex
+            return armour.getDefence() + Math.min((attributes.getStat(AttributeType.DEXTERITY) - 50)/10, 2);
         } else if(armour.getType().equals(ArmourType.HEAVY)) {
             return armour.getDefence();
         }
-        return armour.getDefence() + attributes.getStat("dexterity")/10;
+        return armour.getDefence() + attributes.getStat(AttributeType.DEXTERITY)/30;
     }
 
     /**
