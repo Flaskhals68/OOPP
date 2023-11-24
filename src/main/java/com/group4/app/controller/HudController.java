@@ -1,5 +1,7 @@
 package com.group4.app.controller;
 
+import com.group4.app.model.Model;
+
 public class HudController {
     private boolean attackAllowed = true;
     public boolean attackAllowed() {
@@ -10,9 +12,13 @@ public class HudController {
 
     public void enterAttackState() {
         // TODO: Implement logic to enter attack state
-        // System.err.println("Enter attack state");
         if (attackAllowed) System.out.println("Enter attack state");
         else System.out.println("Enter attack state");
         attackAllowed = false;
+    }
+
+    public void endTurn() {
+        System.out.println("End turn");
+        Model.getInstance().endTurn();
     }
 }

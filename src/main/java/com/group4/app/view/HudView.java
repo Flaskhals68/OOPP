@@ -1,5 +1,6 @@
 package com.group4.app.view;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -13,13 +14,13 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.group4.app.controller.HudController;
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
 
 public class HudView extends JPanel implements IGameView {
     private static final int HEIGHT = 75;
@@ -30,7 +31,8 @@ public class HudView extends JPanel implements IGameView {
     private Model model;
     private HudController controller;
     // private GameWindow gameWindow = GameWindow.getInstance();
-    private List<JComponent> components = new ArrayList<>();
+    private List<HudButton> btnList = new ArrayList<>();
+    private Map<String, HudButton> btnActionMap = new HashMap<>();
 
     private GridBagConstraints btnConstraints = new GridBagConstraints();
 
@@ -50,43 +52,50 @@ public class HudView extends JPanel implements IGameView {
 
         Font defaultFont = new Font("Arial", Font.BOLD, 16);
 
-        createBtns(defaultFont);
-        addComponents();
+        createButtons(defaultFont);
+        addButtons();
     }
 
     /**
      * Create buttons without adding them to the JPanel
      * @param font
      */
-    private void createBtns(Font font) {
-        List<JComponent> btnList = new ArrayList<>();
-
-        JComponent attackBtn = new AttackButton("Attack", font, controller);
-        btnList.add(attackBtn);
-        components.add(attackBtn);
-
-        JComponent endTurnBtn = new JPanel();
-        JLabel endTurnLabel = new JLabel("End Turn");
-        endTurnLabel.setFont(font);
-        endTurnBtn.add(endTurnLabel);
-        btnList.add(endTurnBtn);
-        endTurnBtn.setBackground(Color.WHITE);
-        components.add(endTurnBtn);
+    private void createButtons(Font font) {
+        bindButton(ButtonFactory.createAttackButton(font, controller));
+        bindButton(ButtonFactory.createEndTurnButton(font, controller));
     }
 
-    private void addComponents() {
-        for (JComponent component : components) {
-            this.add(component);
+    private void bindButton(HudButton btn) {
+        btnList.add(btn);
+        btnActionMap.put(btn.getActionId(), btn);
+    }
+
+    private void addButtons() {
+        // TODO: Get legal actions from model
+        List<String> legalActions = new ArrayList<>();
+        legalActions.add("attack");
+        legalActions.add("endTurn");
+
+        for (HudButton btn : btnList) {
+            this.add(btn);
+            updateButtonState(legalActions, btn);
+        }
+    }
+
+    private void updateButtonState(List<String> legalActions, HudButton btn) {
+        if (legalActions.contains(btn.getActionId())) {
+            btn.setEnabled();
+        } else {
+            btn.setDisabled();
         }
     }
 
     @Override
     public void updateView() {
         removeAll();
-        addComponents();
+        addButtons();
         revalidate();
         repaint();
-        
     }
 
     @Override
