@@ -36,8 +36,8 @@ import com.group4.app.model.Tile;
 public class WorldView extends JPanel implements IGameView{
     private WorldController controller;
 
-    //TODO why is this used?
-    private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
+    //The tiles that are seen by the player at the moment.
+    private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
     //TODO implement zoom?
     private static float zoom = 2;
@@ -95,6 +95,9 @@ public class WorldView extends JPanel implements IGameView{
         int actualX = playerX - centerX;
         int actualY = playerY - centerY;
 
+        // reset which tiles are seen by the player 
+        visibleTiles = new HashMap<>();
+
         for(int i = 0; i < MAX_NUMBER_OF_TILES_PER_ROW; i++ ){
             int y = actualY + i;
             tileConstraints.gridy = i;
@@ -103,7 +106,7 @@ public class WorldView extends JPanel implements IGameView{
                 tileConstraints.gridx = j;
                 if(controller.isValidCoordinates(x, y)){
                     JLayeredPane entityPanel = createTile(x, y);
-                    renderedTiles.put(new Position(x,y), entityPanel);
+                    visibleTiles.put(new Position(x,y), entityPanel);
                     add(entityPanel, tileConstraints);
                 }
                 else{
@@ -214,7 +217,7 @@ public class WorldView extends JPanel implements IGameView{
      */ 
     private void colorBorders(Set<Position> positions){
         for(Position pos : positions){
-            renderedTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
+            visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
         }
 
     }
