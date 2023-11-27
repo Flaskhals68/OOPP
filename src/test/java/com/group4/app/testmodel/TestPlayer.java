@@ -3,15 +3,9 @@ package com.group4.app.testmodel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Position;
-import com.group4.app.model.Model;
-import com.group4.app.model.Player;
-import com.group4.app.model.Tile;
-import com.group4.app.model.Weapon;
-import com.group4.app.model.WeaponFactory;
-import com.group4.app.model.World;
+import com.group4.app.model.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -35,7 +29,7 @@ public class TestPlayer {
         player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
-        assertEquals(weapon.getAttack() + 5, player.getDamage());
+        assertEquals(weapon.getAttack(), player.getDamage());
     } 
 
     @Test
@@ -114,7 +108,7 @@ public class TestPlayer {
 
         p.setWeapon(basic_claws);
 
-        assertEquals(basic_claws.getAttack() + 5, p.getDamage());
+        assertEquals(basic_claws.getAttack(), p.getDamage());
         assertEquals(p.fetchItemFromInventory("Basic Sword").getName(), "Basic Sword");
     }
 
@@ -127,6 +121,20 @@ public class TestPlayer {
             p.giveXP(10);
         }
         assertEquals(11, p.getLevel());
+    }
 
+    @Test
+    public void testLevelUpOnKill() {
+        Model.getInstance().addBasicMap(10, 0);
+        String world = Model.getInstance().getCurrentWorldId();
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world));
+        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world));
+        for(int i = 0; i<5; i++) {
+            p.getAttributes().levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
+        }
+        p.giveXP(9);
+        System.out.println(p.getDamage());
+        Model.getInstance().performAttackAction(p, e);
+        assertEquals(2, p.getLevel());
     }
 }
