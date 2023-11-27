@@ -24,7 +24,7 @@ public class TestModel {
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));
         Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), new Position(3, 1, world.getId()));
+        e.setPosition(new Position(3, 1, world.getId()));
 
         int hpBeforeAttack = e.getHitPoints();
         model.performAttackAction(p, e);
@@ -48,7 +48,7 @@ public class TestModel {
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));
         Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), new Position(0, 0, world.getId()));
+        e.setPosition(new Position(0, 0, world.getId()));
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             model.performAttackAction(p, e);
@@ -71,7 +71,7 @@ public class TestModel {
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world1.getId(), new Position(2, 2, world1.getId()));
         Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world2.getId(), new Position(3, 1, world2.getId()));
+        e.setPosition(new Position(3, 1, world2.getId()));
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             model.performAttackAction(p, e);
@@ -92,7 +92,7 @@ public class TestModel {
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));
         Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), new Position(3, 1, world.getId()));
+        e.setPosition(new Position(3, 1, world.getId()));
 
         int hpBeforeAttack = p.getHitPoints();
         model.performAttackAction(e, p);

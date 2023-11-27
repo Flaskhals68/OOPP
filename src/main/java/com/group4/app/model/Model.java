@@ -91,12 +91,12 @@ public class Model {
         return this.getWorld(pos.getFloor()).getTile(pos);
     }
 
-    public Set<Entity> getEntities(String floorId, Position pos){
+    public Set<Entity> getEntities(Position pos){
         return getTile(pos).getEntities();
     }
 
     public List<IDrawable> getDrawables(String floorId, Position pos){
-        IDrawable[] entities = getEntities(floorId, pos).toArray(new IDrawable[0]);
+        IDrawable[] entities = getEntities(pos).toArray(new IDrawable[0]);
         IDrawable tile = getTile(pos);
         ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
         drawables.add(tile);
