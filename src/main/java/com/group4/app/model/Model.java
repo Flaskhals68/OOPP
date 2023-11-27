@@ -46,13 +46,13 @@ public class Model {
                     world.addTile(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
-                        Enemy e = EnemyFactory.createZombie();
+                        Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
                         addEntity(e, new Position(x, y, world.getId()));
                     }
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, null, world.getId(), new Position(0, 0, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, null, new Position(0, 0, world.getId()));
         addEntity(player, player.getPos());
     }
 

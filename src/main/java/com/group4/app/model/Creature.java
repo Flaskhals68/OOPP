@@ -10,8 +10,8 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Weapon weapon;
     private Inventory inv;
     private Attributes attributes;
-    public Creature(String id, String floorId, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id, floorId, pos);
+    public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
+        super(id, pos);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);

@@ -7,8 +7,8 @@ public class Player extends Creature {
     private ResourceBar xp;
     private Attributes attributes;
 
-    public Player(String id, int ap, Weapon weapon, String floorId, Position position) {
-        super(id, floorId, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+    public Player(String id, int ap, Weapon weapon, Position position) {
+        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
     }
 

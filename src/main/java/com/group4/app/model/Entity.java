@@ -4,21 +4,20 @@ import java.util.Objects;
 
 public class Entity implements IDrawable {
     private String id;
-    private String floor;
     private Position pos;
 
     public Entity(String id) {
         this.id = id;
     }
 
-    public Entity(String id, String floorId, Position pos) {
+    public Entity(String id, Position pos) {
         this.id = id;
         this.pos = pos;
         Model.getInstance().addEntity(this, pos);
     }
 
     public void setPosition(Position pos) {
-        if(this.floor != null) {
+        if(getFloor() != null) {
             Model.getInstance().removeEntity(this);
         }
         Model.getInstance().addEntity(this, pos);

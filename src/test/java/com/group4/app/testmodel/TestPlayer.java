@@ -23,7 +23,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(t1);
-        Player player = new Player("player", 3, null, world.getId(), new Position(0, 0, world.getId()));
+        Player player = new Player("player", 3, null, new Position(0, 0, world.getId()));
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
 
@@ -32,7 +32,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(t1);
-        player = new Player("player", 3, weapon, world.getId(), new Position(0, 0, world.getId()));
+        player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
         assertEquals(weapon.getAttack() + 5, player.getDamage());
@@ -45,7 +45,7 @@ public class TestPlayer {
         Tile t1 = new Tile("stone", new Position(0, 0, worldId));
         // world.addTile(t1);
         Tile t2 = Model.getInstance().getTile(new Position(0, 1, worldId));
-        Player p = new Player("player", 3, null, worldId, new Position(0, 0, worldId));
+        Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         p.move(new Position(0, 1, worldId));
         int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
         int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
@@ -58,7 +58,7 @@ public class TestPlayer {
     public void testIllegalMove() {
         Model.getInstance().addBasicMap(10, 0);
         String worldId = Model.getInstance().getCurrentWorldId();
-        Player p = new Player("player", 5, null, worldId, new Position(0, 0, worldId));
+        Player p = new Player("player", 5, null, new Position(0, 0, worldId));
 
         assertThrows(IllegalArgumentException.class, () -> {
             p.move(new Position(9, 9, worldId));
@@ -72,7 +72,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(t1);
-        Player p = new Player("player", 3, null, world.getId(), new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
 
         Weapon testItem = WeaponFactory.createSword();
 
@@ -87,7 +87,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(t1);
-        Player p = new Player("player", 3, null, world.getId(), new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
 
         for(int i = 0; i<4; i++) {
             p.addItemToInventory(WeaponFactory.createSword());
@@ -108,7 +108,7 @@ public class TestPlayer {
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(t1);
-        Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
 
         Weapon basic_claws = WeaponFactory.createClaws();
 
