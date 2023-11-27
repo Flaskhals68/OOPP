@@ -43,7 +43,6 @@ public class HudView extends JPanel implements IGameView {
     }
 
     private void initComponents() {
-        // Init self
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.LIGHT_GRAY);
         btnConstraints.insets = new Insets(5, 5, 5, 5);
