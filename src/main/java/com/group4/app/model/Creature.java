@@ -20,16 +20,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = level;
     }
 
-    public Creature(String id, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id);
-        this.attributes = attr;
-        this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
-        this.ap = new ResourceBar(ap);
-        this.weapon = weapon;
-        this.inv = new Inventory();
-        this.level = level;
-    }
-
     public int getLevel() {
         return level;
     }
