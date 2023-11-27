@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Stack;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import java.awt.Point;
@@ -30,27 +31,27 @@ public class PathfindingHelper {
      * @return Set of Points with all legal positions
      */
     public static Set<Position> getSurrounding(Tile tile, int steps) {
-        // Perform depth-first search to find all tiles in range of given steps
-        Set<Tile> visited = new HashSet<>();
-        Stack<Entry> stack = new Stack<>();
-        Set<Position> positions = new HashSet<>();
+    Set<Tile> visited = new HashSet<>();
+    Queue<Entry> queue = new LinkedList<>();
+    Set<Position> positions = new HashSet<>();
 
-        stack.push(new Entry(tile, steps));
-        while (!stack.isEmpty()) {
-            Entry entry = stack.pop();
-            if (!visited.add(entry.tile)) continue; 
+    // Perform Breadth-first search
+    queue.add(new Entry(tile, steps));
+    while (!queue.isEmpty()) {
+        Entry entry = queue.remove();
+        if (!visited.add(entry.tile)) continue;
+        Position entryPos = entry.tile.getPos();
+        Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
+        positions.add(p);
 
-            Position p = new Position(entry.tile.getXPos(), entry.tile.getYPos());
-            positions.add(p);
-
-            if (entry.remainingSteps > 0) {
-                for (Tile neighbor : entry.tile.getNeighbors()) {
-                    stack.push(new Entry(neighbor, entry.remainingSteps-1));
-                }
+        if (entry.remainingSteps > 0) {
+            for (Tile neighbor : entry.tile.getNeighbors()) {
+                queue.add(new Entry(neighbor, entry.remainingSteps-1));
             }
         }
-        return positions;
     }
+    return positions;
+}
 
     private static class Edge {
         private Tile start;
@@ -166,8 +167,10 @@ public class PathfindingHelper {
     }
     
     private static double guessCost(Tile current, Tile goal) {
-        int dx = goal.getXPos() - current.getXPos();
-        int dy = goal.getYPos() - current.getYPos();
+        Position currentPos = current.getPos();
+        Position goalPos = goal.getPos();
+        int dx = goalPos.getX() - currentPos.getX();
+        int dy = goalPos.getY() - currentPos.getY();
         return Math.sqrt( dx*dx + dy*dy );
     }
     
@@ -176,7 +179,8 @@ public class PathfindingHelper {
         LinkedList<Position> path = new LinkedList<>();
         while (entry.backPointer != null) {
             Tile current = entry.getCurrent();
-            path.addFirst(new Position(current.getXPos(), current.getYPos()));
+            Position currentPos = current.getPos();
+            path.addFirst(new Position(currentPos.getX(), currentPos.getY(), current.getFloor()));
             entry = entry.getBackPointer();
         }
         return path;

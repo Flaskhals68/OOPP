@@ -77,8 +77,8 @@ public class WorldView extends JPanel implements IGameView{
      * @param entityPanelGenerator
      */
     private void drawTile(EntityPanelGenerator entityPanelGenerator){
-        int playerX = model.getPlayerX();
-        int playerY = model.getPlayerY();
+        int playerX = model.getPlayerPos().getX();
+        int playerY = model.getPlayerPos().getY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
@@ -94,18 +94,19 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                if(model.isValidCoordinates(x, y)){
-                    JLayeredPane entityPanel = createTile(model, x, y);
+                Position pos = new Position(x, y, model.getPlayerFloor());
+                if(model.isValidCoordinates(pos)) {
+                    JLayeredPane entityPanel = createTile(model, pos);
                     add(entityPanel, tileConstraints);
                 }
                 else{
                      add(createEmptyTile(), tileConstraints);
                 }
                    
-                }
-
             }
+
         }
+    }
 
     
     /**
@@ -122,7 +123,7 @@ public class WorldView extends JPanel implements IGameView{
     /**
      * Create the actual tile panel and add it's enteties to it.
      */
-    private JLayeredPane createTile(Model model, int x, int y){
+    private JLayeredPane createTile(Model model, Position pos){
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane
@@ -138,12 +139,12 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                model.movePlayer(new Position(x,y));
+                model.movePlayer(pos);
                 model.updateObservers();
             }
         });
 
-        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), x, y);
+        List<IDrawable> drawables = model.getDrawables(model.getPlayerFloor(), pos);
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
             for(int i = drawables.size()-1; i >= 0; i-- ){

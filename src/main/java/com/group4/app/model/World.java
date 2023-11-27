@@ -25,23 +25,24 @@ public class World {
         return tiles.length;
     }
 
-    public Tile getTile(int xPos, int yPos){
-        return this.tiles[xPos][yPos];
+    public Tile getTile(Position pos){
+        return this.tiles[pos.getX()][pos.getY()];
     }
 
-    public Set<IPositionable> getEntities(int xPos, int yPos){
-        return this.tiles[xPos][yPos].getEntities();
+    public Set<IPositionable> getEntities(Position pos){
+        return this.tiles[pos.getX()][pos.getY()].getEntities();
     }
 
-    public void addTile(Tile tile){
-        this.tiles[tile.getXPos()][tile.getYPos()] = tile;
+    public void addTile(Tile tile) {
+        Position pos = tile.getPos();
+        this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
-    public void add(IPositionable entity, int xPos, int yPos){
-        this.getTile(xPos, yPos).add(entity);
+    public void add(IPositionable entity, Position pos){
+        this.getTile(pos).add(entity);
     }
 
     public void remove(IPositionable entity){
-        this.getTile(entity.getXPos(), entity.getYPos()).remove(entity);
+        this.getTile(entity.getPos()).remove(entity);
     }
 }

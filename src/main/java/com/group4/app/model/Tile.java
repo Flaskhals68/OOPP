@@ -6,17 +6,13 @@ import java.io.Serializable;
 
 public class Tile implements IDrawable {
     private String id;
-    private String floor;
     private Set<Tile> neighbors;
-    private int xPos;
-    private int yPos;
+    private Position pos;
     private Set<IPositionable> entities;
 
-    public Tile(String id, String floorId, int xPos, int yPos){
+    public Tile(String id, Position pos){
         this.id = id;
-        this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.pos = pos;
         this.entities = new HashSet<IPositionable>();
         this.calculateNeighbors();
     }
@@ -26,27 +22,19 @@ public class Tile implements IDrawable {
     }
 
     public void setFloor(String floorId){
-        this.floor = floorId;
+        this.pos = new Position(this.pos.getX(), this.pos.getY(), floorId);
     }
 
     public String getFloor(){
-        return this.floor;
+        return this.pos.getFloor();
     }
 
-    public void setXPos(int next){
-        this.xPos = next;
+    public Position getPos() {
+        return new Position(pos.getX(), pos.getY(), pos.getFloor());
     }
 
-    public int getXPos(){
-        return xPos;
-    }
-
-    public void setYPos(int next){
-        this.yPos = next;
-    }
-
-    public int getYPos(){
-        return yPos;
+    public void setPos(Position pos){
+        this.pos = pos;
     }
 
     public void add(IPositionable entity){
@@ -80,7 +68,8 @@ public class Tile implements IDrawable {
         for (int x=-1; x<2; x++){
             for (int y=-1; y<2; y++){
                 try {
-                    Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
+                    // Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
+                    Tile tile = Model.getInstance().getTile(new Position(getPos().getX()+x, getPos().getY()+y, getFloor()));
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);
@@ -97,9 +86,9 @@ public class Tile implements IDrawable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((floor == null) ? 0 : floor.hashCode());
-        result = prime * result + xPos;
-        result = prime * result + yPos;
+        result = prime * result + ((getFloor() == null) ? 0 : getFloor().hashCode());
+        result = prime * result + getPos().getX();
+        result = prime * result + getPos().getY();
         return result;
     }
 
@@ -112,14 +101,14 @@ public class Tile implements IDrawable {
         if (getClass() != obj.getClass())
             return false;
         Tile other = (Tile) obj;
-        if (floor == null) {
-            if (other.floor != null)
+        if (getFloor() == null) {
+            if (other.getFloor() != null)
                 return false;
-        } else if (!floor.equals(other.floor))
+        } else if (!getFloor().equals(other.getFloor()))
             return false;
-        if (xPos != other.xPos)
+        if (getPos().getX() != other.getPos().getX())
             return false;
-        if (yPos != other.yPos)
+        if (getPos().getY() != other.getPos().getY())
             return false;
         return true;
     }

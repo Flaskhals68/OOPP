@@ -1,30 +1,56 @@
 package com.group4.app.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
+import java.util.Random;
 
-import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.IAction;
+public class Player extends Creature {
 
-public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
-    private ResourceBar hp;
-    private ResourceBar ap;
-    private Weapon weapon;
-    private Inventory inv;
-    private Set<IAction<Position>> positionActions;
-    private Set<IAction<IAttackable>> attackActions;
+    private ResourceBar xp;
+    private Attributes attributes;
 
-    public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
-        super(id, floorId, xPos, yPos);
-        this.hp = new ResourceBar(hp);
-        this.ap = new ResourceBar(ap);
-        this.weapon = weapon;
-        this.inv = new Inventory();
-        this.positionActions = new HashSet<IAction<Position>>();
-        this.attackActions = new HashSet<IAction<IAttackable>>();
+    public Player(String id, int ap, Weapon weapon, Position position) {
+        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+        this.xp = new ResourceBar(10);
+    }
+
+    public void giveXP(int amount) {
+        xp.increaseCurrent(amount);
+        if (xp.getCurrent() == xp.getMax()) {
+            levelUp();
+            xp.setCurrent(0);
+        }
+    }
+
+
+    /**
+     * Current implementation before we have a proper level up system
+     * TODO: We want the player to be able to decide themselves what to increase!
+     */
+    private void levelUp() {
+        this.setLevel(this.getLevel() + 1);
+        Attributes attr = this.getAttributes();
+
+        switch (new Random().nextInt(6)) {
+            case 0:
+                attr.levelUpStat(AttributeType.STRENGTH);
+                break;
+            case 1:
+                attr.levelUpStat(AttributeType.DEXTERITY);
+                break;
+            case 2:
+                attr.levelUpStat(AttributeType.CONSTITUTION);
+                break;
+            case 3:
+                attr.levelUpStat(AttributeType.PERCEPTION);
+                break;
+            case 4:
+                attr.levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
+                break;
+            case 5:
+                attr.levelUpStat(AttributeType.RANGED_WEAPON_SKILL);
+                break;
+            default:
+                break;
+        }
     }
 
   @Override
@@ -70,63 +96,20 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
     }
 
     @Override
-    public int getHitPoints() {
-        return hp.getCurrent();
-    }
-
     public void startTurn() {
         Model.getInstance().startPlayerTurn();
+        // TODO : Implement player turn
     }
 
-    private void endTurn() {
+    @Override
+    public void endTurn() {
         Model.getInstance().endPlayerTurn();
     }
 
-    public int getAp() {
-        return this.ap.getCurrent();
-    }
 
-    public void refillAp() {
-        this.ap.setCurrent(this.ap.getMax());
-    }
-
-    public void useAp(int amount) {
-        if (this.ap.getCurrent() < amount) {
-            throw new IllegalArgumentException();
-        }
-        this.ap.reduceCurrent(amount);
-        // if (this.ap.getCurrent() <= 0){
-        //   this.endTurn();
-        // }
-    }
-
-    /**
-     * Use this in model later to fetch (and remove) a specific item to from a players inventory
-     *
-     * @param name name of the item you would like to fetch from the inventory
-     * @return the item object
-     */
-    public IInventoriable fetchItemFromInventory(String name) {
-        return inv.getItem(name);
-    }
-
-    public void addItemToInventory(IInventoriable item) {
-        inv.addItem(item);
-    }
-
-    /**
-     * Should make it easy to draw inventory in the view later
-     *
-     * @return HashMap with item names as keys, and amount of that item as values
-     */
-    public Map<String, Integer> getInventoryItems() {
-        Map<String, Stack<IInventoriable>> ogMap = inv.getItems();
-        Map<String, Integer> returnMap = new HashMap<>();
-
-        // Should count how many of each item there exist. To make drawing them simple
-        ogMap.forEach((key, value) -> {
-            returnMap.put(key, value.size());
-        });
-        return returnMap;
+    @Override
+    public void death() {
+        // TODO : Implement player death
+        System.out.println("Player died");
     }
 }

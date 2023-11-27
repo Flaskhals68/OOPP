@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.group4.app.view.GameWindow;
-import com.group4.app.view.WorldView;
-
 public class Model {
     private static Model instance = null;
     private List<IModelObserver> observers;
@@ -37,30 +34,37 @@ public class Model {
         this.turnHandler = new TurnHandler();
     }
 
-    public void addBasicMap(int size){
+    public void addBasicMap(int size, double emptyChance){
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
-        world.addTile(new Tile("stone", world.getId(), 0, 0));
+        world.addTile(new Tile("stone", new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
-                if(r> 0.1){
-                    world.addTile(new Tile("stone", world.getId(), x, y));
+                if(r> emptyChance){
+                    world.addTile(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
-                        Enemy e = EnemyFactory.createZombie();
-                        add(e, world.getId(), x, y);
+                        Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                        add(e, new Position(x, y, world.getId()));
                     }
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 0, 0);
-        add(player, world.getId(), player.getXPos(), player.getYPos());
+        this.player = new Player(PLAYER_ID, 3, null, new Position(0, 0, world.getId()));
+        add(player, player.getPos());
+    }
+
+    public void addBasicMap(int size) {
+        addBasicMap(size, 0.1);
     }
 
     public void addWorld(World world){
         this.floors.put(world.getId(), world);
+        if (this.currentWorld == null){
+            this.currentWorld = world;
+        }
     }
 
     private World getWorld(String floorId){
@@ -75,25 +79,21 @@ public class Model {
         return this.player;
     }
 
-    public int getPlayerX(){
-        return this.player.getXPos();
+    public Position getPlayerPos() {
+        return this.player.getPos();
     }
 
-    public int getPlayerY(){
-        return this.player.getYPos();
+    public Tile getTile(Position pos){
+        return this.getWorld(pos.getFloor()).getTile(pos);
     }
 
-    public Tile getTile(String floorId, int xPos, int yPos){
-        return this.getWorld(floorId).getTile(xPos, yPos);
+    public Set<IPositionable> getEntities(Position pos){
+        return getTile(pos).getEntities();
     }
 
-    public Set<IPositionable> getEntities(String floorId, int xPos, int yPos){
-        return getTile(floorId, xPos, yPos).getEntities();
-    }
-
-    public List<IDrawable> getDrawables(String floorId, int xPos, int yPos){
-        IDrawable[] entities = getEntities(floorId, xPos, yPos).toArray(new IDrawable[0]);
-        IDrawable tile = getTile(floorId, xPos, yPos);
+    public List<IDrawable> getDrawables(String floorId, Position pos){
+        IDrawable[] entities = getEntities(pos).toArray(new IDrawable[0]);
+        IDrawable tile = getTile(pos);
         ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
         drawables.add(tile);
         for (IDrawable entity : entities){
@@ -102,12 +102,12 @@ public class Model {
         return drawables;
     }
 
-    public void add(Entity entity, String floorId, int xPos, int yPos){
-        this.getWorld(floorId).add(entity, xPos, yPos);
+    public void add(Entity entity, Position pos){
+        this.getWorld(pos.getFloor()).add(entity, xPos, yPos);
     }
 
     public void add(IPositionable entity, String floorId, int xPos, int yPos){
-        this.getWorld(floorId).add(entity, xPos, yPos);
+        this.getWorld(floorId).add(entity, pos);
     }
 
     public void remove(Entity entity){
@@ -139,7 +139,7 @@ public class Model {
      * 
      * @return the id of the current world.
      */
-    private String getCurrentWorldId(){
+    public String getCurrentWorldId(){
         return this.currentWorld.getId();
     }
 
@@ -150,12 +150,12 @@ public class Model {
      * @return Returns true if the given x and y positions are within the bounds of the current world, and
      * if a tile exists at the given position. If not, return false.
      */
-    public boolean isValidCoordinates(int x, int y){
-        if(x < 0 || x > getWorld(getCurrentWorldId()).getWorldWidth()-1 || y <0 || y > getWorld(getCurrentWorldId()).getWorldHeight() - 1){
+    public boolean isValidCoordinates(Position pos){
+        if(pos.getX() < 0 || pos.getX() > getWorld(getCurrentWorldId()).getWorldWidth()-1 || pos.getY() <0 || pos.getY() > getWorld(getCurrentWorldId()).getWorldHeight() - 1){
             return false;
         }
         else{
-            if(getTile(getCurrentWorldId(), x, y) == null){
+            if(getTile(pos) == null){
                 return false;
             }
             return true;
@@ -199,15 +199,23 @@ public class Model {
      * @param victim the entity getting hit
      */
     public void performAttackAction(ICanAttack attacker, IAttackable victim) {
-        int xDiff = Math.abs(attacker.getXPos() - victim.getXPos());
-        int yDiff = Math.abs(attacker.getYPos() - victim.getYPos());
+        int xDiff = Math.abs(attacker.getPos().getX() - victim.getPos().getX());
+        int yDiff = Math.abs(attacker.getPos().getY() - victim.getPos().getY());
 
         if(!attacker.getFloor().equals(victim.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
         } else if(xDiff <= 1 && yDiff <= 1) {
-            victim.takeHit(attacker.getDamage());
+            attacker.attack(victim);
         } else {
             throw new IllegalArgumentException("Attacker is out of range");
         }
+    }
+
+    public Set<Position> getSurrounding(Position pos, int steps) {
+        return PathfindingHelper.getSurrounding(getTile(pos), steps);
+    }
+
+    public void giveExperience(int xp) {
+        player.giveXP(xp);
     }
 }
