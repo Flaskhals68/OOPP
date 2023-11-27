@@ -30,8 +30,8 @@ public class Armour implements IInventoriable{
     }
 
     /**
-     * Since this is a weapon, use simply equips the weapon
-     * @param user the user that would like to equip this weapon
+     * Since this is armour, use simply equips the armour
+     * @param user the user that would like to equip this armour
      */
     public void use(IUser user) {
         user.setArmour(this);
