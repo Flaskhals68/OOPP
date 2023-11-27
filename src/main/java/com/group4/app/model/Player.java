@@ -27,9 +27,9 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
             throw new IllegalArgumentException("Illegal move");
         }
 
-        Model.getInstance().removeEntity(this);
+        Model.getInstance().remove(this);
         this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+        Model.getInstance().add(this, getFloor(), pos.getX(), pos.getY());
   }
 
     @Override

@@ -50,13 +50,13 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie();
-                        addEntity(e, world.getId(), x, y);
+                        add(e, world.getId(), x, y);
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 100, 3, null, world.getId(), 0, 0);
-        addEntity(player, world.getId(), player.getXPos(), player.getYPos());
+        add(player, world.getId(), player.getXPos(), player.getYPos());
     }
 
     public void addWorld(World world){
@@ -87,7 +87,7 @@ public class Model {
         return this.getWorld(floorId).getTile(xPos, yPos);
     }
 
-    public Set<Entity> getEntities(String floorId, int xPos, int yPos){
+    public Set<IPositionable> getEntities(String floorId, int xPos, int yPos){
         return getTile(floorId, xPos, yPos).getEntities();
     }
 
@@ -102,12 +102,20 @@ public class Model {
         return drawables;
     }
 
-    public void addEntity(Entity entity, String floorId, int xPos, int yPos){
-        this.getWorld(floorId).addEntity(entity, xPos, yPos);
+    public void add(Entity entity, String floorId, int xPos, int yPos){
+        this.getWorld(floorId).add(entity, xPos, yPos);
     }
 
-    public void removeEntity(Entity entity){
-        this.getWorld(entity.getFloor()).removeEntity(entity);
+    public void add(IPositionable entity, String floorId, int xPos, int yPos){
+        this.getWorld(floorId).add(entity, xPos, yPos);
+    }
+
+    public void remove(Entity entity){
+        this.getWorld(entity.getFloor()).remove(entity);
+    }
+
+    public void remove(IPositionable positionable){
+        this.getWorld(positionable.getFloor()).remove(positionable);
     }
 
     public void startPlayerTurn(){

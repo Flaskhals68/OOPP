@@ -29,7 +29,7 @@ public class World {
         return this.tiles[xPos][yPos];
     }
 
-    public Set<Entity> getEntities(int xPos, int yPos){
+    public Set<IPositionable> getEntities(int xPos, int yPos){
         return this.tiles[xPos][yPos].getEntities();
     }
 
@@ -37,11 +37,11 @@ public class World {
         this.tiles[tile.getXPos()][tile.getYPos()] = tile;
     }
 
-    public void addEntity(Entity entity, int xPos, int yPos){
-        this.getTile(xPos, yPos).addEntity(entity);
+    public void add(IPositionable entity, int xPos, int yPos){
+        this.getTile(xPos, yPos).add(entity);
     }
 
-    public void removeEntity(Entity entity){
-        this.getTile(entity.getXPos(), entity.getYPos()).removeEntity(entity);
+    public void remove(IPositionable entity){
+        this.getTile(entity.getXPos(), entity.getYPos()).remove(entity);
     }
 }
