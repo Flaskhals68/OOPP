@@ -17,9 +17,9 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), new Position(2, 2, world.getId()));
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), new Position(3, 1, world.getId()));
+        Tile eTile = new Tile("stone", new Position(3, 1, world.getId()));
         world.addTile(eTile);
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));
@@ -41,9 +41,9 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), new Position(2, 2, world.getId()));
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), new Position(0, 0, world.getId()));
+        Tile eTile = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(eTile);
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));
@@ -64,9 +64,9 @@ public class TestModel {
         Model.getInstance().addWorld(world1);
         Model.getInstance().addWorld(world2);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world1.getId(), new Position(2, 2, world1.getId()));
+        Tile pTile = new Tile("stone", new Position(2, 2, world1.getId()));
         world1.addTile(pTile);
-        Tile eTile = new Tile("stone", world2.getId(), new Position(3, 1, world2.getId()));
+        Tile eTile = new Tile("stone", new Position(3, 1, world2.getId()));
         world2.addTile(eTile);
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world1.getId(), new Position(2, 2, world1.getId()));
@@ -85,9 +85,9 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), new Position(2, 2, world.getId()));
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), new Position(3, 1, world.getId()));
+        Tile eTile = new Tile("stone", new Position(3, 1, world.getId()));
         world.addTile(eTile);
 
         Player p = new Player("player", 3, WeaponFactory.createSword(), world.getId(), new Position(2, 2, world.getId()));

@@ -39,7 +39,7 @@ public class TestPathFinderHelper {
         model.addBasicMap(10, 0);
         String worldId = model.getCurrentWorldId();
         Set<Position> correctPositions = debugAddBasicMap(startX, startY, worldId);
-        Tile startingTile = model.getTile(worldId, new Position(startX, startY, worldId));
+        Tile startingTile = model.getTile(new Position(startX, startY, worldId));
         Set<Position> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
         assertTrue(correctPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
     }
@@ -49,8 +49,8 @@ public class TestPathFinderHelper {
         Model model = Model.getInstance();
         model.addBasicMap(5, 0);
         String worldId = model.getCurrentWorldId();
-        Tile start = model.getTile(worldId, new Position(0, 0, worldId));
-        Tile goal = model.getTile(worldId, new Position(2, 0, worldId));
+        Tile start = model.getTile(new Position(0, 0, worldId));
+        Tile goal = model.getTile(new Position(2, 0, worldId));
         List<Position> path = PathfindingHelper.getShortestPath(start, goal);
 
         LinkedList<Position> correctPath1 = new LinkedList<>();
@@ -71,8 +71,8 @@ public class TestPathFinderHelper {
         // World world = new World(5);
         model.addBasicMap(5, 0);
         String worldId = model.getCurrentWorldId();
-        Tile start = model.getTile(worldId, new Position(0, 3, worldId));
-        Tile goal = model.getTile(worldId, new Position(4, 3, worldId));
+        Tile start = model.getTile(new Position(0, 3, worldId));
+        Tile goal = model.getTile(new Position(4, 3, worldId));
         List<Position> path = PathfindingHelper.getPathNextTo(start, goal);
         LinkedList<Position> correctPath = new LinkedList<>();
         

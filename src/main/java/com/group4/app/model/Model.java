@@ -38,12 +38,12 @@ public class Model {
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
-        world.addTile(new Tile("stone", world.getId(), new Position(0, 0, world.getId())));
+        world.addTile(new Tile("stone", new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.addTile(new Tile("stone", world.getId(), new Position(x, y, world.getId())));
+                    world.addTile(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie();
@@ -87,17 +87,17 @@ public class Model {
         return this.player.getYPos();
     }
 
-    public Tile getTile(String floorId, Position pos){
-        return this.getWorld(floorId).getTile(pos);
+    public Tile getTile(Position pos){
+        return this.getWorld(pos.getFloor()).getTile(pos);
     }
 
     public Set<Entity> getEntities(String floorId, Position pos){
-        return getTile(floorId, pos).getEntities();
+        return getTile(pos).getEntities();
     }
 
     public List<IDrawable> getDrawables(String floorId, Position pos){
         IDrawable[] entities = getEntities(floorId, pos).toArray(new IDrawable[0]);
-        IDrawable tile = getTile(floorId, pos);
+        IDrawable tile = getTile(pos);
         ArrayList<IDrawable> drawables = new ArrayList<IDrawable>();
         drawables.add(tile);
         for (IDrawable entity : entities){
@@ -151,7 +151,7 @@ public class Model {
             return false;
         }
         else{
-            if(getTile(getCurrentWorldId(), pos) == null){
+            if(getTile(pos) == null){
                 return false;
             }
             return true;
@@ -208,7 +208,7 @@ public class Model {
     }
 
     public Set<Position> getSurrounding(Position pos, int steps) {
-        return PathfindingHelper.getSurrounding(getTile(currentWorld.getId(), pos), steps);
+        return PathfindingHelper.getSurrounding(getTile(pos), steps);
     }
 
     public void giveExperience(int xp) {

@@ -39,7 +39,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     @Override
     public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos);
+        Tile target = Model.getInstance().getTile(pos);
         Set<Position> legalMoves = getLegalMoves();
         if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos(), target.getFloor()))) {
             throw new IllegalArgumentException("Illegal move");
