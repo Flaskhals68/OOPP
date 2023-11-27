@@ -83,9 +83,9 @@ public class WorldView extends JPanel implements IGameView{
      * to be able to draw the tiles and, if there are any, the enteties located at that tile.
      * @param entityPanelGenerator
      */
-    private void drawTile(EntityPanelGenerator entityPanelGenerator){
-        int playerX = model.getPlayerPos().getX();
-        int playerY = model.getPlayerPos().getY();
+    private void addTiles(EntityPanelGenerator entityPanelGenerator){
+        int playerX = controller.getPlayerX();
+        int playerY = controller.getPlayerY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
@@ -104,9 +104,10 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                Position pos = new Position(x, y, model.getPlayerFloor());
-                if(model.isValidCoordinates(pos)) {
-                    JLayeredPane entityPanel = createTile(model, pos);
+                Position pos = new Position(x, y, controller.getPlayerFloor());
+                if(controller.isValidCoordinates(x,y)) {
+                    JLayeredPane entityPanel = createTile(pos);
+                    visibleTiles.put(pos, entityPanel);
                     add(entityPanel, tileConstraints);
                 }
                 else{
@@ -133,7 +134,7 @@ public class WorldView extends JPanel implements IGameView{
     /**
      * Create the actual tile panel and add it's enteties to it.
      */
-    private JLayeredPane createTile(Model model, Position pos){
+    private JLayeredPane createTile(Position pos){
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane
@@ -142,12 +143,12 @@ public class WorldView extends JPanel implements IGameView{
 
         JLayeredPane tileView = getTileView(borderWidth);
 
-        addMouseListenerClickedEvent(x, y, tileView);
+        addMouseListenerClickedEvent(pos.getX(), pos.getY(), tileView);
 
-        addMouseListenerHover(x, y, tileView);
+        addMouseListenerHover(pos.getX(), pos.getY(), tileView);
 
 
-        List<IDrawable> drawables = controller.getDrawables(x, y);
+        List<IDrawable> drawables = controller.getDrawables(pos.getX(), pos.getY());
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
             for(int i = drawables.size()-1; i >= 0; i-- ){

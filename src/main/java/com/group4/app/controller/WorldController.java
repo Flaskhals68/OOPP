@@ -26,38 +26,42 @@ public class WorldController {
     }
 
     public List<IDrawable> getDrawables(int x, int y){
-        return model.getDrawables(model.getPlayerFloor(), x, y);
+        return model.getDrawables(model.getPlayerFloor(), new Position(x,y,model.getPlayerFloor()));
     }
 
     public boolean isValidCoordinates(int x, int y){
-        return model.isValidCoordinates(x, y);
+        return model.isValidCoordinates(new Position(x,y, model.getPlayerFloor()));
     }
 
     public int getPlayerX(){
-        return model.getPlayerX();
+        return model.getPlayerPos().getX();
     }
 
     public int getPlayerY(){
-        return model.getPlayerY();
+        return model.getPlayerPos().getY();
     }
 
     public Set<Position> getLegalMoves(){
-        return PathfindingHelper.getSurrounding(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), 5);
+        return PathfindingHelper.getSurrounding(model.getTile(new Position(getPlayerX(), getPlayerY(), model.getPlayerFloor())), 5);
     }
 
     public Set<Position> getHighlightedPositions(){
         return this.highlightedPositions;
     }
 
+    public String getPlayerFloor(){
+        return model.getPlayerFloor();
+    }
+
     public void movePlayer(int x, int y){
 
-        Position targePosition  = new Position(x, y);
+        Position targePosition  = new Position(x, y, model.getPlayerFloor());
         if(!getLegalMoves().contains(targePosition)){
             throw new IllegalArgumentException("Tile out of range");
         }
         
         //FIXME dont get straight from internal model classes
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(),getPlayerY()), model.getTile(model.getPlayerFloor(), x,y));
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(getPlayerX(),getPlayerY(),model.getPlayerFloor())), model.getTile(new Position(x,y,model.getPlayerFloor())));
 
         highlightedPositions = new HashSet<Position>(positions);
         
@@ -101,9 +105,9 @@ public class WorldController {
      * @param y
      */
     public void mouseHover(int x, int y){
-        Position targetPosition  = new Position(x, y);
+        Position targetPosition  = new Position(x, y, model.getPlayerFloor());
 
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(model.getPlayerFloor(), getPlayerX(), getPlayerY()), model.getTile(model.getPlayerFloor(), x, y));
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(getPlayerX(),getPlayerY(),model.getPlayerFloor())), model.getTile(new Position(x,y,model.getPlayerFloor())));
 
         if(!movementTimerFlag && !hoverFlag){
             if(getLegalMoves().contains(targetPosition)){
