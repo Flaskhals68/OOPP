@@ -40,8 +40,8 @@ public class PathfindingHelper {
     while (!queue.isEmpty()) {
         Entry entry = queue.remove();
         if (!visited.add(entry.tile)) continue;
-
-        Position p = new Position(entry.tile.getXPos(), entry.tile.getYPos());
+        Position entryPos = entry.tile.getPos();
+        Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
         positions.add(p);
 
         if (entry.remainingSteps > 0) {
@@ -167,8 +167,10 @@ public class PathfindingHelper {
     }
     
     private static double guessCost(Tile current, Tile goal) {
-        int dx = goal.getXPos() - current.getXPos();
-        int dy = goal.getYPos() - current.getYPos();
+        Position currentPos = current.getPos();
+        Position goalPos = goal.getPos();
+        int dx = goalPos.getX() - currentPos.getX();
+        int dy = goalPos.getY() - currentPos.getY();
         return Math.sqrt( dx*dx + dy*dy );
     }
     
@@ -177,7 +179,8 @@ public class PathfindingHelper {
         LinkedList<Position> path = new LinkedList<>();
         while (entry.backPointer != null) {
             Tile current = entry.getCurrent();
-            path.addFirst(new Position(current.getXPos(), current.getYPos()));
+            Position currentPos = current.getPos();
+            path.addFirst(new Position(currentPos.getX(), currentPos.getY(), current.getFloor()));
             entry = entry.getBackPointer();
         }
         return path;
