@@ -5,7 +5,6 @@ import java.util.Random;
 public class Player extends Creature {
 
     private ResourceBar xp;
-    private Attributes attributes;
 
     public Player(String id, int ap, Weapon weapon, Position position) {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
@@ -28,6 +27,7 @@ public class Player extends Creature {
     private void levelUp() {
         this.setLevel(this.getLevel() + 1);
         Attributes attr = this.getAttributes();
+
 
         switch (new Random().nextInt(6)) {
             case 0:

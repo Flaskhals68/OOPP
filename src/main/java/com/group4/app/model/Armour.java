@@ -15,18 +15,18 @@ public class Armour implements IInventoriable{
 
     /**
      * Gets the damage reduction of the armour, factoring in the dex bonus
-     * Medium maxed at 70 dex, light gets defence + dex/30, heavy no dex bonus
+     * Medium maxed at 70 dex, light gets defence + (dex above 50) / 10, heavy no dex bonus
      * @param dex the dexterity of the user
      * @return the amount of damage reduction
      */
     public int getDamageReduction(int dex) {
+        int dexBonus = Math.max((dex - 50)/10, 0);
         if(type.equals(ArmourType.MEDIUM)) {
-            int dexBonus = Math.max((dex - 50)/10, 0);
             return defence + Math.min(dexBonus, 2);
         } else if(type.equals(ArmourType.HEAVY)) {
             return defence;
         }
-        return defence + dex/30;
+        return defence + dexBonus;
     }
     public String getName() {
         return name;
