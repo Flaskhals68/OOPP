@@ -83,9 +83,9 @@ public class WorldView extends JPanel implements IGameView{
      * to be able to draw the tiles and, if there are any, the enteties located at that tile.
      * @param entityPanelGenerator
      */
-    private void addTiles(EntityPanelGenerator entityPanelGenerator){
-        int playerX = controller.getPlayerX();
-        int playerY = controller.getPlayerY();
+    private void drawTile(EntityPanelGenerator entityPanelGenerator){
+        int playerX = model.getPlayerPos().getX();
+        int playerY = model.getPlayerPos().getY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
@@ -104,19 +104,19 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                if(controller.isValidCoordinates(x, y)){
-                    JLayeredPane entityPanel = createTile(x, y);
-                    visibleTiles.put(new Position(x,y), entityPanel);
+                Position pos = new Position(x, y, model.getPlayerFloor());
+                if(model.isValidCoordinates(pos)) {
+                    JLayeredPane entityPanel = createTile(model, pos);
                     add(entityPanel, tileConstraints);
                 }
                 else{
                      add(createEmptyTile(), tileConstraints);
                 }
                    
-                }
-
             }
+
         }
+    }
 
     
     /**
@@ -133,7 +133,7 @@ public class WorldView extends JPanel implements IGameView{
     /**
      * Create the actual tile panel and add it's enteties to it.
      */
-    private JLayeredPane createTile(int x, int y){
+    private JLayeredPane createTile(Model model, Position pos){
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane

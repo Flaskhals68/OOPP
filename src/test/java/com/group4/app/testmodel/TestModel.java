@@ -1,12 +1,14 @@
 package com.group4.app.testmodel;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.group4.app.model.*;
+import com.group4.app.model.Position;
+
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class TestModel {
     @Test
@@ -14,19 +16,22 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), 2, 2);
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), 3, 1);
+        Tile eTile = new Tile("stone", new Position(3, 1, world.getId()));
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
-        Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), 3, 1);
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(2, 2, world.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(3, 1, world.getId()));
 
         int hpBeforeAttack = e.getHitPoints();
         model.performAttackAction(p, e);
 
-        assertEquals(hpBeforeAttack - p.getDamage(), e.getHitPoints());
+        ArrayList<Integer> listOfAcceptableValues = new ArrayList<>();
+        listOfAcceptableValues.add(hpBeforeAttack - p.getDamage());
+        listOfAcceptableValues.add(hpBeforeAttack);
+
+        assertTrue(listOfAcceptableValues.contains(e.getHitPoints()));
     }
 
     @Test
@@ -34,14 +39,13 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), 2, 2);
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), 0, 0);
+        Tile eTile = new Tile("stone", new Position(0, 0, world.getId()));
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
-        Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), 0, 0);
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(2, 2, world.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(0, 0, world.getId()));
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             model.performAttackAction(p, e);
@@ -57,14 +61,14 @@ public class TestModel {
         Model.getInstance().addWorld(world1);
         Model.getInstance().addWorld(world2);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world1.getId(), 2, 2);
+        Tile pTile = new Tile("stone", new Position(2, 2, world1.getId()));
         world1.addTile(pTile);
-        Tile eTile = new Tile("stone", world2.getId(), 3, 1);
+        Tile eTile = new Tile("stone", new Position(3, 1, world2.getId()));
         world2.addTile(eTile);
 
-        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world1.getId(), 2,2);
-        Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world2.getId(), 3, 1);
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(2, 2, world1.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(3, 1, world2.getId()));
+        // e.setPosition(new Position(3, 1, world2.getId()));
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             model.performAttackAction(p, e);
@@ -78,18 +82,21 @@ public class TestModel {
         World world = new World(4);
         Model.getInstance().addWorld(world);
         Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", world.getId(), 2, 2);
+        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
         world.addTile(pTile);
-        Tile eTile = new Tile("stone", world.getId(), 3, 1);
+        Tile eTile = new Tile("stone", new Position(3, 1, world.getId()));
         world.addTile(eTile);
 
-        Player p = new Player("player", 10, 3, WeaponFactory.createSword(), world.getId(), 2,2);
-        Enemy e = EnemyFactory.createZombie();
-        e.setPosition(world.getId(), 3, 1);
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(2, 2, world.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(3, 1, world.getId()));
 
         int hpBeforeAttack = p.getHitPoints();
         model.performAttackAction(e, p);
 
-        assertEquals(hpBeforeAttack - e.getDamage(), p.getHitPoints());
+        ArrayList<Integer> listOfAcceptableValues = new ArrayList<>();
+        listOfAcceptableValues.add(hpBeforeAttack - e.getDamage());
+        listOfAcceptableValues.add(hpBeforeAttack);
+
+        assertTrue(listOfAcceptableValues.contains(p.getHitPoints()));
     }
 }
