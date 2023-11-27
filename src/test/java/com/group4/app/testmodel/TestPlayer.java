@@ -127,14 +127,14 @@ public class TestPlayer {
     public void testLevelUpOnKill() {
         Model.getInstance().addBasicMap(10, 0);
         String world = Model.getInstance().getCurrentWorldId();
-        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world));
+        Player p = Model.getInstance().getPlayer();
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, world));
         for(int i = 0; i<5; i++) {
             p.getAttributes().levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
         }
         p.giveXP(9);
-        System.out.println(p.getDamage());
-        Model.getInstance().performAttackAction(p, e);
+        p.attack(e);
+        p.attack(e);
         assertEquals(2, p.getLevel());
     }
 }

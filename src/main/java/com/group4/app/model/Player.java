@@ -8,6 +8,7 @@ public class Player extends Creature {
     public Player(String id, int ap, Weapon weapon, Position position) {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
+        this.xp.setCurrent(0);
     }
 
     public void giveXP(int amount) {
