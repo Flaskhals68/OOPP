@@ -28,6 +28,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
+        this.armour = ArmourFactory.createArmour(ArmourType.NONE, level);
         this.inv = new Inventory();
         this.level = level;
     }
@@ -130,25 +131,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public void takeHit(int damage) {
-        hp.reduceCurrent(damage + getDamageReduction());
+        hp.reduceCurrent(damage - armour.getDamageReduction(attributes.getStat(AttributeType.DEXTERITY)));
         if (hp.getCurrent() <= 0) {
             this.death();
         }
     }
 
-    /**
-     * Calculates the damage reduction from armour, for medium maxed at 2 if at 70 dex
-     * @return the damage reduction from armour
-     */
-    private int getDamageReduction() {
-        if(armour.getType().equals(ArmourType.MEDIUM)) {
-            int dexBonus = Math.max((attributes.getStat(AttributeType.DEXTERITY) - 50)/10, 0);
-            return armour.getDefence() + Math.min(dexBonus, 2);
-        } else if(armour.getType().equals(ArmourType.HEAVY)) {
-            return armour.getDefence();
-        }
-        return armour.getDefence() + attributes.getStat(AttributeType.DEXTERITY)/30;
-    }
 
     /**
      * Implement in subclasses to handle death of entity
