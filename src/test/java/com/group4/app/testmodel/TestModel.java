@@ -99,27 +99,4 @@ public class TestModel {
 
         assertTrue(listOfAcceptableValues.contains(p.getHitPoints()));
     }
-
-    public static void main(String[] args) {
-        World world = new World(4);
-        Model.getInstance().addWorld(world);
-        Model model = Model.getInstance();
-        Tile pTile = new Tile("stone", new Position(2, 2, world.getId()));
-        world.addTile(pTile);
-        Tile eTile = new Tile("stone", new Position(3, 1, world.getId()));
-        world.addTile(eTile);
-
-        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(2, 2, world.getId()));
-        Enemy e = EnemyFactory.createZombie(new Position(1, 1, world.getId()));
-        e.setPosition(new Position(3, 1, world.getId()));
-
-        int hpBeforeAttack = e.getHitPoints();
-        model.performAttackAction(p, e);
-
-        ArrayList<Integer> listOfAcceptableValues = new ArrayList<>();
-        listOfAcceptableValues.add(hpBeforeAttack - p.getDamage());
-        listOfAcceptableValues.add(hpBeforeAttack);
-
-        assertTrue(listOfAcceptableValues.contains(e.getHitPoints()));
-    }
 }
