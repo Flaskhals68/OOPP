@@ -117,4 +117,16 @@ public class TestPlayer {
         assertEquals(basic_claws.getAttack() + 5, p.getDamage());
         assertEquals(p.fetchItemFromInventory("Basic Sword").getName(), "Basic Sword");
     }
+
+    @Test
+    public void testLevelUp() {
+        Model.getInstance().addBasicMap(10, 0);
+        String world = Model.getInstance().getCurrentWorldId();
+        Player p = new Player("player", 3, null, new Position(0, 0, world));
+        for(int i = 0; i<10; i++) {
+            p.giveXP(10);
+        }
+        assertEquals(11, p.getLevel());
+
+    }
 }
