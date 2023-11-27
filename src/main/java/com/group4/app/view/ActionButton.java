@@ -2,6 +2,8 @@ package com.group4.app.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -11,7 +13,7 @@ import com.group4.app.controller.HudController;
 public class ActionButton extends HudButton {
     private HudController controller;
     private String actionId;
-    private boolean isEnabled;
+    private boolean buttonEnabled;
     private Color defaultColor;
 
     public ActionButton(String actionId, String text, Font font, Color color, HudController controller) {
@@ -23,17 +25,24 @@ public class ActionButton extends HudButton {
         this.setBackground(defaultColor);
         this.setBorderPainted(false);
         this.setFocusPainted(false);
-        this.isEnabled = true;
+        this.buttonEnabled = true;
 
-        this.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent evt) {
-                if (isEnabled) {
+        this.addPropertyChangeListener("buttonEnabled", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if (buttonEnabled) {
                     setBackground(defaultColor);
                 } else {
                     setBackground(Color.GRAY);
                 }
             }
         });
+    }
+
+    public void setButtonEnabled(boolean enabled) {
+        boolean oldEnabled = this.buttonEnabled;
+        this.buttonEnabled = enabled;
+        this.firePropertyChange("buttonEnabled", oldEnabled, enabled);
     }
 
     @Override
@@ -49,16 +58,19 @@ public class ActionButton extends HudButton {
     public void setDisabled() {
         this.setEnabled(false);
         this.setBackground(Color.GRAY);
+        this.setButtonEnabled(false);
     }
 
     @Override
     public void setEnabled() {
         this.setEnabled(true);
+        this.setBackground(defaultColor);
+        this.setButtonEnabled(true);
     }
 
     @Override
     public void toggle() {
-        if (this.isEnabled) {
+        if (this.buttonEnabled) {
             this.setDisabled();
         } else {
             this.setEnabled();
