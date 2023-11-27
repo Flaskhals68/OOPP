@@ -3,10 +3,12 @@ package com.group4.app.model;
 public class Position {
     private int x;
     private int y;
+    private String floor;
 
-    public Position(int x, int y) {
+    public Position(int x, int y, String floor) {
         this.x = x;
         this.y = y;
+        this.floor = floor;
     }
 
     public Position(Position pos) {
@@ -17,6 +19,8 @@ public class Position {
     public int getX() { return x; }
 
     public int getY() { return y; }
+
+    public String getFloor() { return floor; }
 
     /**
      * @return Copy of coordinate

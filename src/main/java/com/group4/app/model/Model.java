@@ -38,21 +38,21 @@ public class Model {
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
-        world.addTile(new Tile("stone", world.getId(), new Position(0, 0)));
+        world.addTile(new Tile("stone", world.getId(), new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.addTile(new Tile("stone", world.getId(), new Position(x, y)));
+                    world.addTile(new Tile("stone", world.getId(), new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie();
-                        addEntity(e, world.getId(), new Position(x, y));
+                        addEntity(e, world.getId(), new Position(x, y, world.getId()));
                     }
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, null, world.getId(), new Position(0, 0));
+        this.player = new Player(PLAYER_ID, 3, null, world.getId(), new Position(0, 0, world.getId()));
         addEntity(player, world.getId(), player.getPos());
     }
 

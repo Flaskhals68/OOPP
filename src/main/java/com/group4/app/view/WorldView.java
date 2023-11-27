@@ -94,7 +94,7 @@ public class WorldView extends JPanel implements IGameView{
             for(int j = 0; j < MAX_NUMBER_OF_TILES_PER_ROW; j++){
                 int x = actualX + j;
                 tileConstraints.gridx = j;
-                Position pos = new Position(x, y);
+                Position pos = new Position(x, y, model.getPlayerFloor());
                 if(model.isValidCoordinates(pos)) {
                     JLayeredPane entityPanel = createTile(model, pos);
                     add(entityPanel, tileConstraints);

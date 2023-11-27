@@ -41,7 +41,7 @@ public class PathfindingHelper {
         Entry entry = queue.remove();
         if (!visited.add(entry.tile)) continue;
 
-        Position p = new Position(entry.tile.getXPos(), entry.tile.getYPos());
+        Position p = new Position(entry.tile.getXPos(), entry.tile.getYPos(), entry.tile.getFloor());
         positions.add(p);
 
         if (entry.remainingSteps > 0) {
@@ -177,7 +177,7 @@ public class PathfindingHelper {
         LinkedList<Position> path = new LinkedList<>();
         while (entry.backPointer != null) {
             Tile current = entry.getCurrent();
-            path.addFirst(new Position(current.getXPos(), current.getYPos()));
+            path.addFirst(new Position(current.getXPos(), current.getYPos(), current.getFloor()));
             entry = entry.getBackPointer();
         }
         return path;
