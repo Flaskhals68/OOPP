@@ -77,8 +77,8 @@ public class WorldView extends JPanel implements IGameView{
      * @param entityPanelGenerator
      */
     private void drawTile(EntityPanelGenerator entityPanelGenerator){
-        int playerX = model.getPlayerX();
-        int playerY = model.getPlayerY();
+        int playerX = model.getPlayerPos().getX();
+        int playerY = model.getPlayerPos().getY();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;

@@ -29,12 +29,8 @@ public class Tile implements IDrawable {
         return this.pos.getFloor();
     }
 
-    public int getXPos(){
-        return pos.getX();
-    }
-
-    public int getYPos(){
-        return pos.getY();
+    public Position getPos() {
+        return new Position(pos.getX(), pos.getY(), pos.getFloor());
     }
 
     public void setPos(Position pos){
@@ -73,7 +69,7 @@ public class Tile implements IDrawable {
             for (int y=-1; y<2; y++){
                 try {
                     // Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
-                    Tile tile = Model.getInstance().getTile(new Position(getXPos()+x, getYPos()+y, getFloor()));
+                    Tile tile = Model.getInstance().getTile(new Position(getPos().getX()+x, getPos().getY()+y, getFloor()));
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);
@@ -91,8 +87,8 @@ public class Tile implements IDrawable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getFloor() == null) ? 0 : getFloor().hashCode());
-        result = prime * result + getXPos();
-        result = prime * result + getXPos();
+        result = prime * result + getPos().getX();
+        result = prime * result + getPos().getY();
         return result;
     }
 
@@ -110,9 +106,9 @@ public class Tile implements IDrawable {
                 return false;
         } else if (!getFloor().equals(other.getFloor()))
             return false;
-        if (getXPos() != other.getXPos())
+        if (getPos().getX() != other.getPos().getX())
             return false;
-        if (getYPos() != other.getYPos())
+        if (getPos().getY() != other.getPos().getY())
             return false;
         return true;
     }

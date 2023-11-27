@@ -47,8 +47,8 @@ public class TestPlayer {
         Tile t2 = Model.getInstance().getTile(new Position(0, 1, worldId));
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         p.move(new Position(0, 1, worldId));
-        int[] pos1 = new int[] {t2.getXPos(), t2.getYPos()};
-        int[] pos2 = new int[] {p.getXPos(), p.getYPos()};
+        int[] pos1 = new int[] {t2.getPos().getX(), t2.getPos().getY()};
+        int[] pos2 = new int[] {p.getPos().getX(), p.getPos().getY()};
         assertEquals(pos1[0], pos2[0]);
         assertEquals(pos1[1], pos2[1]);
         assertTrue(t2.getEntities().contains(p));

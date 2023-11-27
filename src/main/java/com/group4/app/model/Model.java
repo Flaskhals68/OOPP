@@ -79,12 +79,8 @@ public class Model {
         return this.player;
     }
 
-    public int getPlayerX(){
-        return this.player.getXPos();
-    }
-
-    public int getPlayerY(){
-        return this.player.getYPos();
+    public Position getPlayerPos() {
+        return this.player.getPos();
     }
 
     public Tile getTile(Position pos){
@@ -195,8 +191,8 @@ public class Model {
      * @param victim the entity getting hit
      */
     public void performAttackAction(ICanAttack attacker, IAttackable victim) {
-        int xDiff = Math.abs(attacker.getXPos() - victim.getXPos());
-        int yDiff = Math.abs(attacker.getYPos() - victim.getYPos());
+        int xDiff = Math.abs(attacker.getPos().getX() - victim.getPos().getX());
+        int yDiff = Math.abs(attacker.getPos().getY() - victim.getPos().getY());
 
         if(!attacker.getFloor().equals(victim.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");

@@ -33,8 +33,9 @@ public class World {
         return this.tiles[pos.getX()][pos.getY()].getEntities();
     }
 
-    public void addTile(Tile tile){
-        this.tiles[tile.getXPos()][tile.getYPos()] = tile;
+    public void addTile(Tile tile) {
+        Position pos = tile.getPos();
+        this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
     public void addEntity(Entity entity, Position pos){

@@ -40,14 +40,6 @@ public class Entity implements IDrawable {
         this.pos = new Position(this.pos.getX(), this.pos.getY(), floorId);
     }
 
-    public int getXPos() {
-        return pos.getX();
-    }
-
-    public int getYPos() {
-        return pos.getY();
-    }
-
     public Position getPos() {
         return this.pos;
     }
