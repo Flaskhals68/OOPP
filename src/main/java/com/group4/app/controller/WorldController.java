@@ -114,11 +114,11 @@ public class WorldController {
             else{
                 highlightedPositions = getLegalMoves();
                 model.updateObservers();
-                throw new IllegalArgumentException("Tile out of range");
+                return;
             }
         }
         else if(movementTimerFlag){
-            throw new IllegalStateException("Movement in progress, tiles not highlighted");
+            return;
         }        
     }
 
