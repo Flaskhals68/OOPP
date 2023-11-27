@@ -40,7 +40,7 @@ public class WorldView extends JPanel implements IGameView{
     private Map<Position, JLayeredPane> renderedTiles = new HashMap<>();
 
     //TODO implement zoom?
-    private static float zoom = 1;
+    private static float zoom = 2;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -137,31 +137,11 @@ public class WorldView extends JPanel implements IGameView{
         int innerWidth = TILE_WIDHT - 2 * borderWidth;
         int innerHeight = TILE_HEIGHT - 2 * borderWidth;
 
-        JLayeredPane tileView = new JLayeredPane();
-        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
-        tileView.setBackground(Color.white);
-        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
+        JLayeredPane tileView = getTileView(borderWidth);
 
-        tileView.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                controller.movePlayer(x, y);
-            }
-        });
+        addMouseListenerClickedEvent(x, y, tileView);
 
-        tileView.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e){
-                controller.mouseHover(x, y);
-            }
-        });
-
-        tileView.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e){
-                controller.mouseExited();
-            }
-        });
+        addMouseListenerHover(x, y, tileView);
 
 
         List<IDrawable> drawables = controller.getDrawables(x, y);
@@ -175,6 +155,56 @@ public class WorldView extends JPanel implements IGameView{
                 p.setBounds(borderWidth, borderWidth, innerWidth, innerHeight);
             }
             }
+        return tileView;
+    }
+
+    /**
+     * Add a mouselistener to a JLayeredPane with a mouseEntered event and a mouseExited event. 
+     * @param x
+     * @param y
+     * @param tileView
+     */
+    private void addMouseListenerHover(int x, int y, JLayeredPane tileView) {
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e){
+                controller.mouseHover(x, y);
+            }
+        });
+
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e){
+                controller.mouseExited();
+            }
+        });
+    }
+
+    /**
+     * Add a mouseListener to a JLayeredPane with a mouseClicked event.
+     * @param x
+     * @param y
+     * @param tileView
+     */
+    private void addMouseListenerClickedEvent(int x, int y, JLayeredPane tileView) {
+        tileView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                controller.movePlayer(x, y);
+            }
+        });
+    }
+
+    /**
+     * Creates and sets the size, background color and border color, and returns a JLayeredPane
+     * @param borderWidth
+     * @return
+     */
+    private JLayeredPane getTileView(int borderWidth) {
+        JLayeredPane tileView = new JLayeredPane();
+        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
+        tileView.setBackground(Color.white);
+        tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
         return tileView;
     }
 
