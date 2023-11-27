@@ -47,7 +47,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
         Model.getInstance().removeEntity(this);
         this.setPosition(getFloor(), pos);
-        Model.getInstance().addEntity(this, getFloor(), pos);
+        Model.getInstance().addEntity(this, pos);
     }
 
     @Override

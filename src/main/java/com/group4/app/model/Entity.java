@@ -15,14 +15,14 @@ public class Entity implements IDrawable {
         this.id = id;
         this.floor = floorId;
         this.pos = pos;
-        Model.getInstance().addEntity(this, floorId, pos);
+        Model.getInstance().addEntity(this, pos);
     }
 
     public void setPosition(String floorId, Position pos) {
         if(this.floor != null) {
             Model.getInstance().removeEntity(this);
         }
-        Model.getInstance().addEntity(this, floorId, pos);
+        Model.getInstance().addEntity(this, pos);
         this.floor = floorId;
         this.pos = pos;
     }

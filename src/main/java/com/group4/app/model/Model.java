@@ -47,13 +47,13 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie();
-                        addEntity(e, world.getId(), new Position(x, y, world.getId()));
+                        addEntity(e, new Position(x, y, world.getId()));
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 3, null, world.getId(), new Position(0, 0, world.getId()));
-        addEntity(player, world.getId(), player.getPos());
+        addEntity(player, player.getPos());
     }
 
     public void addBasicMap(int size) {
@@ -106,8 +106,8 @@ public class Model {
         return drawables;
     }
 
-    public void addEntity(Entity entity, String floorId, Position pos){
-        this.getWorld(floorId).addEntity(entity, pos);
+    public void addEntity(Entity entity, Position pos){
+        this.getWorld(pos.getFloor()).addEntity(entity, pos);
     }
 
     public void removeEntity(Entity entity){
