@@ -10,18 +10,8 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Weapon weapon;
     private Inventory inv;
     private Attributes attributes;
-    public Creature(String id, String floorId, int xPos, int yPos, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id, floorId, xPos, yPos);
-        this.attributes = attr;
-        this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
-        this.ap = new ResourceBar(ap);
-        this.weapon = weapon;
-        this.inv = new Inventory();
-        this.level = level;
-    }
-
-    public Creature(String id, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id);
+    public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
+        super(id, pos);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);
@@ -39,25 +29,22 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     @Override
     public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
+        Tile target = Model.getInstance().getTile(pos);
         Set<Position> legalMoves = getLegalMoves();
-        if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
+        Position targetPos = target.getPos();
+        if (!legalMoves.contains(new Position(targetPos.getX(), targetPos.getY(), target.getFloor()))) {
             throw new IllegalArgumentException("Illegal move");
         }
 
         Model.getInstance().removeEntity(this);
-        this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().addEntity(this, getFloor(), pos.getX(), pos.getY());
+        this.setPosition(pos);
+        Model.getInstance().addEntity(this, pos);
     }
 
     @Override
     public Set<Position> getLegalMoves() {
         // TODO: Change to use players actionpoints instead of static value
         return Model.getInstance().getSurrounding(getPos(), 5);
-    }
-
-    private Position getPos() {
-        return new Position(getXPos(), getYPos());
     }
 
     public void setWeapon(Weapon weapon) {

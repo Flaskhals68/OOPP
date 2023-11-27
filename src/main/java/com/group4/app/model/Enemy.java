@@ -3,8 +3,8 @@ package com.group4.app.model;
 public class Enemy extends Creature {
     private final String name;
 
-    public Enemy(String id, String name, Weapon weapon, int maxAp, Attributes attr, int level) {
-        super(id, maxAp, weapon, attr, level);
+    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level) {
+        super(id, pos, maxAp, weapon, attr, level);
         this.name = name;
     }
 
