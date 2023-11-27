@@ -4,30 +4,24 @@ import java.util.Objects;
 
 public class Entity implements IDrawable {
     private String id;
-    private String floor;
-    private int xPos;
-    private int yPos;
+    private Position pos;
 
     public Entity(String id) {
         this.id = id;
     }
 
-    public Entity(String id, String floorId, int xPos, int yPos) {
+    public Entity(String id, Position pos) {
         this.id = id;
-        this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        Model.getInstance().addEntity(this, floorId, xPos, yPos);
+        this.pos = pos;
+        Model.getInstance().addEntity(this, pos);
     }
 
-    public void setPosition(String floorId, int xPos, int yPos) {
-        if(this.floor != null) {
+    public void setPosition(Position pos) {
+        if(getFloor() != null) {
             Model.getInstance().removeEntity(this);
         }
-        Model.getInstance().addEntity(this, floorId, xPos, yPos);
-        this.floor = floorId;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        Model.getInstance().addEntity(this, pos);
+        this.pos = pos;
     }
 
     public String getId() {
@@ -39,26 +33,18 @@ public class Entity implements IDrawable {
     }
 
     public String getFloor() {
-        return floor;
+        return pos.getFloor();
     }
 
     public void setFloor(String floorId) {
-        this.floor = floorId;
+        this.pos = new Position(this.pos.getX(), this.pos.getY(), floorId);
     }
 
-    public int getXPos() {
-        return xPos;
+    public Position getPos() {
+        return this.pos;
     }
 
-    public void setXPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
-
-    public void setYPos(int yPos) {
-        this.yPos = yPos;
+    public void setPos(Position pos) {
+        this.pos = pos;
     }
 }

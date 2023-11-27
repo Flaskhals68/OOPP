@@ -1,8 +1,5 @@
 package com.group4.app.model;
 
-
-import org.w3c.dom.Attr;
-
 import java.util.Random;
 
 public class Player extends Creature {
@@ -10,8 +7,8 @@ public class Player extends Creature {
     private ResourceBar xp;
     private Attributes attributes;
 
-    public Player(String id, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
-        super(id, floorId, xPos, yPos, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+    public Player(String id, int ap, Weapon weapon, Position position) {
+        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
     }
 
