@@ -1,15 +1,21 @@
 package com.group4.app.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+
+import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.IAction;
 
 public class Player extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
     private ResourceBar hp;
     private ResourceBar ap;
     private Weapon weapon;
     private Inventory inv;
+    private Set<IAction<Position>> positionActions;
+    private Set<IAction<IAttackable>> attackActions;
 
     public Player(String id, int hp, int ap, Weapon weapon, String floorId, int xPos, int yPos) {
         super(id, floorId, xPos, yPos);
@@ -17,6 +23,8 @@ public class Player extends Entity implements IAttackable, ICanAttack, IMovable,
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
         this.inv = new Inventory();
+        this.positionActions = new HashSet<IAction<Position>>();
+        this.attackActions = new HashSet<IAction<IAttackable>>();
     }
 
   @Override
