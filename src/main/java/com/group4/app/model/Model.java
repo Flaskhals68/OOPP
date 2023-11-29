@@ -52,7 +52,7 @@ public class Model {
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, null, new Position(0, 0, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
         addEntity(player, player.getPos());
     }
 
@@ -137,8 +137,7 @@ public class Model {
 
     /**
      * Checks if the given coordinates are valid.
-     * @param x
-     * @param y
+     * @param pos the position to check
      * @return Returns true if the given x and y positions are within the bounds of the current world, and
      * if a tile exists at the given position. If not, return false.
      */

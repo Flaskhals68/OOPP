@@ -95,19 +95,15 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public int getDamage() {
-        if(weapon.getIsRanged()){
-            return weapon.getAttack() + calculateBonusDamageRanged();
+        return weapon.getAttack() + calculateBonusDamage(weapon.getIsRanged());
+    }
+
+    private int calculateBonusDamage(Boolean isRanged) {
+        if(isRanged){
+            return (attributes.getStat(AttributeType.DEXTERITY) - 50) / 10;
         } else {
-            return weapon.getAttack() + calculateBonusDamageMelee();
+            return (attributes.getStat(AttributeType.STRENGTH) - 50) / 10;
         }
-    }
-
-    private int calculateBonusDamageRanged() {
-        return attributes.getStat(AttributeType.DEXTERITY)/10;
-    }
-
-    private int calculateBonusDamageMelee() {
-        return attributes.getStat(AttributeType.STRENGTH)/10;
     }
 
     /**
