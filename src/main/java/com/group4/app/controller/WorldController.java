@@ -33,14 +33,6 @@ public class WorldController {
         return model.isValidCoordinates(new Position(x,y, model.getPlayerFloor()));
     }
 
-    private int getPlayerX(){
-        return model.getPlayerPos().getX();
-    }
-
-    private int getPlayerY(){
-        return model.getPlayerPos().getY();
-    }
-
     public Position getPlayerPosition(){
         return model.getPlayerPos();
     }
@@ -57,17 +49,23 @@ public class WorldController {
         return model.getPlayerFloor();
     }
 
+    /**
+     * Moves the player to a target position. Animates the movement of the player.
+     * @param pos the clicked position
+     */
     public void movePlayer(Position pos){
 
         // Position targePosition  = new Position(x, y, model.getPlayerFloor());
         Position targePosition  = pos;
+        int playerX = getPlayerPosition().getX();
+        int playerY = getPlayerPosition().getY();
 
         if(!getLegalMoves().contains(targePosition)){
             throw new IllegalArgumentException("Tile out of range");
         }
         
         //FIXME dont get straight from internal model classes
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(getPlayerX(),getPlayerY(),model.getPlayerFloor())), model.getTile(targePosition));
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targePosition));
 
         highlightedPositions = new HashSet<Position>(positions);
         
@@ -107,14 +105,16 @@ public class WorldController {
      * Should run when hovering over a tile, updates the positions to be highlighted when hovering over a tile that is within legal movement range.
      * If hovering over a tile that is out of range it throws an IllegalArgumentException.
      * If a movement is happening at the same time when hovering, it throws an IllegalStateException
-     * @param x
-     * @param y
+     * @param pos the position of the tile that the mouse is hovering over
+     * 
      */
     public void mouseHover(Position pos){
-        // Position targetPosition  = new Position(x, y, model.getPlayerFloor());
+        int playerX = getPlayerPosition().getX();
+        int playerY = getPlayerPosition().getY();
+
         Position targetPosition  = pos;
 
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(getPlayerX(),getPlayerY(),model.getPlayerFloor())), model.getTile(targetPosition));
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targetPosition));
 
         if(!movementTimerFlag && !hoverFlag){
             if(getLegalMoves().contains(targetPosition)){
