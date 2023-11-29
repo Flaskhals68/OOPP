@@ -1,15 +1,14 @@
 package com.group4.app.model;
 
-import java.util.Random;
 
 public class Player extends Creature {
 
     private ResourceBar xp;
-    private Attributes attributes;
 
     public Player(String id, int ap, Weapon weapon, Position position) {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
+        this.xp.setCurrent(0);
     }
 
     public void giveXP(int amount) {
@@ -20,37 +19,12 @@ public class Player extends Creature {
         }
     }
 
-
     /**
-     * Current implementation before we have a proper level up system
-     * TODO: We want the player to be able to decide themselves what to increase!
+     * Levels up the player, increases level by 1 and increases one attributes by 10
      */
     private void levelUp() {
-        this.setLevel(this.getLevel() + 1);
-        Attributes attr = this.getAttributes();
-
-        switch (new Random().nextInt(6)) {
-            case 0:
-                attr.levelUpStat(AttributeType.STRENGTH);
-                break;
-            case 1:
-                attr.levelUpStat(AttributeType.DEXTERITY);
-                break;
-            case 2:
-                attr.levelUpStat(AttributeType.CONSTITUTION);
-                break;
-            case 3:
-                attr.levelUpStat(AttributeType.PERCEPTION);
-                break;
-            case 4:
-                attr.levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
-                break;
-            case 5:
-                attr.levelUpStat(AttributeType.RANGED_WEAPON_SKILL);
-                break;
-            default:
-                break;
-        }
+        setLevel(getLevel() + 1);
+        getAttributes().levelUpRandom();
     }
 
 
