@@ -163,8 +163,7 @@ public class WorldView extends JPanel implements IGameView{
 
     /**
      * Add a mouselistener to a JLayeredPane with a mouseEntered event and a mouseExited event. 
-     * @param x
-     * @param y
+     * @param pos the position where the mouse entered
      * @param tileView
      */
     private void addMouseListenerHover(Position pos, JLayeredPane tileView) {
@@ -185,8 +184,7 @@ public class WorldView extends JPanel implements IGameView{
 
     /**
      * Add a mouseListener to a JLayeredPane with a mouseClicked event.
-     * @param x
-     * @param y
+     * @param pos the position where the user has clicked. 
      * @param tileView
      */
     private void addMouseListenerClickedEvent(Position pos, JLayeredPane tileView) {
