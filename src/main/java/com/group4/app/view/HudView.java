@@ -30,11 +30,9 @@ public class HudView extends JPanel implements IGameView {
 
     private Model model;
     private HudController controller;
-    // private GameWindow gameWindow = GameWindow.getInstance();
-    private List<HudButton> btnList = new ArrayList<>();
-    private Map<String, HudButton> btnActionMap = new HashMap<>();
+    private GridBagConstraints constraints = new GridBagConstraints();
 
-    private GridBagConstraints btnConstraints = new GridBagConstraints();
+    private List<SubView> subViews = new ArrayList<>();
 
     public HudView(Model model, HudController controller) {
         this.model = model;
@@ -45,56 +43,21 @@ public class HudView extends JPanel implements IGameView {
     private void initComponents() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.LIGHT_GRAY);
-        btnConstraints.insets = new Insets(5, 5, 5, 5);
         setLayout(new GridBagLayout());
         
-
-        Font defaultFont = new Font("Arial", Font.BOLD, 16);
-
-        createButtons(defaultFont);
-        addButtons();
+        bindSubView(new ButtonPanel(775, BTN_HEIGHT, controller));
     }
 
-    /**
-     * Create buttons without adding them to the JPanel
-     * @param font
-     */
-    private void createButtons(Font font) {
-        bindButton(ButtonFactory.createAttackButton(font, controller));
-        bindButton(ButtonFactory.createEndTurnButton(font, controller));
-    }
-
-    private void bindButton(HudButton btn) {
-        btnList.add(btn);
-        btnActionMap.put(btn.getActionId(), btn);
-    }
-
-    private void addButtons() {
-        // TODO: Get legal actions from model
-        List<String> legalActions = new ArrayList<>();
-        legalActions.add("attack");
-        legalActions.add("endTurn");
-
-        for (HudButton btn : btnList) {
-            this.add(btn);
-            updateButtonState(legalActions, btn);
-        }
-    }
-
-    private void updateButtonState(List<String> legalActions, HudButton btn) {
-        if (legalActions.contains(btn.getActionId())) {
-            btn.setEnabled();
-        } else {
-            btn.setDisabled();
-        }
+    public void bindSubView(SubView subView) {
+        subViews.add(subView);
+        add(subView, constraints);
     }
 
     @Override
     public void updateView() {
-        removeAll();
-        addButtons();
-        revalidate();
-        repaint();
+        for (SubView subView : subViews) {
+            subView.update();
+        }
     }
 
     @Override

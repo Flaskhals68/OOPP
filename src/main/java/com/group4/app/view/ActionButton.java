@@ -2,6 +2,7 @@ package com.group4.app.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -26,6 +27,12 @@ public class ActionButton extends HudButton {
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.buttonEnabled = true;
+
+        // Add margin to all directions
+        // int margin = 10;
+        // this.setMargin(new Insets(margin, margin, margin, margin));
+
+        
 
         this.addPropertyChangeListener("buttonEnabled", new PropertyChangeListener() {
             @Override
