@@ -33,12 +33,16 @@ public class WorldController {
         return model.isValidCoordinates(new Position(x,y, model.getPlayerFloor()));
     }
 
-    public int getPlayerX(){
+    private int getPlayerX(){
         return model.getPlayerPos().getX();
     }
 
-    public int getPlayerY(){
+    private int getPlayerY(){
         return model.getPlayerPos().getY();
+    }
+
+    public Position getPlayerPosition(){
+        return model.getPlayerPos();
     }
 
     public Set<Position> getLegalMoves(){

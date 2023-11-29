@@ -84,16 +84,15 @@ public class WorldView extends JPanel implements IGameView{
      * @param entityPanelGenerator
      */
     private void addTiles(EntityPanelGenerator entityPanelGenerator){
-        int playerX = controller.getPlayerX();
-        int playerY = controller.getPlayerY();
+        Position playerPosition = controller.getPlayerPosition();
 
         //Offsets in both directions from the player
         int centerX = MAX_NUMBER_OF_TILES_PER_ROW/2;
         int centerY = MAX_NUMBER_OF_TILES_PER_ROW/2;
 
         //Used to get the actual positions of each tile in the loop below.
-        int actualX = playerX - centerX;
-        int actualY = playerY - centerY;
+        int actualX = playerPosition.getX() - centerX;
+        int actualY = playerPosition.getY() - centerY;
 
         // reset which tiles are seen by the player 
         visibleTiles = new HashMap<>();
