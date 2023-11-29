@@ -65,6 +65,10 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.armour = armour;
     }
 
+    public void heal(int amount) {
+        hp.increaseCurrent(amount);
+    }
+
     /**
      * Should be called when the entity attacks another entity, determines if attack hits or not
      * @param other the entity that is being attacked
@@ -118,7 +122,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             this.death();
         }
     }
-
 
     /**
      * Implement in subclasses to handle death of entity
