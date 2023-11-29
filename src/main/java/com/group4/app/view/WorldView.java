@@ -143,9 +143,9 @@ public class WorldView extends JPanel implements IGameView{
 
         JLayeredPane tileView = getTileView(borderWidth);
 
-        addMouseListenerClickedEvent(pos.getX(), pos.getY(), tileView);
+        addMouseListenerClickedEvent(pos, tileView);
 
-        addMouseListenerHover(pos.getX(), pos.getY(), tileView);
+        addMouseListenerHover(pos, tileView);
 
 
         List<IDrawable> drawables = controller.getDrawables(pos.getX(), pos.getY());
@@ -168,11 +168,11 @@ public class WorldView extends JPanel implements IGameView{
      * @param y
      * @param tileView
      */
-    private void addMouseListenerHover(int x, int y, JLayeredPane tileView) {
+    private void addMouseListenerHover(Position pos, JLayeredPane tileView) {
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e){
-                controller.mouseHover(x, y);
+                controller.mouseHover(pos);
             }
         });
 
@@ -190,11 +190,11 @@ public class WorldView extends JPanel implements IGameView{
      * @param y
      * @param tileView
      */
-    private void addMouseListenerClickedEvent(int x, int y, JLayeredPane tileView) {
+    private void addMouseListenerClickedEvent(Position pos, JLayeredPane tileView) {
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                controller.movePlayer(x, y);
+                controller.movePlayer(pos);
             }
         });
     }
