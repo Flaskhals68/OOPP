@@ -38,7 +38,7 @@ public class WorldController {
     }
 
     public Set<Position> getLegalMoves(){
-        return PathfindingHelper.getSurrounding(model.getTile(new Position(getPlayerX(), getPlayerY(), model.getPlayerFloor())), 5);
+        return PathfindingHelper.getSurrounding(model.getTile(new Position(getPlayerPosition().getX(), getPlayerPosition().getY(), model.getPlayerFloor())), 5);
     }
 
     public Set<Position> getHighlightedPositions(){
