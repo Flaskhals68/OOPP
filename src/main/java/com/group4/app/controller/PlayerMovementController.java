@@ -13,40 +13,40 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public class WorldController{
-    
+public class PlayerMovementController extends WorldViewController implements IPlayerControllerState{
+
     private Model model;
     private Set<Position> highlightedPositions;
     private boolean movementTimerFlag;
     private boolean hoverFlag;
 
-    public WorldController(Model model){
-        this.model = model;
+    public PlayerMovementController(Model model){
+        super(model);
         this.highlightedPositions = getLegalMoves();
+    }    
+
+    @Override
+    public void mouseClicked(Position position) {
+        movePlayer(position);
     }
 
-    public List<IDrawable> getDrawables(int x, int y){
-        return model.getDrawables(model.getPlayerFloor(), new Position(x,y,model.getPlayerFloor()));
+    @Override
+    public void mouseEntered(Position position) {
+        mouseHover(position);
     }
 
-    public boolean isValidCoordinates(int x, int y){
-        return model.isValidCoordinates(new Position(x,y, model.getPlayerFloor()));
-    }
-
-    public Position getPlayerPosition(){
-        return model.getPlayerPos();
+    @Override
+    public void mouseExited() {
+        mouseExitHover();
     }
 
     public Set<Position> getLegalMoves(){
-        return PathfindingHelper.getSurrounding(model.getTile(new Position(getPlayerPosition().getX(), getPlayerPosition().getY(), model.getPlayerFloor())), 5);
+        return model.getSurrounding(new Position(model.getPlayerPos().getX(), model.getPlayerPos().getY(), model.getPlayerFloor()), 5);
     }
 
-    public Set<Position> getHighlightedPositions(){
+    @Override
+    public Set<Position> getHighlightedPositions() {
         return this.highlightedPositions;
-    }
-
-    public String getPlayerFloor(){
-        return model.getPlayerFloor();
     }
 
     /**
@@ -57,8 +57,8 @@ public class WorldController{
 
         // Position targePosition  = new Position(x, y, model.getPlayerFloor());
         Position targePosition  = pos;
-        int playerX = getPlayerPosition().getX();
-        int playerY = getPlayerPosition().getY();
+        int playerX = model.getPlayerPos().getX();
+        int playerY = model.getPlayerPos().getY();
 
         if(!getLegalMoves().contains(targePosition)){
             throw new IllegalArgumentException("Tile out of range");
@@ -109,8 +109,8 @@ public class WorldController{
      * 
      */
     public void mouseHover(Position pos){
-        int playerX = getPlayerPosition().getX();
-        int playerY = getPlayerPosition().getY();
+        int playerX = model.getPlayerPos().getX();
+        int playerY = model.getPlayerPos().getY();
 
         Position targetPosition  = pos;
 
@@ -136,9 +136,10 @@ public class WorldController{
     /**
      * When exiting a tile, a flag is set to false to indicate that the tile has been left.
      */
-    public void mouseExited(){
+    public void mouseExitHover(){
         if(hoverFlag){
             hoverFlag = false;
         }
     }
+    
 }
