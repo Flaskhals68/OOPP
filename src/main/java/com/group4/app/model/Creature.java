@@ -8,6 +8,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private ResourceBar ap;
     private int level;
     private Weapon weapon;
+    private Armour armour;
     private Inventory inv;
     private Attributes attributes;
     public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
@@ -16,6 +17,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
+        this.armour = ArmourFactory.createArmour(ArmourType.NONE, level);
         this.inv = new Inventory();
         this.level = level;
     }
@@ -53,6 +55,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             inv.addItem(this.weapon);
         }
         this.weapon = weapon;
+    }
+
+    public void setArmour(Armour armour) {
+        // Puts current armour in inventory if player already has one
+        if (!armour.getType().equals(ArmourType.NONE)) {
+            inv.addItem(this.armour);
+        }
+        this.armour = armour;
     }
 
     /**
@@ -103,11 +113,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public void takeHit(int damage) {
-        hp.reduceCurrent(damage);
+        hp.reduceCurrent(damage - armour.getDamageReduction(attributes.getStat(AttributeType.DEXTERITY)));
         if (hp.getCurrent() <= 0) {
             this.death();
         }
     }
+
 
     /**
      * Implement in subclasses to handle death of entity

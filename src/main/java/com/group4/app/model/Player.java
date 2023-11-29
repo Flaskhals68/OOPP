@@ -1,5 +1,6 @@
 package com.group4.app.model;
 
+import java.util.Random;
 
 public class Player extends Creature {
 
