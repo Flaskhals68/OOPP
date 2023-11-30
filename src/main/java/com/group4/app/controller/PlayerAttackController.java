@@ -5,7 +5,7 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public class PlayerAttackController extends WorldViewController implements IPlayerControllerState{
+public class PlayerAttackController extends WorldViewController{
     
     public PlayerAttackController(Model model) {
         super(model);

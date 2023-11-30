@@ -8,5 +8,4 @@ public interface IPlayerControllerState {
     public void mouseClicked(Position position);
     public void mouseEntered(Position position);
     public void mouseExited();
-    public Set<Position> getHighlightedPositions();
 }

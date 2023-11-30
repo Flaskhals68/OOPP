@@ -13,9 +13,8 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public class PlayerMovementController extends WorldViewController implements IPlayerControllerState{
+public class PlayerMovementController extends WorldViewController{
 
-    private Model model;
     private Set<Position> highlightedPositions;
     private boolean movementTimerFlag;
     private boolean hoverFlag;

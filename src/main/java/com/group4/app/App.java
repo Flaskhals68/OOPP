@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 
 import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
+import com.group4.app.controller.PlayerMovementController;
 import com.group4.app.controller.WorldController;
+import com.group4.app.controller.WorldViewController;
 import com.group4.app.model.Model;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
@@ -20,7 +22,7 @@ public class App {
         Model model = Model.getInstance();
         model.addBasicMap(100);
 
-        WorldController worldController = new WorldController(model);
+        WorldViewController worldController = new PlayerMovementController(model);
         WorldView worldView = new WorldView(worldController);
 
         InventoryController inventoryController = new InventoryController();

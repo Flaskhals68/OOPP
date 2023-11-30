@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
 import com.group4.app.controller.WorldController;
+import com.group4.app.controller.WorldViewController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
@@ -34,7 +35,7 @@ import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 
 public class WorldView extends JPanel implements IGameView{
-    private WorldController controller;
+    private WorldViewController controller;
 
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
@@ -58,7 +59,7 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView(WorldController controller) {
+    public WorldView(WorldViewController controller) {
         this.controller = controller;
         initComponents();
 
@@ -72,7 +73,7 @@ public class WorldView extends JPanel implements IGameView{
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
-        colorBorders(controller.getLegalMoves());
+        colorBorders(controller.getHighlightedPositions());
 
 
     }
@@ -170,7 +171,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e){
-                controller.mouseHover(pos);
+                controller.mouseEntered(pos);
             }
         });
 
@@ -191,7 +192,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                controller.movePlayer(pos);
+                controller.mouseClicked(pos);
             }
         });
     }
