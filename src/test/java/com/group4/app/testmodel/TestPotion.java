@@ -13,8 +13,6 @@ public class TestPotion {
     public void testUseHealthPotion() {
         Model.getInstance().addBasicMap(10, 0);
         Player player = Model.getInstance().getPlayer();
-        Potion hpPot = PotionFactory.createHealthPotion();
-        player.addItemToInventory(hpPot);
         int maxHP = player.getHitPoints();
 
         player.takeHit(8);

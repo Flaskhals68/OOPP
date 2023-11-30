@@ -10,6 +10,9 @@ public class Player extends Creature {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
         this.xp.setCurrent(0);
+        for (int i = 0; i < 3; i++) {
+            this.addItemToInventory(PotionFactory.createHealthPotion());
+        }
     }
 
     public void giveXP(int amount) {
