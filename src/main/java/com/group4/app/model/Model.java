@@ -173,12 +173,8 @@ public class Model {
         this.turnHandler.remove(turnTaker);
     }
 
-    public void startTurn(){
-        this.turnHandler.startTurn();
-    }
-
-    public void endTurn(){
-        this.turnHandler.endTurn();
+    public void nextTurn(){
+        this.turnHandler.nextTurn();
     }
 
     public void addObserver(IModelObserver observer){
