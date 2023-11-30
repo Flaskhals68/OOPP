@@ -23,7 +23,7 @@ import com.group4.app.controller.HudController;
 import com.group4.app.model.Model;
 
 public class HudView extends JPanel implements IGameView {
-    private static final int HEIGHT = 75;
+    private static final int HEIGHT = 200;
     private static final int WIDTH = 775;
     private static final int BTN_WIDTH = 50;
     private static final int BTN_HEIGHT = 30;
@@ -45,10 +45,12 @@ public class HudView extends JPanel implements IGameView {
         setBackground(Color.LIGHT_GRAY);
         setLayout(new GridBagLayout());
         
-        bindSubView(new ButtonPanel(775, BTN_HEIGHT, controller));
+        bindSubView(new ButtonPanel(775, BTN_HEIGHT, controller), 0);
+        bindSubView(new AttributePanel(controller), 1);
     }
 
-    public void bindSubView(SubView subView) {
+    public void bindSubView(SubView subView, int gridy) {
+        constraints.gridy = gridy;
         subViews.add(subView);
         add(subView, constraints);
     }

@@ -210,4 +210,8 @@ public class Model {
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }
+
+    public Map<AttributeType, Integer> getPlayerAttributes() {
+        return player.getAttributesMap();
+    }
 }

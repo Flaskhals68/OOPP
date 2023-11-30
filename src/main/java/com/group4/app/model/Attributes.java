@@ -3,6 +3,7 @@ package com.group4.app.model;
 import org.w3c.dom.Attr;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Attributes {
     private int strength;
@@ -31,5 +32,8 @@ public class Attributes {
         this.stats.put(stat, this.stats.get(stat) + 10);
     }
 
+    public Map<AttributeType, Integer> getAttributeMap() {
+        return new HashMap<>(stats);
+    }
 
 }
