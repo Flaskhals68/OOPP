@@ -6,20 +6,31 @@ import java.util.Map;
 
 import com.group4.app.model.AttributeType;
 import com.group4.app.model.Model;
+import com.group4.app.view.ActionState;
 
 public class HudController {
-    private boolean attackAllowed = true;
-    public boolean attackAllowed() {
-        // TODO: Implement logic to check if attack is allowed
-        System.out.println("Attack allowed : " + attackAllowed);
-        return attackAllowed;
-    }
+    // FIXME: Debugging variables
+    private ActionState currentState = ActionState.IDLE;
+
+    // public boolean attackAllowed() {
+    //     // TODO: Implement logic to check if attack is allowed
+    //     System.out.println("Attack allowed : " + attackAllowed);
+    //     return attackAllowed;
+    // }
 
     public void enterAttackState() {
         // TODO: Implement logic to enter attack state
-        if (attackAllowed) System.out.println("Enter attack state");
-        else System.out.println("Enter attack state");
-        attackAllowed = false;
+        System.out.println("Enter attack state");
+        currentState = ActionState.ATTACK;
+    }
+
+    public void exitAttackState() { 
+        System.out.println("Exit attack state");
+        currentState = ActionState.IDLE;
+    }
+
+    public ActionState getActionState() {
+        return currentState;
     }
 
     public void endTurn() {
@@ -35,5 +46,7 @@ public class HudController {
         return legalActions;
     }
 
-    public Map<AttributeType, Integer> getAttributes() { return Model.getInstance().getPlayerAttributes(); }
+    public Map<AttributeType, Integer> getAttributes() { 
+        return Model.getInstance().getPlayerAttributes(); 
+    }
 }

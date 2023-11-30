@@ -28,7 +28,7 @@ public class AttributePanel extends SubView {
     }
     
     private void initComponents() {
-        setPreferredSize(new Dimension(300, 100));
+        setPreferredSize(new Dimension(275, 100));
         setLayout(new GridLayout(2, 3));
         setBackground(Color.WHITE);
         bindStats();
@@ -50,7 +50,7 @@ public class AttributePanel extends SubView {
         for (AttributeType attribute : attributes.keySet()) {
             JLabel label = labelMap.get(attribute);
             label.setText(attribute.toString() + ": " + attributes.get(attribute));
-            add(label);
+            add(label, constraints);
         }
      }
 

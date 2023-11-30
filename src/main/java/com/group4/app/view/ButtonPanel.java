@@ -1,5 +1,6 @@
 package com.group4.app.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,8 +14,6 @@ import javax.swing.JPanel;
 import com.group4.app.controller.HudController;
 
 public class ButtonPanel extends SubView {
-    private static final int HEIGHT = 75;
-    private static final int WIDTH = 775;
     private static final int BTN_WIDTH = 50;
     private static final int BTN_HEIGHT = 30;
 
@@ -32,12 +31,13 @@ public class ButtonPanel extends SubView {
         this.controller = controller;
 
         setPreferredSize(new Dimension(this.width, this.height));
+        setBackground(Color.lightGray);
 
         initComponents();
     }
 
     private void initComponents() {
-        createButtons();
+        bindButtons();
         addButtons();
     }
 
@@ -45,7 +45,7 @@ public class ButtonPanel extends SubView {
      * Create buttons without adding them to the JPanel
      * @param font
      */
-    private void createButtons() {
+    private void bindButtons() {
         bindButton(ButtonFactory.createAttackButton(defaultFont, controller));
         bindButton(ButtonFactory.createEndTurnButton(defaultFont, controller));
     }
@@ -58,7 +58,8 @@ public class ButtonPanel extends SubView {
     private void addButtons() {
         for (HudButton btn : btnList) {
             add(btn, constraints);
-            updateButtonState(controller.getLegalActions(), btn);
+            // updateButtonState(controller.getLegalActions(), btn);
+            btn.updateState();
         }
     }
 

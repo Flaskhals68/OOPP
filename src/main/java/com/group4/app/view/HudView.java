@@ -1,29 +1,19 @@
 package com.group4.app.view;
 
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import org.w3c.dom.events.MouseEvent;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.group4.app.controller.HudController;
 import com.group4.app.model.Model;
 
 public class HudView extends JPanel implements IGameView {
-    private static final int HEIGHT = 200;
+    private static final int HEIGHT = 130;
     private static final int WIDTH = 775;
     private static final int BTN_WIDTH = 50;
     private static final int BTN_HEIGHT = 30;

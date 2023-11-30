@@ -5,34 +5,43 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Action;
+
 import com.group4.app.controller.HudController;
 
 
 
 public class ButtonFactory {
     public static HudButton createAttackButton(Font font, HudController controller) {
-        HudButton attackBtn = new ActionButton("attack", "Attack", font, Color.RED, controller);
-        attackBtn.setFont(font);
-        attackBtn.addMouseListener(new MouseAdapter() {
+        ActionButton attackBtn = new ActionButton("attack", "Attack", font, Color.RED, controller);
+        attackBtn.registerDisabledState(ActionState.DISABLED);
+        attackBtn.bindStateHandler(ActionState.IDLE, new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!attackBtn.isEnabled()) return;
                 controller.enterAttackState();
-                attackBtn.toggle();
             }
         });
+
+        attackBtn.bindStateHandler(ActionState.ATTACK, new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!attackBtn.isEnabled()) return;
+                controller.exitAttackState();
+            }
+        });
+       
         return attackBtn;
     }
 
     public static HudButton createEndTurnButton(Font font, HudController controller) {
-        HudButton endTurnBtn = new ActionButton("endTurn", "End Turn", font, Color.WHITE, controller);
-        endTurnBtn.setFont(font);
+        ActionButton endTurnBtn = new ActionButton("endTurn", "End Turn", font, Color.WHITE, controller);
+        endTurnBtn.registerDisabledState(ActionState.DISABLED);
         endTurnBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!endTurnBtn.isEnabled()) return;
                 controller.endTurn();
-                endTurnBtn.toggle();
             }
         });
         return endTurnBtn;

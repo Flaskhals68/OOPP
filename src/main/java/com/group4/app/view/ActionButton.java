@@ -2,12 +2,14 @@ package com.group4.app.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.group4.app.controller.HudController;
 
@@ -16,6 +18,9 @@ public class ActionButton extends HudButton {
     private String actionId;
     private boolean buttonEnabled;
     private Color defaultColor;
+    private ActionState currentState = ActionState.IDLE;
+    private Map<ActionState, MouseAdapter> stateHandlerMap = new HashMap<>();
+    private List<ActionState> disabledStates = new ArrayList<>();
 
     public ActionButton(String actionId, String text, Font font, Color color, HudController controller) {
         super(text);
@@ -27,12 +32,7 @@ public class ActionButton extends HudButton {
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.buttonEnabled = true;
-
-        // Add margin to all directions
-        // int margin = 10;
-        // this.setMargin(new Insets(margin, margin, margin, margin));
-
-        
+        updateState();
 
         this.addPropertyChangeListener("buttonEnabled", new PropertyChangeListener() {
             @Override
@@ -44,6 +44,35 @@ public class ActionButton extends HudButton {
                 }
             }
         });
+    }
+
+    public void bindStateHandler(ActionState state,  MouseAdapter handler) {
+        stateHandlerMap.put(state, handler);
+    }
+
+    public void removeHandler(ActionState state) {
+        stateHandlerMap.remove(state);
+    }
+
+    public void setState(ActionState state) {
+        currentState = state;
+    }
+
+    public void registerDisabledState(ActionState state) {
+        disabledStates.add(state);
+    }
+
+    @Override
+    public void updateState() {
+        MouseListener[] mouseListners = getMouseListeners();
+        if (getMouseListeners().length > 0) {
+            removeMouseListener(stateHandlerMap.get(currentState));
+        }
+        currentState = controller.getActionState();
+        addMouseListener(stateHandlerMap.get(currentState));
+        MouseAdapter handler = stateHandlerMap.get(currentState);
+        mouseListners = getMouseListeners();
+        updateButtonState();
     }
 
     public void setButtonEnabled(boolean enabled) {
@@ -59,6 +88,15 @@ public class ActionButton extends HudButton {
 
     public HudController getController() {
         return controller;
+    }
+
+    private void updateButtonState() {
+        List<String> legalActions = controller.getLegalActions();
+        if (!disabledStates.contains(currentState) && legalActions.contains(actionId)) {
+            this.setEnabled();
+        } else {
+            this.setDisabled();
+        }
     }
 
     @Override
