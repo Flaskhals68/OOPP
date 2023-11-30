@@ -48,33 +48,6 @@ public class TestPlayer {
         assertEquals(weapon.getAttack(), player.getDamage());
     } 
 
-    // @Test
-    // public void testMove() {
-    //     Model.getInstance().addBasicMap(2, 0);
-    //     String worldId = Model.getInstance().getCurrentWorldId();
-    //     Tile t1 = new Tile("stone", new Position(0, 0, worldId));
-    //     // world.addTile(t1);
-    //     Tile t2 = Model.getInstance().getTile(new Position(0, 1, worldId));
-    //     Player p = new Player("player", 3, null, new Position(0, 0, worldId));
-    //     p.move(new Position(0, 1, worldId));
-    //     int[] pos1 = new int[] {t2.getPos().getX(), t2.getPos().getY()};
-    //     int[] pos2 = new int[] {p.getPos().getX(), p.getPos().getY()};
-    //     assertEquals(pos1[0], pos2[0]);
-    //     assertEquals(pos1[1], pos2[1]);
-    //     assertTrue(t2.getEntities().contains(p));
-    // }
-
-    // @Test
-    // public void testIllegalMove() {
-    //     Model.getInstance().addBasicMap(10, 0);
-    //     String worldId = Model.getInstance().getCurrentWorldId();
-    //     Player p = new Player("player", 5, null, new Position(0, 0, worldId));
-
-    //     assertThrows(IllegalArgumentException.class, () -> {
-    //         p.move(new Position(9, 9, worldId));
-    //     });
-    // }
-
     @Test
     public void testFetchItemFromInventory() {
 

@@ -202,4 +202,12 @@ public class Model {
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }
+
+    public void performPlayerAction(String actionId, Position target) {
+        player.performAction(actionId, target);
+    }
+
+    public void performPlayerAction(String actionId, IAttackable target) {
+        player.performAction(actionId, target);
+    }
 }

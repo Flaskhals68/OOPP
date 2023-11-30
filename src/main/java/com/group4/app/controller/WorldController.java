@@ -70,7 +70,7 @@ public class WorldController {
         highlightedPositions = new HashSet<Position>(positions);
         
         // moves the player the first step to remove delay
-        model.getPlayer().performAction("move", positions.get(0));
+        model.performPlayerAction("move", positions.get(0));
         highlightedPositions.remove(positions.get(0));
         model.updateObservers();
 
@@ -84,7 +84,7 @@ public class WorldController {
             public void actionPerformed(ActionEvent e){
                 // if done with iterating through the positions, stop the timer. 
                 if(currentPosIndex < positions.size()){
-                    model.getPlayer().performAction("move", positions.get(currentPosIndex));
+                    model.performPlayerAction("move", positions.get(currentPosIndex));
                     highlightedPositions.remove(positions.get(currentPosIndex));
                     model.updateObservers();
                     currentPosIndex++;
