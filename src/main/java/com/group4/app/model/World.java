@@ -29,20 +29,20 @@ public class World {
         return this.tiles[pos.getX()][pos.getY()];
     }
 
-    public Set<Entity> getEntities(Position pos){
+    public Set<IPositionable> getEntities(Position pos){
         return this.tiles[pos.getX()][pos.getY()].getEntities();
     }
 
-    public void addTile(Tile tile) {
+    public void add(Tile tile) {
         Position pos = tile.getPos();
         this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
-    public void addEntity(Entity entity, Position pos){
-        this.getTile(pos).addEntity(entity);
+    public void add(IPositionable positionable, Position pos){
+        this.getTile(pos).add(positionable);
     }
 
-    public void removeEntity(Entity entity){
-        this.getTile(entity.getPos()).removeEntity(entity);
+    public void remove(IPositionable positionable){
+        this.getTile(positionable.getPos()).remove(positionable);
     }
 }

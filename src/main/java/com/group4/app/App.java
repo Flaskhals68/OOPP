@@ -20,8 +20,8 @@ public class App {
         Model model = Model.getInstance();
         model.addBasicMap(100);
 
-        WorldController worldController = new WorldController();
-        WorldView worldView = new WorldView(model, worldController);
+        WorldController worldController = new WorldController(model);
+        WorldView worldView = new WorldView(worldController);
 
         InventoryController inventoryController = new InventoryController();
         InventoryView inventoryView = new InventoryView(model, inventoryController);

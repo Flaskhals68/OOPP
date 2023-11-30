@@ -4,14 +4,9 @@ import org.w3c.dom.Attr;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Attributes {
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int perception;
-    private int meleeWeaponSkill;
-    private int rangedWeaponSkill;
     private HashMap<AttributeType, Integer> stats;
 
     public Attributes(int meleeWeaponSkill, int rangedWeaponSkill, int str, int dex, int con, int per) {
@@ -35,5 +30,16 @@ public class Attributes {
     public Map<AttributeType, Integer> getAttributeMap() {
         return new HashMap<>(stats);
     }
+    /**
+     * Should be used to level up a random stat
+     */
+    public void levelUpRandom() {
+        AttributeType[] types = AttributeType.values();
+        int randomIndex = new Random().nextInt(types.length);
+        AttributeType randomType = types[randomIndex];
+        levelUpStat(randomType);
+        System.out.println("Leveled up " + randomType.toString() + " to " + getStat(randomType));
+    }
+
 
 }

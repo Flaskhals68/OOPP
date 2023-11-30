@@ -38,22 +38,22 @@ public class Model {
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
-        world.addTile(new Tile("stone", new Position(0, 0, world.getId())));
+        world.add(new Tile("stone", new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.addTile(new Tile("stone", new Position(x, y, world.getId())));
+                    world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
-                        addEntity(e, new Position(x, y, world.getId()));
+                        add(e, new Position(x, y, world.getId()));
                     }
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, null, new Position(0, 0, world.getId()));
-        addEntity(player, player.getPos());
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
+        add(player, player.getPos());
     }
 
     public void addBasicMap(int size) {
@@ -87,7 +87,7 @@ public class Model {
         return this.getWorld(pos.getFloor()).getTile(pos);
     }
 
-    public Set<Entity> getEntities(Position pos){
+    public Set<IPositionable> getEntities(Position pos){
         return getTile(pos).getEntities();
     }
 
@@ -102,12 +102,24 @@ public class Model {
         return drawables;
     }
 
-    public void addEntity(Entity entity, Position pos){
-        this.getWorld(pos.getFloor()).addEntity(entity, pos);
+    public void add(Tile tile){
+        this.getWorld(tile.getFloor()).add(tile);
     }
 
-    public void removeEntity(Entity entity){
-        this.getWorld(entity.getFloor()).removeEntity(entity);
+    public void add(Entity entity, Position pos){
+        this.getWorld(pos.getFloor()).add(entity, pos);
+    }
+
+    public void add(IPositionable positionable, Position pos){
+        this.getWorld(pos.getFloor()).add(positionable, pos);
+    }
+
+    public void remove(Entity entity){
+        this.getWorld(entity.getFloor()).remove(entity);
+    }
+
+    public void remove(IPositionable positionable){
+        this.getWorld(positionable.getFloor()).remove(positionable);
     }
 
     public void startPlayerTurn(){
@@ -116,7 +128,6 @@ public class Model {
 
     public void endPlayerTurn(){
         this.isPlayerTurn = false;
-        this.endTurn();
     }
 
     public boolean isPlayerTurn(){
@@ -135,10 +146,13 @@ public class Model {
         return this.currentWorld.getId();
     }
 
+    public void setCurrentWorld(String floorId){
+        this.currentWorld = this.getWorld(floorId);
+    }
+
     /**
      * Checks if the given coordinates are valid.
-     * @param x
-     * @param y
+     * @param pos the position to check
      * @return Returns true if the given x and y positions are within the bounds of the current world, and
      * if a tile exists at the given position. If not, return false.
      */
@@ -158,16 +172,8 @@ public class Model {
         this.turnHandler.remove(turnTaker);
     }
 
-    public void startTurn(){
-        this.turnHandler.startTurn();
-    }
-
-    public void endTurn(){
-        this.turnHandler.endTurn();
-    }
-
-    public void movePlayer(Position pos){
-        this.player.move(pos);
+    public void nextTurn(){
+        this.turnHandler.nextTurn();
     }
 
     public void addObserver(IModelObserver observer){
@@ -184,25 +190,6 @@ public class Model {
         }
     }
 
-    /**
-     * Only implemented for melee weapons currently,
-     * but should be relatively simple to adapt for ranged as well in the future
-     * @param attacker the entity doing the attacking
-     * @param victim the entity getting hit
-     */
-    public void performAttackAction(ICanAttack attacker, IAttackable victim) {
-        int xDiff = Math.abs(attacker.getPos().getX() - victim.getPos().getX());
-        int yDiff = Math.abs(attacker.getPos().getY() - victim.getPos().getY());
-
-        if(!attacker.getFloor().equals(victim.getFloor())) {
-            throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
-        } else if(xDiff <= 1 && yDiff <= 1) {
-            attacker.attack(victim);
-        } else {
-            throw new IllegalArgumentException("Attacker is out of range");
-        }
-    }
-
     public Set<Position> getSurrounding(Position pos, int steps) {
         return PathfindingHelper.getSurrounding(getTile(pos), steps);
     }
@@ -213,5 +200,12 @@ public class Model {
 
     public Map<AttributeType, Integer> getPlayerAttributes() {
         return player.getAttributesMap();
+    }
+    public void performPlayerAction(String actionId, Position target) {
+        player.performAction(actionId, target);
+    }
+
+    public void performPlayerAction(String actionId, IAttackable target) {
+        player.performAction(actionId, target);
     }
 }

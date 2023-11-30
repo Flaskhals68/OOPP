@@ -1,8 +1,7 @@
 package com.group4.app.model;
 
 public interface ITurnTaker {
-    void startTurn();
-    void endTurn();
+    void takeTurn();
     int getAp();
     void refillAp();
     void useAp(int amount);

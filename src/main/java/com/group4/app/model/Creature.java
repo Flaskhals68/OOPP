@@ -1,23 +1,52 @@
 package com.group4.app.model;
-
 import java.util.*;
 
-public abstract class Creature extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
+import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.IAction;
+import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.model.actions.PlayerMoveAction;
+
+public abstract class Creature extends Entity implements IAttackable, ICanAttack, ITurnTaker, IUser {
 
     private ResourceBar hp;
     private ResourceBar ap;
     private int level;
     private Weapon weapon;
+    private Armour armour;
     private Inventory inv;
     private Attributes attributes;
+    private Map<String, IAction<Position>> moveActions;
+    private Map<String, IAction<IAttackable>> attackActions;
+
     public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, pos);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);
         this.weapon = weapon;
+        this.armour = ArmourFactory.createArmour(ArmourType.NONE, level);
         this.inv = new Inventory();
         this.level = level;
+        this.moveActions = new HashMap<String, IAction<Position>>();
+        this.attackActions = new HashMap<String, IAction<IAttackable>>();
+        this.addAttackAction("attack", new PlayerAttackAction(1, "attack", this));
+        this.addMoveAction("move", new PlayerMoveAction(1, "move", this));
+    }
+
+    public void performAction(String action, Position target) {
+        if (moveActions.containsKey(action)) {
+            moveActions.get(action).perform(target);
+        } else {
+            throw new IllegalArgumentException("Action not available");
+        }
+    }
+
+    public void performAction(String action, IAttackable target) {
+        if (attackActions.containsKey(action)) {
+            attackActions.get(action).perform(target);
+        } else {
+            throw new IllegalArgumentException("Action not available");
+        }
     }
 
     public int getLevel() {
@@ -27,24 +56,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = lvl;
     }
 
-    @Override
-    public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(pos);
-        Set<Position> legalMoves = getLegalMoves();
-        Position targetPos = target.getPos();
-        if (!legalMoves.contains(new Position(targetPos.getX(), targetPos.getY(), target.getFloor()))) {
-            throw new IllegalArgumentException("Illegal move");
-        }
-
-        Model.getInstance().removeEntity(this);
-        this.setPosition(pos);
-        Model.getInstance().addEntity(this, pos);
+    public void addMoveAction(String actionId, Action<IPositionable, Position> action) {
+        action.setActionTaker(this);
+        moveActions.put(actionId, action);
     }
 
-    @Override
-    public Set<Position> getLegalMoves() {
-        // TODO: Change to use players actionpoints instead of static value
-        return Model.getInstance().getSurrounding(getPos(), 5);
+    public void addAttackAction(String actionId, Action<ICanAttack, IAttackable> action) {
+        action.setActionTaker(this);
+        attackActions.put(actionId, action);
     }
 
     public void setWeapon(Weapon weapon) {
@@ -55,28 +74,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.weapon = weapon;
     }
 
-    /**
-     * Should be called when the entity attacks another entity, determines if attack hits or not
-     * @param other the entity that is being attacked
-     */
-    @Override
-    public void attack(IAttackable other) {
-        // Roll 100 sided dice, if roll is less than or equal to hit chance, hit
-        int roll = new Random().nextInt(100) + 1;
-        if (weapon.getIsRanged()) {
-            if(roll <= attributes.getStat(AttributeType.RANGED_WEAPON_SKILL)) {
-                other.takeHit(this.getDamage());
-            } else {
-                // TODO: Probably add some notification to the player that the attack missed other than console message
-                System.out.println("Missed");
-            }
-        } else {
-            if(roll <= attributes.getStat(AttributeType.MELEE_WEAPON_SKILL)) {
-                other.takeHit(this.getDamage());
-            } else {
-                System.out.println("Missed");
-            }
+    public void setArmour(Armour armour) {
+        // Puts current armour in inventory if player already has one
+        if (!armour.getType().equals(ArmourType.NONE)) {
+            inv.addItem(this.armour);
         }
+        this.armour = armour;
     }
 
     /**
@@ -85,19 +88,15 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public int getDamage() {
-        if(weapon.getIsRanged()){
-            return weapon.getAttack() + calculateBonusDamageRanged();
+        return weapon.getAttack() + calculateBonusDamage(weapon.getIsRanged());
+    }
+
+    private int calculateBonusDamage(Boolean isRanged) {
+        if(isRanged){
+            return (attributes.getStat(AttributeType.DEXTERITY) - 50) / 10;
         } else {
-            return weapon.getAttack() + calculateBonusDamageMelee();
+            return (attributes.getStat(AttributeType.STRENGTH) - 50) / 10;
         }
-    }
-
-    private int calculateBonusDamageRanged() {
-        return attributes.getStat(AttributeType.DEXTERITY)/10;
-    }
-
-    private int calculateBonusDamageMelee() {
-        return attributes.getStat(AttributeType.STRENGTH)/10;
     }
 
     /**
@@ -107,11 +106,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public void takeHit(int damage) {
-        hp.reduceCurrent(damage);
+        hp.reduceCurrent(damage - armour.getDamageReduction(attributes.getStat(AttributeType.DEXTERITY)));
         if (hp.getCurrent() <= 0) {
             this.death();
         }
     }
+
 
     /**
      * Implement in subclasses to handle death of entity
@@ -136,9 +136,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             throw new IllegalArgumentException();
         }
         this.ap.reduceCurrent(amount);
-        if (this.ap.getCurrent() <= 0){
-            this.endTurn();
-        }
     }
 
     /**

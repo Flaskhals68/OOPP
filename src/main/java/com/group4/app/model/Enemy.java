@@ -14,13 +14,12 @@ public class Enemy extends Creature {
 
 
     @Override
-    public void startTurn() {
+    public void takeTurn() {
         // TODO : Implement enemy AI
     }
 
-    @Override
     public void endTurn() {
-        Model.getInstance().endTurn();
+        
     }
 
     @Override
