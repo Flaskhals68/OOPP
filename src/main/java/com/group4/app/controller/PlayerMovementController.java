@@ -57,25 +57,20 @@ public class PlayerMovementController extends WorldViewPlayerController{
      * Moves the player to a target position. Animates the movement of the player.
      * @param pos the clicked position
      */
-    public void movePlayer(Position pos){
+    public void movePlayer(Position targetPosition){
 
-        // Position targePosition  = new Position(x, y, model.getPlayerFloor());
-        Position targePosition  = pos;
-        int playerX = model.getPlayerPos().getX();
-        int playerY = model.getPlayerPos().getY();
+        int playerX = getPlayerPosition().getX();
+        int playerY = getPlayerPosition().getY();
 
-        if(!getLegalMoves().contains(targePosition)){
-            throw new IllegalArgumentException("Tile out of range");
-        }
+        checkIfMovingToLegalPos(targetPosition);
         
         //FIXME dont get straight from internal model classes
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targePosition));
+        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targetPosition));
 
         highlightedPositions = new HashSet<Position>(positions);
         
         // moves the player the first step to remove delay
-        model.movePlayer(positions.get(0));
-        highlightedPositions.remove(positions.get(0));
+        movePlayerOneStep(positions, 0);
 
         // creates and starts the timer.
         Timer movementTimer = new Timer(100, null);
@@ -87,8 +82,7 @@ public class PlayerMovementController extends WorldViewPlayerController{
             public void actionPerformed(ActionEvent e){
                 // if done with iterating through the positions, stop the timer. 
                 if(currentPosIndex < positions.size()){
-                    model.movePlayer(positions.get(currentPosIndex));
-                    highlightedPositions.remove(positions.get(currentPosIndex));
+                    movePlayerOneStep(positions, currentPosIndex);
                     currentPosIndex++;
                 }
                 else{
@@ -103,6 +97,21 @@ public class PlayerMovementController extends WorldViewPlayerController{
  
     }
 
+    private void movePlayerOneStep(List<Position> positions, int positionIndex) {
+        highlightedPositions.remove(positions.get(positionIndex));
+        model.movePlayer(positions.get(positionIndex));
+    }
+
+    /**
+     * 
+     * @param targePosition
+     */
+    private void checkIfMovingToLegalPos(Position targePosition) {
+        if(!getLegalMoves().contains(targePosition)){
+            throw new IllegalArgumentException("Tile out of range");
+        }
+    }
+
     /**
      * Should run when hovering over a tile, updates the positions to be highlighted when hovering over a tile that is within legal movement range.
      * If hovering over a tile that is out of range it throws an IllegalArgumentException.
@@ -110,12 +119,11 @@ public class PlayerMovementController extends WorldViewPlayerController{
      * @param pos the position of the tile that the mouse is hovering over
      * 
      */
-    public void mouseHover(Position pos){
-        int playerX = model.getPlayerPos().getX();
-        int playerY = model.getPlayerPos().getY();
+    public void mouseHover(Position targetPosition){
+        int playerX = getPlayerPosition().getX();
+        int playerY = getPlayerPosition().getY();
 
-        Position targetPosition  = pos;
-
+        //FIXME
         List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targetPosition));
 
         if(!movementTimerFlag && !hoverFlag){
