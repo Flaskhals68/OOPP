@@ -7,14 +7,15 @@ import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 
-public abstract class WorldViewController{
-    Model model;
+public abstract class WorldViewPlayerController{
+    protected Model model;
 
     public abstract void mouseClicked(Position position);
     public abstract void mouseEntered(Position position);
     public abstract void mouseExited();
+    public abstract String getControllerState();
 
-    public WorldViewController(Model model){
+    public WorldViewPlayerController(Model model){
         this.model = model;
     }
 

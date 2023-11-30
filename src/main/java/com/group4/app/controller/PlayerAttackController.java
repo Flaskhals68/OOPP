@@ -5,7 +5,7 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public class PlayerAttackController extends WorldViewController{
+public class PlayerAttackController extends WorldViewPlayerController{
     
     public PlayerAttackController(Model model) {
         super(model);
@@ -13,15 +13,19 @@ public class PlayerAttackController extends WorldViewController{
     }
 
     @Override
-    public void mouseExited() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    public String getControllerState(){
+        return "attack";
     }
 
     @Override
+    public void mouseExited() {}
+
+    @Override
     public Set<Position> getHighlightedPositions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHighlightedPositions'");
+        // TODO
+        // get the range somehow? Meaning the players weapon range prehaps?
+        // works for now
+        return model.getSurrounding(getPlayerPosition(), 1);
     }
 
     @Override

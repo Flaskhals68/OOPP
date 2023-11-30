@@ -13,7 +13,7 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public class PlayerMovementController extends WorldViewController{
+public class PlayerMovementController extends WorldViewPlayerController{
 
     private Set<Position> highlightedPositions;
     private boolean movementTimerFlag;
@@ -23,6 +23,11 @@ public class PlayerMovementController extends WorldViewController{
         super(model);
         this.highlightedPositions = getLegalMoves();
     }    
+
+    @Override
+    public String getControllerState(){
+        return "move";
+    }
 
     @Override
     public void mouseClicked(Position position) {

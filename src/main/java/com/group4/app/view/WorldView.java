@@ -24,8 +24,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
-import com.group4.app.controller.WorldController;
-import com.group4.app.controller.WorldViewController;
+import com.group4.app.controller.WorldViewPlayerController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
@@ -35,7 +34,7 @@ import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 
 public class WorldView extends JPanel implements IGameView{
-    private WorldViewController controller;
+    private WorldViewPlayerController controller;
 
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
@@ -59,7 +58,7 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView(WorldViewController controller) {
+    public WorldView(WorldViewPlayerController controller) {
         this.controller = controller;
         initComponents();
 
@@ -215,9 +214,18 @@ public class WorldView extends JPanel implements IGameView{
      * @param positions set of positions
      */ 
     private void colorBorders(Set<Position> positions){
-        for(Position pos : positions){
-            visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
+        if(controller.getControllerState() == "move"){
+            for(Position pos : positions){
+                visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
+            }
         }
+        else if (controller.getControllerState() == "attack") {
+            for(Position pos : positions){
+                visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.red, 1));
+            }
+        }
+
+        
 
     }
 
