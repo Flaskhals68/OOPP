@@ -10,4 +10,5 @@ public interface IAction<T> {
     Set<T> getTargetable();
     Set<Position> getTargetablePositions();
     String getName();
+    int getApCost();
 }

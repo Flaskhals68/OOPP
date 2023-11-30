@@ -25,6 +25,14 @@ public abstract class Action<A, T> implements IAction<T> {
         return name;
     }
 
+    public A getActionTaker() {
+        return actionTaker;
+    }
+
+    public void setActionTaker(A actionTaker) {
+        this.actionTaker = actionTaker;
+    }
+
     public abstract void perform(T target);
 
     public abstract Set<T> getTargetable();

@@ -1,8 +1,10 @@
 package com.group4.app.model;
-
 import java.util.*;
 
-public abstract class Creature extends Entity implements IAttackable, ICanAttack, IMovable, ITurnTaker, IUser {
+import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.IAction;
+
+public abstract class Creature extends Entity implements IAttackable, ICanAttack, ITurnTaker, IUser {
 
     private ResourceBar hp;
     private ResourceBar ap;
@@ -10,6 +12,9 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Weapon weapon;
     private Inventory inv;
     private Attributes attributes;
+    private Map<String, IAction<Position>> tileActions;
+    private Map<String, IAction<IAttackable>> attackActions;
+
     public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, pos);
         this.attributes = attr;
@@ -18,6 +23,8 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.weapon = weapon;
         this.inv = new Inventory();
         this.level = level;
+        this.tileActions = new HashMap<String, IAction<Position>>();
+        this.attackActions = new HashMap<String, IAction<IAttackable>>();
     }
 
     public int getLevel() {
@@ -27,24 +34,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = lvl;
     }
 
-    @Override
-    public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(pos);
-        Set<Position> legalMoves = getLegalMoves();
-        Position targetPos = target.getPos();
-        if (!legalMoves.contains(new Position(targetPos.getX(), targetPos.getY(), target.getFloor()))) {
-            throw new IllegalArgumentException("Illegal move");
-        }
-
-        Model.getInstance().removeEntity(this);
-        this.setPosition(pos);
-        Model.getInstance().addEntity(this, pos);
+    public void addTileAction(String actionId, Action<Creature, Position> action) {
+        action.setActionTaker(this);
+        tileActions.put(actionId, action);
     }
 
-    @Override
-    public Set<Position> getLegalMoves() {
-        // TODO: Change to use players actionpoints instead of static value
-        return Model.getInstance().getSurrounding(getPos(), 5);
+    public void addAttackAction(String actionId, Action<ICanAttack, IAttackable> action) {
+        action.setActionTaker(this);
+        attackActions.put(actionId, action);
     }
 
     public void setWeapon(Weapon weapon) {
@@ -55,27 +52,19 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.weapon = weapon;
     }
 
-    /**
-     * Should be called when the entity attacks another entity, determines if attack hits or not
-     * @param other the entity that is being attacked
-     */
-    @Override
-    public void attack(IAttackable other) {
-        // Roll 100 sided dice, if roll is less than or equal to hit chance, hit
-        int roll = new Random().nextInt(100) + 1;
-        if (weapon.getIsRanged()) {
-            if(roll <= attributes.getStat(AttributeType.RANGED_WEAPON_SKILL)) {
-                other.takeHit(this.getDamage());
-            } else {
-                // TODO: Probably add some notification to the player that the attack missed other than console message
-                System.out.println("Missed");
-            }
+    public void performAction(String action, Position target) {
+        if (tileActions.containsKey(action)) {
+            tileActions.get(action).perform(target);
         } else {
-            if(roll <= attributes.getStat(AttributeType.MELEE_WEAPON_SKILL)) {
-                other.takeHit(this.getDamage());
-            } else {
-                System.out.println("Missed");
-            }
+            throw new IllegalArgumentException("Action not available");
+        }
+    }
+
+    public void performAction(String action, IAttackable target) {
+        if (attackActions.containsKey(action)) {
+            attackActions.get(action).perform(target);
+        } else {
+            throw new IllegalArgumentException("Action not available");
         }
     }
 

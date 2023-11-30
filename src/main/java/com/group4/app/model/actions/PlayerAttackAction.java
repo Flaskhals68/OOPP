@@ -11,9 +11,6 @@ import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
 public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
-    private int apCost;
-    private String name;
-    private ICanAttack actionTaker;
     
     public PlayerAttackAction(int apCost, String name, ICanAttack actionTaker) {
         super(apCost, name, actionTaker);
@@ -26,31 +23,26 @@ public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
      * @param victim the entity getting hit
      */
     public void perform(IAttackable target) {
+        int xDiff = Math.abs(this.getActionTaker().getPos().getX() - target.getPos().getX());
+        int yDiff = Math.abs(this.getActionTaker().getPos().getY() - target.getPos().getY());
 
-        if (target instanceof IAttackable) {
-            throw new IllegalArgumentException("Target is not attackable");
-        }
-
-        int xDiff = Math.abs(actionTaker.getXPos() - target.getXPos());
-        int yDiff = Math.abs(actionTaker.getYPos() - target.getYPos());
-
-        if(!actionTaker.getFloor().equals(target.getFloor())) {
+        if(!this.getActionTaker().getFloor().equals(target.getFloor())) {
             throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
-        } else if(xDiff > 1 && yDiff > 1) {
+        } else if(xDiff > 1 || yDiff > 1) {
             throw new IllegalArgumentException("Attacker is out of range");
         }
 
-        (target).takeHit(actionTaker.getDamage());
+        (target).takeHit(this.getActionTaker().getDamage());
     }
 
     public Set<IAttackable> getTargetable() {
         Set<Position> positions = this.getTargetablePositions();
         Set<IAttackable> attackables = new HashSet<IAttackable>();
         for (Position position : positions) {
-            Set<IPositionable> entities = Model.getInstance().getEntities(actionTaker.getFloor(), position.getX(), position.getY());
-            for (IPositionable entity : entities) {
-                if (entity instanceof IAttackable) {
-                    attackables.add((IAttackable) entity);
+            Set<IPositionable> positionables = Model.getInstance().getEntities(position);
+            for (IPositionable positionable : positionables) {
+                if (positionable instanceof IAttackable) {
+                    attackables.add((IAttackable) positionable);
                 }
             }
         }
@@ -58,6 +50,8 @@ public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
     }
 
     public Set<Position> getTargetablePositions() {
-        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(actionTaker.getFloor(), actionTaker.getYPos(), actionTaker.getYPos()), 5);
+        Set<Position> positions = PathfindingHelper.getSurrounding(Model.getInstance().getTile(this.getActionTaker().getPos()), 1);
+        positions.remove(this.getActionTaker().getPos());
+        return positions;
     }
 }

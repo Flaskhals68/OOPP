@@ -182,10 +182,6 @@ public class Model {
         this.turnHandler.endTurn();
     }
 
-    public void movePlayer(Position pos){
-        this.player.move(pos);
-    }
-
     public void addObserver(IModelObserver observer){
         this.observers.add(observer);
     }
@@ -197,25 +193,6 @@ public class Model {
     public void updateObservers(){
         for (IModelObserver observer : this.observers){
             observer.update();
-        }
-    }
-
-    /**
-     * Only implemented for melee weapons currently,
-     * but should be relatively simple to adapt for ranged as well in the future
-     * @param attacker the entity doing the attacking
-     * @param victim the entity getting hit
-     */
-    public void performAttackAction(ICanAttack attacker, IAttackable victim) {
-        int xDiff = Math.abs(attacker.getPos().getX() - victim.getPos().getX());
-        int yDiff = Math.abs(attacker.getPos().getY() - victim.getPos().getY());
-
-        if(!attacker.getFloor().equals(victim.getFloor())) {
-            throw new IllegalArgumentException("Attacker and victim are on different floors/worlds");
-        } else if(xDiff <= 1 && yDiff <= 1) {
-            attacker.attack(victim);
-        } else {
-            throw new IllegalArgumentException("Attacker is out of range");
         }
     }
 

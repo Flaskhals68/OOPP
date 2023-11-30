@@ -7,9 +7,6 @@ import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
 public class PlayerMoveAction extends Action<IPositionable, Position>{
-    private int apCost;
-    private String name;
-    private IPositionable actionTaker;
     
     public PlayerMoveAction(int apCost, String name, IPositionable actionTaker) {
         super(apCost, name, actionTaker);
@@ -21,14 +18,13 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
             throw new IllegalArgumentException("Illegal move");
         }
 
-        Model.getInstance().remove(actionTaker);
-        actionTaker.setXPos(target.getX());
-        actionTaker.setYPos(target.getY());
-        Model.getInstance().add(actionTaker, actionTaker.getFloor(), target.getX(), target.getY());
+        Model.getInstance().remove(getActionTaker());
+        getActionTaker().setPos(target);
+        Model.getInstance().add(getActionTaker(), target);
     }
 
     public Set<Position> getTargetable() {
-        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(actionTaker.getFloor(), actionTaker.getYPos(), actionTaker.getYPos()), 5);
+        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getActionTaker().getPos()), 5);
     }
 
     public Set<Position> getTargetablePositions() {
