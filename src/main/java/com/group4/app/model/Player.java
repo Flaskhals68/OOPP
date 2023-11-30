@@ -28,7 +28,6 @@ public class Player extends Creature {
         getAttributes().levelUpRandom();
     }
 
-
     @Override
     public void startTurn() {
         Model.getInstance().startPlayerTurn();

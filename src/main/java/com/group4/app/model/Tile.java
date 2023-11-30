@@ -8,12 +8,12 @@ public class Tile implements IDrawable {
     private String id;
     private Set<Tile> neighbors;
     private Position pos;
-    private Set<Entity> entities;
+    private Set<IPositionable> entities;
 
     public Tile(String id, Position pos){
         this.id = id;
         this.pos = pos;
-        this.entities = new HashSet<Entity>();
+        this.entities = new HashSet<IPositionable>();
         this.calculateNeighbors();
     }
 
@@ -37,16 +37,16 @@ public class Tile implements IDrawable {
         this.pos = pos;
     }
 
-    public void addEntity(Entity entity){
-       this.entities.add(entity);
+    public void add(IPositionable positionable){
+       this.entities.add(positionable);
     }
 
-    public Set<Entity> getEntities(){
+    public Set<IPositionable> getEntities(){
         return this.entities;
     }
 
-    public void removeEntity(Entity entity){
-       this.entities.remove(entity);
+    public void remove(IPositionable positionable){
+       this.entities.remove(positionable);
     }
 
     public void addNeighbors(Tile neighbor){
