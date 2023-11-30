@@ -161,6 +161,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         return inv.getItem(name);
     }
 
+    public void useItemFromInventory(String name) {
+        IInventoriable item = inv.getItem(name);
+        item.use(this);
+    }
+
     public void addItemToInventory(IInventoriable item) {
         inv.addItem(item);
     }

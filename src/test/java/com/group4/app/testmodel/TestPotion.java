@@ -14,10 +14,11 @@ public class TestPotion {
         Model.getInstance().addBasicMap(10, 0);
         Player player = Model.getInstance().getPlayer();
         Potion hpPot = PotionFactory.createHealthPotion();
+        player.addItemToInventory(hpPot);
         int maxHP = player.getHitPoints();
 
         player.takeHit(8);
-        hpPot.use(player);
+        player.useItemFromInventory("Health Potion");
         assertEquals(maxHP, player.getHitPoints());
     }
 }
