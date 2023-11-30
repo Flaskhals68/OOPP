@@ -19,15 +19,20 @@ public class TurnHandler {
         this.order.remove(turnTaker);
     }
 
-    public void startTurn(){
+    public void nextTurn(){
+        startTurn();
+        this.current.takeTurn();
+        endTurn();
+    }
+
+    private void startTurn(){
         if (this.current == null){
             this.current = this.order.remove();
         }
         this.current.refillAp();
-        this.current.startTurn();
     }
 
-    public void endTurn(){
+    private void endTurn(){
         this.order.add(this.current);
         this.current = this.order.remove();
     }

@@ -29,12 +29,14 @@ public class Player extends Creature {
     }
 
     @Override
-    public void startTurn() {
+    public void takeTurn() {
         Model.getInstance().startPlayerTurn();
-        // TODO : Implement player turn
+        while (this.getAp() > 0) {
+            // TODO : Implememnt player turn
+        }
+        endTurn();
     }
 
-    @Override
     public void endTurn() {
         Model.getInstance().endPlayerTurn();
     }
