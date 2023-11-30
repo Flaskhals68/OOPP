@@ -26,6 +26,11 @@ public class TestTurnHandler {
                 this.endedTurn = false;
             }
 
+            public void takeTurn(){
+                this.startedTurn = true;
+                this.endTurn();
+            }
+
             public void startTurn(){
                 this.startedTurn = true;
                 this.endTurn();
@@ -67,7 +72,7 @@ public class TestTurnHandler {
         MockTurnTaker o2 = new MockTurnTaker(3, 3);
         turnHandler.add(o1);
         turnHandler.add(o2);
-        turnHandler.startTurn();
+        turnHandler.nextTurn();
         assertTrue(o1.hasStartedTurn());
         assertFalse(o2.hasStartedTurn());
     }
@@ -79,8 +84,7 @@ public class TestTurnHandler {
         MockTurnTaker o2 = new MockTurnTaker(3, 3);
         turnHandler.add(o1);
         turnHandler.add(o2);
-        turnHandler.startTurn();
-        turnHandler.endTurn();
+        turnHandler.nextTurn();
         assertEquals(o1.hasEndedTurn(), true);
         assertEquals(o2.hasEndedTurn(), false);
     }
