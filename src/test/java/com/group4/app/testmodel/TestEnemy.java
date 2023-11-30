@@ -15,9 +15,9 @@ public class TestEnemy {
     public void test_constructor(){
         Model.getInstance().addBasicMap(5);
         Position pos = new Position(0, 0, Model.getInstance().getCurrentWorldId());
-        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 10,1,70, 1), 1);
+        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 30,1,70, 1), 1);
         assertEquals(enemy.getName(), "Bob");
-        assertEquals(enemy.getDamage(), 5);
+        assertEquals(2, enemy.getDamage());
         assertEquals(enemy.getHitPoints(), 14);
     }
 }

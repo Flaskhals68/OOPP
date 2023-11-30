@@ -3,6 +3,8 @@ package com.group4.app.testmodel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.group4.app.model.*;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.Position;
@@ -43,7 +45,7 @@ public class TestPlayer {
         player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
-        assertEquals(weapon.getAttack() + 5, player.getDamage());
+        assertEquals(weapon.getAttack(), player.getDamage());
     } 
 
     // @Test
@@ -122,8 +124,36 @@ public class TestPlayer {
 
         p.setWeapon(basic_claws);
 
-        assertEquals(basic_claws.getAttack() + 5, p.getDamage());
+        assertEquals(basic_claws.getAttack(), p.getDamage());
         assertEquals(p.fetchItemFromInventory("Basic Sword").getName(), "Basic Sword");
+    }
+
+    @Test
+    public void testLevelUp() {
+        Model.getInstance().addBasicMap(10, 0);
+        String world = Model.getInstance().getCurrentWorldId();
+        Player p = new Player("player", 3, null, new Position(0, 0, world));
+        for(int i = 0; i<10; i++) {
+            p.giveXP(10);
+        }
+        assertEquals(11, p.getLevel());
+    }
+
+    @Test
+    public void testLevelUpOnKill() {
+        Model.getInstance().addBasicMap(10, 0);
+        String world = Model.getInstance().getCurrentWorldId();
+        Player p = Model.getInstance().getPlayer();
+        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world));
+        for(int i = 0; i<5; i++) {
+            p.getAttributes().levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
+        }
+        p.giveXP(9);
+
+        p.performAction("attack", e);
+        p.performAction("attack", e);
+
+        assertEquals(2, p.getLevel());
     }
 
     public class TestAction extends Action<ICanAttack, IAttackable> {
@@ -159,9 +189,9 @@ public class TestPlayer {
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
-        TestAction action = new TestAction(1, "action", p);
-        p.addAttackAction("attack", action);
-        p.performAction("attack", p);
+        TestAction action = new TestAction(1, "testPerformAction", p);
+        p.addAttackAction("testPerformAction", action);
+        p.performAction("testPerformAction", p);
         assertTrue(action.getPerformed());
     }
 }
