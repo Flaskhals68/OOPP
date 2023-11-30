@@ -20,12 +20,7 @@ public class TestCreature {
         }
 
         @Override
-        public void startTurn() {
-
-        }
-
-        @Override
-        public void endTurn() {
+        public void takeTurn() {
 
         }
     }
