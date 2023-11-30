@@ -128,7 +128,6 @@ public class Model {
 
     public void endPlayerTurn(){
         this.isPlayerTurn = false;
-        this.endTurn();
     }
 
     public boolean isPlayerTurn(){
