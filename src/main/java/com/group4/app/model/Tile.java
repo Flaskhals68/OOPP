@@ -37,16 +37,16 @@ public class Tile implements IDrawable {
         this.pos = pos;
     }
 
-    public void add(IPositionable entity){
-       this.entities.add(entity);
+    public void add(IPositionable positionable){
+       this.entities.add(positionable);
     }
 
     public Set<IPositionable> getEntities(){
         return this.entities;
     }
 
-    public void remove(IPositionable entity){
-       this.entities.remove(entity);
+    public void remove(IPositionable positionable){
+       this.entities.remove(positionable);
     }
 
     public void addNeighbors(Tile neighbor){

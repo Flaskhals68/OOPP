@@ -22,7 +22,7 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
-        world.addTile(t1);
+        world.add(t1);
         Player player = new Player("player", 3, null, new Position(0, 0, world.getId()));
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
@@ -71,7 +71,7 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
-        world.addTile(t1);
+        world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
 
         Weapon testItem = WeaponFactory.createSword();
@@ -86,7 +86,7 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
-        world.addTile(t1);
+        world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
 
         for(int i = 0; i<4; i++) {
@@ -107,7 +107,7 @@ public class TestPlayer {
         World world = new World(2);
         Model.getInstance().addWorld(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
-        world.addTile(t1);
+        world.add(t1);
         Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
 
         Weapon basic_claws = WeaponFactory.createClaws();

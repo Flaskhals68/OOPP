@@ -38,12 +38,12 @@ public class Model {
         World world = new World(100);
         currentWorld = world;
         this.addWorld(currentWorld);
-        world.addTile(new Tile("stone", new Position(0, 0, world.getId())));
+        world.add(new Tile("stone", new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.addTile(new Tile("stone", new Position(x, y, world.getId())));
+                    world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
@@ -102,12 +102,16 @@ public class Model {
         return drawables;
     }
 
-    public void add(Entity entity, Position pos){
-        this.getWorld(pos.getFloor()).add(entity, xPos, yPos);
+    public void add(Tile tile){
+        this.getWorld(tile.getFloor()).add(tile);
     }
 
-    public void add(IPositionable entity, String floorId, int xPos, int yPos){
-        this.getWorld(floorId).add(entity, pos);
+    public void add(Entity entity, Position pos){
+        this.getWorld(pos.getFloor()).add(entity, pos);
+    }
+
+    public void add(IPositionable positionable, Position pos){
+        this.getWorld(pos.getFloor()).add(positionable, pos);
     }
 
     public void remove(Entity entity){
@@ -141,6 +145,10 @@ public class Model {
      */
     public String getCurrentWorldId(){
         return this.currentWorld.getId();
+    }
+
+    public void setCurrentWorld(String floorId){
+        this.currentWorld = this.getWorld(floorId);
     }
 
     /**

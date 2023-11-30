@@ -53,48 +53,6 @@ public class Player extends Creature {
         }
     }
 
-  @Override
-  public void move(Position pos) {
-        Tile target = Model.getInstance().getTile(getFloor(), pos.getX(), pos.getY());
-        Set<Position> legalMoves = getLegalMoves();
-        if (!legalMoves.contains(new Position(target.getXPos(), target.getYPos()))) {
-            throw new IllegalArgumentException("Illegal move");
-        }
-
-        Model.getInstance().remove(this);
-        this.setPosition(getFloor(), pos.getX(), pos.getY());
-        Model.getInstance().add(this, getFloor(), pos.getX(), pos.getY());
-  }
-
-    @Override
-    public Set<Position> getLegalMoves() {
-        // TODO: Change to use players actionpoints instead of static value
-        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getFloor(), getYPos(), getYPos()), 5);
-    }
-
-    public void setWeapon(Weapon weapon) {
-        // Puts current weapon in inventory if player already has one
-        if (this.weapon != null) {
-            inv.addItem(this.weapon);
-        }
-        this.weapon = weapon;
-    }
-
-    @Override
-    public void attack(IAttackable other) {
-        other.takeHit(this.getDamage());
-    }
-
-    @Override
-    public int getDamage() {
-        return weapon.getAttack();
-    }
-
-    @Override
-    public void takeHit(int damage) {
-        hp.reduceCurrent(damage);
-    }
-
     @Override
     public void startTurn() {
         Model.getInstance().startPlayerTurn();

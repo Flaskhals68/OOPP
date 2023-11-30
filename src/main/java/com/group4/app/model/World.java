@@ -33,16 +33,16 @@ public class World {
         return this.tiles[pos.getX()][pos.getY()].getEntities();
     }
 
-    public void addTile(Tile tile) {
+    public void add(Tile tile) {
         Position pos = tile.getPos();
         this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
-    public void add(IPositionable entity, Position pos){
-        this.getTile(pos).add(entity);
+    public void add(IPositionable positionable, Position pos){
+        this.getTile(pos).add(positionable);
     }
 
-    public void remove(IPositionable entity){
-        this.getTile(entity.getPos()).remove(entity);
+    public void remove(IPositionable positionable){
+        this.getTile(positionable.getPos()).remove(positionable);
     }
 }

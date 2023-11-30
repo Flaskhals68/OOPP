@@ -20,17 +20,17 @@ public class TestTile {
     {
         World world = new World(9);
         Model.getInstance().addWorld(world);
-        world.addTile(new Tile("stone", new Position(0, 0, world.getId())));
-        world.addTile(new Tile("stone", new Position(0, 1, world.getId())));
-        world.addTile(new Tile("stone", new Position(0, 2, world.getId())));
+        world.add(new Tile("stone", new Position(0, 0, world.getId())));
+        world.add(new Tile("stone", new Position(0, 1, world.getId())));
+        world.add(new Tile("stone", new Position(0, 2, world.getId())));
 
-        world.addTile(new Tile("stone", new Position(1, 0, world.getId())));
-        world.addTile(new Tile("stone", new Position(1, 1, world.getId())));
-        world.addTile(new Tile("stone", new Position(1, 2, world.getId())));
+        world.add(new Tile("stone", new Position(1, 0, world.getId())));
+        world.add(new Tile("stone", new Position(1, 1, world.getId())));
+        world.add(new Tile("stone", new Position(1, 2, world.getId())));
 
-        world.addTile(new Tile("stone", new Position(2, 0, world.getId())));
-        world.addTile(new Tile("stone", new Position(2, 1, world.getId())));
-        world.addTile(new Tile("stone", new Position(2, 2, world.getId())));
+        world.add(new Tile("stone", new Position(2, 0, world.getId())));
+        world.add(new Tile("stone", new Position(2, 1, world.getId())));
+        world.add(new Tile("stone", new Position(2, 2, world.getId())));
 
         Set<Tile> tile00Neighbors = world.getTile(new Position(0, 0, world.getId())).getNeighbors();
         Tile tile01 = world.getTile(new Position(0, 1, world.getId()));
