@@ -135,6 +135,8 @@ public class Model {
         return this.currentWorld.getId();
     }
 
+
+    // TODO MOVE TO POSITION?
     /**
      * Checks if the given coordinates are valid.
      * @param pos the position to check
@@ -167,6 +169,7 @@ public class Model {
 
     public void movePlayer(Position pos){
         this.player.move(pos);
+        this.updateObservers();
     }
 
     public void addObserver(IModelObserver observer){

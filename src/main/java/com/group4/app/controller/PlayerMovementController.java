@@ -76,7 +76,6 @@ public class PlayerMovementController extends WorldViewPlayerController{
         // moves the player the first step to remove delay
         model.movePlayer(positions.get(0));
         highlightedPositions.remove(positions.get(0));
-        model.updateObservers();
 
         // creates and starts the timer.
         Timer movementTimer = new Timer(100, null);
@@ -90,12 +89,11 @@ public class PlayerMovementController extends WorldViewPlayerController{
                 if(currentPosIndex < positions.size()){
                     model.movePlayer(positions.get(currentPosIndex));
                     highlightedPositions.remove(positions.get(currentPosIndex));
-                    model.updateObservers();
                     currentPosIndex++;
                 }
                 else{
                     highlightedPositions = getLegalMoves();
-                    model.updateObservers();
+                    model.movePlayer(getPlayerPosition());
                     movementTimerFlag = false;
                     movementTimer.stop();
                 }

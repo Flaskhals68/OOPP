@@ -22,8 +22,8 @@ public class App {
         Model model = Model.getInstance();
         model.addBasicMap(100);
 
-        // WorldViewPlayerController worldController = new PlayerMovementController(model);
-        WorldViewPlayerController worldController = new PlayerAttackController(model);
+        WorldViewPlayerController worldController = new PlayerMovementController(model);
+        // WorldViewPlayerController worldController = new PlayerAttackController(model);
         WorldView worldView = new WorldView(worldController);
 
         InventoryController inventoryController = new InventoryController();
