@@ -12,12 +12,6 @@ public class HudController {
     // FIXME: Debugging variables
     private ActionState currentState = ActionState.IDLE;
 
-    // public boolean attackAllowed() {
-    //     // TODO: Implement logic to check if attack is allowed
-    //     System.out.println("Attack allowed : " + attackAllowed);
-    //     return attackAllowed;
-    // }
-
     public void enterAttackState() {
         // TODO: Implement logic to enter attack state
         System.out.println("Enter attack state");
