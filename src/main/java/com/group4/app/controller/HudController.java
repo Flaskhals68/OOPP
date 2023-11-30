@@ -29,7 +29,7 @@ public class HudController {
 
     public void endTurn() {
         System.out.println("End turn");
-        Model.getInstance().endTurn();
+        Model.getInstance().nextTurn();
     }
 
     public List<String> getLegalActions() {
