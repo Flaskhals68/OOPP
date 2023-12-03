@@ -198,6 +198,9 @@ public class Model {
         player.giveXP(xp);
     }
 
+    public Map<AttributeType, Integer> getPlayerAttributes() {
+        return player.getAttributesMap();
+    }
     public void performPlayerAction(String actionId, Position target) {
         player.performAction(actionId, target);
     }

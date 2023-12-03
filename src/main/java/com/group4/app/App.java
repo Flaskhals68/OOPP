@@ -32,6 +32,7 @@ public class App {
         //TODO add the rest of the views.
         List<IGameView> pl = new ArrayList<IGameView>();
         pl.add(worldView);
+        pl.add(HudView);
 
         GameWindow gw = GameWindow.getInstance(pl);
 
