@@ -13,7 +13,7 @@ import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
-import com.group4.app.view.WorldView;
+import com.group4.app.view.worldView.WorldView;
 
 public class App {
     public static void main(String[] args) {

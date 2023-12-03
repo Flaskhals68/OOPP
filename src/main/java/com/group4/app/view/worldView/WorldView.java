@@ -1,4 +1,4 @@
-package com.group4.app.view;
+package com.group4.app.view.worldView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,9 +32,15 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
+import com.group4.app.model.actions.Action;
+import com.group4.app.view.ActionState;
+import com.group4.app.view.EntityPanelGenerator;
+import com.group4.app.view.IGameView;
 
 public class WorldView extends JPanel implements IGameView{
     private WorldController controller;
+    private ActionState state = ActionState.IDLE;
+    private WorldViewState drawingState;
 
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
@@ -72,6 +78,7 @@ public class WorldView extends JPanel implements IGameView{
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
+        setState(state);
         colorBorders(controller.getLegalMoves());
 
 
@@ -214,16 +221,28 @@ public class WorldView extends JPanel implements IGameView{
      * @param positions set of positions
      */ 
     private void colorBorders(Set<Position> positions){
-        for(Position pos : positions){
-            visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
-        }
+        drawingState.colorBorders(positions, visibleTiles);
+    }
 
+    //TODO make it modular?
+    public void setState(ActionState newState){
+        this.state = newState;
+        if(newState == ActionState.IDLE){
+            this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+        }
+    }
+
+    public ActionState getState(){
+        ActionState thisState = this.state;
+        return thisState;
     }
 
     @Override
     public void updateView() {
         removeAll();
         addTiles(entityPanelGenerator);
+        //TODO fix with model
+        setState(ActionState.IDLE);
         colorBorders(controller.getHighlightedPositions());
         revalidate();
         repaint();
