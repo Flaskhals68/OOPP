@@ -24,6 +24,7 @@ public class PlayerMovementController extends AWorldController{
         return Model.getInstance().getPathFromTo(getPlayerPosition(), position);
     }
 
+    //TODO fix
     @Override
     public void mouseClicked(Position position) {
         // Model.getInstance().performPlayerAction("move");
