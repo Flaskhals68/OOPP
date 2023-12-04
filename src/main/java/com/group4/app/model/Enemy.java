@@ -53,7 +53,8 @@ public class Enemy extends Creature {
                     // if the enemy is more than or equal to 5 steps away from the player, it will move 5 steps towards the player
                     performAction(new PositionActionInput("move", path.get(4)));
                 } else if(stepsTaken < 0) {
-                    // this should THEORETICALLY happen only if there are no free spots around the player
+                    // this should THEORETICALLY happen only if there are no free spots around the player that are
+                    // closer than what the enemy is currently standing on
                     // and the enemy will then stand still... hopefully
                     performAction(new PositionActionInput("move", path.get(0)));
                 }
