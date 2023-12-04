@@ -206,12 +206,16 @@ public class Model {
     public Map<AttributeType, Integer> getPlayerAttributes() {
         return player.getAttributesMap();
     }
-    
+
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
     }
 
     public ActionInput<?> getActionInput() {
         return controller.getActionInput();
+    }
+
+    public List<String> getAvailableActions() {
+        return player.getAvailableActions();
     }
 }

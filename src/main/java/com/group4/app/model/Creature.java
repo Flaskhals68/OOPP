@@ -169,4 +169,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public Map<AttributeType, Integer> getAttributesMap() {
         return attributes.getAttributeMap();
     }
+
+    public List<String> getAvailableActions() {
+        List<String> actions = new ArrayList<String>();
+        actions.addAll(moveActions.keySet());
+        actions.addAll(attackActions.keySet());
+        return actions;
+    }
 }
