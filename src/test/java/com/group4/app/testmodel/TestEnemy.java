@@ -21,7 +21,7 @@ public class TestEnemy {
     }
 
     @Test
-    public void testTakeTurnMove() {
+    public void testTakeTurn() {
         Model.resetModel();
         Model m = Model.getInstance();
         World w = new World(100);
@@ -36,19 +36,16 @@ public class TestEnemy {
         m.setPlayer(p);
         m.add(p, p.getPos());
 
-        Enemy e = EnemyFactory.createZombie(new Position(10, 10, w.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(15, 0, w.getId()));
         m.addToTurnOrder(e);
         m.add(e, e.getPos());
-        e = EnemyFactory.createZombie(new Position(11, 10, w.getId()));
+        e = EnemyFactory.createZombie(new Position(0, 15, w.getId()));
         m.add(e, e.getPos());
         m.addToTurnOrder(e);
-        e = EnemyFactory.createZombie(new Position(12, 10, w.getId()));
+        // this enemy should just attack the player three times lol
+        e = EnemyFactory.createZombie(new Position(1, 1, w.getId()));
         m.add(e, e.getPos());
         m.addToTurnOrder(e);
-        e = EnemyFactory.createZombie(new Position(13, 10, w.getId()));
-        m.add(e, e.getPos());
-        m.addToTurnOrder(e);
-        m.nextTurn();
         m.nextTurn();
         m.nextTurn();
         m.nextTurn();
@@ -61,6 +58,7 @@ public class TestEnemy {
             }
         }
         // substracts one because getSurrounding counts the tile the player as well
-        assertEquals(2, counter - 1);
+        assertEquals(3, counter - 1);
+        assertEquals(4, p.getHitPoints());
     }
 }
