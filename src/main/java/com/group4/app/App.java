@@ -31,6 +31,7 @@ public class App {
         IGameView HudView = new HudView(model, hudController);
         IGameView attrPanel = new AttributePanel(hudController);
 
+
         //TODO add the rest of the views.
         List<IGameView> pl = new ArrayList<IGameView>();
         pl.add(worldView);

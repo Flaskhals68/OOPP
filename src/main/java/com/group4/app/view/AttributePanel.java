@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import com.group4.app.controller.HudController;
 import com.group4.app.model.AttributeType;
 
-public class AttributePanel extends JPanel implements IGameView {
+public class AttributePanel extends SidePanel implements IGameView {
     private HudController controller;
     private Map<AttributeType, JLabel> labelMap = new HashMap<>();
     private List<JLabel> labels = new ArrayList<>();
