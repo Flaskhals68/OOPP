@@ -203,6 +203,10 @@ public class Model {
         player.giveXP(xp);
     }
 
+    public Map<AttributeType, Integer> getPlayerAttributes() {
+        return player.getAttributesMap();
+    }
+    
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
     }

@@ -3,6 +3,7 @@ package com.group4.app.model;
 import org.w3c.dom.Attr;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Attributes {
@@ -26,6 +27,9 @@ public class Attributes {
         this.stats.put(stat, this.stats.get(stat) + 10);
     }
 
+    public Map<AttributeType, Integer> getAttributeMap() {
+        return new HashMap<>(stats);
+    }
     /**
      * Should be used to level up a random stat
      */
