@@ -208,4 +208,12 @@ public class Model {
     public void performPlayerAction(String actionId, IAttackable target) {
         player.performAction(actionId, target);
     }
+
+    public int getPlayerHealth() {
+        return player.getHitPoints();
+    }
+
+    public int getPlayerMaxHealth() {
+        return player.getMaxHitPoints();
+    }
 }
