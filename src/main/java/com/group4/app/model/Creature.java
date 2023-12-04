@@ -36,8 +36,10 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public void performAction(ActionInput<?> input) {
         if (moveActions.containsKey(input.getActionId()) && (input instanceof PositionActionInput)) {
                 moveActions.get(input.getActionId()).perform(((PositionActionInput)input).getTarget());
+                ap.reduceCurrent(1);
         } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
+                ap.reduceCurrent(1);
         } else {
                 throw new IllegalArgumentException("Action not available");
         }

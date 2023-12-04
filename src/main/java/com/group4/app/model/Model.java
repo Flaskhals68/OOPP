@@ -223,7 +223,7 @@ public class Model {
         }
     }
 
-    public boolean nextToPlayer(Enemy enemy) {
-        return PathfindingHelper.getSurrounding(getTile(player.getPos()), 1).contains(enemy.getPos());
+    public boolean nextToPlayer(Position enemyPos) {
+        return PathfindingHelper.getSurrounding(getTile(player.getPos()), 1).contains(enemyPos);
     }
 }
