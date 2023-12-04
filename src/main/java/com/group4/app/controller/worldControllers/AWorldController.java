@@ -3,12 +3,13 @@ package com.group4.app.controller.worldControllers;
 import java.util.List;
 import java.util.Set;
 
+import com.group4.app.model.IController;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 
-public abstract class AWorldController {
+public abstract class AWorldController implements IController{
 
     public AWorldController(){
     }

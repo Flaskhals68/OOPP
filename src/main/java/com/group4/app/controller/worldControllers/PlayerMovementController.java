@@ -3,6 +3,7 @@ package com.group4.app.controller.worldControllers;
 import java.util.List;
 import java.util.Set;
 
+import com.group4.app.model.ActionInput;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 
@@ -25,7 +26,7 @@ public class PlayerMovementController extends AWorldController{
 
     @Override
     public void mouseClicked(Position position) {
-        Model.getInstance().performPlayerAction("move", position);
+        // Model.getInstance().performPlayerAction("move");
     }
 
     @Override
@@ -36,5 +37,11 @@ public class PlayerMovementController extends AWorldController{
     @Override
     public void mouseExited() {
         return;
+    }
+
+    @Override
+    public ActionInput<?> getActionInput() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getActionInput'");
     }
 }

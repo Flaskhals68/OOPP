@@ -1,5 +1,6 @@
 package com.group4.app.controller.worldControllers;
 
+import com.group4.app.model.ActionInput;
 import com.group4.app.model.Position;
 
 public class PlayerViewAttackController extends AWorldController{
@@ -20,6 +21,12 @@ public class PlayerViewAttackController extends AWorldController{
     public void mouseExited() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    }
+
+    @Override
+    public ActionInput<?> getActionInput() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getActionInput'");
     }
     
 }
