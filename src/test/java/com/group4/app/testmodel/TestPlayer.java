@@ -123,8 +123,8 @@ public class TestPlayer {
         }
         p.giveXP(9);
 
-        p.performAction("attack", e);
-        p.performAction("attack", e);
+        p.performAction(new AttackActionInput("attack", e));
+        p.performAction(new AttackActionInput("attack", e));
 
         assertEquals(2, p.getLevel());
     }
@@ -164,7 +164,7 @@ public class TestPlayer {
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
         TestAction action = new TestAction(1, "testPerformAction", p);
         p.addAttackAction("testPerformAction", action);
-        p.performAction("testPerformAction", p);
+        p.performAction(new AttackActionInput("testPerformAction", p));
         assertTrue(action.getPerformed());
     }
 }

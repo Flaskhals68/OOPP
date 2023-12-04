@@ -9,6 +9,7 @@ import java.util.Set;
 public class Model {
     private static Model instance = null;
     private List<IModelObserver> observers;
+    private IController controller;
     private Player player;
     private TurnHandler turnHandler;
     private Boolean isPlayerTurn;
@@ -190,6 +191,10 @@ public class Model {
         }
     }
 
+    public void setController(IController inputGetter){
+        this.controller = inputGetter;
+    }
+
     public Set<Position> getSurrounding(Position pos, int steps) {
         return PathfindingHelper.getSurrounding(getTile(pos), steps);
     }
@@ -201,11 +206,12 @@ public class Model {
     public Map<AttributeType, Integer> getPlayerAttributes() {
         return player.getAttributesMap();
     }
-    public void performPlayerAction(String actionId, Position target) {
-        player.performAction(actionId, target);
+    
+    public void performPlayerAction(ActionInput<?> input) {
+        player.performAction(input);
     }
 
-    public void performPlayerAction(String actionId, IAttackable target) {
-        player.performAction(actionId, target);
+    public ActionInput<?> getActionInput() {
+        return controller.getActionInput();
     }
 }
