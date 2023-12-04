@@ -5,17 +5,20 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.group4.app.controller.HudController;
 import com.group4.app.model.AttributeType;
 
-public class AttributePanel extends SubView {
+public class AttributePanel extends SubView implements IGameView {
     private HudController controller;
     private Map<AttributeType, JLabel> labelMap = new HashMap<>();
     private List<JLabel> labels = new ArrayList<>();
@@ -28,9 +31,9 @@ public class AttributePanel extends SubView {
     }
     
     private void initComponents() {
-        setPreferredSize(new Dimension(275, 100));
-        setLayout(new GridLayout(2, 3));
-        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(100, 250));
+        
+        setLayout(new GridLayout(7, 1));
         bindStats();
         addLabels();
     }
@@ -46,10 +49,19 @@ public class AttributePanel extends SubView {
     }
 
     private void addLabels() {
+        JLabel header = new JLabel("Attributes");
+        int largeFontSize = defaultFont.getSize() + 4;
+        String fontFamily = defaultFont.getFamily();
+        Font largeFont = new Font(fontFamily, Font.BOLD, largeFontSize);
+        header.setFont(largeFont);
+        header.setHorizontalAlignment(SwingConstants.RIGHT);
+        add(header, constraints);
+
         Map<AttributeType, Integer> attributes = controller.getAttributes();
         for (AttributeType attribute : attributes.keySet()) {
             JLabel label = labelMap.get(attribute);
             label.setText(attribute.toString() + ": " + attributes.get(attribute));
+            label.setHorizontalAlignment(SwingConstants.RIGHT);
             add(label, constraints);
         }
      }
@@ -60,5 +72,15 @@ public class AttributePanel extends SubView {
         addLabels();
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void updateView() {
+        update();
+    }
+
+    @Override
+    public JPanel getView() {
+        return this;
     }
 }
