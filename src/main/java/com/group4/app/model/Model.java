@@ -226,4 +226,19 @@ public class Model {
     public boolean nextToPlayer(Position enemyPos) {
         return PathfindingHelper.getSurrounding(getTile(player.getPos()), 1).contains(enemyPos);
     }
+
+    public boolean freePosition(Position pos) {
+        return getTile(pos).getEntities().isEmpty();
+    }
+
+    public void setPlayer(Player p) {
+        this.player = p;
+    }
+
+    /**
+     * Resets the model to a new instance. Should only really be used for testing.
+     */
+    public static void resetModel() {
+        instance = new Model();
+    }
 }

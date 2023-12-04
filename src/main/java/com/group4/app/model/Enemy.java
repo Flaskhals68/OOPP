@@ -1,5 +1,6 @@
 package com.group4.app.model;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Enemy extends Creature {
@@ -26,26 +27,45 @@ public class Enemy extends Creature {
                 performAction(new AttackActionInput("attack", m.getPlayer()));
             } else {
                 System.out.println(getName() + " should move now");
+                // gives the entire path to the player, irrespective of ditance
                 path = PathfindingHelper.getPathNextTo(this.getPos(), m.getPlayerPos());
-                // TODO : FIX SO THEY DONT MOVE ONTOP OF EACHOTHER :(
+
                 int stepsTaken = 0;
 
+                // counts how many steps it will take to get to the player
                 for(Position p : path) {
                     if(m.nextToPlayer(p)) {
                         break;
                     }
                     stepsTaken++;
                 }
-                if(stepsTaken > 4) {
+                // checks if the enemy is blocked by another enemy, if so reduce stepstaken by 1
+                for (int i = stepsTaken; i >= 0; i--) {
+                    if(m.freePosition(path.get(i))) {
+                        break;
+                    } else {
+                        stepsTaken--;
+                    }
+                }
+
+
+                if(stepsTaken >= 5) {
+                    // if the enemy is more than or equal to 5 steps away from the player, it will move 5 steps towards the player
                     performAction(new PositionActionInput("move", path.get(4)));
-                } else {
+                } else if(stepsTaken < 0) {
+                    // this should THEORETICALLY happen only if there are no free spots around the player
+                    // and the enemy will then stand still... hopefully
+                    performAction(new PositionActionInput("move", path.get(0)));
+                }
+                else {
+                    // move to nearest free spot :)
                     performAction(new PositionActionInput("move", path.get(stepsTaken)));
                 }
 
             }
             m.updateObservers();
             try {
-                Thread.sleep(200);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

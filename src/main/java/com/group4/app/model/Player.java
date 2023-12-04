@@ -1,6 +1,7 @@
 package com.group4.app.model;
 
 import java.util.Random;
+import java.util.Set;
 
 public class Player extends Creature {
 
@@ -30,8 +31,18 @@ public class Player extends Creature {
 
     @Override
     public void takeTurn() {
-        Model.getInstance().startPlayerTurn();
+        Model m = Model.getInstance();
+        m.startPlayerTurn();
+        Set<Position> surrounding = m.getSurrounding(m.getPlayerPos(), 1);
+        int counter = 0;
+        for(Position p : surrounding) {
+            if(!m.getEntities(p).isEmpty()) {
+                counter++;
+            }
+        }
         while (this.getAp() > 0) {
+
+            System.out.println("Player has " + (counter - 1)  + " enemies within 1 step around them");
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
         }
