@@ -9,7 +9,7 @@ import java.util.Set;
 public class Model {
     private static Model instance = null;
     private List<IModelObserver> observers;
-    private Controller controller;
+    private IController controller;
     private Player player;
     private TurnHandler turnHandler;
     private Boolean isPlayerTurn;
@@ -191,7 +191,7 @@ public class Model {
         }
     }
 
-    public void setController(Controller inputGetter){
+    public void setController(IController inputGetter){
         this.controller = inputGetter;
     }
 

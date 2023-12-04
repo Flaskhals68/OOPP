@@ -1,5 +1,5 @@
 package com.group4.app.model;
 
-public interface Controller {
+public interface IController {
     ActionInput<?> getActionInput();
 }
