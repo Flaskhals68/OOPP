@@ -134,8 +134,10 @@ public class PathfindingHelper {
      * @param goal
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
-    public static List<Position> getPathNextTo(Tile start, Tile goal) {
-        AStarEntry finalEntry = aStarSearch(start, goal);
+    public static List<Position> getPathNextTo(Position start, Position goal) {
+        Tile startTile = Model.getInstance().getTile(start);
+        Tile goalTile = Model.getInstance().getTile(goal);
+        AStarEntry finalEntry = aStarSearch(startTile, goalTile);
         List<Position> path = extractPath(finalEntry);
         path.remove(path.size()-1);
         return path;
