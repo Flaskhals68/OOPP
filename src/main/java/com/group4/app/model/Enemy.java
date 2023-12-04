@@ -15,7 +15,7 @@ public class Enemy extends Creature {
 
     @Override
     public void takeTurn() {
-        // TODO : Implement enemy AI
+        System.out.println(getName() + " is taking a turn");
     }
 
     public void endTurn() {

@@ -48,6 +48,7 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                        turnHandler.add(e);
                         add(e, new Position(x, y, world.getId()));
                     }
                 }
@@ -55,6 +56,7 @@ public class Model {
         }
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
         add(player, player.getPos());
+        turnHandler.add(player);
     }
 
     public void addBasicMap(int size) {
@@ -213,5 +215,11 @@ public class Model {
 
     public ActionInput<?> getActionInput() {
         return controller.getActionInput();
+    }
+
+    public void startGameLoop() {
+        while (true) {
+            turnHandler.nextTurn();
+        }
     }
 }

@@ -41,5 +41,6 @@ public class App {
         GameWindow gw = GameWindow.getInstance(pl);
 
         model.addObserver(gw);
+        model.startGameLoop();
     }
 }
