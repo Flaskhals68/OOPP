@@ -5,17 +5,31 @@ import java.util.Set;
 
 import javax.swing.JLayeredPane;
 
+import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 
 public abstract class WorldViewState {
     protected Position playerPosition;
+    protected boolean hoverFlag;
+    protected Set<Position> highlightedPositions;
 
     public WorldViewState(Position playerPosition){
         this.playerPosition = playerPosition;
     }
 
-    public abstract void colorBorders(Set<Position> positionsToColor, Map<Position, JLayeredPane> visibleToPlayer);
+    public Set<Position> getHighlightedPositions(){
+        Set<Position> litUpPos = this.highlightedPositions;
+        return litUpPos;
+    }
+
+    public void setHighLightedPositions(Set<Position> pos){
+        this.highlightedPositions = pos;
+    }
+
+    public abstract AWorldController getController();
+
+    public abstract void colorBorders(Map<Position, JLayeredPane> visibleToPlayer);
     public abstract void drawMouseClickedOnTile(Position targetPosition);
     public abstract void drawMouseEnteredTile(Position targetPosition);
     public abstract void drawMouseExitedTile();

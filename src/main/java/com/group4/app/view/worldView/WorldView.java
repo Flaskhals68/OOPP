@@ -24,7 +24,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
-import com.group4.app.controller.WorldController;
+import com.group4.app.controller.worldControllers.AWorldController;
+import com.group4.app.controller.worldControllers.PlayerMovementController;
+import com.group4.app.controller.worldControllers.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
@@ -38,7 +40,7 @@ import com.group4.app.view.EntityPanelGenerator;
 import com.group4.app.view.IGameView;
 
 public class WorldView extends JPanel implements IGameView{
-    private WorldController controller;
+    private AWorldController controller;
     private ActionState state = ActionState.IDLE;
     private WorldViewState drawingState;
 
@@ -64,8 +66,7 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView(WorldController controller) {
-        this.controller = controller;
+    public WorldView() {
         initComponents();
 
     }
@@ -74,14 +75,20 @@ public class WorldView extends JPanel implements IGameView{
      * Initiates the worldView by setting up it's look and adding the tiles that should be added initially.
      */
     private void initComponents(){
+        initialState();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
-        setState(state);
-        colorBorders(controller.getLegalMoves());
+    
+        colorBorders();
+    }
 
-
+    private void initialState(){
+        if(state == ActionState.IDLE){
+            controller = new PlayerMovementController();
+        }
+        drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
     }
 
     /**
@@ -177,14 +184,14 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e){
-                controller.mouseHover(pos);
+                drawingState.drawMouseEnteredTile(pos);
             }
         });
 
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e){
-                controller.mouseExited();
+                drawingState.drawMouseExitedTile();
             }
         });
     }
@@ -198,7 +205,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                controller.movePlayer(pos);
+                drawingState.drawMouseClickedOnTile(pos);
             }
         });
     }
@@ -220,13 +227,16 @@ public class WorldView extends JPanel implements IGameView{
      * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes. 
      * @param positions set of positions
      */ 
-    private void colorBorders(Set<Position> positions){
-        drawingState.colorBorders(positions, visibleTiles);
+    private void colorBorders(){
+        drawingState.colorBorders(visibleTiles);
     }
 
     //TODO make it modular?
     public void setState(ActionState newState){
         this.state = newState;
+        if(newState == state){
+            return;
+        }
         if(newState == ActionState.IDLE){
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
         }
@@ -243,7 +253,7 @@ public class WorldView extends JPanel implements IGameView{
         addTiles(entityPanelGenerator);
         //TODO fix with model
         setState(ActionState.IDLE);
-        colorBorders(controller.getHighlightedPositions());
+        colorBorders();
         revalidate();
         repaint();
     }

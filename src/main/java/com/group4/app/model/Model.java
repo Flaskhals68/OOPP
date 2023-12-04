@@ -60,6 +60,10 @@ public class Model {
         addBasicMap(size, 0.1);
     }
 
+    public List<Position> getPathFromTo(Position startPos, Position targetPos){
+        return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
+    }
+
     public void addWorld(World world){
         this.floors.put(world.getId(), world);
         if (this.currentWorld == null){
@@ -203,9 +207,11 @@ public class Model {
     }
     public void performPlayerAction(String actionId, Position target) {
         player.performAction(actionId, target);
+        updateObservers();
     }
 
     public void performPlayerAction(String actionId, IAttackable target) {
         player.performAction(actionId, target);
+        updateObservers();
     }
 }

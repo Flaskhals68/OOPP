@@ -1,4 +1,4 @@
-package com.group4.app.controller;
+package com.group4.app.controller.worldControllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
