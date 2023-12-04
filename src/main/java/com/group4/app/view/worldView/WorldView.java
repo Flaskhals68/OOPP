@@ -233,11 +233,11 @@ public class WorldView extends JPanel implements IGameView{
 
     //TODO make it modular?
     public void setState(ActionState newState){
-        this.state = newState;
         if(newState == state){
             return;
         }
         if(newState == ActionState.IDLE){
+            this.state = newState;
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
         }
     }

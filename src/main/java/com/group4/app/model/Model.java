@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.model.actions.PlayerAttackAction;
+
 public class Model {
     private static Model instance = null;
     private List<IModelObserver> observers;
