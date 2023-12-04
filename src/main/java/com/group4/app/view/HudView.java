@@ -36,7 +36,6 @@ public class HudView extends JPanel implements IGameView {
         setLayout(new GridBagLayout());
         
         bindSubView(new ButtonPanel(775, BTN_HEIGHT, controller), 0);
-        bindSubView(new AttributePanel(controller), 1);
     }
 
     public void bindSubView(SubView subView, int gridy) {
