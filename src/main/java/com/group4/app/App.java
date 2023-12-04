@@ -11,6 +11,7 @@ import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.WorldController;
 import com.group4.app.model.Model;
+import com.group4.app.view.AttributePanel;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
@@ -29,11 +30,14 @@ public class App {
         InventoryView inventoryView = new InventoryView(model, inventoryController);
         
         HudController hudController = new HudController();
-        HudView HudView = new HudView(model, hudController);
+        IGameView HudView = new HudView(model, hudController);
+        IGameView attrPanel = new AttributePanel(hudController);
+
 
         //TODO add the rest of the views.
         List<IGameView> pl = new ArrayList<IGameView>();
         pl.add(worldView);
+        pl.add(attrPanel);
         pl.add(HudView);
 
         GameWindow gw = GameWindow.getInstance(pl);
