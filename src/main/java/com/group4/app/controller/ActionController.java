@@ -13,11 +13,17 @@ import com.group4.app.model.ActionInput;
 import com.group4.app.model.IController;
 
 public class ActionController implements IController {
+    private static final int DELAY = 100;
     private BlockingQueue<ActionInput<?>> actionQueue = new LinkedBlockingQueue<>();
-    private Timer timer;
+    private static ActionController instance = null;
 
-    private ActionController() {
-        
+    private ActionController() { }
+
+    public static ActionController getInstance() {
+        if (instance == null) {
+            instance = new ActionController();
+        }
+        return instance;
     }
 
     public void queueAction(ActionInput<?> action) {
@@ -26,21 +32,15 @@ public class ActionController implements IController {
 
     @Override
     public ActionInput<?> getActionInput() {
-        CountDownLatch latch = new CountDownLatch(1);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!actionQueue.isEmpty()) {
-                    latch.countDown();
-                }
+        while (actionQueue.isEmpty()) {
+            try {
+                Thread.sleep(DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
-        }, 100);
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+        System.out.println("ActionController: Timer escaped");
         return actionQueue.poll();
     }
     

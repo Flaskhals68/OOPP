@@ -218,4 +218,13 @@ public class Model {
     public List<String> getAvailableActions() {
         return player.getAvailableActions();
     }
+
+    // FIXME: THIS IS ONLY FOR TESTING ACTIONCONTROLLER!!!!
+    // NEEDS TO BE REMOVED BEFORE MERGING TO MAIN!!!
+    public void waitForAction() {
+        ActionInput<?> action = controller.getActionInput();
+        System.out.println("Action received: " + action.toString());
+        performPlayerAction(action);
+        updateObservers();
+    }
 }
