@@ -223,7 +223,6 @@ public class Model {
     // NEEDS TO BE REMOVED BEFORE MERGING TO MAIN!!!
     public void waitForAction() {
         ActionInput<?> action = controller.getActionInput();
-        System.out.println("Action received: " + action.toString());
         performPlayerAction(action);
         updateObservers();
     }

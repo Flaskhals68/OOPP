@@ -37,10 +37,8 @@ public class ActionController implements IController {
                 Thread.sleep(DELAY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                Thread.currentThread().interrupt();
             }
         }
-        System.out.println("ActionController: Timer escaped");
         return actionQueue.poll();
     }
     
