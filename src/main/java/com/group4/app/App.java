@@ -44,6 +44,8 @@ public class App {
         model.addObserver(gw);
 
         model.setController(ActionController.getInstance());
+
+        //FIXME: Only for testing new action system
         while (true) {
             model.waitForAction();
         }

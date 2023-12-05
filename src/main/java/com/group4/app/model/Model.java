@@ -220,7 +220,7 @@ public class Model {
     }
 
     // FIXME: THIS IS ONLY FOR TESTING ACTIONCONTROLLER!!!!
-    // NEEDS TO BE REMOVED BEFORE MERGING TO MAIN!!!
+    // Replace with a proper turn cycle
     public void waitForAction() {
         ActionInput<?> action = controller.getActionInput();
         performPlayerAction(action);

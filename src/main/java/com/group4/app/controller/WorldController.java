@@ -8,13 +8,11 @@ import java.util.Set;
 
 import javax.swing.Timer;
 
-import com.group4.app.model.ActionInput;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.PositionActionInput;
-import com.group4.app.model.actions.Action;
 
 public class WorldController {
     

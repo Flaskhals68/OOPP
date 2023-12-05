@@ -1,19 +1,12 @@
 package com.group4.app.controller;
 
-import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
-
 
 import com.group4.app.model.ActionInput;
 import com.group4.app.model.IController;
 
 public class ActionController implements IController {
-    private static final int DELAY = 100;
     private BlockingQueue<ActionInput<?>> actionQueue = new LinkedBlockingQueue<>();
     private static ActionController instance = null;
 
@@ -26,20 +19,26 @@ public class ActionController implements IController {
         return instance;
     }
 
+    /**
+     * Enqueue an action to be performed
+     * @param action
+     */
     public void queueAction(ActionInput<?> action) {
-        actionQueue.add(action);
+        actionQueue.offer(action);
     }
 
+    /**
+     * Get the next queued action
+     */
     @Override
     public ActionInput<?> getActionInput() {
-        while (actionQueue.isEmpty()) {
-            try {
-                Thread.sleep(DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            return actionQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
+            return null;
         }
-        return actionQueue.poll();
     }
     
 }

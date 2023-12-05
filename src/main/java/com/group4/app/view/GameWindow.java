@@ -72,13 +72,14 @@ public class GameWindow extends JFrame implements IModelObserver{
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        for(IGameView view : viewList){
-            view.updateView();
-        }
-
+        // Makes sure that the updateView method is run on the AWT
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                for(IGameView view : viewList){
+                    view.updateView();
+                }
+            }
+        });
     }
-
-
-
 }
