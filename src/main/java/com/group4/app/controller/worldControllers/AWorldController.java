@@ -8,10 +8,13 @@ import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.view.ActionState;
 
 public abstract class AWorldController implements IController{
+    private ActionState state;
 
-    public AWorldController(){
+    public AWorldController(ActionState state){
+        this.state = state;
     }
 
     public abstract void mouseClicked(Position position);
@@ -32,6 +35,10 @@ public abstract class AWorldController implements IController{
 
     public String getPlayerFloor(){
         return Model.getInstance().getPlayerFloor();
+    }
+
+    public ActionState getState(){
+        return this.state;
     }
 
 } 

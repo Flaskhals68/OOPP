@@ -7,13 +7,16 @@ import com.group4.app.model.ActionInput;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 
+import com.group4.app.view.ActionState;
+
+
 public class PlayerMovementController extends AWorldController{
     private Set<Position> highlightedPositions;
     private boolean movementTimerFlag;
     private boolean hoverFlag;
 
     public PlayerMovementController(){
-        super();
+        super(ActionState.IDLE);
     }
 
     public Set<Position> getLegalMoves(){

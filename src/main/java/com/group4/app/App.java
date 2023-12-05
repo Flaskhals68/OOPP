@@ -9,8 +9,10 @@ import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
+import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.controller.worldControllers.WorldController;
 import com.group4.app.model.Model;
+import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.view.AttributePanel;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
@@ -24,7 +26,7 @@ public class App {
         model.addBasicMap(100);
 
         AWorldController worldController = new PlayerMovementController();
-        WorldView worldView = new WorldView();
+        WorldView worldView = new WorldView(worldController.getState());
 
         InventoryController inventoryController = new InventoryController();
         InventoryView inventoryView = new InventoryView(model, inventoryController);

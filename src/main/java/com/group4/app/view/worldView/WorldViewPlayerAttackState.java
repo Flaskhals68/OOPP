@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
+import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 
 public class WorldViewPlayerAttackState extends WorldViewState{
@@ -15,7 +16,7 @@ public class WorldViewPlayerAttackState extends WorldViewState{
     public WorldViewPlayerAttackState(Position playerPosition){
         super(playerPosition);
         //TODO implement
-        // setHighLightedPositions();
+        setHighLightedPositions(controller.getAttacksInRange());
     }
 
     @Override

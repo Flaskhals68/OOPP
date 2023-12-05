@@ -26,6 +26,7 @@ import javax.swing.OverlayLayout;
 
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
+import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.controller.worldControllers.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
@@ -41,7 +42,7 @@ import com.group4.app.view.IGameView;
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
-    private ActionState state = ActionState.IDLE;
+    private ActionState state;
     private WorldViewState drawingState;
 
     //The tiles that are seen by the player at the moment.
@@ -66,7 +67,8 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView() {
+    public WorldView(ActionState initialState) {
+        this.state = initialState;
         initComponents();
 
     }
@@ -87,8 +89,13 @@ public class WorldView extends JPanel implements IGameView{
     private void initialState(){
         if(state == ActionState.IDLE){
             controller = new PlayerMovementController();
+            drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
         }
-        drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+        else if(state == ActionState.ATTACK){
+            controller = new PlayerViewAttackController();
+            drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
+        }
+        
     }
 
     /**
@@ -239,6 +246,10 @@ public class WorldView extends JPanel implements IGameView{
         if(newState == ActionState.IDLE){
             this.state = newState;
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+        }
+        if(newState == ActionState.ATTACK){
+            this.state = newState;
+            this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
         }
     }
 
