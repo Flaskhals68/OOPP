@@ -34,6 +34,8 @@ public class Player extends Creature {
         while (this.getAp() > 0) {
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
+            this.useAp(1);
+            Model.getInstance().updateObservers();
         }
         endTurn();
     }

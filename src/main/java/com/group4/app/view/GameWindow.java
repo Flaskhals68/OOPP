@@ -72,7 +72,7 @@ public class GameWindow extends JFrame implements IModelObserver{
 
     @Override
     public void update() {
-        // Makes sure that the updateView method is run on the AWT
+        // Makes sure that the updateView method is run on the EDT
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

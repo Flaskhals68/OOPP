@@ -49,12 +49,14 @@ public class Model {
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
                         add(e, new Position(x, y, world.getId()));
+                        addToTurnOrder(e);
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
         add(player, player.getPos());
+        addToTurnOrder(player);
     }
 
     public void addBasicMap(int size) {
@@ -124,10 +126,12 @@ public class Model {
     }
 
     public void startPlayerTurn(){
+        System.out.println("Player turn started");
         this.isPlayerTurn = true;
     }
 
     public void endPlayerTurn(){
+        System.out.println("Player turn ended");
         this.isPlayerTurn = false;
     }
 
@@ -217,5 +221,16 @@ public class Model {
 
     public List<String> getAvailableActions() {
         return player.getAvailableActions();
+    }
+
+    public void enterGameLoop() {
+        while (true) {
+            nextTurn();
+            updateObservers();
+        }
+    }
+
+    public List<Position> getPathFromTo(Position startPos, Position targetPos){
+        return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
     }
 }
