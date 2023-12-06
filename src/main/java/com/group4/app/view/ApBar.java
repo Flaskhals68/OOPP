@@ -22,7 +22,6 @@ public class ApBar extends SubView{
         this.setBackground(null);
         this.setLayout(new FlowLayout());
         intiJLabel(dimension);
-
     }
 
     private void intiJLabel(Dimension d){
@@ -39,7 +38,7 @@ public class ApBar extends SubView{
 
     private void updateValues(){
         int remainingAp = psc.getPlayerAp();
-        this.apLabel.setText("AP:" + remainingAp + "/" + maxAp);
+        this.apLabel.setText("AP: " + remainingAp + "/" + maxAp);
     }
 
     @Override
