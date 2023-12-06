@@ -218,12 +218,4 @@ public class Model {
     public List<String> getAvailableActions() {
         return player.getAvailableActions();
     }
-
-    // FIXME: THIS IS ONLY FOR TESTING ACTIONCONTROLLER!!!!
-    // Replace with a proper turn cycle
-    public void waitForAction() {
-        ActionInput<?> action = controller.getActionInput();
-        performPlayerAction(action);
-        updateObservers();
-    }
 }
