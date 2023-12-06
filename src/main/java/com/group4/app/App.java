@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import com.group4.app.controller.ActionController;
 import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
 import com.group4.app.controller.worldControllers.AWorldController;
@@ -44,5 +45,7 @@ public class App {
         GameWindow gw = GameWindow.getInstance(pl);
 
         model.addObserver(gw);
+
+        model.setController(ActionController.getInstance());
     }
 }

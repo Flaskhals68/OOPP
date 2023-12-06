@@ -43,6 +43,16 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         }
     }
 
+    public Set<Position> getTargetPositions(String actionId){
+        if (moveActions.containsKey(actionId)) {
+            return moveActions.get(actionId).getTargetablePositions();
+        } else if (attackActions.containsKey(actionId)) {
+            return attackActions.get(actionId).getTargetablePositions();
+        } else {
+            throw new IllegalArgumentException("Action not available");
+        }
+    }
+
     public int getLevel() {
         return level;
     }
@@ -117,6 +127,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         return hp.getCurrent();
     }
 
+    @Override
+    public int getMaxHitPoints() {
+        return hp.getMax();
+    }
+
     public int getAp() {
         return this.ap.getCurrent();
     }
@@ -168,5 +183,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     public Map<AttributeType, Integer> getAttributesMap() {
         return attributes.getAttributeMap();
+    }
+
+    public List<String> getAvailableActions() {
+        List<String> actions = new ArrayList<String>();
+        actions.addAll(moveActions.keySet());
+        actions.addAll(attackActions.keySet());
+        return actions;
     }
 }

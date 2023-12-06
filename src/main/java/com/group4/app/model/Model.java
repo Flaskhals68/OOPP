@@ -212,7 +212,7 @@ public class Model {
     public Map<AttributeType, Integer> getPlayerAttributes() {
         return player.getAttributesMap();
     }
-    
+
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
         updateObservers();
@@ -220,5 +220,17 @@ public class Model {
 
     public ActionInput<?> getActionInput() {
         return controller.getActionInput();
+    }
+
+    public List<String> getAvailableActions() {
+        return player.getAvailableActions();
+    }
+
+    public int getPlayerHealth() {
+        return player.getHitPoints();
+    }
+
+    public int getPlayerMaxHealth() {
+        return player.getMaxHitPoints();
     }
 }
