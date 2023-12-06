@@ -34,7 +34,10 @@ public abstract class WorldViewState {
      * @param visibleToPlayer
      */
     public abstract void colorBorders(Map<Position, JLayeredPane> visibleToPlayer);
+
     public abstract void drawMouseClickedOnTile(Position targetPosition);
+
     public abstract void drawMouseEnteredTile(Position targetPosition);
+    
     public abstract void drawMouseExitedTile();
 }
