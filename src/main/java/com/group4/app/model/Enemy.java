@@ -1,5 +1,7 @@
 package com.group4.app.model;
 
+import com.group4.app.model.actions.PlayerMoveAction;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -27,49 +29,32 @@ public class Enemy extends Creature {
                 performAction(new AttackActionInput("attack", m.getPlayer()));
             } else {
                 System.out.println(getName() + " should move now");
-                // gives the entire path to the player, irrespective of ditance
+                // gives the entire path to the player, irrespective of distance
                 path = PathfindingHelper.getPathNextTo(this.getPos(), m.getPlayerPos());
 
-                int stepsTaken = 0;
+                if(path.size() > 5) {
+                    // if the path is longer than 5, it will only take the first 5 steps
+                    path = path.subList(0, 5);
+                }
+                Collections.reverse(path);
 
+                Position target = getPos();
                 // counts how many steps it will take to get to the player
                 for(Position p : path) {
-                    if(m.nextToPlayer(p)) {
+                    if(m.freePosition(p)) {
+                        target = p;
                         break;
                     }
-                    stepsTaken++;
                 }
-                // checks if the enemy is blocked by another enemy, if so reduce stepstaken by 1
-                for (int i = stepsTaken; i >= 0; i--) {
-                    if(m.freePosition(path.get(i))) {
-                        break;
-                    } else {
-                        stepsTaken--;
-                    }
+                performAction(new PositionActionInput("move", target));
+                m.updateObservers();
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-
-                if(stepsTaken >= 5) {
-                    // if the enemy is more than or equal to 5 steps away from the player, it will move 5 steps towards the player
-                    performAction(new PositionActionInput("move", path.get(4)));
-                } else if(stepsTaken < 0) {
-                    // this should THEORETICALLY happen only if there are no free spots around the player that are
-                    // closer than what the enemy is currently standing on
-                    // and the enemy will then stand still... hopefully
-                    performAction(new PositionActionInput("move", path.get(0)));
-                }
-                else {
-                    // move to nearest free spot :)
-                    performAction(new PositionActionInput("move", path.get(stepsTaken)));
-                }
-
             }
-            m.updateObservers();
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
 
 

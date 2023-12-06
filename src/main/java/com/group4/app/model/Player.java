@@ -33,16 +33,16 @@ public class Player extends Creature {
     public void takeTurn() {
         Model m = Model.getInstance();
         m.startPlayerTurn();
-        Set<Position> surrounding = m.getSurrounding(m.getPlayerPos(), 1);
+        Set<Position> surrounding = m.getSurrounding(m.getPlayerPos(), 2);
         int counter = 0;
         for(Position p : surrounding) {
             if(!m.getEntities(p).isEmpty()) {
-                counter++;
+                counter += m.getEntities(p).size();
             }
         }
         while (this.getAp() > 0) {
 
-            System.out.println("Player has " + (counter - 1)  + " enemies within 1 step around them");
+            System.out.println("Player has " + (counter - 1)  + " enemies within 2 step around them");
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
         }
