@@ -3,17 +3,15 @@ package com.group4.app.controller.worldControllers;
 import java.util.List;
 import java.util.Set;
 
+import com.group4.app.controller.ActionController;
 import com.group4.app.model.ActionInput;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
-
+import com.group4.app.model.PositionActionInput;
 import com.group4.app.view.ActionState;
 
 
 public class PlayerMovementController extends AWorldController{
-    private Set<Position> highlightedPositions;
-    private boolean movementTimerFlag;
-    private boolean hoverFlag;
 
     public PlayerMovementController(){
         super(ActionState.IDLE);
@@ -27,10 +25,9 @@ public class PlayerMovementController extends AWorldController{
         return Model.getInstance().getPathFromTo(getPlayerPosition(), position);
     }
 
-    //TODO fix
     @Override
     public void mouseClicked(Position position) {
-        // Model.getInstance().performPlayerAction("move");
+        ActionController.getInstance().queueAction(new PositionActionInput("move", position));
     }
 
     @Override
@@ -43,9 +40,5 @@ public class PlayerMovementController extends AWorldController{
         return;
     }
 
-    @Override
-    public ActionInput<?> getActionInput() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActionInput'");
-    }
+
 }

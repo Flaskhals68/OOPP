@@ -56,17 +56,11 @@ public class WorldViewPlayerMoveState extends WorldViewState{
     @Override
     public void drawMouseClickedOnTile(Position targetPosition) {
         List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
-
-        //FIXME should not be in view
-        if(!controller.getLegalMoves().contains(targetPosition)){
-            throw new IllegalArgumentException("Tile out of range");
-        }
         
         setHighLightedPositions(new HashSet<>(path));
         getHighlightedPositions().remove(path.get(0));
         controller.mouseClicked(path.get(0));
         
-
         initMovementTimer(movementTimerDelay); 
 
         movementTimer.addActionListener(new ActionListener() {

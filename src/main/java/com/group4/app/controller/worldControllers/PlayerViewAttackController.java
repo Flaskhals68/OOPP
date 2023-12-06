@@ -15,6 +15,7 @@ public class PlayerViewAttackController extends AWorldController{
         super(ActionState.ATTACK);
     }
 
+    //TODO change to use actionInput
     public Set<Position> getAttacksInRange(){
         return Model.getInstance().getSurrounding(getPlayerPosition(), 1);
     }
@@ -35,12 +36,6 @@ public class PlayerViewAttackController extends AWorldController{
     public void mouseExited() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
-    }
-
-    @Override
-    public ActionInput<?> getActionInput() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActionInput'");
     }
     
 }

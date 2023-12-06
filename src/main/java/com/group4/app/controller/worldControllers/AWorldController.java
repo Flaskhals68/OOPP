@@ -10,7 +10,7 @@ import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 
-public abstract class AWorldController implements IController{
+public abstract class AWorldController{
     private ActionState state;
 
     public AWorldController(ActionState state){
