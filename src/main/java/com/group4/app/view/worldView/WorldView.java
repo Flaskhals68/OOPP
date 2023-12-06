@@ -27,7 +27,6 @@ import javax.swing.OverlayLayout;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
-import com.group4.app.controller.worldControllers.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
