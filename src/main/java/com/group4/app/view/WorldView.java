@@ -218,10 +218,7 @@ public class WorldView extends JPanel implements IGameView{
      */ 
     private void colorBorders(Set<Position> positions){
         for(Position pos : positions){
-            JLayeredPane tile = visibleTiles.get(pos);
-            if (tile != null) {
-                visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
-            }
+            visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
         }
 
     }
