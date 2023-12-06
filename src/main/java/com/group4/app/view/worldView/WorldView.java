@@ -231,14 +231,14 @@ public class WorldView extends JPanel implements IGameView{
     }
 
     /**
-     * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes. 
+     * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes, based on the view's state. 
      * @param positions set of positions
      */ 
     private void colorBorders(){
         drawingState.colorBorders(visibleTiles);
     }
 
-    //TODO make it modular?
+    //FIXME make it more open closed.?
     public void setState(ActionState newState){
         if(newState == state){
             return;
@@ -246,12 +246,18 @@ public class WorldView extends JPanel implements IGameView{
         if(newState == ActionState.IDLE){
             this.state = newState;
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+            this.controller = drawingState.getController();
+            return;
         }
         if(newState == ActionState.ATTACK){
             this.state = newState;
             this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
+            this.controller = drawingState.getController();
+            return;
         }
     }
+
+    
 
     public ActionState getState(){
         ActionState thisState = this.state;
@@ -262,7 +268,7 @@ public class WorldView extends JPanel implements IGameView{
     public void updateView() {
         removeAll();
         addTiles(entityPanelGenerator);
-        //TODO fix with model
+        //TODO fix with mode, get state somehow.
         setState(ActionState.IDLE);
         colorBorders();
         revalidate();

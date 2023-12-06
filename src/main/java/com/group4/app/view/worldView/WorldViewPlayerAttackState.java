@@ -15,14 +15,12 @@ public class WorldViewPlayerAttackState extends WorldViewState{
     private PlayerViewAttackController controller = new PlayerViewAttackController();
     public WorldViewPlayerAttackState(Position playerPosition){
         super(playerPosition);
-        //TODO implement
         setHighLightedPositions(controller.getAttacksInRange());
     }
 
     @Override
     public AWorldController getController() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getController'");
+        return this.controller;
     }
 
     @Override

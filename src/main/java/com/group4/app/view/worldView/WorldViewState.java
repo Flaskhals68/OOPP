@@ -29,6 +29,10 @@ public abstract class WorldViewState {
 
     public abstract AWorldController getController();
 
+    /**
+     * Colors the border of a number of the tiles that are currently shown to the user based on view state.
+     * @param visibleToPlayer
+     */
     public abstract void colorBorders(Map<Position, JLayeredPane> visibleToPlayer);
     public abstract void drawMouseClickedOnTile(Position targetPosition);
     public abstract void drawMouseEnteredTile(Position targetPosition);

@@ -50,11 +50,14 @@ public class WorldViewPlayerMoveState extends WorldViewState{
         }
     }
     
-
+    /**
+     *  Starts and animates the movement of the player
+     */
     @Override
     public void drawMouseClickedOnTile(Position targetPosition) {
         List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
 
+        //FIXME should not be in view
         if(!controller.getLegalMoves().contains(targetPosition)){
             throw new IllegalArgumentException("Tile out of range");
         }
@@ -88,6 +91,9 @@ public class WorldViewPlayerMoveState extends WorldViewState{
 
     }
 
+    /**
+     * Highlights a path between the position  of the player and the position the mouse has entered.
+     */
     @Override
     public void drawMouseEnteredTile(Position targetPosition) {
         
@@ -113,7 +119,6 @@ public class WorldViewPlayerMoveState extends WorldViewState{
 
     @Override
     public void drawMouseExitedTile() {
-        // TODO Auto-generated method stub
         if(hoverFlag){
             hoverFlag = false;
         }
@@ -121,7 +126,6 @@ public class WorldViewPlayerMoveState extends WorldViewState{
 
     @Override
     public AWorldController getController() {
-        // TODO Auto-generated method stub
         return this.controller;
     }
 
