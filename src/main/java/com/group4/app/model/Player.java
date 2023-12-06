@@ -30,7 +30,6 @@ public class Player extends Creature {
 
     @Override
     public void takeTurn() {
-        System.out.println("Player turn");
         Model.getInstance().startPlayerTurn();
         while (this.getAp() > 0) {
             ActionInput<?> input = Model.getInstance().getActionInput();
