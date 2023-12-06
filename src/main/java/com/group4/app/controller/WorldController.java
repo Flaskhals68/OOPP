@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.swing.Timer;
 
-import com.group4.app.model.ActionInput;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
@@ -72,7 +71,7 @@ public class WorldController {
         highlightedPositions = new HashSet<Position>(positions);
         
         // moves the player the first step to remove delay
-        model.performPlayerAction(new PositionActionInput("move", positions.get(0)));
+        ActionController.getInstance().queueAction(new PositionActionInput("move", positions.get(0)));
         highlightedPositions.remove(positions.get(0));
         model.updateObservers();
 
@@ -86,7 +85,7 @@ public class WorldController {
             public void actionPerformed(ActionEvent e){
                 // if done with iterating through the positions, stop the timer. 
                 if(currentPosIndex < positions.size()){
-                    model.performPlayerAction(new PositionActionInput("move", positions.get(currentPosIndex)));
+                    ActionController.getInstance().queueAction(new PositionActionInput("move", positions.get(currentPosIndex)));
                     highlightedPositions.remove(positions.get(currentPosIndex));
                     model.updateObservers();
                     currentPosIndex++;
