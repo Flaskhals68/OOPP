@@ -226,4 +226,12 @@ public class Model {
     public int getPlayerMaxHealth() {
         return player.getMaxHitPoints();
     }
+
+    public int getPlayerAp(){
+        return player.getAp();
+    }
+
+    public int getMaxPlayerAp(){
+        return player.getAp();
+    }
 }

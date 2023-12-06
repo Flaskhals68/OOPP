@@ -10,4 +10,12 @@ public class PlayerStatController {
     public int getPlayerMaxHealth() {
         return Model.getInstance().getPlayerMaxHealth();
     }
+
+    public int getPlayerMaxAP(){
+        return Model.getInstance().getPlayerAp();
+    }
+
+    public int getPlayerAp(){
+        return Model.getInstance().getPlayerAp();
+    }
 }
