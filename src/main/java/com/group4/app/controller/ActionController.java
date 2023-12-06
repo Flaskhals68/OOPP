@@ -19,6 +19,10 @@ public class ActionController implements IController {
         return instance;
     }
 
+    public void clearEventQueue() {
+        actionQueue.clear();
+    }
+
     /**
      * Enqueue an action to be performed
      * @param action
