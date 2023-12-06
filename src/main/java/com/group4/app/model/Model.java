@@ -218,4 +218,12 @@ public class Model {
     public List<String> getAvailableActions() {
         return player.getAvailableActions();
     }
+
+    public int getPlayerHealth() {
+        return player.getHitPoints();
+    }
+
+    public int getPlayerMaxHealth() {
+        return player.getMaxHitPoints();
+    }
 }
