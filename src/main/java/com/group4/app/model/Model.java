@@ -233,4 +233,12 @@ public class Model {
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
         return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
     }
+    
+    public int getPlayerHealth() {
+        return player.getHitPoints();
+    }
+
+    public int getPlayerMaxHealth() {
+        return player.getMaxHitPoints();
+    }
 }

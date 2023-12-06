@@ -127,6 +127,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         return hp.getCurrent();
     }
 
+    @Override
+    public int getMaxHitPoints() {
+        return hp.getMax();
+    }
+
     public int getAp() {
         return this.ap.getCurrent();
     }
