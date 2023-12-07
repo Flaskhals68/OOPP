@@ -212,8 +212,6 @@ public class PathfindingHelper {
                 continue;
             if (entry.getGuessedCost() < closest.getGuessedCost())
                 closest = entry;
-            // if (entry.getCurrent() == goal)
-            //     break;
             for (Edge edge : entry.getOutgoingEdges()) {
                 if (entry.getCurrent() == goal) break;
                 double costToHere = entry.getCostToHere() + edge.getWeight();
@@ -225,7 +223,6 @@ public class PathfindingHelper {
         }
 
         List<Position> path = extractPath(closest);
-        // path.remove(path.size()-1);
         return path;
     }
 }
