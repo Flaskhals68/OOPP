@@ -144,17 +144,18 @@ public class PathfindingHelper {
     private static AStarEntry aStarSearch(Tile start, Tile goal) {
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
+        AStarEntry startEntry = new AStarEntry(start, null, null, 0, 0);
         
-        pq.add(new AStarEntry(start, null, null, 0, 0));
+        pq.add(startEntry);
 
         while (!pq.isEmpty()) {
             AStarEntry entry = pq.poll();
             if (visited.contains(entry.getCurrent()))
                 continue;
-            if (!entry.getCurrent().isEmpty())
-                continue;
-            if (entry.getCurrent() == goal)
-                return entry;
+                if (entry.getCurrent() == goal)
+                    return entry;
+                if (entry != startEntry && !entry.getCurrent().isEmpty())
+                    continue;
             for (Edge edge : entry.getOutgoingEdges()) {
                 double costToHere = entry.getCostToHere() + edge.getWeight();
                 double guessedCost = guessCost(edge.getEnd(), goal);
@@ -198,14 +199,15 @@ public class PathfindingHelper {
     public static List<Position> pathToClosest(Tile start, Tile goal) {
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
+        AStarEntry startEntry = new AStarEntry(start, null, null, 0, 0);
+        pq.add(startEntry);
         
-        pq.add(new AStarEntry(start, null, null, 0, 0));
         AStarEntry entry = null;
         while (!pq.isEmpty()) {
             entry = pq.poll();
             if (visited.contains(entry.getCurrent()))
                 continue;
-            if (!entry.getCurrent().isEmpty())
+            if (entry != startEntry && !entry.getCurrent().isEmpty())
                 continue;
             if (entry.getCurrent() == goal)
                 break;
