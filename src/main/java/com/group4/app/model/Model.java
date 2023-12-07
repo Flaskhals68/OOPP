@@ -230,8 +230,4 @@ public class Model {
     public int getPlayerAp(){
         return player.getAp();
     }
-
-    public int getMaxPlayerAp(){
-        return player.getAp();
-    }
 }
