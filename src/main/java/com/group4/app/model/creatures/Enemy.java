@@ -49,9 +49,8 @@ public class Enemy extends Creature {
             } else {
                 System.out.println(getName() + " should move now");
                 // gives the entire path to the player, irrespective of distance
-                Tile startTile = m.getTile(getPos());
-                Tile playerTile = m.getTile(m.getPlayerPos());
-                path = PathfindingHelper.pathToClosest(startTile, playerTile);
+
+                path = PathfindingHelper.pathToClosest(getPos(), m.getPlayerPos(), m.getWorld(m.getPlayerFloor()));
 
                 path = path.subList(0, Math.min(path.size(), 5));
 
