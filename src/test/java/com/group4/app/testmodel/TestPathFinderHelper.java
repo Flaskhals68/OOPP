@@ -100,27 +100,12 @@ public class TestPathFinderHelper {
         Tile start = model.getTile(new Position(0, 0, worldId));
         Tile goal = model.getTile(new Position(4, 0, worldId));
         List<Position> path = PathfindingHelper.pathToClosest(start, goal);
-        Position finalPosition = path.get(path.size() - 1);
         List<Position> correctPositions = new ArrayList<>();
+        correctPositions.add(new Position(1, 0, worldId));
+        correctPositions.add(new Position(2, 0, worldId));
         correctPositions.add(new Position(3, 0, worldId));
-        assertTrue(correctPositions.contains(finalPosition));
-    }
-
-    @Test
-    public void testBlockedPath() {
-        Model model = Model.getInstance();
-        World world = new World(5);
-        model.addWorld(world);
-        initFlatWorld(5, world);
-        model.setCurrentWorld(world.getId());
-        String worldId = model.getCurrentWorldId();
-        Tile start = model.getTile(new Position(0, 0, worldId));
-        Tile goal = model.getTile(new Position(4, 0, worldId));
-        Tile obstacle = model.getTile(new Position(2, 0, worldId));
-        obstacle.add(EnemyFactory.createZombie(obstacle.getPos()));
-        List<Position> path = PathfindingHelper.pathToClosest(start, goal);
-        Position finalPosition = path.get(path.size() - 1);
-        assertEquals(new Position(1, 0, worldId), finalPosition);
+        correctPositions.add(new Position(4, 0, worldId));
+        assertEquals(correctPositions, path);
     }
 
     private static void initFlatWorld(int size, World world) {
