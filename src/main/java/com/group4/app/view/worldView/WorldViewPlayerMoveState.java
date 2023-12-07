@@ -19,12 +19,10 @@ import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 
 public class WorldViewPlayerMoveState extends WorldViewState{
-    private final ActionState state = ActionState.IDLE;
     private boolean movementTimerFlag;
     private boolean hoverFlag;
-    private Timer movementTimer;
-    private final int movementTimerDelay = 100;
     private PlayerMovementController controller = new PlayerMovementController();
+    private Position mouseClickedPosition;
 
     public WorldViewPlayerMoveState(Position playerPosition){
         super(playerPosition);
@@ -32,21 +30,22 @@ public class WorldViewPlayerMoveState extends WorldViewState{
         System.out.println("null");
     }
 
-    private void initMovementTimer(int delay){
-        movementTimer = new Timer(delay, null);
-        movementTimer.start();
-        movementTimerFlag = true;
-    }
-
-    private void stopMovementTimer(){
-        movementTimer.stop();
-        movementTimerFlag = false;
-    }
-
     @Override
     public void colorBorders(Map<Position, JLayeredPane> visibleToPlayer) {
+        drawMovementPathIfMoving();
         for(Position pos : getHighlightedPositions()){
             visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
+        }
+    }
+
+    private void drawMovementPathIfMoving(){
+        if(movementTimerFlag && !controller.getPlayerPosition().equals(mouseClickedPosition)){
+            List<Position> path = controller.getPathFromPlayerTo(mouseClickedPosition);
+            setHighLightedPositions(new HashSet<>(path));
+        }
+        else if(movementTimerFlag && controller.getPlayerPosition().equals(mouseClickedPosition)){
+            setHighLightedPositions(controller.getLegalMoves());
+            movementTimerFlag = false;
         }
     }
     
@@ -55,54 +54,18 @@ public class WorldViewPlayerMoveState extends WorldViewState{
      */
     @Override
     public void drawMouseClickedOnTile(Position targetPosition) {
-        List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
-        
-        setHighLightedPositions(new HashSet<>(path));
-        
-        
-        initMovementTimer(movementTimerDelay); 
-        getHighlightedPositions().remove(path.get(0));
+        mouseClickedPosition = targetPosition;
+        movementTimerFlag = true;
         controller.mouseClicked(targetPosition);
-
-        movementTimer.addActionListener(new ActionListener() {
-            private int currentPosIndex = 1;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(currentPosIndex < path.size()-1){
-                    getHighlightedPositions().remove(path.get(currentPosIndex));
-                    currentPosIndex++;            
-                }
-                else{
-                    setHighLightedPositions(controller.getLegalMoves());
-                    stopMovementTimer();
-                }
-            }
-        });
-
     }
-
-    // /**
-    //  *  Starts and animates the movement of the player
-    //  */
-    // @Override
-    // public void drawMouseClickedOnTile(Position targetPosition) {
-    //     List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
-    //     setHighLightedPositions(new HashSet<>(path));
-    //     movementTimerFlag = true;
-    //     controller.mouseClicked(targetPosition);
-    //     movementTimerFlag = false;
-    //     setHighLightedPositions(controller.getLegalMoves());
-        
-    // }
 
     /**
      * Highlights a path between the position  of the player and the position the mouse has entered.
      */
     @Override
     public void drawMouseEnteredTile(Position targetPosition) {
+        List<Position> path = controller.getPathFromPlayerTo(targetPosition);
         
-        List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
-
         if(!hoverFlag && !movementTimerFlag){
             if(controller.getLegalMoves().contains(targetPosition)){
                 hoverFlag = true;

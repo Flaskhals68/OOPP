@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.security.Identity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +85,6 @@ public class WorldView extends JPanel implements IGameView{
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
-    
         colorBorders();
     }
 
@@ -237,6 +237,7 @@ public class WorldView extends JPanel implements IGameView{
      * @param positions set of positions
      */ 
     private void colorBorders(){
+        
         drawingState.colorBorders(visibleTiles);
     }
 
@@ -255,7 +256,6 @@ public class WorldView extends JPanel implements IGameView{
             this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
             this.controller = drawingState.getController();
             this.state = StateController.getState();
-
             return;
         }
     }
@@ -265,7 +265,9 @@ public class WorldView extends JPanel implements IGameView{
         removeAll();
         setState(StateController.getState());
         addTiles(entityPanelGenerator);
-        colorBorders();
+        if(StateController.getState() != ActionState.DISABLED){
+            colorBorders();
+        }
         revalidate();
         repaint();
     }

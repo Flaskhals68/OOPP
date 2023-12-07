@@ -26,8 +26,6 @@ public class PlayerViewAttackController extends AWorldController{
     @Override
     public void mouseClicked(Position position) {
         ActionController.getInstance().queueAction(new AttackActionInput("attack", Model.getInstance().getAttackedAtPosition(position)));
-        Set<IPositionable> poset = Model.getInstance().getEntities(position);
-        // System.out.println(poset);
     }
 
     @Override

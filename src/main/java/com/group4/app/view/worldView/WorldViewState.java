@@ -9,7 +9,7 @@ import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 
-public abstract class WorldViewState {
+public abstract class WorldViewState implements IClickableState{
     protected Position playerPosition;
     protected boolean hoverFlag;
     protected Set<Position> highlightedPositions;
@@ -35,9 +35,5 @@ public abstract class WorldViewState {
      */
     public abstract void colorBorders(Map<Position, JLayeredPane> visibleToPlayer);
 
-    public abstract void drawMouseClickedOnTile(Position targetPosition);
 
-    public abstract void drawMouseEnteredTile(Position targetPosition);
-    
-    public abstract void drawMouseExitedTile();
 }

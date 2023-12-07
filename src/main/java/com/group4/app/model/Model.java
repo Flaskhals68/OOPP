@@ -2,11 +2,14 @@ package com.group4.app.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.controller.StateController;
 import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.view.ActionState;
 
 public class Model {
     private static Model instance = null;
@@ -219,7 +222,13 @@ public class Model {
 
     //FIXME not random
     public IAttackable getAttackedAtPosition(Position targetPos){
-        Set<IPositionable> targets = getTile(targetPos).getEntities();
+        Set<IPositionable> targets = new HashSet<>();
+        if(getAttackablePositions().contains(targetPos)){
+            targets = getEntities(targetPos);
+        }
+        else{
+            throw new IllegalStateException();
+        }
         List<IPositionable> targetsList = new ArrayList<>(targets);
         return (IAttackable)targetsList.get(0);
     }
