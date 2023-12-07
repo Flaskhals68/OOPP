@@ -9,19 +9,19 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-import java.awt.Point;
-import java.awt.geom.Point2D;
-
 public class PathfindingHelper {
 
     // Helper class for storing remaining steps in entry
     private static class Entry {
-        public Tile tile;
-        public int remainingSteps;
+        private Tile tile;
+        private int remainingSteps;
         public Entry(Tile tile, int remainingSteps) {
             this.tile = tile;
             this.remainingSteps = remainingSteps;
         }
+
+        public Tile getTile() { return tile; }
+        public int getRemainingSteps() { return remainingSteps; }
     }
 
     /**
@@ -39,14 +39,14 @@ public class PathfindingHelper {
     queue.add(new Entry(tile, steps));
     while (!queue.isEmpty()) {
         Entry entry = queue.remove();
-        if (!visited.add(entry.tile)) continue;
+        if (!entry.getTile().isEmpty() && !visited.add(entry.getTile())) continue;
         Position entryPos = entry.tile.getPos();
         Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
         positions.add(p);
 
         if (entry.remainingSteps > 0) {
-            for (Tile neighbor : entry.tile.getNeighbors()) {
-                queue.add(new Entry(neighbor, entry.remainingSteps-1));
+            for (Tile neighbor : entry.getTile().getNeighbors()) {
+                queue.add(new Entry(neighbor, entry.getRemainingSteps()-1));
             }
         }
     }
@@ -106,7 +106,7 @@ public class PathfindingHelper {
         @Override
         public int compareTo(AStarEntry other) {
             if (this.getGuessedCost() < other.getGuessedCost()) { return -1; }
-            if (this.getGuessedCost() > other.getGuessedCost()) { return 1; }
+            if (this.getCostToHere() + this.getGuessedCost() > other.getCostToHere() + other.getGuessedCost()) { return 1; }
             else return 0;
         }
 
@@ -146,18 +146,21 @@ public class PathfindingHelper {
     private static AStarEntry aStarSearch(Tile start, Tile goal) {
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
+        AStarEntry startEntry = new AStarEntry(start, null, null, 0, 0);
         
-        pq.add(new AStarEntry(start, null, null, 0, 0));
+        pq.add(startEntry);
 
         while (!pq.isEmpty()) {
             AStarEntry entry = pq.poll();
             if (visited.contains(entry.getCurrent()))
                 continue;
-            if (entry.getCurrent() == goal)
-                return entry;
+                if (entry.getCurrent() == goal)
+                    return entry;
+                if (entry != startEntry && !entry.getCurrent().isEmpty())
+                    continue;
             for (Edge edge : entry.getOutgoingEdges()) {
                 double costToHere = entry.getCostToHere() + edge.getWeight();
-                double guessedCost = entry.getCostToHere() + guessCost(edge.getEnd(), goal);
+                double guessedCost = guessCost(edge.getEnd(), goal);
                 AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
                 pq.add(newEntry);
             }
@@ -185,6 +188,42 @@ public class PathfindingHelper {
             path.addFirst(new Position(currentPos.getX(), currentPos.getY(), current.getFloor()));
             entry = entry.getBackPointer();
         }
+        return path;
+    }
+
+
+    /**
+     * @param start
+     * @param goal
+     * @return The shortest path from start to goal.
+     * If the goal cannot be reached, the path to the closest tile is returned
+     */
+    public static List<Position> pathToClosest(Tile start, Tile goal) {
+        PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
+        Set<Tile> visited = new HashSet<>();
+        AStarEntry startEntry = new AStarEntry(start, null, null, 0, 0);
+        pq.add(startEntry);
+        
+        AStarEntry entry = null;
+        while (!pq.isEmpty()) {
+            entry = pq.poll();
+            if (visited.contains(entry.getCurrent()))
+                continue;
+            if (entry != startEntry && !entry.getCurrent().isEmpty())
+                continue;
+            if (entry.getCurrent() == goal)
+                break;
+            for (Edge edge : entry.getOutgoingEdges()) {
+                double costToHere = entry.getCostToHere() + edge.getWeight();
+                double guessedCost = entry.getCostToHere() + guessCost(edge.getEnd(), goal);
+                AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
+                pq.add(newEntry);
+            }
+            visited.add(entry.current);
+        }
+
+        List<Position> path = extractPath(entry);
+        path.remove(path.size()-1);
         return path;
     }
 }
