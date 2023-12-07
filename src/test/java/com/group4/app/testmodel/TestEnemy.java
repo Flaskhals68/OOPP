@@ -25,7 +25,7 @@ public class TestEnemy {
 
     @BeforeEach
     public void setup() {
-        world = new World(10);
+        world = new World(20);
         m = Model.getInstance();
 
         m.add(world);
@@ -60,8 +60,6 @@ public class TestEnemy {
     }
     @Test
     public void testTakeTurnMoveAndAttack() {
-        World world = new World(20);
-        Model m = Model.getInstance();
 
         m.add(world);
         m.setCurrentWorld(world.getId());
