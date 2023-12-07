@@ -209,6 +209,10 @@ public class Model {
         return PathfindingHelper.getSurrounding(getTile(pos), steps);
     }
 
+    public Set<Position> getLegalMoves(){
+        return player.getTargetPositions("move");
+    }
+
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }

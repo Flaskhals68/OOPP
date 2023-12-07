@@ -18,7 +18,7 @@ public class PlayerMovementController extends AWorldController{
     }
 
     public Set<Position> getLegalMoves(){
-        return Model.getInstance().getSurrounding(new Position(getPlayerPosition().getX(), getPlayerPosition().getY(), Model.getInstance().getPlayerFloor()), 5);
+        return Model.getInstance().getLegalMoves();
     }
 
     public List<Position> getPathFromPlayerTo(Position position){
