@@ -62,7 +62,14 @@ public class Model implements IWorldContainer {
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
                     if(r > 0.995){
-                        Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                        r = Math.random();
+                        Enemy e;
+                        if(r > 0.5){
+                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+
+                        } else {
+                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+                        }
                         add(e);
                         addToTurnOrder(e);
                     }
