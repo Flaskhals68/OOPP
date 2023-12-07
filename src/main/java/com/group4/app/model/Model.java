@@ -217,6 +217,13 @@ public class Model {
         return player.getTargetPositions("attack");
     }
 
+    //FIXME not random
+    public IAttackable getAttackedAtPosition(Position targetPos){
+        Set<IPositionable> targets = getTile(targetPos).getEntities();
+        List<IPositionable> targetsList = new ArrayList<>(targets);
+        return (IAttackable)targetsList.get(0);
+    }
+
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }

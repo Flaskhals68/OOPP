@@ -263,9 +263,8 @@ public class WorldView extends JPanel implements IGameView{
     @Override
     public void updateView() {
         removeAll();
-        addTiles(entityPanelGenerator);
-        //TODO fix with mode, get state somehow.
         setState(StateController.getState());
+        addTiles(entityPanelGenerator);
         colorBorders();
         revalidate();
         repaint();

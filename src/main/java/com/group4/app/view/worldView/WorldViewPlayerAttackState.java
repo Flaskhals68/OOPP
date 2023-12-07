@@ -33,19 +33,19 @@ public class WorldViewPlayerAttackState extends WorldViewState{
     @Override
     public void drawMouseClickedOnTile(Position targetPosition) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawMouseClickedOnTile'");
+        controller.mouseClicked(targetPosition);
     }
 
     @Override
     public void drawMouseEnteredTile(Position targetPosition) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawMouseEnteredTile'");
+        // throw new UnsupportedOperationException("Unimplemented method 'drawMouseEnteredTile'");
     }
 
     @Override
     public void drawMouseExitedTile() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawMouseExitedTile'");
+        // throw new UnsupportedOperationException("Unimplemented method 'drawMouseExitedTile'");
     }
     
 }

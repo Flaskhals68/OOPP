@@ -2,10 +2,13 @@ package com.group4.app.controller.worldControllers;
 
 import java.util.Set;
 
+import com.group4.app.controller.ActionController;
 import com.group4.app.model.ActionInput;
+import com.group4.app.model.AttackActionInput;
+import com.group4.app.model.IPositionable;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
-
+import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.view.ActionState;
 
 
@@ -22,20 +25,19 @@ public class PlayerViewAttackController extends AWorldController{
 
     @Override
     public void mouseClicked(Position position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        ActionController.getInstance().queueAction(new AttackActionInput("attack", Model.getInstance().getAttackedAtPosition(position)));
+        Set<IPositionable> poset = Model.getInstance().getEntities(position);
+        // System.out.println(poset);
     }
 
     @Override
     public void mouseEntered(Position position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+        
     }
 
     @Override
     public void mouseExited() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+        
     }
     
 }
