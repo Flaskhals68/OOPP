@@ -36,7 +36,7 @@ public class TestPathFinderHelper {
         int startY = 0;
         Model model = Model.getInstance();
         World world = new World(5);
-        model.addWorld(world);
+        model.add(world);
         String worldId = world.getId();
         initFlatWorld(5, world);;
         Set<Position> correctPositions = new HashSet<>();
@@ -54,7 +54,7 @@ public class TestPathFinderHelper {
         // model.addBasicMap(5, 0);
         World world = new World(5);
         String worldId = world.getId();
-        model.addWorld(world);
+        model.add(world);
         model.setCurrentWorld(worldId);
         initFlatWorld(5, world);
         Tile start = model.getTile(new Position(0, 0, worldId));
@@ -71,7 +71,7 @@ public class TestPathFinderHelper {
     public void testGetPathNextTo() {
         Model model = Model.getInstance();
         World world = new World(5);
-        model.addWorld(world);
+        model.add(world);
         String worldId = world.getId();
         model.setCurrentWorld(worldId);
         initFlatWorld(5, world);
@@ -91,7 +91,7 @@ public class TestPathFinderHelper {
     public void pathToClosest() {
         Model model = Model.getInstance();
         World world = new World(10);
-        model.addWorld(world);
+        model.add(world);
         initFlatWorld(5, world);
         model.setCurrentWorld(world.getId());
         String worldId = model.getCurrentWorldId();
@@ -108,7 +108,7 @@ public class TestPathFinderHelper {
     public void testBlockedPath() {
         Model model = Model.getInstance();
         World world = new World(5);
-        model.addWorld(world);
+        model.add(world);
         initFlatWorld(5, world);
         model.setCurrentWorld(world.getId());
         String worldId = model.getCurrentWorldId();
