@@ -1,5 +1,6 @@
 package com.group4.app.controller;
 
+import com.group4.app.model.Model;
 import com.group4.app.view.ActionState;
 
 public class StateController {
@@ -14,6 +15,11 @@ public class StateController {
     }
 
     public static void setState(ActionState newState){
-        state = newState;
+        if(!Model.getInstance().isPlayerTurn()){
+            state = ActionState.IDLE;
+        }
+        else{
+            state = newState;
+        }
     }
 }
