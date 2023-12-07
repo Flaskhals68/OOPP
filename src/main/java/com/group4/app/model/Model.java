@@ -13,6 +13,7 @@ import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.DungeonGenerator;
 import com.group4.app.model.dungeon.IWorldContainer;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
@@ -73,6 +74,14 @@ public class Model implements IWorldContainer {
 
     public void addBasicMap(int size) {
         addBasicMap(size, 0.1);
+    }
+
+    public void addRandomMap(int size) {
+        World world = DungeonGenerator.generate(size, this);
+        this.add(world);
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(4, 4, world.getId()));
+        add(player);
+        addToTurnOrder(player);
     }
 
     public void add(World world){

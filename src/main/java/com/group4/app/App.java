@@ -20,7 +20,7 @@ import com.group4.app.view.WorldView;
 public class App {
     public static void main(String[] args) {
         Model model = Model.getInstance();
-        model.addBasicMap(100);
+        model.addRandomMap(10);
 
         WorldController worldController = new WorldController(model);
         WorldView worldView = new WorldView(worldController);
