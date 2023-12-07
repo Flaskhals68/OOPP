@@ -26,7 +26,7 @@ public class ApBar extends SubView{
 
     private void intiJLabel(Dimension d){
         this.psc = new PlayerStatController();
-        this.maxAp = psc.getPlayerMaxAP();
+        this.maxAp = psc.getPlayerAp();
         this.apLabel = new JLabel(String.valueOf(maxAp));
         this.apLabel.setPreferredSize(d);
         this.apLabel.setFont(new Font("Arial", Font.BOLD, 16));
