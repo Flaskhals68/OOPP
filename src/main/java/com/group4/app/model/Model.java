@@ -294,4 +294,12 @@ public class Model implements IWorldContainer {
     public boolean nextToPlayer(Position pos){
         return getSurrounding(pos, 1).contains(player.getPos());
     }
+
+    /**
+     * Required for tests
+     * @param player the player object to be set as current player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
