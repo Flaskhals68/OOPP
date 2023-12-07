@@ -237,27 +237,21 @@ public class WorldView extends JPanel implements IGameView{
      * @param positions set of positions
      */ 
     private void colorBorders(){
-        
         drawingState.colorBorders(visibleTiles);
     }
 
-    //FIXME make it more open closed.?
     public void setState(ActionState newState){
         if(this.state == newState){
             return;
         }
         if(newState == ActionState.IDLE){
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
-            this.controller = drawingState.getController();
-            this.state = StateController.getState();
-            return;
         }
         else if(newState == ActionState.ATTACK){
             this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
-            this.controller = drawingState.getController();
-            this.state = StateController.getState();
-            return;
         }
+        this.controller = drawingState.getController();
+        this.state = StateController.getState();
     }
 
     @Override

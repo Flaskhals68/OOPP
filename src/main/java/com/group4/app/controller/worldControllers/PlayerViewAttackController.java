@@ -30,12 +30,12 @@ public class PlayerViewAttackController extends AWorldController{
 
     @Override
     public void mouseEntered(Position position) {
-        
+        // TODO Left open for future implementation      
     }
 
     @Override
     public void mouseExited() {
-        
+        // TODO Left open for future implementation        
     }
     
 }

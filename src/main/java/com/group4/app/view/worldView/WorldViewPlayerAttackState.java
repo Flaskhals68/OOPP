@@ -38,14 +38,12 @@ public class WorldViewPlayerAttackState extends WorldViewState{
 
     @Override
     public void drawMouseEnteredTile(Position targetPosition) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'drawMouseEnteredTile'");
+        // TODO Left open for future implementation
     }
 
     @Override
     public void drawMouseExitedTile() {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'drawMouseExitedTile'");
+        // TODO Left open for future implementation
     }
     
 }
