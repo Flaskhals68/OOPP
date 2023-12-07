@@ -1,4 +1,6 @@
-package com.group4.app.model;
+package com.group4.app.model.actions;
+
+import com.group4.app.model.Position;
 
 public class PositionActionInput extends ActionInput<Position>{
     public PositionActionInput(String actionId, Position target) {

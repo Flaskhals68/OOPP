@@ -29,14 +29,14 @@ import javax.swing.SwingUtilities;
 
 import com.group4.app.controller.ActionController;
 import com.group4.app.controller.WorldController;
-import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
-import com.group4.app.model.PositionActionInput;
-import com.group4.app.model.Tile;
+import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.dungeon.Tile;
 
 public class WorldView extends JPanel implements IGameView{
     private WorldController controller;

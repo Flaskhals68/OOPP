@@ -6,6 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.creatures.AttributeType;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.IWorldContainer;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
+import com.group4.app.model.items.WeaponFactory;
+
 public class Model implements IWorldContainer {
     private static Model instance = null;
     private List<IModelObserver> observers;

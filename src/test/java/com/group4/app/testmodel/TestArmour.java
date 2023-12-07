@@ -1,8 +1,9 @@
 package com.group4.app.testmodel;
 
-import com.group4.app.model.Armour;
-import com.group4.app.model.ArmourType;
 import org.junit.jupiter.api.Test;
+
+import com.group4.app.model.items.Armour;
+import com.group4.app.model.items.ArmourType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

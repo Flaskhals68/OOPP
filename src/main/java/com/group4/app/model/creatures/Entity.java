@@ -1,6 +1,10 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
 
 import java.util.Objects;
+
+import com.group4.app.model.IDrawable;
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
 
 public class Entity implements IDrawable {
     private String id;

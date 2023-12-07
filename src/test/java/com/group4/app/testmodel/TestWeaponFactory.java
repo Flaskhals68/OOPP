@@ -1,8 +1,9 @@
 package com.group4.app.testmodel;
 
-import com.group4.app.model.Weapon;
-import com.group4.app.model.WeaponFactory;
 import org.junit.jupiter.api.Test;
+
+import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

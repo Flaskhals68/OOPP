@@ -7,20 +7,20 @@ import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Enemy;
-import com.group4.app.model.EnemyFactory;
-import com.group4.app.model.IAttackable;
-import com.group4.app.model.ICanAttack;
-import com.group4.app.model.IPositionable;
 import com.group4.app.model.Model;
-import com.group4.app.model.Player;
 import com.group4.app.model.Position;
-import com.group4.app.model.Tile;
-import com.group4.app.model.WeaponFactory;
-import com.group4.app.model.World;
 import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.model.actions.PlayerMoveAction;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.creatures.ICanAttack;
+import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
+import com.group4.app.model.items.WeaponFactory;
 
 public class TestPlayerMoveAction {
     @Test

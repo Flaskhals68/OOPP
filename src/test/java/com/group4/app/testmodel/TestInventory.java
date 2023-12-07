@@ -1,8 +1,9 @@
 package com.group4.app.testmodel;
 
-import com.group4.app.model.Inventory;
-import com.group4.app.model.Weapon;
-import com.group4.app.model.WeaponFactory;
+import com.group4.app.model.items.Inventory;
+import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
