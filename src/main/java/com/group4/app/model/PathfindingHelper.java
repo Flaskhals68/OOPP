@@ -188,37 +188,14 @@ public class PathfindingHelper {
         return path;
     }
 
+
+    /**
+     * @param start
+     * @param goal
+     * @return The shortest path from start to goal.
+     * If the goal cannot be reached, the path to the closest tile is returned
+     */
     public static List<Position> pathToClosest(Tile start, Tile goal) {
-        PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
-        Set<Tile> visited = new HashSet<>();
-        AStarEntry startEntry = new AStarEntry(start, null, null, 0, guessCost(start, goal));
-        AStarEntry closest = startEntry;
-
-        pq.add(startEntry);
-
-        while (!pq.isEmpty()) {
-            AStarEntry entry = pq.poll();
-            if (visited.contains(entry.getCurrent()))
-                continue;
-            if (entry.getCurrent() == goal)
-                break;
-            if (entry.getGuessedCost() < closest.getGuessedCost())
-                closest = entry;
-            for (Edge edge : entry.getOutgoingEdges()) {
-                if (!edge.getEnd().isEmpty()) continue;
-
-                double costToHere = entry.getCostToHere() + edge.getWeight();
-                double guessedCost = entry.getCostToHere() + guessCost(edge.getEnd(), goal);
-                AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
-                pq.add(newEntry);
-            }
-            visited.add(entry.current);
-        }
-
-        return extractPath(closest);
-    }
-
-    public static List<Position> test(Tile start, Tile goal) {
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
         
@@ -245,6 +222,4 @@ public class PathfindingHelper {
         path.remove(path.size()-1);
         return path;
     }
-
-    
 }

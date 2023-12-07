@@ -32,12 +32,17 @@ public class TestPathFinderHelper {
 
     @Test
     public void testGetSurrounding() {
-        int startX = 3;
-        int startY = 3;
+        int startX = 2;
+        int startY = 0;
         Model model = Model.getInstance();
-        model.addBasicMap(10, 0);
-        String worldId = model.getCurrentWorldId();
-        Set<Position> correctPositions = debugAddBasicMap(startX, startY, worldId);
+        World world = new World(5);
+        model.addWorld(world);
+        String worldId = world.getId();
+        initFlatWorld(5, world);;
+        Set<Position> correctPositions = new HashSet<>();
+        correctPositions.add(new Position(1, 0, worldId));
+        correctPositions.add(new Position(3, 0, worldId));
+        correctPositions.add(new Position(2, 0, worldId));
         Tile startingTile = model.getTile(new Position(startX, startY, worldId));
         Set<Position> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
         assertTrue(correctPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
@@ -92,7 +97,7 @@ public class TestPathFinderHelper {
         String worldId = model.getCurrentWorldId();
         Tile start = model.getTile(new Position(0, 0, worldId));
         Tile goal = model.getTile(new Position(4, 0, worldId));
-        List<Position> path = PathfindingHelper.test(start, goal);
+        List<Position> path = PathfindingHelper.pathToClosest(start, goal);
         Position finalPosition = path.get(path.size() - 1);
         List<Position> correctPositions = new ArrayList<>();
         correctPositions.add(new Position(3, 0, worldId));
@@ -111,7 +116,7 @@ public class TestPathFinderHelper {
         Tile goal = model.getTile(new Position(4, 0, worldId));
         Tile obstacle = model.getTile(new Position(2, 0, worldId));
         obstacle.add(EnemyFactory.createZombie(obstacle.getPos()));
-        List<Position> path = PathfindingHelper.test(start, goal);
+        List<Position> path = PathfindingHelper.pathToClosest(start, goal);
         Position finalPosition = path.get(path.size() - 1);
         assertEquals(new Position(1, 0, worldId), finalPosition);
     }
