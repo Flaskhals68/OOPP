@@ -1,10 +1,22 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
 import java.util.*;
 
+import com.group4.app.model.ITurnTaker;
+import com.group4.app.model.Position;
 import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.IAction;
 import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.model.actions.PlayerMoveAction;
+import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.items.Armour;
+import com.group4.app.model.items.ArmourFactory;
+import com.group4.app.model.items.ArmourType;
+import com.group4.app.model.items.IInventoriable;
+import com.group4.app.model.items.IUser;
+import com.group4.app.model.items.Inventory;
+import com.group4.app.model.items.Weapon;
 
 public abstract class Creature extends Entity implements IAttackable, ICanAttack, ITurnTaker, IUser {
 

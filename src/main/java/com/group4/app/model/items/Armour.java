@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.items;
 
 public class Armour implements IInventoriable{
     private final int defence;

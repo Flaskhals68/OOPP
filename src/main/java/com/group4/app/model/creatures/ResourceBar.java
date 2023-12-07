@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
 
 public class ResourceBar {
     private int max;

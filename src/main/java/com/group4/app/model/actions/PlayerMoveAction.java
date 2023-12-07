@@ -2,10 +2,11 @@ package com.group4.app.model.actions;
 
 import java.util.List;
 import java.util.Set;
-import com.group4.app.model.IPositionable;
+
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.model.creatures.IPositionable;
 
 public class PlayerMoveAction extends Action<IPositionable, Position>{
     
@@ -23,7 +24,7 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
         for (Position pos : path) {
             Model.getInstance().remove(getActionTaker());
             getActionTaker().setPos(pos);
-            Model.getInstance().add(getActionTaker(), pos);
+            Model.getInstance().add(getActionTaker());
             System.out.println("Moving to " + pos.getX() + ", " + pos.getY());
             Model.getInstance().updateObservers();
             try {

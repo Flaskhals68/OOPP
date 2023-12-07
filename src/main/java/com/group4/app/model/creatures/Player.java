@@ -1,7 +1,13 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
 
 import java.util.Random;
 import java.util.Set;
+
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
+import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.items.PotionFactory;
+import com.group4.app.model.items.Weapon;
 
 public class Player extends Creature {
 

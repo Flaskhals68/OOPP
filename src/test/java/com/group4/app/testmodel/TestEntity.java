@@ -8,7 +8,7 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Entity;
+import com.group4.app.model.creatures.Entity;
 
 public class TestEntity {
     private String randomString(int length) {

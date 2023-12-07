@@ -1,7 +1,13 @@
-package com.group4.app.model;
+package com.group4.app.model.dungeon;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.group4.app.model.IDrawable;
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
+import com.group4.app.model.creatures.IPositionable;
+
 import java.io.Serializable;
 
 public class Tile implements IDrawable {

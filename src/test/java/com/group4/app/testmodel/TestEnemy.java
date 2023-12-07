@@ -1,6 +1,12 @@
 package com.group4.app.testmodel;
 
 import com.group4.app.model.*;
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
+import com.group4.app.model.creatures.Attributes;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.items.WeaponFactory;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

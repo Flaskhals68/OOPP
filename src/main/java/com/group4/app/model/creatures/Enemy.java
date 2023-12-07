@@ -1,4 +1,8 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
+
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
+import com.group4.app.model.items.Weapon;
 
 import com.group4.app.model.actions.PlayerMoveAction;
 
