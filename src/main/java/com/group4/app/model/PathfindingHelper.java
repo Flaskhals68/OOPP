@@ -213,10 +213,13 @@ public class PathfindingHelper {
             if (entry.getGuessedCost() < closest.getGuessedCost())
                 closest = entry;
             for (Edge edge : entry.getOutgoingEdges()) {
-                if (entry.getCurrent() == goal) break;
                 double costToHere = entry.getCostToHere() + edge.getWeight();
                 double guessedCost = guessCost(edge.getEnd(), goal);
                 AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
+                if (edge.getEnd() == goal) {
+                    closest = newEntry;
+                    break;
+                }
                 pq.add(newEntry);
             }
             visited.add(entry.current);
