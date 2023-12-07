@@ -98,10 +98,12 @@ public class TestPathFinderHelper {
         Tile start = model.getTile(new Position(0, 0, worldId));
         Tile goal = model.getTile(new Position(4, 0, worldId));
         List<Position> path = PathfindingHelper.pathToClosest(start, goal);
-        Position finalPosition = path.get(path.size() - 1);
         List<Position> correctPositions = new ArrayList<>();
+        correctPositions.add(new Position(1, 0, worldId));
+        correctPositions.add(new Position(2, 0, worldId));
         correctPositions.add(new Position(3, 0, worldId));
-        assertTrue(correctPositions.contains(finalPosition));
+        correctPositions.add(new Position(4, 0, worldId));
+        assertEquals(correctPositions, path);
     }
 
     @Test

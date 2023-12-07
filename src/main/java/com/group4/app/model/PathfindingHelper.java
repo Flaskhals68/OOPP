@@ -202,7 +202,8 @@ public class PathfindingHelper {
     public static List<Position> pathToClosest(Tile start, Tile goal) {
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
-        AStarEntry startEntry = new AStarEntry(start, null, null, 0, 0);
+        AStarEntry startEntry = new AStarEntry(start, null, null, 0, guessCost(start, goal));
+        AStarEntry closest = startEntry;
         pq.add(startEntry);
         
         AStarEntry entry = null;
@@ -212,19 +213,24 @@ public class PathfindingHelper {
                 continue;
             if (entry != startEntry && !entry.getCurrent().isEmpty())
                 continue;
-            if (entry.getCurrent() == goal)
-                break;
+            if (entry.getGuessedCost() < closest.getGuessedCost())
+                closest = entry;
             for (Edge edge : entry.getOutgoingEdges()) {
                 double costToHere = entry.getCostToHere() + edge.getWeight();
-                double guessedCost = entry.getCostToHere() + guessCost(edge.getEnd(), goal);
+                double guessedCost = guessCost(edge.getEnd(), goal);
                 AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
+                if (edge.getEnd() == goal) {
+                    if (goal.isEmpty()) {
+                        closest = newEntry;
+                    }
+                    break;
+                }
                 pq.add(newEntry);
             }
             visited.add(entry.current);
         }
 
-        List<Position> path = extractPath(entry);
-        path.remove(path.size()-1);
+        List<Position> path = extractPath(closest);
         return path;
     }
 }

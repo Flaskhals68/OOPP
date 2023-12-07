@@ -36,7 +36,8 @@ public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
     }
 
     public Set<IAttackable> getTargetable() {
-        Set<Position> positions = this.getTargetablePositions();
+        Set<Position> positions = PathfindingHelper.getSurrounding(Model.getInstance().getTile(this.getActionTaker().getPos()), 1);
+        positions.remove(getActionTaker().getPos());
         Set<IAttackable> attackables = new HashSet<IAttackable>();
         for (Position position : positions) {
             Set<IPositionable> positionables = Model.getInstance().getEntities(position);
@@ -50,8 +51,12 @@ public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
     }
 
     public Set<Position> getTargetablePositions() {
-        Set<Position> positions = PathfindingHelper.getSurrounding(Model.getInstance().getTile(this.getActionTaker().getPos()), 1);
-        positions.remove(this.getActionTaker().getPos());
-        return positions;
+        Set<IAttackable> attackables = getTargetable();
+        Set<Position> attackablePositions = new HashSet<Position>();
+        for (IAttackable attackable : attackables) {
+            attackablePositions.add(attackable.getPos());
+        }
+
+        return attackablePositions;
     }
 }
