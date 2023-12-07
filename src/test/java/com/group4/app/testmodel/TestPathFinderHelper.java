@@ -43,8 +43,8 @@ public class TestPathFinderHelper {
         correctPositions.add(new Position(1, 0, worldId));
         correctPositions.add(new Position(3, 0, worldId));
         correctPositions.add(new Position(2, 0, worldId));
-        Tile startingTile = model.getTile(new Position(startX, startY, worldId));
-        Set<Position> legalPositions = PathfindingHelper.getSurrounding(startingTile, 1);
+        Position startingPos = new Position(startX, startY, worldId);
+        Set<Position> legalPositions = PathfindingHelper.getSurrounding(startingPos, 1, model);
         assertTrue(correctPositions.containsAll(legalPositions) && legalPositions.size() == correctPositions.size());
     }
 
@@ -57,9 +57,9 @@ public class TestPathFinderHelper {
         model.add(world);
         model.setCurrentWorld(worldId);
         initFlatWorld(5, world);
-        Tile start = model.getTile(new Position(0, 0, worldId));
-        Tile goal = model.getTile(new Position(2, 0, worldId));
-        List<Position> path = PathfindingHelper.getShortestPath(start, goal);
+        Position start = new Position(0, 0, worldId);
+        Position goal = new Position(2, 0, worldId);
+        List<Position> path = PathfindingHelper.getShortestPath(start, goal, world);
 
         LinkedList<Position> correctPath = new LinkedList<>();
         correctPath.addFirst(new Position(2, 0, worldId));
@@ -75,11 +75,9 @@ public class TestPathFinderHelper {
         String worldId = world.getId();
         model.setCurrentWorld(worldId);
         initFlatWorld(5, world);
-        Tile start = model.getTile(new Position(0, 0, worldId));
-        Tile goal = model.getTile(new Position(4, 0, worldId));
-        Position startPos = start.getPos();
-        Position goalPos = goal.getPos();
-        List<Position> path = PathfindingHelper.getPathNextTo(startPos, goalPos);
+        Position start = new Position(0, 0, worldId);
+        Position goal = new Position(4, 0, worldId);
+        List<Position> path = PathfindingHelper.getPathNextTo(start, goal, model);
         LinkedList<Position> correctPath = new LinkedList<>();
         
         correctPath.addFirst(new Position(3, 0, worldId));
@@ -97,9 +95,9 @@ public class TestPathFinderHelper {
         initFlatWorld(5, world);
         model.setCurrentWorld(world.getId());
         String worldId = model.getCurrentWorldId();
-        Tile start = model.getTile(new Position(0, 0, worldId));
-        Tile goal = model.getTile(new Position(4, 0, worldId));
-        List<Position> path = PathfindingHelper.pathToClosest(start, goal);
+        Position start = new Position(0, 0, worldId);
+        Position goal = new Position(4, 0, worldId);
+        List<Position> path = PathfindingHelper.pathToClosest(start, goal, model);
         List<Position> correctPositions = new ArrayList<>();
         correctPositions.add(new Position(1, 0, worldId));
         correctPositions.add(new Position(2, 0, worldId));
@@ -116,11 +114,11 @@ public class TestPathFinderHelper {
         initFlatWorld(5, world);
         model.setCurrentWorld(world.getId());
         String worldId = model.getCurrentWorldId();
-        Tile start = model.getTile(new Position(0, 0, worldId));
-        Tile goal = model.getTile(new Position(4, 0, worldId));
+        Position start = new Position(0, 0, worldId);
+        Position goal = new Position(4, 0, worldId);
         Tile obstacle = model.getTile(new Position(2, 0, worldId));
         obstacle.add(EnemyFactory.createZombie(obstacle.getPos()));
-        List<Position> path = PathfindingHelper.pathToClosest(start, goal);
+        List<Position> path = PathfindingHelper.pathToClosest(start, goal, model);
         Position finalPosition = path.get(path.size() - 1);
         assertEquals(new Position(1, 0, worldId), finalPosition);
     }

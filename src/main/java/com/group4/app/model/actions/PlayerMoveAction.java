@@ -36,7 +36,7 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
     }
 
     public Set<Position> getTargetable() {
-        return PathfindingHelper.getSurrounding(Model.getInstance().getTile(getActionTaker().getPos()), 5);
+        return PathfindingHelper.getSurrounding(getActionTaker().getPos(), 5, Model.getInstance());
     }
 
     public Set<Position> getTargetablePositions() {
