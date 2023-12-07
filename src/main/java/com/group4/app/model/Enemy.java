@@ -30,29 +30,14 @@ public class Enemy extends Creature {
             } else {
                 System.out.println(getName() + " should move now");
                 // gives the entire path to the player, irrespective of distance
-                path = PathfindingHelper.getPathNextTo(this.getPos(), m.getPlayerPos());
+                Tile startTile = m.getTile(getPos());
+                Tile playerTile = m.getTile(m.getPlayerPos());
+                path = PathfindingHelper.pathToClosest(startTile, playerTile);
 
-                if(path.size() > 5) {
-                    // if the path is longer than 5, it will only take the first 5 steps
-                    path = path.subList(0, 5);
-                }
-                Collections.reverse(path);
+                path = path.subList(0, Math.min(path.size(), 5));
 
-                Position target = getPos();
-                // counts how many steps it will take to get to the player
-                for(Position p : path) {
-                    if(m.freePosition(p)) {
-                        target = p;
-                        break;
-                    }
-                }
-                performAction(new PositionActionInput("move", target));
-                m.updateObservers();
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                performAction(new PositionActionInput("move", path.get(path.size()-1)));
+
             }
 
         }

@@ -54,7 +54,7 @@ public class TestEnemy {
         int counter = 0;
         for(Position pos : surrounding) {
             if(!m.getEntities(pos).isEmpty()) {
-                counter++;
+                counter += m.getEntities(pos).size();
             }
         }
         // substracts one because getSurrounding counts the tile the player as well

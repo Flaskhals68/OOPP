@@ -77,7 +77,9 @@ public class TestPathFinderHelper {
         initFlatWorld(5, world);
         Tile start = model.getTile(new Position(0, 0, worldId));
         Tile goal = model.getTile(new Position(4, 0, worldId));
-        List<Position> path = PathfindingHelper.getPathNextTo(start, goal);
+        Position startPos = start.getPos();
+        Position goalPos = goal.getPos();
+        List<Position> path = PathfindingHelper.getPathNextTo(startPos, goalPos);
         LinkedList<Position> correctPath = new LinkedList<>();
         
         correctPath.addFirst(new Position(3, 0, worldId));
