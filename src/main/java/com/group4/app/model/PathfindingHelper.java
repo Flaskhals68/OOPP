@@ -219,7 +219,9 @@ public class PathfindingHelper {
                 double guessedCost = guessCost(edge.getEnd(), goal);
                 AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
                 if (edge.getEnd() == goal) {
-                    closest = newEntry;
+                    if (goal.isEmpty()) {
+                        closest = newEntry;
+                    }
                     break;
                 }
                 pq.add(newEntry);
