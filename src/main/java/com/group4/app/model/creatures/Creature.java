@@ -128,10 +128,18 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public void takeHit(int damage) {
-        hp.reduceCurrent(damage - armour.getDamageReduction(attributes.getStat(AttributeType.DEXTERITY)));
+        hp.reduceCurrent(damage - armour.getDamageReduction(getDexBonus()));
         if (hp.getCurrent() <= 0) {
             this.death();
         }
+    }
+
+    public int getDexBonus() {
+        return Math.max((attributes.getStat(AttributeType.DEXTERITY) - 50)/10, 0);
+    }
+
+    public int getPerceptionBonus() {
+        return (attributes.getStat(AttributeType.PERCEPTION) - 50) / 10;
     }
 
     /**

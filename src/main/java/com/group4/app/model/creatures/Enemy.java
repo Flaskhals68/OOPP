@@ -1,7 +1,11 @@
 package com.group4.app.model.creatures;
 
 import com.group4.app.model.Model;
+import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.model.actions.AttackActionInput;
+import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.items.Weapon;
 
 import com.group4.app.model.actions.PlayerMoveAction;
@@ -24,9 +28,20 @@ public class Enemy extends Creature {
 
     @Override
     public void takeTurn() {
-        System.out.println(getName() + " is taking a turn");
         Model m = Model.getInstance();
         List<Position> path;
+
+        Position pPos = m.getPlayerPos();
+        int xDiff = Math.abs(pPos.getX() - getPos().getX());
+        int yDiff = Math.abs(pPos.getY() - getPos().getY());
+
+        int pDexBonus = m.getPlayer().getDexBonus();
+
+        // if the player is too far away, don't do anything. Depends on players dex stat and enemy perception
+        if(xDiff > (10 + getPerceptionBonus() - pDexBonus) || yDiff > (10 + getPerceptionBonus() - pDexBonus)) {
+            return;
+        }
+        System.out.println(getName() + " is taking a turn");
         while(getAp() > 0) {
             if(m.nextToPlayer(this.getPos())){
                 System.out.println(getName() + " is attacking player now");
@@ -45,13 +60,9 @@ public class Enemy extends Creature {
                 } else {
                     performAction(new PositionActionInput("move", getPos()));
                 }
-
             }
 
         }
-
-
-
     }
 
     @Override

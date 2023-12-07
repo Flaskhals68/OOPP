@@ -3,6 +3,8 @@ package com.group4.app.testmodel;
 import com.group4.app.model.*;
 import com.group4.app.model.Position;
 
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class TestModel {
         m.addBasicMap(5, 0);
         Position pos = new Position(0, 1, m.getCurrentWorldId());
         Enemy e = EnemyFactory.createZombie(pos);
-        m.add(e, pos);
+        m.add(e);
         assertTrue(m.nextToPlayer(e.getPos()));
     }
 
@@ -26,7 +28,7 @@ public class TestModel {
         m.addBasicMap(5, 0);
         Position pos = new Position(0, 2, m.getCurrentWorldId());
         Enemy e = EnemyFactory.createZombie(pos);
-        m.add(e, pos);
+        m.add(e);
         assertFalse(m.nextToPlayer(e.getPos()));
     }
 }
