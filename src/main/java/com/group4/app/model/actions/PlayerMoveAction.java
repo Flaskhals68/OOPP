@@ -1,5 +1,6 @@
 package com.group4.app.model.actions;
 
+import java.util.List;
 import java.util.Set;
 import com.group4.app.model.IPositionable;
 import com.group4.app.model.Model;
@@ -18,9 +19,19 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
             throw new IllegalArgumentException("Illegal move");
         }
 
-        Model.getInstance().remove(getActionTaker());
-        getActionTaker().setPos(target);
-        Model.getInstance().add(getActionTaker(), target);
+        List<Position> path = Model.getInstance().getPathFromTo(getActionTaker().getPos(), target);
+        for (Position pos : path) {
+            Model.getInstance().remove(getActionTaker());
+            getActionTaker().setPos(pos);
+            Model.getInstance().add(getActionTaker(), pos);
+            System.out.println("Moving to " + pos.getX() + ", " + pos.getY());
+            Model.getInstance().updateObservers();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     public Set<Position> getTargetable() {

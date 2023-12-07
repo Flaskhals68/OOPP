@@ -48,15 +48,15 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
-                        turnHandler.add(e);
                         add(e, new Position(x, y, world.getId()));
+                        addToTurnOrder(e);
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
         add(player, player.getPos());
-        turnHandler.add(player);
+        addToTurnOrder(player);
     }
 
     public void addBasicMap(int size) {
@@ -126,10 +126,12 @@ public class Model {
     }
 
     public void startPlayerTurn(){
+        System.out.println("Player turn started");
         this.isPlayerTurn = true;
     }
 
     public void endPlayerTurn(){
+        System.out.println("Player turn ended");
         this.isPlayerTurn = false;
     }
 
@@ -208,7 +210,7 @@ public class Model {
     public Map<AttributeType, Integer> getPlayerAttributes() {
         return player.getAttributesMap();
     }
-    
+
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
     }
@@ -217,28 +219,30 @@ public class Model {
         return controller.getActionInput();
     }
 
-    public void startGameLoop() {
+    public List<String> getAvailableActions() {
+        return player.getAvailableActions();
+    }
+
+    public void enterGameLoop() {
         while (true) {
-            turnHandler.nextTurn();
+            nextTurn();
+            updateObservers();
         }
     }
 
-    public boolean nextToPlayer(Position enemyPos) {
-        return PathfindingHelper.getSurrounding(getTile(player.getPos()), 1).contains(enemyPos);
+    public List<Position> getPathFromTo(Position startPos, Position targetPos){
+        return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
     }
 
-    public boolean freePosition(Position pos) {
-        return getTile(pos).getEntities().isEmpty();
+    public int getPlayerHealth() {
+        return player.getHitPoints();
     }
 
-    public void setPlayer(Player p) {
-        this.player = p;
+    public int getPlayerMaxHealth() {
+        return player.getMaxHitPoints();
     }
 
-    /**
-     * Resets the model to a new instance. Should only really be used for testing.
-     */
-    public static void resetModel() {
-        instance = new Model();
+    public int getPlayerAp(){
+        return player.getAp();
     }
 }

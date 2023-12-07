@@ -45,6 +45,16 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         }
     }
 
+    public Set<Position> getTargetPositions(String actionId){
+        if (moveActions.containsKey(actionId)) {
+            return moveActions.get(actionId).getTargetablePositions();
+        } else if (attackActions.containsKey(actionId)) {
+            return attackActions.get(actionId).getTargetablePositions();
+        } else {
+            throw new IllegalArgumentException("Action not available");
+        }
+    }
+
     public int getLevel() {
         return level;
     }
@@ -78,6 +88,10 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.armour = armour;
     }
 
+    public void heal(int amount) {
+        hp.increaseCurrent(amount);
+    }
+
     /**
      * Should be called when attack will land, determines how much damage the attack will do
      * @return the amount of damage the attack will do
@@ -108,7 +122,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         }
     }
 
-
     /**
      * Implement in subclasses to handle death of entity
      */
@@ -117,6 +130,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     @Override
     public int getHitPoints() {
         return hp.getCurrent();
+    }
+
+    @Override
+    public int getMaxHitPoints() {
+        return hp.getMax();
     }
 
     public int getAp() {
@@ -142,6 +160,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     public IInventoriable fetchItemFromInventory(String name) {
         return inv.getItem(name);
+    }
+
+    public void useItemFromInventory(String name) {
+        IInventoriable item = inv.getItem(name);
+        item.use(this);
     }
 
     public void addItemToInventory(IInventoriable item) {
@@ -170,5 +193,12 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
 
     public Map<AttributeType, Integer> getAttributesMap() {
         return attributes.getAttributeMap();
+    }
+
+    public List<String> getAvailableActions() {
+        List<String> actions = new ArrayList<String>();
+        actions.addAll(moveActions.keySet());
+        actions.addAll(attackActions.keySet());
+        return actions;
     }
 }

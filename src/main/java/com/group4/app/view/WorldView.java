@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,10 +21,13 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
+import javax.swing.SwingUtilities;
 
+import com.group4.app.controller.ActionController;
 import com.group4.app.controller.WorldController;
 import com.group4.app.model.Entity;
 import com.group4.app.model.IDrawable;
@@ -31,6 +35,7 @@ import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.model.PositionActionInput;
 import com.group4.app.model.Tile;
 
 public class WorldView extends JPanel implements IGameView{
@@ -191,7 +196,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                controller.movePlayer(pos);
+                ActionController.getInstance().queueAction(new PositionActionInput("move", pos));
             }
         });
     }
