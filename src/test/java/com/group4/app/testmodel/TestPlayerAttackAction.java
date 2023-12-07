@@ -9,32 +9,32 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Enemy;
-import com.group4.app.model.EnemyFactory;
-import com.group4.app.model.IAttackable;
-import com.group4.app.model.ICanAttack;
 import com.group4.app.model.Model;
-import com.group4.app.model.Player;
 import com.group4.app.model.Position;
-import com.group4.app.model.Tile;
-import com.group4.app.model.WeaponFactory;
-import com.group4.app.model.World;
 import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.creatures.ICanAttack;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
+import com.group4.app.model.items.WeaponFactory;
 
 public class TestPlayerAttackAction {
 
     @Test
     public void testGetTargetable(){
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, worldId));
-        Model.getInstance().add(e, e.getPos());
+        Model.getInstance().add(e);
         Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
         assertEquals(e, action.getTargetable().toArray()[0]);
     }
@@ -42,7 +42,7 @@ public class TestPlayerAttackAction {
     @Test
     public void testPerform(){
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
@@ -50,7 +50,7 @@ public class TestPlayerAttackAction {
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, worldId));
-        Model.getInstance().add(e, e.getPos());
+        Model.getInstance().add(e);
         Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
         int maxHp = e.getHitPoints();
         action.perform(e);
@@ -60,7 +60,7 @@ public class TestPlayerAttackAction {
     @Test
     public void testPlayerAttackActionOutOfRange() {
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
@@ -69,7 +69,7 @@ public class TestPlayerAttackAction {
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 2, worldId));
-        Model.getInstance().add(e, e.getPos());
+        Model.getInstance().add(e);
         Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
         
 
@@ -83,16 +83,16 @@ public class TestPlayerAttackAction {
     @Test
     public void testPlayerAttackActionDifferentFloors() {
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         World world2 = new World(10);
-        Model.getInstance().addWorld(world2);
+        Model.getInstance().add(world2);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world2.getId())));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, world2.getId()));
-        Model.getInstance().add(e, e.getPos());
+        Model.getInstance().add(e);
         Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {

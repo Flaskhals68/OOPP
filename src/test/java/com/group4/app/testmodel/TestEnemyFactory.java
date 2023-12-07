@@ -1,10 +1,10 @@
 package com.group4.app.testmodel;
 
-import com.group4.app.model.Enemy;
-import com.group4.app.model.EnemyFactory;
 import com.group4.app.model.Model;
-import com.group4.app.model.Weapon;
-import com.group4.app.model.WeaponFactory;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
 import com.group4.app.model.Position;
 import org.junit.jupiter.api.Test;
 

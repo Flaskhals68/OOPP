@@ -1,6 +1,13 @@
 package com.group4.app.testmodel;
 
 import com.group4.app.model.*;
+import com.group4.app.model.creatures.Attributes;
+import com.group4.app.model.creatures.Creature;
+import com.group4.app.model.items.ArmourFactory;
+import com.group4.app.model.items.ArmourType;
+import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

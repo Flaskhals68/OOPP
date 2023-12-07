@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.EnemyFactory;
 import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.TurnHandler;
+import com.group4.app.model.creatures.EnemyFactory;
 
 public class TestTurnHandler {
 

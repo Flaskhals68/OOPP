@@ -1,4 +1,6 @@
-package com.group4.app.model;
+package com.group4.app.model.actions;
+
+import com.group4.app.model.creatures.IAttackable;
 
 public class AttackActionInput extends ActionInput<IAttackable> {
     public AttackActionInput(String actionId, IAttackable target) {

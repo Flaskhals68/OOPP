@@ -7,20 +7,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.group4.app.model.*;
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Position;
-import com.group4.app.model.Creature;
-import com.group4.app.model.Enemy;
-import com.group4.app.model.EnemyFactory;
-import com.group4.app.model.IAttackable;
-import com.group4.app.model.ICanAttack;
-import com.group4.app.model.Model;
-import com.group4.app.model.Player;
-import com.group4.app.model.Tile;
-import com.group4.app.model.Weapon;
-import com.group4.app.model.WeaponFactory;
-import com.group4.app.model.World;
 import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.model.creatures.AttributeType;
+import com.group4.app.model.creatures.Creature;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.creatures.ICanAttack;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
+import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +30,7 @@ public class TestPlayer {
     @Test
     public void testConstructors() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player player = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -39,7 +39,7 @@ public class TestPlayer {
 
         Weapon weapon = WeaponFactory.createSword();
         world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
@@ -52,7 +52,7 @@ public class TestPlayer {
     public void testFetchItemFromInventory() {
 
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -67,7 +67,7 @@ public class TestPlayer {
     @Test
     public void testGetInventoryItems() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -88,7 +88,7 @@ public class TestPlayer {
     @Test
     public void testSetWeapon() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
@@ -158,7 +158,7 @@ public class TestPlayer {
     @Test
     public void testPerformAction(){
         World world = new World(1);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));

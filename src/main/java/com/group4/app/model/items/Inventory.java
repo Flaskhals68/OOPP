@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.items;
 
 import java.util.HashMap;
 import java.util.Stack;
