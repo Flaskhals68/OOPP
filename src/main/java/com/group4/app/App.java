@@ -8,11 +8,13 @@ import javax.swing.JPanel;
 import com.group4.app.controller.ActionController;
 import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
+import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.model.Model;
 import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.view.ActionState;
 import com.group4.app.view.AttributePanel;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
@@ -25,8 +27,8 @@ public class App {
         Model model = Model.getInstance();
         model.addBasicMap(100);
 
-        AWorldController worldController = new PlayerMovementController();
-        WorldView worldView = new WorldView(worldController.getState());
+        StateController initalStateController = new StateController(ActionState.IDLE);
+        WorldView worldView = new WorldView(StateController.getState());
 
         InventoryController inventoryController = new InventoryController();
         InventoryView inventoryView = new InventoryView(model, inventoryController);

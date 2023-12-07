@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 import javax.swing.SwingUtilities;
 
+import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
@@ -39,13 +40,12 @@ import com.group4.app.model.Position;
 import com.group4.app.model.Tile;
 import com.group4.app.model.actions.Action;
 import com.group4.app.view.ActionState;
-import com.group4.app.view.EntityPanelGenerator;
 import com.group4.app.view.IGameView;
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
-    private ActionState state;
     private WorldViewState drawingState;
+    private ActionState state;
 
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
@@ -89,11 +89,11 @@ public class WorldView extends JPanel implements IGameView{
     }
 
     private void initialState(){
-        if(state == ActionState.IDLE){
+        if(StateController.getState() == ActionState.IDLE){
             controller = new PlayerMovementController();
             drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
         }
-        else if(state == ActionState.ATTACK){
+        else if(StateController.getState() == ActionState.ATTACK){
             controller = new PlayerViewAttackController();
             drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
         }
@@ -242,28 +242,22 @@ public class WorldView extends JPanel implements IGameView{
 
     //FIXME make it more open closed.?
     public void setState(ActionState newState){
-        if(newState == state){
+        if(this.state == newState){
             return;
         }
         if(newState == ActionState.IDLE){
-            this.state = newState;
             this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
             this.controller = drawingState.getController();
+            this.state = StateController.getState();
             return;
         }
-        if(newState == ActionState.ATTACK){
-            this.state = newState;
+        else if(newState == ActionState.ATTACK){
             this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
             this.controller = drawingState.getController();
+            this.state = StateController.getState();
+
             return;
         }
-    }
-
-    
-
-    public ActionState getState(){
-        ActionState thisState = this.state;
-        return thisState;
     }
 
     @Override
@@ -271,7 +265,7 @@ public class WorldView extends JPanel implements IGameView{
         removeAll();
         addTiles(entityPanelGenerator);
         //TODO fix with mode, get state somehow.
-        setState(ActionState.IDLE);
+        setState(StateController.getState());
         colorBorders();
         revalidate();
         repaint();

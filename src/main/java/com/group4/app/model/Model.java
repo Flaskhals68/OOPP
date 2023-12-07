@@ -236,10 +236,6 @@ public class Model {
             updateObservers();
         }
     }
-
-    public List<Position> getPathFromTo(Position startPos, Position targetPos){
-        return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
-    }
     
     public int getPlayerHealth() {
         return player.getHitPoints();
