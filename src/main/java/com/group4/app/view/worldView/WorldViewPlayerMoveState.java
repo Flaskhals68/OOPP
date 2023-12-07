@@ -58,10 +58,11 @@ public class WorldViewPlayerMoveState extends WorldViewState{
         List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
         
         setHighLightedPositions(new HashSet<>(path));
-        getHighlightedPositions().remove(path.get(0));
-        controller.mouseClicked(path.get(0));
+        
         
         initMovementTimer(movementTimerDelay); 
+        getHighlightedPositions().remove(path.get(0));
+        controller.mouseClicked(targetPosition);
 
         movementTimer.addActionListener(new ActionListener() {
             private int currentPosIndex = 1;
@@ -69,21 +70,30 @@ public class WorldViewPlayerMoveState extends WorldViewState{
             public void actionPerformed(ActionEvent e) {
                 if(currentPosIndex < path.size()-1){
                     getHighlightedPositions().remove(path.get(currentPosIndex));
-                    controller.mouseClicked(path.get(currentPosIndex));
                     currentPosIndex++;            
                 }
                 else{
-                    controller.mouseClicked(path.get(currentPosIndex));
                     setHighLightedPositions(controller.getLegalMoves());
-                    //FIXME weird way of updating obeservers?
-                    controller.mouseClicked(controller.getPlayerPosition());
                     stopMovementTimer();
                 }
             }
         });
-        System.out.println(controller.getPlayerPosition().getX());
 
     }
+
+    // /**
+    //  *  Starts and animates the movement of the player
+    //  */
+    // @Override
+    // public void drawMouseClickedOnTile(Position targetPosition) {
+    //     List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
+    //     setHighLightedPositions(new HashSet<>(path));
+    //     movementTimerFlag = true;
+    //     controller.mouseClicked(targetPosition);
+    //     movementTimerFlag = false;
+    //     setHighLightedPositions(controller.getLegalMoves());
+        
+    // }
 
     /**
      * Highlights a path between the position  of the player and the position the mouse has entered.
@@ -93,7 +103,7 @@ public class WorldViewPlayerMoveState extends WorldViewState{
         
         List<Position> path = controller.getPathFromPlayerTo(targetPosition); 
 
-        if(!movementTimerFlag && !hoverFlag){
+        if(!hoverFlag && !movementTimerFlag){
             if(controller.getLegalMoves().contains(targetPosition)){
                 hoverFlag = true;
                 setHighLightedPositions(new HashSet<>(path));
