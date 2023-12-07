@@ -28,6 +28,8 @@ public class Model implements IWorldContainer {
     private Map<String, World> floors;
     private World currentWorld;
 
+    private boolean dead;
+
     private static final String PLAYER_ID = "player";
     
     public static Model getInstance(){
@@ -45,6 +47,7 @@ public class Model implements IWorldContainer {
         this.floors = new HashMap<String, World>();
         this.isPlayerTurn = false;
         this.turnHandler = new TurnHandler();
+        this.dead = false;
     }
 
     public void addBasicMap(int size, double emptyChance){
@@ -255,7 +258,14 @@ public class Model implements IWorldContainer {
         while (true) {
             nextTurn();
             updateObservers();
+            if(dead) {
+                break;
+            }
         }
+    }
+
+    public void setPlayerDied() {
+        dead = true;
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
