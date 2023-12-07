@@ -257,4 +257,8 @@ public class Model implements IWorldContainer {
     public int getPlayerMaxHealth() {
         return player.getMaxHitPoints();
     }
+
+    public int getPlayerAp(){
+        return player.getAp();
+    }
 }

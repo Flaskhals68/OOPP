@@ -86,6 +86,10 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.armour = armour;
     }
 
+    public void heal(int amount) {
+        hp.increaseCurrent(amount);
+    }
+
     /**
      * Should be called when attack will land, determines how much damage the attack will do
      * @return the amount of damage the attack will do
@@ -115,7 +119,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
             this.death();
         }
     }
-
 
     /**
      * Implement in subclasses to handle death of entity
@@ -155,6 +158,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     public IInventoriable fetchItemFromInventory(String name) {
         return inv.getItem(name);
+    }
+
+    public void useItemFromInventory(String name) {
+        IInventoriable item = inv.getItem(name);
+        item.use(this);
     }
 
     public void addItemToInventory(IInventoriable item) {

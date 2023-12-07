@@ -82,6 +82,10 @@ public class Tile implements IDrawable {
         }
     }
 
+    public boolean isEmpty() {
+        return this.entities.isEmpty();
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
