@@ -277,12 +277,4 @@ public class Model implements IWorldContainer {
     public boolean nextToPlayer(Position pos){
         return getSurrounding(pos, 1).contains(player.getPos());
     }
-
-    public static void resetModel(){
-        instance = new Model();
-    }
-
-    public void setPlayer(Player player){
-        this.player = player;
-    }
 }
