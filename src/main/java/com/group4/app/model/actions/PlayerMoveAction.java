@@ -23,7 +23,7 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
         for (Position pos : path) {
             Model.getInstance().remove(getActionTaker());
             getActionTaker().setPos(pos);
-            Model.getInstance().add(getActionTaker(), pos);
+            Model.getInstance().add(getActionTaker());
             System.out.println("Moving to " + pos.getX() + ", " + pos.getY());
             Model.getInstance().updateObservers();
             try {

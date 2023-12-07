@@ -1,10 +1,9 @@
 package com.group4.app.model;
 
-import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-public class World {
+public class World implements ITileContainer{
     private String uniqueID;
     private Tile[][] tiles;
 
@@ -38,8 +37,17 @@ public class World {
         this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
-    public void add(IPositionable positionable, Position pos){
-        this.getTile(pos).add(positionable);
+    public void remove(Tile tile) {
+        Position pos = tile.getPos();
+        remove(pos);
+    }
+
+    public void remove(Position pos) {
+        this.tiles[pos.getX()][pos.getY()] = null;
+    }
+
+    public void add(IPositionable positionable){
+        this.getTile(positionable.getPos()).add(positionable);
     }
 
     public void remove(IPositionable positionable){

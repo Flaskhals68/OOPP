@@ -30,7 +30,7 @@ public class TestPlayer {
     @Test
     public void testConstructors() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player player = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -39,7 +39,7 @@ public class TestPlayer {
 
         Weapon weapon = WeaponFactory.createSword();
         world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
@@ -52,7 +52,7 @@ public class TestPlayer {
     public void testFetchItemFromInventory() {
 
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -67,7 +67,7 @@ public class TestPlayer {
     @Test
     public void testGetInventoryItems() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
@@ -88,7 +88,7 @@ public class TestPlayer {
     @Test
     public void testSetWeapon() {
         World world = new World(2);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
         world.add(t1);
         Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
@@ -158,7 +158,7 @@ public class TestPlayer {
     @Test
     public void testPerformAction(){
         World world = new World(1);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));

@@ -28,7 +28,7 @@ public class TestPlayerMoveAction {
         
 
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
@@ -45,7 +45,7 @@ public class TestPlayerMoveAction {
     @Test
     public void testPerform(){
         World world = new World(10);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));

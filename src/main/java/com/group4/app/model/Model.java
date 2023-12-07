@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Model {
+public class Model implements IWorldContainer {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;
@@ -38,7 +38,7 @@ public class Model {
     public void addBasicMap(int size, double emptyChance){
         World world = new World(100);
         currentWorld = world;
-        this.addWorld(currentWorld);
+        this.add(currentWorld);
         world.add(new Tile("stone", new Position(0, 0, world.getId())));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
@@ -48,14 +48,14 @@ public class Model {
                     r = Math.random();
                     if(r > 0.98){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
-                        add(e, new Position(x, y, world.getId()));
+                        add(e);
                         addToTurnOrder(e);
                     }
                 }
             }
         }
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
-        add(player, player.getPos());
+        add(player);
         addToTurnOrder(player);
     }
 
@@ -63,14 +63,22 @@ public class Model {
         addBasicMap(size, 0.1);
     }
 
-    public void addWorld(World world){
+    public void add(World world){
         this.floors.put(world.getId(), world);
         if (this.currentWorld == null){
             this.currentWorld = world;
         }
     }
 
-    private World getWorld(String floorId){
+    public void remove(World world){
+        this.remove(world.getId());
+    }
+
+    public void remove(String floorId){
+        this.floors.remove(floorId);
+    }
+
+    public World getWorld(String floorId){
         return this.floors.get(floorId);
     }
 
@@ -109,12 +117,20 @@ public class Model {
         this.getWorld(tile.getFloor()).add(tile);
     }
 
-    public void add(Entity entity, Position pos){
-        this.getWorld(pos.getFloor()).add(entity, pos);
+    public void remove(Tile tile){
+        this.remove(tile.getPos());;
     }
 
-    public void add(IPositionable positionable, Position pos){
-        this.getWorld(pos.getFloor()).add(positionable, pos);
+    public void remove(Position pos){
+        this.getWorld(pos.getFloor()).remove(pos);
+    }
+
+    public void add(Entity entity){
+        this.getWorld(entity.getFloor()).add(entity);
+    }
+
+    public void add(IPositionable positionable){
+        this.getWorld(positionable.getFloor()).add(positionable);
     }
 
     public void remove(Entity entity){
@@ -233,7 +249,7 @@ public class Model {
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
         return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
     }
-    
+
     public int getPlayerHealth() {
         return player.getHitPoints();
     }
