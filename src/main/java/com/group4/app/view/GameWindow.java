@@ -8,7 +8,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO Add obeserver
 /*
  * This is the frame where every other panel is added to
  */
@@ -17,7 +16,7 @@ public class GameWindow extends JFrame implements IModelObserver{
     private static GameWindow instance = null;
     private static int SCREEN_WIDTH = 1280;
     private static int SCREEN_HEIGHT = 720;
-    private static String title = "GAME";
+    private static String title = "THE DUNGEON CRAWLER GAME EXTREME";
     private static Color backGroundColor = Color.black;
 
     private GameWindow(List<IGameView> viewList) {
@@ -72,7 +71,7 @@ public class GameWindow extends JFrame implements IModelObserver{
 
     @Override
     public void update() {
-        // Makes sure that the updateView method is run on the AWT
+        // Makes sure that the updateView method is run on the EDT
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

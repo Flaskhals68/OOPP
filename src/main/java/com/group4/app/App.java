@@ -47,5 +47,7 @@ public class App {
         model.addObserver(gw);
 
         model.setController(ActionController.getInstance());
+        
+        model.enterGameLoop();
     }
 }
