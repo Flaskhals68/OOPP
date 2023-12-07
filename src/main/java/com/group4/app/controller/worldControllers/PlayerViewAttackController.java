@@ -17,7 +17,7 @@ public class PlayerViewAttackController extends AWorldController{
 
     //TODO change to use actionInput
     public Set<Position> getAttacksInRange(){
-        return Model.getInstance().getSurrounding(getPlayerPosition(), 1);
+        return Model.getInstance().getAttackablePositions();
     }
 
     @Override

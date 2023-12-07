@@ -213,6 +213,10 @@ public class Model {
         return player.getTargetPositions("move");
     }
 
+    public Set<Position> getAttackablePositions(){
+        return player.getTargetPositions("attack");
+    }
+
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }
