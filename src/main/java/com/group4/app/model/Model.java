@@ -46,7 +46,7 @@ public class Model {
                 if(r> emptyChance){
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
-                    if(r > 0.98){
+                    if(r > 0.995){
                         Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
                         add(e, new Position(x, y, world.getId()));
                         addToTurnOrder(e);

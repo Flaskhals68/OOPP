@@ -36,7 +36,11 @@ public class Enemy extends Creature {
 
                 path = path.subList(0, Math.min(path.size(), 5));
 
-                performAction(new PositionActionInput("move", path.get(path.size()-1)));
+                if(path.size()>0) {
+                    performAction(new PositionActionInput("move", path.get(path.size()-1)));
+                } else {
+                    performAction(new PositionActionInput("move", getPos()));
+                }
 
             }
 
