@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.group4.app.controller.StateController;
-import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.view.ActionState;
 
 import com.group4.app.model.actions.ActionInput;
