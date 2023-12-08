@@ -1,4 +1,4 @@
-package com.group4.app.view;
+package com.group4.app.view.worldView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.security.Identity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,24 +28,33 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 import javax.swing.SwingUtilities;
 
+import com.group4.app.controller.StateController;
+import com.group4.app.controller.worldControllers.AWorldController;
+import com.group4.app.controller.worldControllers.PlayerMovementController;
+import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.controller.ActionController;
-import com.group4.app.controller.WorldController;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.model.actions.Action;
+import com.group4.app.view.ActionState;
+import com.group4.app.view.IGameView;
+import com.group4.app.view.IStateControllerObserver;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.dungeon.Tile;
 
 public class WorldView extends JPanel implements IGameView{
-    private WorldController controller;
+    private AWorldController controller;
+    private WorldViewState drawingState;
+    private ActionState state;
 
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
-    //TODO implement zoom?
+    //TODO implement zoom
     private static float zoom = 2;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
@@ -63,8 +73,8 @@ public class WorldView extends JPanel implements IGameView{
     // Helper class to generate the sprites
     private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
 
-    public WorldView(WorldController controller) {
-        this.controller = controller;
+    public WorldView(ActionState initialState) {
+        this.state = initialState;
         initComponents();
 
     }
@@ -73,13 +83,24 @@ public class WorldView extends JPanel implements IGameView{
      * Initiates the worldView by setting up it's look and adding the tiles that should be added initially.
      */
     private void initComponents(){
+        initialState();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
-        colorBorders(controller.getLegalMoves());
+        colorBorders();
+    }
 
-
+    private void initialState(){
+        if(StateController.getState() == ActionState.IDLE){
+            controller = new PlayerMovementController();
+            drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+        }
+        else if(StateController.getState() == ActionState.ATTACK){
+            controller = new PlayerViewAttackController();
+            drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
+        }
+        
     }
 
     /**
@@ -151,7 +172,6 @@ public class WorldView extends JPanel implements IGameView{
 
         addMouseListenerHover(pos, tileView);
 
-
         List<IDrawable> drawables = controller.getDrawables(pos.getX(), pos.getY());
         int layerIndex = 0;
         if (drawables.isEmpty() == false) {
@@ -175,14 +195,14 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e){
-                controller.mouseHover(pos);
+                drawingState.drawMouseEnteredTile(pos);
             }
         });
 
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e){
-                controller.mouseExited();
+                drawingState.drawMouseExitedTile();
             }
         });
     }
@@ -196,7 +216,7 @@ public class WorldView extends JPanel implements IGameView{
         tileView.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                ActionController.getInstance().queueAction(new PositionActionInput("move", pos));
+                drawingState.drawMouseClickedOnTile(pos);
             }
         });
     }
@@ -215,21 +235,35 @@ public class WorldView extends JPanel implements IGameView{
     }
 
     /**
-     * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes. 
+     * Colors the JLayeredPanes' borders at the specific positions in a map of positions and JLayeredPanes, based on the view's state. 
      * @param positions set of positions
      */ 
-    private void colorBorders(Set<Position> positions){
-        for(Position pos : positions){
-            visibleTiles.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
-        }
+    private void colorBorders(){
+        drawingState.colorBorders(visibleTiles);
+    }
 
+    public void setState(ActionState newState){
+        if(this.state == newState){
+            return;
+        }
+        if(newState == ActionState.IDLE){
+            this.drawingState = new WorldViewPlayerMoveState(controller.getPlayerPosition());
+        }
+        else if(newState == ActionState.ATTACK){
+            this.drawingState = new WorldViewPlayerAttackState(controller.getPlayerPosition());
+        }
+        this.controller = drawingState.getController();
+        this.state = StateController.getState();
     }
 
     @Override
     public void updateView() {
         removeAll();
         addTiles(entityPanelGenerator);
-        colorBorders(controller.getHighlightedPositions());
+        setState(StateController.getState());
+        if(StateController.getState() != ActionState.DISABLED){
+            colorBorders();
+        }
         revalidate();
         repaint();
     }
@@ -238,5 +272,4 @@ public class WorldView extends JPanel implements IGameView{
     public JPanel getView(){
         return this;
     }
-
 }

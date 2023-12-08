@@ -2,15 +2,21 @@ package com.group4.app.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.group4.app.controller.StateController;
+import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.view.ActionState;
 
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.IWorldContainer;
@@ -166,11 +172,13 @@ public class Model implements IWorldContainer {
     public void startPlayerTurn(){
         System.out.println("Player turn started");
         this.isPlayerTurn = true;
+        updateObservers();
     }
 
     public void endPlayerTurn(){
         System.out.println("Player turn ended");
         this.isPlayerTurn = false;
+        updateObservers();
     }
 
     public boolean isPlayerTurn(){
@@ -241,6 +249,27 @@ public class Model implements IWorldContainer {
         return PathfindingHelper.getSurrounding(pos, steps, this);
     }
 
+    public Set<Position> getLegalMoves(){
+        return player.getTargetPositions("move");
+    }
+
+    public Set<Position> getAttackablePositions(){
+        return player.getTargetPositions("attack");
+    }
+
+    //FIXME not random
+    public IAttackable getAttackedAtPosition(Position targetPos){
+        Set<IPositionable> targets = new HashSet<>();
+        if(getAttackablePositions().contains(targetPos)){
+            targets = getEntities(targetPos);
+        }
+        else{
+            throw new IllegalStateException();
+        }
+        List<IPositionable> targetsList = new ArrayList<>(targets);
+        return (IAttackable)targetsList.get(0);
+    }
+
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }
@@ -251,6 +280,7 @@ public class Model implements IWorldContainer {
 
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
+        updateObservers();
     }
 
     public ActionInput<?> getActionInput() {

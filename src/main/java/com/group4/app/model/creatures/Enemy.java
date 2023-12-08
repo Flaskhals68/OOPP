@@ -69,6 +69,7 @@ public class Enemy extends Creature {
     @Override
     public void death() {
         // TODO : Implement the rest of enemy death
+        Model.getInstance().remove(this);
         Model.getInstance().giveExperience(1);
     }
 }

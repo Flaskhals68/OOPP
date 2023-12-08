@@ -14,7 +14,7 @@ import com.group4.app.controller.HudController;
 import com.group4.app.controller.PlayerStatController;
 import com.group4.app.model.Model;
 
-public class HudView extends JPanel implements IGameView {
+public class HudView extends JPanel implements IGameView{
     private static final int HEIGHT = 150;
     private static final int WIDTH = 775;
     private static final int BTN_WIDTH = 50;
@@ -62,4 +62,5 @@ public class HudView extends JPanel implements IGameView {
     public JPanel getView() {
         return this;
     }
+
 }
