@@ -28,8 +28,9 @@ public class PathfindingHelper {
 
     /**
      * Get all tiles that can be reached from specified tile with given amounts of steps
-     * @param tile
+     * @param pos
      * @param steps
+     * @param tc
      * @return Set of Points with all legal positions
      */
     public static Set<Position> getSurrounding(Position pos, int steps, ITileContainer tc) {
@@ -125,6 +126,7 @@ public class PathfindingHelper {
      * Get a list where each element is the next step in order of the shortest path from start to goal
      * @param start
      * @param goal
+     * @param tc
      * @return List representing the shortest path between two tiles
      */
     public static List<Position> getShortestPath(Position start, Position goal, ITileContainer tc) {
@@ -139,6 +141,7 @@ public class PathfindingHelper {
      * Get the shortest path from start to position next to goal
      * @param start
      * @param goal
+     * @param tc
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
     public static List<Position> getPathNextTo(Position start, Position goal, ITileContainer tc) {
@@ -146,7 +149,9 @@ public class PathfindingHelper {
         Tile goalTile = tc.getTile(goal);
         AStarEntry finalEntry = aStarSearch(startTile, goalTile);
         List<Position> path = extractPath(finalEntry);
-        path.remove(path.size()-1);
+        if(path.size() > 1) {
+            path.remove(path.size()-1);
+        }
         return path;
     }
 
@@ -200,8 +205,9 @@ public class PathfindingHelper {
 
 
     /**
-     * @param startTile
-     * @param goalTile
+     * @param start start position
+     * @param goal end position
+     * @param tc tile container
      * @return The shortest path from start to goal.
      * If the goal cannot be reached, the path to the closest tile is returned
      */
