@@ -39,7 +39,7 @@ public class TestEnemy {
     public void test_constructor(){
         Model.getInstance().addBasicMap(5);
         Position pos = new Position(0, 0, Model.getInstance().getCurrentWorldId());
-        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 30,1,70, 1), 1);
+        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 30,1,70, 1), 1, 3);
         assertEquals(enemy.getName(), "Bob");
         assertEquals(2, enemy.getDamage());
         assertEquals(enemy.getHitPoints(), 14);
@@ -81,7 +81,7 @@ public class TestEnemy {
         e.takeTurn();
         int playerHPAfter = m.getPlayer().getHitPoints();
 
-        assertEquals(playerHPBefore - e.getDamage()*2, playerHPAfter);
+        assertEquals(playerHPBefore - e.getDamage(), playerHPAfter);
         assertEquals(1, e.getPos().getX());
         assertEquals(0, e.getPos().getY());
     }

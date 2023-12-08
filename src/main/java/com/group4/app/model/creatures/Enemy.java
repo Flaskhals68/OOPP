@@ -4,22 +4,22 @@ import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.AttackActionInput;
+import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.actions.PositionActionInput;
-import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.items.Weapon;
 
-import com.group4.app.model.actions.PlayerMoveAction;
-
-import java.util.Collections;
 import java.util.List;
 
 public class Enemy extends Creature {
     private final String name;
     private static final int DETECTION_RANGE = 10;
+    private final int moveSpeed;
 
-    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level) {
+    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed) {
         super(id, pos, maxAp, weapon, attr, level);
         this.name = name;
+        this.moveSpeed = moveSpeed;
+        this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
     }
 
     public String getName() {
@@ -49,11 +49,12 @@ public class Enemy extends Creature {
                 performAction(new AttackActionInput("attack", m.getPlayer()));
             } else {
                 System.out.println(getName() + " should move now");
-                // gives the entire path to the player, irrespective of distance
 
+                // gives the entire path to the player, irrespective of distance
                 path = PathfindingHelper.pathToClosest(getPos(), m.getPlayerPos(), m.getWorld(m.getPlayerFloor()));
 
-                path = path.subList(0, Math.min(path.size(), 5));
+                // Limit move length to moveSpeed, so that the enemy doesn't move too far
+                path = path.subList(0, Math.min(path.size(), moveSpeed));
 
                 if(path.size()>0) {
                     performAction(new PositionActionInput("move", path.get(path.size()-1)));

@@ -10,9 +10,9 @@ import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.ICanAttack;
 import com.group4.app.model.creatures.IPositionable;
 
-public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
+public class AttackAction extends Action<ICanAttack, IAttackable> {
     
-    public PlayerAttackAction(int apCost, String name, ICanAttack actionTaker) {
+    public AttackAction(int apCost, String name, ICanAttack actionTaker) {
         super(apCost, name, actionTaker);
     }
 

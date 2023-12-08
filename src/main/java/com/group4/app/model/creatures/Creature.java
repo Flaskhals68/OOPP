@@ -7,8 +7,8 @@ import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.IAction;
-import com.group4.app.model.actions.PlayerAttackAction;
-import com.group4.app.model.actions.PlayerMoveAction;
+import com.group4.app.model.actions.AttackAction;
+import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
@@ -41,8 +41,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = level;
         this.moveActions = new HashMap<String, IAction<Position>>();
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
-        this.addAttackAction("attack", new PlayerAttackAction(1, "attack", this));
-        this.addMoveAction("move", new PlayerMoveAction(1, "move", this));
+        this.addAttackAction("attack", new AttackAction(1, "attack", this));
     }
 
     public void performAction(ActionInput<?> input) {

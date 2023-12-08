@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.AttackActionInput;
-import com.group4.app.model.actions.PlayerAttackAction;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Creature;
 import com.group4.app.model.creatures.Enemy;

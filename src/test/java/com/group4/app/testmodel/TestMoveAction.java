@@ -10,19 +10,13 @@ import org.junit.jupiter.api.Test;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.PlayerAttackAction;
-import com.group4.app.model.actions.PlayerMoveAction;
-import com.group4.app.model.creatures.Enemy;
-import com.group4.app.model.creatures.EnemyFactory;
-import com.group4.app.model.creatures.IAttackable;
-import com.group4.app.model.creatures.ICanAttack;
+import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
-import com.group4.app.model.items.WeaponFactory;
 
-public class TestPlayerMoveAction {
+public class TestMoveAction {
     @Test
     public void testGetTargetable(){
         
@@ -35,7 +29,7 @@ public class TestPlayerMoveAction {
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         
-        Action<IPositionable, Position> action = new PlayerMoveAction(1, "action", p);
+        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         HashSet<Position> pos = new HashSet<Position>();
         pos.add(new Position(0, 0, world.getId()));
         pos.add(new Position(0, 1, world.getId()));
@@ -52,7 +46,7 @@ public class TestPlayerMoveAction {
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         Position pos = new Position(0, 1, worldId);
-        Action<IPositionable, Position> action = new PlayerMoveAction(1, "action", p);
+        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         action.perform(pos);
     }
 }
