@@ -160,11 +160,14 @@ public class Model implements IWorldContainer {
     }
 
     public void startPlayerTurn(){
+        //TODO maybe dont access controller?
+        StateController.setState(ActionState.IDLE);
         System.out.println("Player turn started");
         this.isPlayerTurn = true;
     }
 
     public void endPlayerTurn(){
+        StateController.setState(ActionState.DISABLED);
         System.out.println("Player turn ended");
         this.isPlayerTurn = false;
     }
