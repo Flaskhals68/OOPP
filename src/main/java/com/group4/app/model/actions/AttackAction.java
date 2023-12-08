@@ -10,17 +10,16 @@ import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.ICanAttack;
 import com.group4.app.model.creatures.IPositionable;
 
-public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
+public class AttackAction extends Action<ICanAttack, IAttackable> {
     
-    public PlayerAttackAction(int apCost, String name, ICanAttack actionTaker) {
+    public AttackAction(int apCost, String name, ICanAttack actionTaker) {
         super(apCost, name, actionTaker);
     }
 
     /**
      * Only implemented for melee weapons currently,
      * but should be relatively simple to adapt for ranged as well in the future
-     * @param attacker the entity doing the attacking
-     * @param victim the entity getting hit
+     * @param target the entity getting hit
      */
     public void perform(IAttackable target) {
         int xDiff = Math.abs(this.getActionTaker().getPos().getX() - target.getPos().getX());

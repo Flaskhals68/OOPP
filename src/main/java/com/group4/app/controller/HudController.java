@@ -16,15 +16,17 @@ public class HudController {
         // TODO: Implement logic to enter attack state
         System.out.println("Enter attack state");
         currentState = ActionState.ATTACK;
+        StateController.setState(currentState);
     }
 
     public void exitAttackState() { 
         System.out.println("Exit attack state");
         currentState = ActionState.IDLE;
+        StateController.setState(currentState);
     }
 
     public ActionState getActionState() {
-        return currentState;
+        return StateController.getState();
     }
 
     public void endTurn() {

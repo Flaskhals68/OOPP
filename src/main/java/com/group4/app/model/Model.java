@@ -2,15 +2,20 @@ package com.group4.app.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.group4.app.controller.StateController;
+import com.group4.app.view.ActionState;
 
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.IWorldContainer;
@@ -27,6 +32,8 @@ public class Model implements IWorldContainer {
     private Boolean isPlayerTurn;
     private Map<String, World> floors;
     private World currentWorld;
+
+    private boolean dead;
 
     private static final String PLAYER_ID = "player";
     
@@ -45,6 +52,7 @@ public class Model implements IWorldContainer {
         this.floors = new HashMap<String, World>();
         this.isPlayerTurn = false;
         this.turnHandler = new TurnHandler();
+        this.dead = false;
     }
 
     public void addBasicMap(int size, double emptyChance){
@@ -58,8 +66,15 @@ public class Model implements IWorldContainer {
                 if(r> emptyChance){
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
-                    if(r > 0.98){
-                        Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                    if(r > 0.995){
+                        r = Math.random();
+                        Enemy e;
+                        if(r > 0.5){
+                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+
+                        } else {
+                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+                        }
                         add(e);
                         addToTurnOrder(e);
                     }
@@ -147,6 +162,7 @@ public class Model implements IWorldContainer {
 
     public void remove(Entity entity){
         this.getWorld(entity.getFloor()).remove(entity);
+        updateObservers();
     }
 
     public void remove(IPositionable positionable){
@@ -156,11 +172,13 @@ public class Model implements IWorldContainer {
     public void startPlayerTurn(){
         System.out.println("Player turn started");
         this.isPlayerTurn = true;
+        updateObservers();
     }
 
     public void endPlayerTurn(){
         System.out.println("Player turn ended");
         this.isPlayerTurn = false;
+        updateObservers();
     }
 
     public boolean isPlayerTurn(){
@@ -231,6 +249,27 @@ public class Model implements IWorldContainer {
         return PathfindingHelper.getSurrounding(pos, steps, this);
     }
 
+    public Set<Position> getLegalMoves(){
+        return player.getTargetPositions("move");
+    }
+
+    public Set<Position> getAttackablePositions(){
+        return player.getTargetPositions("attack");
+    }
+
+    //FIXME not random
+    public IAttackable getAttackedAtPosition(Position targetPos){
+        Set<IPositionable> targets = new HashSet<>();
+        if(getAttackablePositions().contains(targetPos)){
+            targets = getEntities(targetPos);
+        }
+        else{
+            throw new IllegalStateException();
+        }
+        List<IPositionable> targetsList = new ArrayList<>(targets);
+        return (IAttackable)targetsList.get(0);
+    }
+
     public void giveExperience(int xp) {
         player.giveXP(xp);
     }
@@ -241,6 +280,7 @@ public class Model implements IWorldContainer {
 
     public void performPlayerAction(ActionInput<?> input) {
         player.performAction(input);
+        updateObservers();
     }
 
     public ActionInput<?> getActionInput() {
@@ -255,11 +295,22 @@ public class Model implements IWorldContainer {
         while (true) {
             nextTurn();
             updateObservers();
+            if(dead) {
+                break;
+            }
         }
     }
 
+    public void setPlayerDied() {
+        dead = true;
+    }
+
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
-        return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        if(getEntities(targetPos).isEmpty()){
+            return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        } else {
+            return PathfindingHelper.getPathNextTo(startPos, targetPos, this);
+        }
     }
 
     public int getPlayerHealth() {
@@ -272,5 +323,17 @@ public class Model implements IWorldContainer {
 
     public int getPlayerAp(){
         return player.getAp();
+    }
+
+    public boolean nextToPlayer(Position pos){
+        return getSurrounding(pos, 1).contains(player.getPos());
+    }
+
+    /**
+     * Required for tests
+     * @param player the player object to be set as current player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

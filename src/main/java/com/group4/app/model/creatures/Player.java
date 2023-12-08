@@ -1,10 +1,9 @@
 package com.group4.app.model.creatures;
 
-import java.util.Random;
-
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
 
@@ -16,6 +15,7 @@ public class Player extends Creature {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
         this.xp = new ResourceBar(10);
         this.xp.setCurrent(0);
+        this.addMoveAction("move", new MoveAction(1, "move", this, 5));
         for (int i = 0; i < 3; i++) {
             this.addItemToInventory(PotionFactory.createHealthPotion());
         }
@@ -39,11 +39,12 @@ public class Player extends Creature {
 
     @Override
     public void takeTurn() {
-        Model.getInstance().startPlayerTurn();
+        Model m = Model.getInstance();
+        m.startPlayerTurn();
+
         while (this.getAp() > 0) {
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
-            this.useAp(1);
             Model.getInstance().updateObservers();
         }
         endTurn();
@@ -58,5 +59,6 @@ public class Player extends Creature {
     public void death() {
         // TODO : Implement player death
         System.out.println("Player died");
+        Model.getInstance().setPlayerDied();
     }
 }
