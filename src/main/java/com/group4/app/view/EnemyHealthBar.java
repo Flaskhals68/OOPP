@@ -12,6 +12,9 @@ import javax.swing.JProgressBar;
 import com.group4.app.controller.CreatureStatController;
 import com.group4.app.model.Position;
 
+/**
+ * A health bar for a creature at the given position.
+ */
 public class EnemyHealthBar extends JPanel {
     private CreatureStatController csc = new CreatureStatController();
     private JProgressBar bar;
