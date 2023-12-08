@@ -26,7 +26,7 @@ public class HudController {
     }
 
     public ActionState getActionState() {
-        return currentState;
+        return StateController.getState();
     }
 
     public void endTurn() {

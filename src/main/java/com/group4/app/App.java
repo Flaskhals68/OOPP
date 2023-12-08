@@ -50,6 +50,7 @@ public class App {
 
 
         model.addObserver(gw);
+        model.addObserver(initalStateController);
 
         model.setController(ActionController.getInstance());
         
