@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.group4.app.model.Model;
+import com.group4.app.model.actions.PlayerEndTurnActionInput;
 import com.group4.app.model.creatures.AttributeType;
+import com.group4.app.model.creatures.Player;
 import com.group4.app.view.ActionState;
 
 public class HudController {
@@ -31,9 +33,8 @@ public class HudController {
 
     public void endTurn() {
         System.out.println("End turn");
-        currentState = ActionState.DISABLED;
-        StateController.setState(currentState);
-        Model.getInstance().endPlayerTurn();
+        StateController.setState(ActionState.DISABLED);
+        ActionController.getInstance().queueAction(new PlayerEndTurnActionInput(Model.getInstance().getPlayer()));
     }
 
     public List<String> getLegalActions() {

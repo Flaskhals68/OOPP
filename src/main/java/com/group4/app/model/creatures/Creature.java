@@ -2,6 +2,7 @@ package com.group4.app.model.creatures;
 import java.util.*;
 
 import com.group4.app.model.ITurnTaker;
+import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.ActionInput;
@@ -9,6 +10,8 @@ import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.IAction;
 import com.group4.app.model.actions.AttackAction;
 import com.group4.app.model.actions.MoveAction;
+import com.group4.app.model.actions.PlayerEndTurnAction;
+import com.group4.app.model.actions.PlayerEndTurnActionInput;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
@@ -29,6 +32,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Attributes attributes;
     private Map<String, IAction<Position>> moveActions;
     private Map<String, IAction<IAttackable>> attackActions;
+    private Map<String, IAction<ITurnTaker>> playerEndTurnActions;
 
     public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, pos);
@@ -41,17 +45,24 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = level;
         this.moveActions = new HashMap<String, IAction<Position>>();
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
+        this.playerEndTurnActions = new HashMap<String, IAction<ITurnTaker>>();
+        this.addPlayerEndTurnAction("endTurn", new PlayerEndTurnAction(ap, "endTurn", this));
         this.addAttackAction("attack", new AttackAction(1, "attack", this));
+        
     }
 
     public void performAction(ActionInput<?> input) {
         if (moveActions.containsKey(input.getActionId()) && (input instanceof PositionActionInput)) {
                 moveActions.get(input.getActionId()).perform(((PositionActionInput)input).getTarget());
                 ap.reduceCurrent(moveActions.get(input.getActionId()).getApCost());
-        } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
+        }else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
                 ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
-        } else {
+        }else if(input instanceof PlayerEndTurnActionInput){
+                playerEndTurnActions.get(input.getActionId()).perform(((PlayerEndTurnActionInput)input).getTarget());
+                ap.reduceCurrent(playerEndTurnActions.get(input.getActionId()).getApCost());
+        }
+        else {
                 throw new IllegalArgumentException("Action not available");
         }
     }
@@ -71,6 +82,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     }
     public void setLevel(int lvl) {
         this.level = lvl;
+    }
+
+    public void addPlayerEndTurnAction(String actionId, Action<ITurnTaker, ITurnTaker> action){
+        action.setActionTaker(this);
+        playerEndTurnActions.put(actionId, action);
     }
 
     public void addMoveAction(String actionId, Action<IPositionable, Position> action) {
@@ -167,6 +183,9 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public void useAp(int amount) {
         if (this.ap.getCurrent() < amount) {
             throw new IllegalArgumentException();
+        }
+        else if(this.ap.getCurrent() == amount){
+            this.ap.reduceCurrent(amount);
         }
         this.ap.reduceCurrent(amount);
     }
