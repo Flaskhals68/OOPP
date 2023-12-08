@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Enemy extends Creature {
     private final String name;
+    private static final int DETECTION_RANGE = 10;
 
     public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level) {
         super(id, pos, maxAp, weapon, attr, level);
@@ -38,7 +39,7 @@ public class Enemy extends Creature {
         int pDexBonus = m.getPlayer().getDexBonus();
 
         // if the player is too far away, don't do anything. Depends on players dex stat and enemy perception
-        if(xDiff > (10 + getPerceptionBonus() - pDexBonus) || yDiff > (10 + getPerceptionBonus() - pDexBonus)) {
+        if(xDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus) || yDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus)) {
             return;
         }
         System.out.println(getName() + " is taking a turn");
