@@ -54,7 +54,6 @@ public class EntityPanelGenerator{
             p.setPreferredSize(new Dimension(tile_width, tile_height));
             p.setBackground(colorArray2[i]);
             panels.add(p);
-            panels.add(new EnemyHealthBar(null, new Dimension(tile_width, tile_height)));
         }
         return panels;
     }

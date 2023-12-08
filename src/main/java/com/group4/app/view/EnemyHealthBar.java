@@ -1,7 +1,10 @@
 package com.group4.app.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -14,20 +17,22 @@ public class EnemyHealthBar extends JPanel {
     private JProgressBar bar;
 
     public EnemyHealthBar(Position creaturePosition, Dimension size) {
+        this.setBounds(0, 0, size.width, size.height);
         this.setPreferredSize(size);
-        this.setBackground(Color.RED);
-        initBar(creaturePosition, size);
+        this.setLayout(new BorderLayout());
+        JProgressBar bar = initBar(creaturePosition, size);
+        this.add(bar, BorderLayout.NORTH);
     }
 
-    private void initBar(Position creaturePosition, Dimension size) {
+    private JProgressBar initBar(Position creaturePosition, Dimension size) {
         int maxHealth = csc.getCreatureMaxHealth(creaturePosition);
         int currentHealth = csc.getCreatureHealth(creaturePosition);
         this.bar = new JProgressBar(0, maxHealth);
+        
+        bar.setBounds(0, 0, size.width, size.height);
         bar.setPreferredSize(size);
-        bar.setBackground(Color.RED);
+        bar.setForeground(Color.RED);
         bar.setValue(currentHealth);
-        bar.setString("{currentHealth}/{maxHealth}");
-        bar.setStringPainted(true);
-        this.add(bar);
+        return bar;
     }
 }
