@@ -37,6 +37,9 @@ public class World implements ITileContainer{
 
     public void add(Tile tile) {
         Position pos = tile.getPos();
+        if (this.tiles[pos.getX()][pos.getY()] != null) {
+            throw new IllegalArgumentException("Tile already exists at position");
+        }
         this.tiles[pos.getX()][pos.getY()] = tile;
     }
 
