@@ -54,7 +54,7 @@ public class WorldView extends JPanel implements IGameView{
     //The tiles that are seen by the player at the moment.
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
-    //TODO implement zoom?
+    //TODO implement zoom
     private static float zoom = 2;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
@@ -171,7 +171,6 @@ public class WorldView extends JPanel implements IGameView{
         addMouseListenerClickedEvent(pos, tileView);
 
         addMouseListenerHover(pos, tileView);
-
 
         List<IDrawable> drawables = controller.getDrawables(pos.getX(), pos.getY());
         int layerIndex = 0;
