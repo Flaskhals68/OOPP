@@ -137,9 +137,9 @@ public class WorldView extends JPanel implements IGameView{
                     JLayeredPane entityPanel = createTile(pos);
                     visibleTiles.put(pos, entityPanel);
                     if (!pos.equals(controller.getPlayerPosition()) && posController.hasAttackable(pos)) {
-                        JPanel enemyHeathBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/3));
-                        enemyHeathBar.setVisible(true);
-                        entityPanel.add(enemyHeathBar, 0);
+                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/3));
+                        enemyHealthBar.setVisible(true);
+                        entityPanel.add(enemyHealthBar, 0);
                     }
                     add(entityPanel, tileConstraints);
                 }
