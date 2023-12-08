@@ -276,7 +276,11 @@ public class Model implements IWorldContainer {
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
-        return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        if(getEntities(targetPos).isEmpty()){
+            return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        } else {
+            return PathfindingHelper.getPathNextTo(startPos, targetPos, this);
+        }
     }
 
     public int getPlayerHealth() {
