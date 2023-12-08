@@ -27,14 +27,13 @@ public class WorldViewPlayerMoveState extends WorldViewState{
     public WorldViewPlayerMoveState(Position playerPosition){
         super(playerPosition);
         setHighLightedPositions(controller.getLegalMoves());
-        System.out.println("null");
     }
 
     @Override
     public void colorBorders(Map<Position, JLayeredPane> visibleToPlayer) {
         drawMovementPathIfMoving();
         for(Position pos : getHighlightedPositions()){
-            visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
+            visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(Color.cyan));
         }
     }
 

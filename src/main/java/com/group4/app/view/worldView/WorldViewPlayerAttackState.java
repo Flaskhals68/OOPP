@@ -26,7 +26,7 @@ public class WorldViewPlayerAttackState extends WorldViewState{
     @Override
     public void colorBorders(Map<Position, JLayeredPane> visibleToPlayer) {
         for(Position pos : getHighlightedPositions()){
-            visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(borderColor, 1));
+            visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(borderColor));
         }
     }
 

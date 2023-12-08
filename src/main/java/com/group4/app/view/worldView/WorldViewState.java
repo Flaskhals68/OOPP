@@ -35,5 +35,4 @@ public abstract class WorldViewState implements IClickableState{
      */
     public abstract void colorBorders(Map<Position, JLayeredPane> visibleToPlayer);
 
-
 }

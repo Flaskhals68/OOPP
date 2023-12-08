@@ -271,11 +271,4 @@ public class WorldView extends JPanel implements IGameView{
     public JPanel getView(){
         return this;
     }
-
-    // @Override
-    // public void updateState() {
-    //     setState(StateController.getState());
-    //     updateView();
-    // }
-
 }
