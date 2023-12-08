@@ -19,8 +19,7 @@ public class AttackAction extends Action<ICanAttack, IAttackable> {
     /**
      * Only implemented for melee weapons currently,
      * but should be relatively simple to adapt for ranged as well in the future
-     * @param attacker the entity doing the attacking
-     * @param victim the entity getting hit
+     * @param target the entity getting hit
      */
     public void perform(IAttackable target) {
         int xDiff = Math.abs(this.getActionTaker().getPos().getX() - target.getPos().getX());
