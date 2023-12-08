@@ -162,6 +162,7 @@ public class Model implements IWorldContainer {
 
     public void remove(Entity entity){
         this.getWorld(entity.getFloor()).remove(entity);
+        updateObservers();
     }
 
     public void remove(IPositionable positionable){
