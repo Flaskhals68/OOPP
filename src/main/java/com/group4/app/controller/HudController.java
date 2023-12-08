@@ -17,15 +17,12 @@ public class HudController {
         System.out.println("Enter attack state");
         currentState = ActionState.ATTACK;
         StateController.setState(currentState);
-        Model.getInstance().updateObservers();
     }
 
     public void exitAttackState() { 
         System.out.println("Exit attack state");
         currentState = ActionState.IDLE;
         StateController.setState(currentState);
-        Model.getInstance().updateObservers();
-
     }
 
     public ActionState getActionState() {

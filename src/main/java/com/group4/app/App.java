@@ -30,6 +30,7 @@ public class App {
         StateController initalStateController = new StateController(ActionState.IDLE);
         WorldView worldView = new WorldView(StateController.getState());
 
+
         InventoryController inventoryController = new InventoryController();
         InventoryView inventoryView = new InventoryView(model, inventoryController);
         
@@ -45,6 +46,8 @@ public class App {
         pl.add(HudView);
 
         GameWindow gw = GameWindow.getInstance(pl);
+        StateController.addObserver(gw);
+
 
         model.addObserver(gw);
 

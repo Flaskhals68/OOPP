@@ -11,7 +11,7 @@ import java.util.List;
 /*
  * This is the frame where every other panel is added to
  */
-public class GameWindow extends JFrame implements IModelObserver{
+public class GameWindow extends JFrame implements IModelObserver, IStateControllerObserver{
     private List<IGameView> viewList = new ArrayList<IGameView>();
     private static GameWindow instance = null;
     private static int SCREEN_WIDTH = 1280;
@@ -80,5 +80,10 @@ public class GameWindow extends JFrame implements IModelObserver{
                 }
             }
         });
+    }
+
+    @Override
+    public void updateState() {
+        update();
     }
 }

@@ -42,6 +42,7 @@ import com.group4.app.model.Tile;
 import com.group4.app.model.actions.Action;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.IGameView;
+import com.group4.app.view.IStateControllerObserver;
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
@@ -257,8 +258,8 @@ public class WorldView extends JPanel implements IGameView{
     @Override
     public void updateView() {
         removeAll();
-        setState(StateController.getState());
         addTiles(entityPanelGenerator);
+        setState(StateController.getState());
         if(StateController.getState() != ActionState.DISABLED){
             colorBorders();
         }
@@ -270,5 +271,11 @@ public class WorldView extends JPanel implements IGameView{
     public JPanel getView(){
         return this;
     }
+
+    // @Override
+    // public void updateState() {
+    //     setState(StateController.getState());
+    //     updateView();
+    // }
 
 }
