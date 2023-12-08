@@ -31,7 +31,9 @@ public class HudController {
 
     public void endTurn() {
         System.out.println("End turn");
-        Model.getInstance().nextTurn();
+        currentState = ActionState.DISABLED;
+        StateController.setState(currentState);
+        Model.getInstance().endPlayerTurn();
     }
 
     public List<String> getLegalActions() {
