@@ -28,6 +28,8 @@ public class Model implements IWorldContainer {
     private Map<String, World> floors;
     private World currentWorld;
 
+    private boolean dead;
+
     private static final String PLAYER_ID = "player";
     
     public static Model getInstance(){
@@ -45,6 +47,7 @@ public class Model implements IWorldContainer {
         this.floors = new HashMap<String, World>();
         this.isPlayerTurn = false;
         this.turnHandler = new TurnHandler();
+        this.dead = false;
     }
 
     public void addBasicMap(int size, double emptyChance){
@@ -58,8 +61,15 @@ public class Model implements IWorldContainer {
                 if(r> emptyChance){
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
-                    if(r > 0.98){
-                        Enemy e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                    if(r > 0.995){
+                        r = Math.random();
+                        Enemy e;
+                        if(r > 0.5){
+                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+
+                        } else {
+                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+                        }
                         add(e);
                         addToTurnOrder(e);
                     }
@@ -255,11 +265,22 @@ public class Model implements IWorldContainer {
         while (true) {
             nextTurn();
             updateObservers();
+            if(dead) {
+                break;
+            }
         }
     }
 
+    public void setPlayerDied() {
+        dead = true;
+    }
+
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
-        return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        if(getEntities(targetPos).isEmpty()){
+            return PathfindingHelper.getShortestPath(startPos, targetPos, this);
+        } else {
+            return PathfindingHelper.getPathNextTo(startPos, targetPos, this);
+        }
     }
 
     public int getPlayerHealth() {
@@ -272,5 +293,17 @@ public class Model implements IWorldContainer {
 
     public int getPlayerAp(){
         return player.getAp();
+    }
+
+    public boolean nextToPlayer(Position pos){
+        return getSurrounding(pos, 1).contains(player.getPos());
+    }
+
+    /**
+     * Required for tests
+     * @param player the player object to be set as current player
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

@@ -23,7 +23,7 @@ public class TestEnemyFactory {
     @Test
     public void testCreateSkeleton() {
         Enemy skeleton = EnemyFactory.createSkeleton(new Position(0, 0,  Model.getInstance().getCurrentWorldId()));
-        Weapon skeleton_sword = WeaponFactory.createSword();
-        assertEquals(skeleton_sword.getAttack() + 1, skeleton.getDamage());
+        Weapon skeleton_sword = WeaponFactory.createRustySword();
+        assertEquals(skeleton_sword.getAttack() - 1, skeleton.getDamage());
     }
 }
