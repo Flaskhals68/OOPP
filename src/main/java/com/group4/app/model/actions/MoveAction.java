@@ -8,10 +8,12 @@ import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.creatures.IPositionable;
 
-public class PlayerMoveAction extends Action<IPositionable, Position>{
-    
-    public PlayerMoveAction(int apCost, String name, IPositionable actionTaker) {
+public class MoveAction extends Action<IPositionable, Position>{
+
+    private final int moveSpeed;
+    public MoveAction(int apCost, String name, IPositionable actionTaker, int moveSpeed) {
         super(apCost, name, actionTaker);
+        this.moveSpeed = moveSpeed;
     }
 
     public void perform(Position target) {
@@ -36,7 +38,7 @@ public class PlayerMoveAction extends Action<IPositionable, Position>{
     }
 
     public Set<Position> getTargetable() {
-        return PathfindingHelper.getSurrounding(getActionTaker().getPos(), 5, Model.getInstance());
+        return PathfindingHelper.getSurrounding(getActionTaker().getPos(), moveSpeed, Model.getInstance());
     }
 
     public Set<Position> getTargetablePositions() {

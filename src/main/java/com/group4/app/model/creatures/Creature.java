@@ -7,8 +7,8 @@ import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.IAction;
-import com.group4.app.model.actions.PlayerAttackAction;
-import com.group4.app.model.actions.PlayerMoveAction;
+import com.group4.app.model.actions.AttackAction;
+import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
@@ -41,15 +41,16 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = level;
         this.moveActions = new HashMap<String, IAction<Position>>();
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
-        this.addAttackAction("attack", new PlayerAttackAction(1, "attack", this));
-        this.addMoveAction("move", new PlayerMoveAction(1, "move", this));
+        this.addAttackAction("attack", new AttackAction(1, "attack", this));
     }
 
     public void performAction(ActionInput<?> input) {
         if (moveActions.containsKey(input.getActionId()) && (input instanceof PositionActionInput)) {
                 moveActions.get(input.getActionId()).perform(((PositionActionInput)input).getTarget());
+                ap.reduceCurrent(moveActions.get(input.getActionId()).getApCost());
         } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
+                ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
         } else {
                 throw new IllegalArgumentException("Action not available");
         }
@@ -126,10 +127,18 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
      */
     @Override
     public void takeHit(int damage) {
-        hp.reduceCurrent(damage - armour.getDamageReduction(attributes.getStat(AttributeType.DEXTERITY)));
+        hp.reduceCurrent(damage - armour.getDamageReduction(getDexBonus()));
         if (hp.getCurrent() <= 0) {
             this.death();
         }
+    }
+
+    public int getDexBonus() {
+        return Math.max((attributes.getStat(AttributeType.DEXTERITY) - 50)/10, 0);
+    }
+
+    public int getPerceptionBonus() {
+        return (attributes.getStat(AttributeType.PERCEPTION) - 50) / 10;
     }
 
     /**

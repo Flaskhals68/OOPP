@@ -8,22 +8,27 @@ import javax.swing.JPanel;
 import com.group4.app.controller.ActionController;
 import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
-import com.group4.app.controller.WorldController;
+import com.group4.app.controller.StateController;
+import com.group4.app.controller.worldControllers.AWorldController;
+import com.group4.app.controller.worldControllers.PlayerMovementController;
+import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.model.Model;
+import com.group4.app.view.ActionState;
 import com.group4.app.view.AttributePanel;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
-import com.group4.app.view.WorldView;
+import com.group4.app.view.worldView.WorldView;
 
 public class App {
     public static void main(String[] args) {
         Model model = Model.getInstance();
         model.addRandomMap(10);
 
-        WorldController worldController = new WorldController(model);
-        WorldView worldView = new WorldView(worldController);
+        StateController initalStateController = new StateController(ActionState.IDLE);
+        WorldView worldView = new WorldView(StateController.getState());
+
 
         InventoryController inventoryController = new InventoryController();
         InventoryView inventoryView = new InventoryView(model, inventoryController);
@@ -40,11 +45,14 @@ public class App {
         pl.add(HudView);
 
         GameWindow gw = GameWindow.getInstance(pl);
+        StateController.addObserver(gw);
+
 
         model.addObserver(gw);
+        model.addObserver(initalStateController);
 
         model.setController(ActionController.getInstance());
-        
+
         model.enterGameLoop();
     }
 }

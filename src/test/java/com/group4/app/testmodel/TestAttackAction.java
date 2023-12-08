@@ -4,15 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.PlayerAttackAction;
+import com.group4.app.model.actions.AttackAction;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.IAttackable;
@@ -22,7 +19,7 @@ import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 import com.group4.app.model.items.WeaponFactory;
 
-public class TestPlayerAttackAction {
+public class TestAttackAction {
 
     @Test
     public void testGetTargetable(){
@@ -35,7 +32,7 @@ public class TestPlayerAttackAction {
         Player p = new Player("player", 3, null, new Position(0, 0, worldId));
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, worldId));
         Model.getInstance().add(e);
-        Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
+        Action<ICanAttack, IAttackable> action = new AttackAction(1, "action", p);
         assertEquals(e, action.getTargetable().toArray()[0]);
     }
 
@@ -51,7 +48,7 @@ public class TestPlayerAttackAction {
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, worldId));
         Model.getInstance().add(e);
-        Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
+        Action<ICanAttack, IAttackable> action = new AttackAction(1, "action", p);
         int maxHp = e.getHitPoints();
         action.perform(e);
         assertTrue(e.getHitPoints() < maxHp);
@@ -70,7 +67,7 @@ public class TestPlayerAttackAction {
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 2, worldId));
         Model.getInstance().add(e);
-        Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
+        Action<ICanAttack, IAttackable> action = new AttackAction(1, "action", p);
         
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
@@ -93,7 +90,7 @@ public class TestPlayerAttackAction {
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, world2.getId()));
         Model.getInstance().add(e);
-        Action<ICanAttack, IAttackable> action = new PlayerAttackAction(1, "action", p);
+        Action<ICanAttack, IAttackable> action = new AttackAction(1, "action", p);
 
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
             action.perform(e);

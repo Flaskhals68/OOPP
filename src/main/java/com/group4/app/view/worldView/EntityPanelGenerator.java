@@ -1,4 +1,4 @@
-package com.group4.app.view;
+package com.group4.app.view.worldView;
 
 import java.awt.Color;
 import java.awt.Dimension;
