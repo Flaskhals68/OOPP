@@ -32,17 +32,20 @@ import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
-import com.group4.app.model.Entity;
+import com.group4.app.controller.ActionController;
+import com.group4.app.controller.WorldController;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
-import com.group4.app.model.Tile;
 import com.group4.app.model.actions.Action;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.IStateControllerObserver;
+import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.dungeon.Tile;
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;

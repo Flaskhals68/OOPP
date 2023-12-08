@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.group4.app.model.AttributeType;
 import com.group4.app.model.Model;
+import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.view.ActionState;
 
 public class HudController {

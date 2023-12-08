@@ -3,12 +3,12 @@ package com.group4.app.model.actions;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.group4.app.model.IAttackable;
-import com.group4.app.model.ICanAttack;
-import com.group4.app.model.IPositionable;
 import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
+import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.creatures.ICanAttack;
+import com.group4.app.model.creatures.IPositionable;
 
 public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
     
@@ -36,7 +36,7 @@ public class PlayerAttackAction extends Action<ICanAttack, IAttackable> {
     }
 
     public Set<IAttackable> getTargetable() {
-        Set<Position> positions = PathfindingHelper.getSurrounding(Model.getInstance().getTile(this.getActionTaker().getPos()), 1);
+        Set<Position> positions = PathfindingHelper.getSurrounding(this.getActionTaker().getPos(), 1, Model.getInstance());
         positions.remove(getActionTaker().getPos());
         Set<IAttackable> attackables = new HashSet<IAttackable>();
         for (Position position : positions) {

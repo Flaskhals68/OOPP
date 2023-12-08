@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.group4.app.controller.HudController;
-import com.group4.app.model.AttributeType;
+import com.group4.app.model.creatures.AttributeType;
 
 public class AttributePanel extends SidePanel implements IGameView {
     private HudController controller;

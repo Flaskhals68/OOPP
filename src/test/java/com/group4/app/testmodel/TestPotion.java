@@ -1,9 +1,10 @@
 package com.group4.app.testmodel;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.Player;
-import com.group4.app.model.Potion;
-import com.group4.app.model.PotionFactory;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.items.Potion;
+import com.group4.app.model.items.PotionFactory;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
-import com.group4.app.model.Tile;
-import com.group4.app.model.World;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
 
 import java.lang.ArrayIndexOutOfBoundsException;
 
@@ -22,7 +22,7 @@ public class TestWorld
     public void testAddTileInside()
     {
         World world = new World(101);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile tile = new Tile("stone", new Position(100, 100, world.getId()));
         world.add(tile);
 
@@ -33,7 +33,7 @@ public class TestWorld
     public void testAddTileOutside()
     {
         World world = new World(101);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         Tile tile = new Tile("stone", new Position(101, 101, world.getId()));
 
         assertThrows(ArrayIndexOutOfBoundsException.class, ()->{world.add(tile);});
@@ -43,7 +43,7 @@ public class TestWorld
     public void testConstructor0()
     {
         World world = new World(101);
-        Model.getInstance().addWorld(world);
+        Model.getInstance().add(world);
         world.add(new Tile("stone", new Position(1, 1, world.getId())));
 
         assertFalse(world.getTile(new Position(1, 1, world.getId())) == null);

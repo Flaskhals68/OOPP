@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.items;
 
 public class ArmourFactory {
     public static Armour createArmour(ArmourType type, int level) {

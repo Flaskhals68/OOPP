@@ -1,6 +1,10 @@
-package com.group4.app.model;
+package com.group4.app.model.creatures;
 
 import java.util.Objects;
+
+import com.group4.app.model.IDrawable;
+import com.group4.app.model.Model;
+import com.group4.app.model.Position;
 
 public class Entity implements IDrawable {
     private String id;
@@ -13,14 +17,14 @@ public class Entity implements IDrawable {
     public Entity(String id, Position pos) {
         this.id = id;
         this.pos = pos;
-        Model.getInstance().add(this, pos);
+        Model.getInstance().add(this);
     }
 
     public void setPosition(Position pos) {
         if(getFloor() != null) {
             Model.getInstance().remove(this);
         }
-        Model.getInstance().add(this, pos);
+        Model.getInstance().add(this);
         this.pos = pos;
     }
 

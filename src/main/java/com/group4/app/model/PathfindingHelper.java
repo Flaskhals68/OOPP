@@ -1,9 +1,11 @@
 package com.group4.app.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Stack;
+
+import com.group4.app.model.dungeon.ITileContainer;
+import com.group4.app.model.dungeon.Tile;
+
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -30,7 +32,9 @@ public class PathfindingHelper {
      * @param steps
      * @return Set of Points with all legal positions
      */
-    public static Set<Position> getSurrounding(Tile tile, int steps) {
+    public static Set<Position> getSurrounding(Position pos, int steps, ITileContainer tc) {
+
+    Tile tile = tc.getTile(pos);
     Set<Tile> visited = new HashSet<>();
     Queue<Entry> queue = new LinkedList<>();
     Set<Position> positions = new HashSet<>();
@@ -123,8 +127,11 @@ public class PathfindingHelper {
      * @param goal
      * @return List representing the shortest path between two tiles
      */
-    public static List<Position> getShortestPath(Tile start, Tile goal) {
-        AStarEntry finalEntry = aStarSearch(start, goal);
+    public static List<Position> getShortestPath(Position start, Position goal, ITileContainer tc) {
+        Tile startTile = tc.getTile(start);
+        Tile goalTile = tc.getTile(goal);
+
+        AStarEntry finalEntry = aStarSearch(startTile, goalTile);
         return extractPath(finalEntry);  
     }
 
@@ -134,8 +141,10 @@ public class PathfindingHelper {
      * @param goal
      * @return List of tiles representing the shortest path between start and tile next to goal
      */
-    public static List<Position> getPathNextTo(Tile start, Tile goal) {
-        AStarEntry finalEntry = aStarSearch(start, goal);
+    public static List<Position> getPathNextTo(Position start, Position goal, ITileContainer tc) {
+        Tile startTile = tc.getTile(start);
+        Tile goalTile = tc.getTile(goal);
+        AStarEntry finalEntry = aStarSearch(startTile, goalTile);
         List<Position> path = extractPath(finalEntry);
         path.remove(path.size()-1);
         return path;
@@ -191,15 +200,18 @@ public class PathfindingHelper {
 
 
     /**
-     * @param start
-     * @param goal
+     * @param startTile
+     * @param goalTile
      * @return The shortest path from start to goal.
      * If the goal cannot be reached, the path to the closest tile is returned
      */
-    public static List<Position> pathToClosest(Tile start, Tile goal) {
+    public static List<Position> pathToClosest(Position start, Position goal, ITileContainer tc) {
+        Tile startTile = tc.getTile(start);
+        Tile goalTile = tc.getTile(goal);
+
         PriorityQueue<AStarEntry> pq = new PriorityQueue<>();
         Set<Tile> visited = new HashSet<>();
-        AStarEntry startEntry = new AStarEntry(start, null, null, 0, guessCost(start, goal));
+        AStarEntry startEntry = new AStarEntry(startTile, null, null, 0, guessCost(startTile, goalTile));
         AStarEntry closest = startEntry;
         pq.add(startEntry);
         
@@ -214,10 +226,10 @@ public class PathfindingHelper {
                 closest = entry;
             for (Edge edge : entry.getOutgoingEdges()) {
                 double costToHere = entry.getCostToHere() + edge.getWeight();
-                double guessedCost = guessCost(edge.getEnd(), goal);
+                double guessedCost = guessCost(edge.getEnd(), goalTile);
                 AStarEntry newEntry = new AStarEntry(edge.getEnd(), edge, entry, costToHere, guessedCost);
-                if (edge.getEnd() == goal) {
-                    if (goal.isEmpty()) {
+                if (edge.getEnd() == goalTile) {
+                    if (goalTile.isEmpty()) {
                         closest = newEntry;
                     }
                     break;
