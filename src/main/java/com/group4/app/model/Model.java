@@ -237,7 +237,7 @@ public class Model implements IWorldContainer {
     }
 
     public Set<Position> getSurrounding(Position pos, int steps) {
-        return PathfindingHelper.getSurrounding(getTile(pos), steps);
+        return PathfindingHelper.getSurrounding(pos, steps, this);
     }
 
     public void giveExperience(int xp) {
@@ -268,7 +268,7 @@ public class Model implements IWorldContainer {
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
-        return PathfindingHelper.getShortestPath(getTile(startPos), getTile(targetPos));
+        return PathfindingHelper.getShortestPath(startPos, targetPos, this);
     }
 
     public int getPlayerHealth() {

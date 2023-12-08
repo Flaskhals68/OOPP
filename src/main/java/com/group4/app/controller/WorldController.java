@@ -39,7 +39,7 @@ public class WorldController {
     }
 
     public Set<Position> getLegalMoves(){
-        return PathfindingHelper.getSurrounding(model.getTile(new Position(getPlayerPosition().getX(), getPlayerPosition().getY(), model.getPlayerFloor())), 5);
+        return PathfindingHelper.getSurrounding(new Position(getPlayerPosition().getX(), getPlayerPosition().getY(), model.getPlayerFloor()), 5, model);
     }
 
     public Set<Position> getHighlightedPositions(){
@@ -66,7 +66,7 @@ public class WorldController {
         }
         
         //FIXME dont get straight from internal model classes
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targePosition));
+        List<Position> positions = PathfindingHelper.getShortestPath(new Position(playerX,playerY,model.getPlayerFloor()), targePosition, model);
 
         highlightedPositions = new HashSet<Position>(positions);
         
@@ -115,7 +115,7 @@ public class WorldController {
 
         Position targetPosition  = pos;
 
-        List<Position> positions = PathfindingHelper.getShortestPath(model.getTile(new Position(playerX,playerY,model.getPlayerFloor())), model.getTile(targetPosition));
+        List<Position> positions = PathfindingHelper.getShortestPath(new Position(playerX, playerY, model.getPlayerFloor()), targetPosition, model);
 
         if(!movementTimerFlag && !hoverFlag){
             if(getLegalMoves().contains(targetPosition)){
