@@ -7,10 +7,16 @@ import java.util.Random;
 import java.util.Set;
 
 public class DungeonGraphGenerator {
+    /**
+     * Generates a dungeon graph of the specified size.
+     *
+     * @param size the size of the dungeon graph
+     * @return the generated dungeon graph
+     */
     public static DungeonGraph generate(int size) {
         DungeonGraph graph = new DungeonGraph(size);
         
-        fillGraphWithRooms(graph, size);
+        fillGraphWithRooms(graph);
 
         addCorridors(graph);
 
@@ -19,15 +25,25 @@ public class DungeonGraphGenerator {
         return graph;
     }
 
-    private static void fillGraphWithRooms(DungeonGraph graph, int size) {
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
+    /**
+     * Fills the given DungeonGraph with rooms.
+     * 
+     * @param graph the DungeonGraph to fill with rooms
+     */
+    private static void fillGraphWithRooms(DungeonGraph graph) {
+        for (int x = 0; x < graph.getMatrix().length; x++) {
+            for (int y = 0; y < graph.getMatrix()[x].length; y++) {
                 graph.addRoom(new Room(x, y));
             }
         }
         graph.updateAdjacent();
     }
 
+    /**
+     * Adds corridors to the dungeon graph.
+     * 
+     * @param graph the dungeon graph to add corridors to
+     */
     private static void addCorridors(DungeonGraph graph) {
         Queue<Room> rooms = new LinkedList<>();
         Set<Room> visited = new HashSet<>();
@@ -55,6 +71,11 @@ public class DungeonGraphGenerator {
         }
     }
 
+    /**
+     * Ensures that the given DungeonGraph is connected by adding corridors between rooms if necessary.
+     * 
+     * @param graph The DungeonGraph to ensure connectivity for.
+     */
     private static void ensureGraphIsConnected(DungeonGraph graph) {
         Room start = graph.getMatrix()[0][0];
         for (int x = 0; x < graph.getMatrix().length; x++) {
@@ -82,6 +103,9 @@ public class DungeonGraphGenerator {
         return null;
     }
 
+    /**
+    * Represents a room in the dungeon.
+    */
     public static class Room {
         private int x;
         private int y;
@@ -204,6 +228,9 @@ public class DungeonGraphGenerator {
         NORTH, SOUTH, EAST, WEST
     }
 
+    /**
+    * Represents a corridor connecting two rooms in a dungeon.
+    */
     public static class Corridor {
         private Room room1;
         private Room room2;
@@ -298,6 +325,10 @@ public class DungeonGraphGenerator {
         }
     }
 
+    /**
+    * Represents a graph that represents a dungeon layout.
+    * The graph is a grid of rooms with corridors connecting them.
+    */
     public static class DungeonGraph {
         private Room[][] matrix;
         private Set<Room> rooms;

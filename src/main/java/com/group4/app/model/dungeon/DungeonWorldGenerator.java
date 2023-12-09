@@ -10,6 +10,13 @@ public class DungeonWorldGenerator {
     private static final int ROOM_SIZE = 6;
     private static final int CORRIDOR_SIZE = 2;
 
+    /**
+     * Generates a dungeon world of a given size and adds it to the specified container.
+     *
+     * @param size      the size of the dungeon world
+     * @param container the container to add the dungeon world to
+     * @return the generated dungeon world
+     */
     public static World generate(int size, IWorldContainer container) {
         World world = new World(size*ROOM_SIZE);
         container.add(world);
@@ -51,6 +58,15 @@ public class DungeonWorldGenerator {
         }
     }
 
+    /**
+     * Adds a corridor to the specified room in the world.
+     * The corridor is added based on the direction of the corridor and the position of the room.
+     * The size of the corridor is determined randomly.
+     * 
+     * @param room the room to add the corridor from
+     * @param corridor the corridor to add
+     * @param world the world to add the corridor to
+     */
     private static void addCorridor(Room room, Corridor corridor, World world) {
         int x = room.getX() * ROOM_SIZE;
         int y = room.getY() * ROOM_SIZE;
@@ -93,6 +109,16 @@ public class DungeonWorldGenerator {
         }
     }
 
+    /**
+     * Adds a box of tiles to the world starting from the specified position (x, y) with the given width and height.
+     * Each tile is added to the world using the provided World object.
+     *
+     * @param x      the starting x-coordinate of the box
+     * @param y      the starting y-coordinate of the box
+     * @param width  the width of the box
+     * @param height the height of the box
+     * @param world  the World object to add the tiles to
+     */
     private static void addBox(int x, int y, int width, int height, World world) {
         for (int i = x; i < x + width; i++) {
             for (int j = y; j < y + height ; j++) {

@@ -91,7 +91,6 @@ public class Model implements IWorldContainer {
 
     public void addRandomMap(int size) {
         World world = DungeonWorldGenerator.generate(size, this);
-        this.add(world);
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
         add(player);
         addToTurnOrder(player);
