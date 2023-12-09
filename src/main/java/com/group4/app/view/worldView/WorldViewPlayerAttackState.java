@@ -8,15 +8,17 @@ import javax.swing.JLayeredPane;
 
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
+import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 
 public class WorldViewPlayerAttackState extends WorldViewState{
     private PlayerViewAttackController controller = new PlayerViewAttackController();
     private Color borderColor = Color.red;
+    private boolean hasAttackedFlag = false;
     public WorldViewPlayerAttackState(Position playerPosition){
         super(playerPosition);
         setHighLightedPositions(controller.getAttacksInRange());
-    }
+    } 
 
     @Override
     public AWorldController getController() {
@@ -25,6 +27,7 @@ public class WorldViewPlayerAttackState extends WorldViewState{
 
     @Override
     public void colorBorders(Map<Position, JLayeredPane> visibleToPlayer) {
+        this.borderColor = Color.red;
         for(Position pos : getHighlightedPositions()){
             visibleToPlayer.get(pos).setBorder(BorderFactory.createLineBorder(borderColor));
         }

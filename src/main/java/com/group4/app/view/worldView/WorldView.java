@@ -259,8 +259,8 @@ public class WorldView extends JPanel implements IGameView{
     @Override
     public void updateView() {
         removeAll();
-        addTiles(entityPanelGenerator);
         setState(StateController.getState());
+        addTiles(entityPanelGenerator);
         if(StateController.getState() != ActionState.DISABLED){
             colorBorders();
         }
