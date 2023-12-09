@@ -57,8 +57,8 @@ public class Player extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement player death
-        System.out.println("Player died");
+        Model.getInstance().add(new Entity("deadPlayer", getPos()));
+        Model.getInstance().remove(this);
         Model.getInstance().setPlayerDied();
     }
 }
