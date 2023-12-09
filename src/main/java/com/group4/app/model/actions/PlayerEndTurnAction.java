@@ -27,7 +27,7 @@ public class PlayerEndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 
     @Override
     public void perform(ITurnTaker player) {
-        // player.useAp(player.getAp());
+        player.useAp(player.getAp());
     }
     
 }

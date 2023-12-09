@@ -59,7 +59,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
                 ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
         }else if(input instanceof PlayerEndTurnActionInput){
-                ap.reduceCurrent(playerEndTurnActions.get(input.getActionId()).getApCost());
                 playerEndTurnActions.get(input.getActionId()).perform(((PlayerEndTurnActionInput)input).getTarget());
         }
         else {
