@@ -58,7 +58,7 @@ public class WorldView extends JPanel implements IGameView{
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
     //TODO implement zoom
-    private static float zoom = 2;
+    private static double zoom = 1.5;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
