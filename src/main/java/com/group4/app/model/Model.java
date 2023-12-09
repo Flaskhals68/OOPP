@@ -18,7 +18,6 @@ import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
-import com.group4.app.model.dungeon.DungeonGenerator;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
 import com.group4.app.model.dungeon.IWorldContainer;
 import com.group4.app.model.dungeon.Tile;
