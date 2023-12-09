@@ -24,6 +24,7 @@ public class SpriteComponent extends JPanel{
         super.paintComponent(g);
         if(spriteImage != null){
             g.drawImage(spriteImage, 0, 0, getWidth(), getHeight(), this);
+
         }
     }
 

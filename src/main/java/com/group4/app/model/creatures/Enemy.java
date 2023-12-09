@@ -70,6 +70,7 @@ public class Enemy extends Creature {
     public void death() {
         // TODO : Implement the rest of enemy death
         Model.getInstance().remove(this);
+        Model.getInstance().add(new Entity("deadEnemy", getPos()));
         Model.getInstance().removeFromTurnOrder(this);
         Model.getInstance().giveExperience(1);
     }
