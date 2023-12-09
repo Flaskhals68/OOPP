@@ -61,7 +61,7 @@ public class Model implements IWorldContainer {
         currentWorld = world;
         this.add(currentWorld);
         world.add(new Tile("stone", new Position(0, 0, world.getId())));
-        for (int x = 0; x<size; x++) {
+        for (int x = 1; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){

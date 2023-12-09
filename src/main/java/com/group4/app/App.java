@@ -24,7 +24,7 @@ import com.group4.app.view.worldView.WorldView;
 public class App {
     public static void main(String[] args) {
         Model model = Model.getInstance();
-        model.addRandomMap(10);
+        model.addBasicMap(100,0.1);
 
         StateController initalStateController = new StateController(ActionState.IDLE);
         WorldView worldView = new WorldView(StateController.getState());

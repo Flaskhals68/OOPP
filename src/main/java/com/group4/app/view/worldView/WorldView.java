@@ -176,6 +176,8 @@ public class WorldView extends JPanel implements IGameView{
 
         JLayeredPane tileView = getTileView(borderWidth);
 
+        tileView.setBackground(Color.BLACK);
+
         addMouseListenerClickedEvent(pos, tileView);
 
         addMouseListenerHover(pos, tileView);
@@ -191,6 +193,7 @@ public class WorldView extends JPanel implements IGameView{
                 p.setBounds(borderWidth, borderWidth, innerWidth, innerHeight);
             }
             }
+        tileView.getComponent(0).setVisible(true);
         return tileView;
     }
 
