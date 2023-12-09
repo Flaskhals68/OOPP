@@ -3,6 +3,8 @@ package com.group4.app.model;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.dungeon.ITileContainer;
 import com.group4.app.model.dungeon.Tile;
 
@@ -44,7 +46,14 @@ public class PathfindingHelper {
     queue.add(new Entry(tile, steps));
     while (!queue.isEmpty()) {
         Entry entry = queue.remove();
-        if (!entry.getTile().isEmpty() && !visited.add(entry.getTile())) continue;
+        boolean containsEnemy = false;
+        for(Object o : entry.getTile().getEntities()){
+            if(o instanceof Enemy){
+                containsEnemy = true;
+                break;
+            }
+        }
+        if (containsEnemy && !visited.add(entry.getTile())) continue;
         Position entryPos = entry.tile.getPos();
         Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
         positions.add(p);

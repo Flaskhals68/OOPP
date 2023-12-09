@@ -57,7 +57,6 @@ public class Player extends Creature {
 
     @Override
     public void death() {
-        Model.getInstance().add(new Entity("deadPlayer", getPos()));
         Model.getInstance().remove(this);
         Model.getInstance().setPlayerDied();
     }

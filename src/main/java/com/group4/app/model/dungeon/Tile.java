@@ -27,6 +27,10 @@ public class Tile implements IDrawable {
         return this.id;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     public void setFloor(String floorId){
         this.pos = new Position(this.pos.getX(), this.pos.getY(), floorId);
     }
