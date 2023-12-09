@@ -32,7 +32,6 @@ public class DungeonWorldGenerator {
 
     private static void addRoom(Room room, World world) {
         addCenter(room, world);
-        
     }
 
     private static void addCenter(Room room, World world) {

@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.group4.app.controller.StateController;
-import com.group4.app.view.ActionState;
-
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
@@ -18,6 +15,7 @@ import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.DungeonEntitySpawner;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
 import com.group4.app.model.dungeon.IWorldContainer;
 import com.group4.app.model.dungeon.Tile;
@@ -97,6 +95,7 @@ public class Model implements IWorldContainer {
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
         add(player);
         addToTurnOrder(player);
+        DungeonEntitySpawner.spawnEnemies(world, 0.01);
     }
 
     public void add(World world){
