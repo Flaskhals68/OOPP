@@ -53,7 +53,7 @@ public class EntityPanelGenerator{
             JPanel p = new JPanel();
             p.setPreferredSize(new Dimension(tile_width, tile_height));
             p.setBackground(colorArray2[i]);
-            panels.add(p);            
+            panels.add(p);
         }
         return panels;
     }
