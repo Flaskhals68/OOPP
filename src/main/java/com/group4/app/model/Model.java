@@ -63,7 +63,11 @@ public class Model implements IWorldContainer {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.add(new Tile("stone", new Position(x, y, world.getId())));
+                    try {
+                        world.add(new Tile("stone", new Position(x, y, world.getId())));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Tile already exists at position: " + x + ", " + y);
+                    }
                     r = Math.random();
                     if(r > 0.995){
                         r = Math.random();
