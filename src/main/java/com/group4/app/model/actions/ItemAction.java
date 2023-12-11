@@ -1,5 +1,6 @@
 package com.group4.app.model.actions;
 
+import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.items.IInventoriable;
 import com.group4.app.model.items.IUser;
@@ -17,6 +18,7 @@ public class ItemAction extends Action<IUser, IInventoriable>{
     @Override
     public void perform(IInventoriable target) {
         target.use(getActionTaker());
+        Model.getInstance().updateObservers();
     }
 
     @Override
