@@ -7,6 +7,7 @@ import com.group4.app.model.actions.ItemAction;
 import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
+import com.group4.app.model.items.WeaponFactory;
 
 public class Player extends Creature {
 

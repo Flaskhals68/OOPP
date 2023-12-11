@@ -23,12 +23,17 @@ public class InventoryView extends SidePanel implements IGameView{
     private void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setSize(new Dimension(getWidth(), getHeight()));
         initInventory();
     }
 
     private void initInventory() {
         removeAll();
         Map<String, Integer> inventory = model.getPlayer().getInventoryItems();
+        JPanel invTitle = new JPanel();
+        invTitle.setPreferredSize(new Dimension(100, 25));
+        invTitle.add(new JLabel("Inventory"));
+        add(invTitle);
 
         for(Map.Entry<String, Integer> entry : inventory.entrySet()) {
             JPanel jPan = new JPanel();
