@@ -260,6 +260,10 @@ public class Model implements IWorldContainer {
         return PathfindingHelper.getSurrounding(pos, steps, this);
     }
 
+    public Set<Position> getEntitiesInRange(Position pos, int steps) {
+        return PathfindingHelper.getEntitiesInRange(pos, steps, this);
+    }
+
     public Set<Position> getLegalMoves(){
         return player.getTargetPositions("move");
     }
@@ -338,7 +342,8 @@ public class Model implements IWorldContainer {
     }
 
     public boolean nextToPlayer(Position pos){
-        return getSurrounding(pos, 1).contains(player.getPos());
+        Set<Position> surrounding = getEntitiesInRange(pos, 1);
+        return surrounding.contains(player.getPos());
     }
 
     /**
