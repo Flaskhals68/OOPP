@@ -1,6 +1,5 @@
 package com.group4.app.view;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Color;

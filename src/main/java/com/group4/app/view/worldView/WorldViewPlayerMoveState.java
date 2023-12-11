@@ -1,22 +1,14 @@
 package com.group4.app.view.worldView;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
-import javax.swing.Timer;
-
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
-import com.group4.app.model.Model;
 import com.group4.app.model.Position;
-import com.group4.app.view.ActionState;
 
 public class WorldViewPlayerMoveState extends WorldViewState{
     private boolean movementTimerFlag;

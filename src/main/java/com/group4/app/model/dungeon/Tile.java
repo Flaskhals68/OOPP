@@ -8,7 +8,6 @@ import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.creatures.IPositionable;
 
-import java.io.Serializable;
 
 public class Tile implements IDrawable {
     private String id;
@@ -25,6 +24,10 @@ public class Tile implements IDrawable {
 
     public String getId(){
         return this.id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 
     public void setFloor(String floorId){
