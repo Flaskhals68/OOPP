@@ -34,7 +34,7 @@ public class App {
         InventoryView inventoryView = new InventoryView(model, inventoryController);
         
         HudController hudController = new HudController();
-        IGameView HudView = new HudView(model, hudController);
+        IGameView HudView = new HudView(hudController);
         IGameView attrPanel = new AttributePanel(hudController);
 
 

@@ -46,6 +46,7 @@ public class ButtonPanel extends SubView {
      * @param font
      */
     private void bindButtons() {
+        bindButton(ButtonFactory.createMoveButton(defaultFont, controller));
         bindButton(ButtonFactory.createAttackButton(defaultFont, controller));
         bindButton(ButtonFactory.createEndTurnButton(defaultFont, controller));
     }
@@ -63,6 +64,12 @@ public class ButtonPanel extends SubView {
         }
     }
 
+    private void updateButtons() {
+        for (HudButton btn : btnList) {
+            btn.updateState();
+        }
+    }
+
     private void updateButtonState(List<String> legalActions, HudButton btn) {
         if (controller.getLegalActions().contains(btn.getActionId())) {
             btn.setEnabled();
@@ -72,8 +79,9 @@ public class ButtonPanel extends SubView {
     }
 
     public void update() {
-        removeAll();
-        addButtons();
+        // removeAll();
+        // addButtons();
+        updateButtons();
         revalidate();
         repaint();
     }

@@ -13,7 +13,6 @@ public class HudController {
     private ActionState currentState = ActionState.IDLE;
 
     public void enterAttackState() {
-        // TODO: Implement logic to enter attack state
         System.out.println("Enter attack state");
         currentState = ActionState.ATTACK;
         StateController.setState(currentState);
@@ -21,6 +20,12 @@ public class HudController {
 
     public void exitAttackState() { 
         System.out.println("Exit attack state");
+        currentState = ActionState.IDLE;
+        StateController.setState(currentState);
+    }
+
+    public void enterMoveState() {
+        System.out.println("Enter move state");
         currentState = ActionState.IDLE;
         StateController.setState(currentState);
     }
@@ -36,10 +41,7 @@ public class HudController {
 
     public List<String> getLegalActions() {
         // TODO: Get legal actions from model
-        List<String> legalActions = new ArrayList<>();
-        legalActions.add("attack");
-        legalActions.add("endTurn");
-        return legalActions;
+        return Model.getInstance().getAvailableActions();
     }
 
     public Map<AttributeType, Integer> getAttributes() { 

@@ -15,6 +15,7 @@ public class ButtonFactory {
     public static HudButton createAttackButton(Font font, HudController controller) {
         ActionButton attackBtn = new ActionButton("attack", "Attack", font, Color.RED, controller);
         attackBtn.registerDisabledState(ActionState.DISABLED);
+        attackBtn.registerDisabledState(ActionState.ATTACK);
         attackBtn.bindStateHandler(ActionState.IDLE, new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -45,6 +46,20 @@ public class ButtonFactory {
             }
         });
         return endTurnBtn;
+    }
+
+    public static HudButton createMoveButton(Font font, HudController controller) {
+        ActionButton moveBtn = new ActionButton("move", "Move", font, Color.WHITE, controller);
+        moveBtn.registerDisabledState(ActionState.DISABLED);
+        moveBtn.registerDisabledState(ActionState.IDLE);
+        moveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!moveBtn.isEnabled()) return;
+                controller.enterMoveState();
+            }
+        });
+        return moveBtn;
     }
 
 }
