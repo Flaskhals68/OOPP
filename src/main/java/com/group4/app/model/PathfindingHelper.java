@@ -39,12 +39,13 @@ public class PathfindingHelper {
     Set<Tile> visited = new HashSet<>();
     Queue<Entry> queue = new LinkedList<>();
     Set<Position> positions = new HashSet<>();
+    Entry startEntry = new Entry(tile, steps);
 
     // Perform Breadth-first search
-    queue.add(new Entry(tile, steps));
+    queue.add(startEntry);
     while (!queue.isEmpty()) {
         Entry entry = queue.remove();
-        if (!entry.getTile().isEmpty() && !visited.add(entry.getTile())) continue;
+        if ((!entry.getTile().isEmpty() || !visited.add(entry.getTile())) && entry != startEntry) continue;
         Position entryPos = entry.tile.getPos();
         Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
         positions.add(p);
