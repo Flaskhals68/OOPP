@@ -46,14 +46,7 @@ public class PathfindingHelper {
     queue.add(new Entry(tile, steps));
     while (!queue.isEmpty()) {
         Entry entry = queue.remove();
-        boolean containsEnemy = false;
-        for(Object o : entry.getTile().getEntities()){
-            if(o instanceof Enemy){
-                containsEnemy = true;
-                break;
-            }
-        }
-        if (containsEnemy && !visited.add(entry.getTile())) continue;
+        if (!entry.getTile().isEmpty() && !visited.add(entry.getTile())) continue;
         Position entryPos = entry.tile.getPos();
         Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
         positions.add(p);
