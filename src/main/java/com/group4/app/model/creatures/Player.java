@@ -3,6 +3,7 @@ package com.group4.app.model.creatures;
 import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.actions.ItemAction;
 import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
@@ -19,6 +20,7 @@ public class Player extends Creature {
         for (int i = 0; i < 3; i++) {
             this.addItemToInventory(PotionFactory.createHealthPotion());
         }
+        this.addInvAction("useItem", new ItemAction(1, "useItem", this));
     }
 
     public void giveXP(int amount) {

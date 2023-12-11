@@ -3,13 +3,7 @@ import java.util.*;
 
 import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.Position;
-import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.ActionInput;
-import com.group4.app.model.actions.AttackActionInput;
-import com.group4.app.model.actions.IAction;
-import com.group4.app.model.actions.AttackAction;
-import com.group4.app.model.actions.MoveAction;
-import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.actions.*;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
 import com.group4.app.model.items.ArmourType;
@@ -29,6 +23,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Attributes attributes;
     private Map<String, IAction<Position>> moveActions;
     private Map<String, IAction<IAttackable>> attackActions;
+    private Map<String, IAction<IInventoriable>> invActions;
 
     public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
         super(id, pos);
@@ -41,6 +36,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = level;
         this.moveActions = new HashMap<String, IAction<Position>>();
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
+        this.invActions = new HashMap<>();
         this.addAttackAction("attack", new AttackAction(1, "attack", this));
     }
 
@@ -51,7 +47,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
                 ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
-        } else {
+        } else if (invActions.containsKey(input.getActionId()) && input instanceof ItemActionInput) {
+                invActions.get(input.getActionId()).perform(((ItemActionInput)input).getTarget());
+                ap.reduceCurrent(invActions.get(input.getActionId()).getApCost());
+        } else
+        {
                 throw new IllegalArgumentException("Action not available");
         }
     }
@@ -81,6 +81,11 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     public void addAttackAction(String actionId, Action<ICanAttack, IAttackable> action) {
         action.setActionTaker(this);
         attackActions.put(actionId, action);
+    }
+
+    public void addInvAction(String actionId, Action<IUser, IInventoriable> action) {
+        action.setActionTaker(this);
+        invActions.put(actionId, action);
     }
 
     public void setWeapon(Weapon weapon) {
