@@ -32,6 +32,7 @@ public class AttackAction extends Action<ICanAttack, IAttackable> {
         }
 
         (target).takeHit(this.getActionTaker().getDamage());
+        Model.getInstance().updateObservers();
     }
 
     public Set<IAttackable> getTargetable() {
