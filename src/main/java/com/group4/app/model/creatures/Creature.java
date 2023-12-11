@@ -231,6 +231,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         List<String> actions = new ArrayList<String>();
         actions.addAll(moveActions.keySet());
         actions.addAll(attackActions.keySet());
+        actions.addAll(playerEndTurnActions.keySet());
         return actions;
     }
 }
