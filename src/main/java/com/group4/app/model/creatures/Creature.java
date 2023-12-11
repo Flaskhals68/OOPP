@@ -48,16 +48,15 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         if (moveActions.containsKey(input.getActionId()) && (input instanceof PositionActionInput)) {
                 ap.reduceCurrent(moveActions.get(input.getActionId()).getApCost());
                 moveActions.get(input.getActionId()).perform(((PositionActionInput)input).getTarget());
-        }else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
+        } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
-        }else if(input instanceof PlayerEndTurnActionInput){
+        } else if(input instanceof PlayerEndTurnActionInput){
                 playerEndTurnActions.get(input.getActionId()).perform(((PlayerEndTurnActionInput)input).getTarget());
         } else if (invActions.containsKey(input.getActionId()) && input instanceof ItemActionInput) {
                 invActions.get(input.getActionId()).perform(((ItemActionInput)input).getTarget());
                 ap.reduceCurrent(invActions.get(input.getActionId()).getApCost());
-        } else
-        {
+        } else {
                 throw new IllegalArgumentException("Action not available");
         }
     }
@@ -235,6 +234,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         actions.addAll(moveActions.keySet());
         actions.addAll(attackActions.keySet());
         actions.addAll(playerEndTurnActions.keySet());
+        actions.addAll(invActions.keySet());
         return actions;
     }
 }
