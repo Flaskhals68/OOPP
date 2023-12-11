@@ -15,6 +15,8 @@ import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.DungeonEntitySpawner;
+import com.group4.app.model.dungeon.DungeonWorldGenerator;
 import com.group4.app.model.dungeon.IWorldContainer;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
@@ -61,7 +63,11 @@ public class Model implements IWorldContainer {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
-                    world.add(new Tile("stone", new Position(x, y, world.getId())));
+                    try {
+                        world.add(new Tile("stone", new Position(x, y, world.getId())));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Tile already exists at position: " + x + ", " + y);
+                    }
                     r = Math.random();
                     if(r > 0.995){
                         r = Math.random();
@@ -85,6 +91,14 @@ public class Model implements IWorldContainer {
 
     public void addBasicMap(int size) {
         addBasicMap(size, 0.1);
+    }
+
+    public void addRandomMap(int size) {
+        World world = DungeonWorldGenerator.generate(size, this);
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
+        add(player);
+        addToTurnOrder(player);
+        DungeonEntitySpawner.spawnEnemies(world, 0.01);
     }
 
     public void add(World world){

@@ -16,15 +16,18 @@ import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
+import com.group4.app.controller.PositionController;
 import com.group4.app.model.IDrawable;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
+import com.group4.app.view.EnemyHealthBar;
 import com.group4.app.view.IGameView;
 
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
     private WorldViewState drawingState;
+    private PositionController posController = new PositionController();
     private ActionState state;
 
     //The tiles that are seen by the player at the moment.
@@ -109,6 +112,11 @@ public class WorldView extends JPanel implements IGameView{
                 if(controller.isValidCoordinates(x,y)) {
                     JLayeredPane entityPanel = createTile(pos);
                     visibleTiles.put(pos, entityPanel);
+                    if (!pos.equals(controller.getPlayerPosition()) && posController.hasAttackable(pos)) {
+                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/3));
+                        enemyHealthBar.setVisible(true);
+                        entityPanel.add(enemyHealthBar, 0);
+                    }
                     add(entityPanel, tileConstraints);
                 }
                 else{
