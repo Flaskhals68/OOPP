@@ -1,7 +1,5 @@
 package com.group4.app.model.dungeon;
 
-import java.util.Set;
-
 import com.group4.app.model.Position;
 
 public interface ITileContainer {

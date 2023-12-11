@@ -33,7 +33,7 @@ public class App {
         InventoryController inventoryController = new InventoryController();
 
         HudController hudController = new HudController();
-        IGameView HudView = new HudView(model, hudController);
+        IGameView HudView = new HudView(hudController);
         IGameView attrPanel = new AttributePanel(hudController);
         IGameView inventoryPanel = new InventoryView(model, inventoryController);
 
@@ -48,9 +48,8 @@ public class App {
         GameWindow gw = GameWindow.getInstance(pl);
         StateController.addObserver(gw);
 
-
-        model.addObserver(gw);
         model.addObserver(initalStateController);
+        model.addObserver(gw);
 
         model.setController(ActionController.getInstance());
 

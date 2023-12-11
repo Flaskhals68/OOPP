@@ -44,11 +44,9 @@ public class Player extends Creature {
     public void takeTurn() {
         Model m = Model.getInstance();
         m.startPlayerTurn();
-
         while (this.getAp() > 0) {
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
-            Model.getInstance().updateObservers();
         }
         endTurn();
     }
@@ -60,8 +58,7 @@ public class Player extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement player death
-        System.out.println("Player died");
+        Model.getInstance().remove(this);
         Model.getInstance().setPlayerDied();
     }
 }

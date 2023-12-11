@@ -1,6 +1,5 @@
 package com.group4.app.view;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -17,18 +16,14 @@ import com.group4.app.model.Model;
 public class HudView extends JPanel implements IGameView{
     private static final int HEIGHT = 150;
     private static final int WIDTH = 775;
-    private static final int BTN_WIDTH = 50;
     private static final int BTN_HEIGHT = 30;
 
-    private Model model;
     private HudController controller;
-    private PlayerStatController psc = new PlayerStatController();
     private GridBagConstraints constraints = new GridBagConstraints();
 
     private List<SubView> subViews = new ArrayList<>();
 
-    public HudView(Model model, HudController controller) {
-        this.model = model;
+    public HudView(HudController controller) {
         this.controller = controller;
         initComponents();
     }
