@@ -183,9 +183,6 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         if (this.ap.getCurrent() < amount) {
             throw new IllegalArgumentException();
         }
-        else if(this.ap.getCurrent() == amount){
-            this.ap.reduceCurrent(amount);
-        }
         this.ap.reduceCurrent(amount);
     }
 
