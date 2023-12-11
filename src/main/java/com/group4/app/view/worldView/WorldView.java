@@ -58,7 +58,7 @@ public class WorldView extends JPanel implements IGameView{
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
     //TODO implement zoom
-    private static double zoom = 1;
+    private static double zoom = 1.5;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -137,7 +137,7 @@ public class WorldView extends JPanel implements IGameView{
                     JLayeredPane entityPanel = createTile(pos);
                     visibleTiles.put(pos, entityPanel);
                     if (!pos.equals(controller.getPlayerPosition()) && posController.hasAttackable(pos)) {
-                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/3));
+                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/4));
                         enemyHealthBar.setVisible(true);
                         entityPanel.add(enemyHealthBar, 0);
                     }

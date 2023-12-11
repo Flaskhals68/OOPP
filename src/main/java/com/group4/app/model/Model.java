@@ -67,7 +67,7 @@ public class Model implements IWorldContainer {
                 if(r> emptyChance){
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
-                    if(r > 0.95){
+                    if(r > 0.975){
                         r = Math.random();
                         Enemy e;
                         if(r > 0.5){
