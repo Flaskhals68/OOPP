@@ -20,6 +20,7 @@ public class Enemy extends Creature {
         this.name = name;
         this.moveSpeed = moveSpeed;
         this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
+        Model.getInstance().addToTurnOrder(this);
     }
 
     public String getName() {

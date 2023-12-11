@@ -65,7 +65,11 @@ public class TestEnemy {
         m.setCurrentWorld(world.getId());
         for (int i = 0; i < 20; i++) {
             for(int j = 0; j < 20; j++) {
-                m.add(new Tile("stone", new Position(i, j, world.getId())));
+                try {
+                    m.add(new Tile("stone", new Position(i, j, world.getId())));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
 
