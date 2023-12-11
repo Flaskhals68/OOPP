@@ -35,29 +35,54 @@ public class PathfindingHelper {
      */
     public static Set<Position> getSurrounding(Position pos, int steps, ITileContainer tc) {
 
-    Tile tile = tc.getTile(pos);
-    Set<Tile> visited = new HashSet<>();
-    Queue<Entry> queue = new LinkedList<>();
-    Set<Position> positions = new HashSet<>();
-    Entry startEntry = new Entry(tile, steps);
+        Tile tile = tc.getTile(pos);
+        Set<Tile> visited = new HashSet<>();
+        Queue<Entry> queue = new LinkedList<>();
+        Set<Position> positions = new HashSet<>();
+        Entry startEntry = new Entry(tile, steps);
 
-    // Perform Breadth-first search
-    queue.add(startEntry);
-    while (!queue.isEmpty()) {
-        Entry entry = queue.remove();
-        if ((!entry.getTile().isEmpty() || !visited.add(entry.getTile())) && entry != startEntry) continue;
-        Position entryPos = entry.tile.getPos();
-        Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
-        positions.add(p);
+        // Perform Breadth-first search
+        queue.add(startEntry);
+        while (!queue.isEmpty()) {
+            Entry entry = queue.remove();
+            if ((!entry.getTile().isEmpty() || !visited.add(entry.getTile())) && entry != startEntry) continue;
+            Position entryPos = entry.tile.getPos();
+            Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
+            positions.add(p);
 
-        if (entry.remainingSteps > 0) {
-            for (Tile neighbor : entry.getTile().getNeighbors()) {
-                queue.add(new Entry(neighbor, entry.getRemainingSteps()-1));
+            if (entry.remainingSteps > 0) {
+                for (Tile neighbor : entry.getTile().getNeighbors()) {
+                    queue.add(new Entry(neighbor, entry.getRemainingSteps()-1));
+                }
             }
         }
+        return positions;
     }
-    return positions;
-}
+
+    public static Set<Position> getEntitiesInRange(Position pos, int range, ITileContainer tc) {
+        Tile tile = tc.getTile(pos);
+        Set<Tile> visited = new HashSet<>();
+        Queue<Entry> queue = new LinkedList<>();
+        Set<Position> positions = new HashSet<>();
+        Entry startEntry = new Entry(tile, range);
+
+        // Perform Breadth-first search
+        queue.add(startEntry);
+        while (!queue.isEmpty()) {
+            Entry entry = queue.remove();
+            if (entry != startEntry && (entry.getTile().isEmpty() || !visited.add(entry.getTile()))) continue;
+            Position entryPos = entry.tile.getPos();
+            Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
+            positions.add(p);
+
+            if (entry.remainingSteps > 0) {
+                for (Tile neighbor : entry.getTile().getNeighbors()) {
+                    queue.add(new Entry(neighbor, entry.getRemainingSteps()-1));
+                }
+            }
+        }
+        return positions;
+    }
 
     private static class Edge {
         private Tile start;
