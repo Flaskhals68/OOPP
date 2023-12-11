@@ -41,11 +41,9 @@ public class Player extends Creature {
     public void takeTurn() {
         Model m = Model.getInstance();
         m.startPlayerTurn();
-
         while (this.getAp() > 0) {
             ActionInput<?> input = Model.getInstance().getActionInput();
             this.performAction(input);
-            Model.getInstance().updateObservers();
         }
         endTurn();
     }

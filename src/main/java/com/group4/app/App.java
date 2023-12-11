@@ -47,9 +47,8 @@ public class App {
         GameWindow gw = GameWindow.getInstance(pl);
         StateController.addObserver(gw);
 
-
-        model.addObserver(gw);
         model.addObserver(initalStateController);
+        model.addObserver(gw);
 
         model.setController(ActionController.getInstance());
 
