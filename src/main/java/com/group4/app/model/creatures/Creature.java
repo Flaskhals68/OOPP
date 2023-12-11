@@ -8,7 +8,6 @@ import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.IAction;
 import com.group4.app.model.actions.AttackAction;
-import com.group4.app.model.actions.MoveAction;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;

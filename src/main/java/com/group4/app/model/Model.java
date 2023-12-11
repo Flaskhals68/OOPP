@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.group4.app.controller.StateController;
-import com.group4.app.view.ActionState;
-
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
@@ -61,13 +58,13 @@ public class Model implements IWorldContainer {
         currentWorld = world;
         this.add(currentWorld);
         world.add(new Tile("stone", new Position(0, 0, world.getId())));
-        for (int x = 1; x<size; x++) {
+        for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
                     world.add(new Tile("stone", new Position(x, y, world.getId())));
                     r = Math.random();
-                    if(r > 0.975){
+                    if(r > 0.995){
                         r = Math.random();
                         Enemy e;
                         if(r > 0.5){

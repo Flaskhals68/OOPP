@@ -1,52 +1,27 @@
 package com.group4.app.view.worldView;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.security.Identity;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingUtilities;
-
 import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
-import com.group4.app.controller.ActionController;
 import com.group4.app.controller.PositionController;
 import com.group4.app.model.IDrawable;
-import com.group4.app.model.IModelObserver;
-import com.group4.app.model.Model;
-import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
-import com.group4.app.model.actions.Action;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
 import com.group4.app.view.IGameView;
-import com.group4.app.view.IStateControllerObserver;
-import com.group4.app.model.actions.PositionActionInput;
-import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.dungeon.Tile;
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
@@ -68,13 +43,13 @@ public class WorldView extends JPanel implements IGameView{
     private static final int WIDTH = 500;
 
     // Max dimensions of each tile
-    private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
+    private static final int TILE_WIDTH = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW;
 
     private GridBagConstraints tileConstraints = new GridBagConstraints();
 
     // Helper class to generate the sprites
-    private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
+    private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDTH);
 
     public WorldView(ActionState initialState) {
         this.state = initialState;
@@ -137,7 +112,7 @@ public class WorldView extends JPanel implements IGameView{
                     JLayeredPane entityPanel = createTile(pos);
                     visibleTiles.put(pos, entityPanel);
                     if (!pos.equals(controller.getPlayerPosition()) && posController.hasAttackable(pos)) {
-                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/4));
+                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDTH, TILE_HEIGHT/4));
                         enemyHealthBar.setVisible(true);
                         entityPanel.add(enemyHealthBar, 0);
                     }
@@ -159,7 +134,7 @@ public class WorldView extends JPanel implements IGameView{
      */
     private JPanel createEmptyTile(){
         JPanel tileView = new JPanel();
-        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
+        tileView.setPreferredSize(new Dimension(TILE_WIDTH,TILE_HEIGHT));
         tileView.setBackground(Color.BLACK);
         return tileView;
     }
@@ -171,7 +146,7 @@ public class WorldView extends JPanel implements IGameView{
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane
-        int innerWidth = TILE_WIDHT - 2 * borderWidth;
+        int innerWidth = TILE_WIDTH - 2 * borderWidth;
         int innerHeight = TILE_HEIGHT - 2 * borderWidth;
 
         JLayeredPane tileView = getTileView(borderWidth);
@@ -239,7 +214,7 @@ public class WorldView extends JPanel implements IGameView{
      */
     private JLayeredPane getTileView(int borderWidth) {
         JLayeredPane tileView = new JLayeredPane();
-        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
+        tileView.setPreferredSize(new Dimension(TILE_WIDTH,TILE_HEIGHT));
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
         return tileView;

@@ -1,12 +1,10 @@
 package com.group4.app.view.worldView;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SpriteComponent extends JPanel{

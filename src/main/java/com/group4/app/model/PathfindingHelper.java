@@ -3,8 +3,6 @@ package com.group4.app.model;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import com.group4.app.model.creatures.Enemy;
-import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.dungeon.ITileContainer;
 import com.group4.app.model.dungeon.Tile;
 
