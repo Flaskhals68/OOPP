@@ -42,7 +42,6 @@ public class HudController {
     }
 
     public List<String> getLegalActions() {
-        // TODO: Get legal actions from model
         return Model.getInstance().getAvailableActions();
     }
 

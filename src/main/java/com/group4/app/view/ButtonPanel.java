@@ -70,17 +70,7 @@ public class ButtonPanel extends SubView {
         }
     }
 
-    private void updateButtonState(List<String> legalActions, HudButton btn) {
-        if (controller.getLegalActions().contains(btn.getActionId())) {
-            btn.setEnabled();
-        } else {
-            btn.setDisabled();
-        }
-    }
-
     public void update() {
-        // removeAll();
-        // addButtons();
         updateButtons();
         revalidate();
         repaint();
