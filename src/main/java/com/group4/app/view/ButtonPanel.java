@@ -59,7 +59,6 @@ public class ButtonPanel extends SubView {
     private void addButtons() {
         for (HudButton btn : btnList) {
             add(btn, constraints);
-            // updateButtonState(controller.getLegalActions(), btn);
             btn.updateState();
         }
     }
