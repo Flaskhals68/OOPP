@@ -3,6 +3,7 @@ package com.group4.app.model;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.dungeon.ITileContainer;
 import com.group4.app.model.dungeon.Tile;
 
@@ -63,17 +64,18 @@ public class PathfindingHelper {
         Tile tile = tc.getTile(pos);
         Set<Tile> visited = new HashSet<>();
         Queue<Entry> queue = new LinkedList<>();
-        Set<Position> positions = new HashSet<>();
         Entry startEntry = new Entry(tile, range);
-
+        Set<Position> entities = new HashSet<>();
         // Perform Breadth-first search
         queue.add(startEntry);
         while (!queue.isEmpty()) {
             Entry entry = queue.remove();
-            if (entry != startEntry && (entry.getTile().isEmpty() || !visited.add(entry.getTile()))) continue;
+            if (entry != startEntry && !visited.add(entry.getTile())) continue;
+            if (!entry.getTile().isEmpty()) {
+                entities.add(entry.getTile().getPos());
+            }
             Position entryPos = entry.tile.getPos();
             Position p = new Position(entryPos.getX(), entryPos.getY(), entryPos.getFloor());
-            positions.add(p);
 
             if (entry.remainingSteps > 0) {
                 for (Tile neighbor : entry.getTile().getNeighbors()) {
@@ -81,7 +83,7 @@ public class PathfindingHelper {
                 }
             }
         }
-        return positions;
+        return entities;
     }
 
     private static class Edge {
