@@ -1,16 +1,13 @@
 package com.group4.app.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import com.group4.app.controller.PlayerStatController;
-import com.group4.app.model.Model;
 
 public class ApBar extends SubView{
     private PlayerStatController psc;

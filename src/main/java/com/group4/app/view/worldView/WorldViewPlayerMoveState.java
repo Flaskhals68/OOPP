@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
-
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.model.Position;

@@ -69,8 +69,10 @@ public class Enemy extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement the rest of enemy death
+        // TODO : Implement the rest of enemy death 
+        // FIXME: Should death manipulate a tile?
         Model.getInstance().remove(this);
+        Model.getInstance().getTile(getPos()).setId("deadEnemy");
         Model.getInstance().removeFromTurnOrder(this);
         Model.getInstance().giveExperience(1);
     }

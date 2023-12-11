@@ -23,7 +23,6 @@ import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
 import com.group4.app.view.IGameView;
 
-
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;
     private WorldViewState drawingState;
@@ -34,7 +33,7 @@ public class WorldView extends JPanel implements IGameView{
     private Map<Position, JLayeredPane> visibleTiles = new HashMap<>();
 
     //TODO implement zoom
-    private static float zoom = 2;
+    private static double zoom = 1.5;
 
     //Specifies how many tiles at maximum are allowed to be displayed per row.
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
@@ -44,13 +43,13 @@ public class WorldView extends JPanel implements IGameView{
     private static final int WIDTH = 500;
 
     // Max dimensions of each tile
-    private static final int TILE_WIDHT = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
+    private static final int TILE_WIDTH = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
     private static final int TILE_HEIGHT = HEIGHT/MAX_NUMBER_OF_TILES_PER_ROW;
 
     private GridBagConstraints tileConstraints = new GridBagConstraints();
 
     // Helper class to generate the sprites
-    private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDHT);
+    private static final EntityPanelGenerator entityPanelGenerator = new EntityPanelGenerator(TILE_HEIGHT, TILE_WIDTH);
 
     public WorldView(ActionState initialState) {
         this.state = initialState;
@@ -113,7 +112,7 @@ public class WorldView extends JPanel implements IGameView{
                     JLayeredPane entityPanel = createTile(pos);
                     visibleTiles.put(pos, entityPanel);
                     if (!pos.equals(controller.getPlayerPosition()) && posController.hasAttackable(pos)) {
-                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDHT, TILE_HEIGHT/3));
+                        JPanel enemyHealthBar = new EnemyHealthBar(pos, new Dimension(TILE_WIDTH, TILE_HEIGHT/4));
                         enemyHealthBar.setVisible(true);
                         entityPanel.add(enemyHealthBar, 0);
                     }
@@ -135,7 +134,7 @@ public class WorldView extends JPanel implements IGameView{
      */
     private JPanel createEmptyTile(){
         JPanel tileView = new JPanel();
-        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
+        tileView.setPreferredSize(new Dimension(TILE_WIDTH,TILE_HEIGHT));
         tileView.setBackground(Color.BLACK);
         return tileView;
     }
@@ -147,10 +146,12 @@ public class WorldView extends JPanel implements IGameView{
         int borderWidth = 1;
 
         // Makes sure that the components get added inside the border of the JLayerPane
-        int innerWidth = TILE_WIDHT - 2 * borderWidth;
+        int innerWidth = TILE_WIDTH - 2 * borderWidth;
         int innerHeight = TILE_HEIGHT - 2 * borderWidth;
 
         JLayeredPane tileView = getTileView(borderWidth);
+
+        tileView.setBackground(Color.BLACK);
 
         addMouseListenerClickedEvent(pos, tileView);
 
@@ -167,6 +168,7 @@ public class WorldView extends JPanel implements IGameView{
                 p.setBounds(borderWidth, borderWidth, innerWidth, innerHeight);
             }
             }
+        tileView.getComponent(0).setVisible(true);
         return tileView;
     }
 
@@ -212,7 +214,7 @@ public class WorldView extends JPanel implements IGameView{
      */
     private JLayeredPane getTileView(int borderWidth) {
         JLayeredPane tileView = new JLayeredPane();
-        tileView.setPreferredSize(new Dimension(TILE_WIDHT,TILE_HEIGHT));
+        tileView.setPreferredSize(new Dimension(TILE_WIDTH,TILE_HEIGHT));
         tileView.setBackground(Color.white);
         tileView.setBorder(BorderFactory.createLineBorder(Color.darkGray, borderWidth));
         return tileView;
