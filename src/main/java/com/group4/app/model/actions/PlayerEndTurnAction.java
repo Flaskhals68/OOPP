@@ -4,9 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.group4.app.model.ITurnTaker;
-import com.group4.app.model.TurnHandler;
 import com.group4.app.model.creatures.Creature;
-import com.group4.app.model.creatures.Player;
 
 public class PlayerEndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 

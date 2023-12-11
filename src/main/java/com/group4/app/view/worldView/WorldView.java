@@ -1,50 +1,26 @@
 package com.group4.app.view.worldView;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.security.Identity;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingUtilities;
-
 import com.group4.app.controller.StateController;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
-import com.group4.app.controller.ActionController;
 import com.group4.app.model.IDrawable;
-import com.group4.app.model.IModelObserver;
-import com.group4.app.model.Model;
-import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
-import com.group4.app.model.actions.Action;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.IGameView;
-import com.group4.app.view.IStateControllerObserver;
-import com.group4.app.model.actions.PositionActionInput;
-import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.dungeon.Tile;
+
 
 public class WorldView extends JPanel implements IGameView{
     private AWorldController controller;

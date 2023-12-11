@@ -7,7 +7,6 @@ import java.util.Map;
 import com.group4.app.model.Model;
 import com.group4.app.model.actions.PlayerEndTurnActionInput;
 import com.group4.app.model.creatures.AttributeType;
-import com.group4.app.model.creatures.Player;
 import com.group4.app.view.ActionState;
 
 public class HudController {
