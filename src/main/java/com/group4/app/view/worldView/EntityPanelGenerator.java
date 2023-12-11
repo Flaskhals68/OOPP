@@ -21,8 +21,8 @@ public class EntityPanelGenerator{
         "src/resources/ghoul.png",
         "src/resources/skeletal_warrior.png",
         "src/resources/player.png",
-        "src/resources/dead_enemy_stone.png",
-        "src/resources/dead_player_stone.png"
+        "src/resources/dead_enemy_stone2.png",
+        "src/resources/dead_player_stone2.png"
     };
     private int tile_width;
     private int tile_height;
