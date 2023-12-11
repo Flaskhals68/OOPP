@@ -18,6 +18,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * A class that creates a map with sprite ID:s as keys and JPanels containing the correct sprite as values.
+ */
 public class EntityPanelGenerator{
     private Map<String, JPanel> entityPanelMap = new HashMap<>();
     private String[] idArray = {"stone", "Zombie", "Skeleton", "player","deadEnemy", "playerDead"};
