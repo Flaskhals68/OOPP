@@ -24,7 +24,7 @@ public class StateController implements IModelObserver{
     }
 
     public static void setState(ActionState newState){
-        if(!Model.getInstance().isPlayerTurn()){
+        if(!Model.getInstance().isPlayerTurn() && !Model.getInstance().isPlayerDead()){
             state = ActionState.DISABLED;
         }
         else{
@@ -43,10 +43,15 @@ public class StateController implements IModelObserver{
     public void update() {
         boolean currentPlayerTurn = Model.getInstance().isPlayerTurn();
         if(Model.getInstance().isPlayerDead()){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             setState(ActionState.DEAD);
         }
-
-        if(currentPlayerTurn != isPlayerTurn){
+        else if(currentPlayerTurn != isPlayerTurn){
             if(getState() == ActionState.ATTACK){}
             else{
                 setState(ActionState.IDLE);

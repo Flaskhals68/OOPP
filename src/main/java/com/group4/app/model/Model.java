@@ -316,6 +316,7 @@ public class Model implements IWorldContainer {
                 break;
             }
         }
+        updateObservers();
 
     }
 
@@ -326,16 +327,7 @@ public class Model implements IWorldContainer {
     public void setPlayerDied() {
         getTile(getPlayerPos()).setId("playerDead");
         dead = true;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Do you want to restart?");
-        String answer = sc.nextLine();
-        if(answer.equals("yes")){
-            System.out.println("We are restarting");
-            dead = false;
-            this.instance = null;
-            App.main(null);
-        }
-        System.out.println("We are closing");
+
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){

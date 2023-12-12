@@ -22,8 +22,9 @@ import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
 import com.group4.app.view.IGameView;
+import com.group4.app.view.SubView;
 
-public class WorldView extends JPanel implements IGameView{
+public class WorldView extends SubView{
     private AWorldController controller;
     private WorldViewState drawingState;
     private PositionController posController = new PositionController();
@@ -39,8 +40,8 @@ public class WorldView extends JPanel implements IGameView{
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
 
     // Dimensions of the actual worldView Panel
-    private static final int HEIGHT = 500;
-    private static final int WIDTH = 500;
+    private static final int HEIGHT = BaseDisplayArea.getScreenHeight();
+    private static final int WIDTH = BaseDisplayArea.getScreenWidth();
 
     // Max dimensions of each tile
     private static final int TILE_WIDTH = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;
@@ -250,7 +251,6 @@ public class WorldView extends JPanel implements IGameView{
         this.state = StateController.getState();
     }
 
-    @Override
     public void updateView() {
         removeAll();
         addTiles(entityPanelGenerator);
@@ -263,7 +263,7 @@ public class WorldView extends JPanel implements IGameView{
     }
 
     @Override
-    public JPanel getView(){
-        return this;
+    public void update() {
+        updateView();
     }
 }

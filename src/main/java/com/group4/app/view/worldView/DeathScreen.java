@@ -13,10 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 
-public class DeathScreen extends JPanel {
+import com.group4.app.controller.DeathScreenController;
+import com.group4.app.view.SubView;
+
+public class DeathScreen extends SubView {
+
+    private DeathScreenController dsc;
     
     public DeathScreen(){
-        setPreferredSize(new Dimension(400,400));
+        this.dsc = new DeathScreenController();
+        setPreferredSize(new Dimension(BaseDisplayArea.getScreenWidth(), BaseDisplayArea.getScreenHeight()));
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JLabel deathLabel = createDeathJLabel();
@@ -46,7 +52,7 @@ public class DeathScreen extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //TODO make it so that it closes the APP
-                super.mouseClicked(e);
+                dsc.closeGame();
             }
         });
         return closeBtn;
@@ -59,9 +65,15 @@ public class DeathScreen extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // TODO RESET GAME
-                super.mouseClicked(e);
+                dsc.restartGame();
             }
         });
         return restartButton;
+    }
+
+    @Override
+    public void update() {
+        revalidate();
+        repaint();
     }
 }
