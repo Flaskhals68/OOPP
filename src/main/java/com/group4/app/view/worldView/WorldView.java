@@ -81,6 +81,14 @@ public class WorldView extends JPanel implements IGameView{
         
     }
 
+    public int getHeight(){
+        return HEIGHT;
+    }
+
+    public int getWidth(){
+        return WIDTH;
+    }
+
     /**
      * Calculates which tiles should be added by getting the player's position and adding
      * the corresponding tiles around that position. Takes a EntetyPanelGenerator as a parameter
