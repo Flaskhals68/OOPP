@@ -13,17 +13,17 @@ public class BaseDisplayArea extends JPanel implements IGameView{
     private static final int HEIGHT = 500;
     private static final int WIDTH = 500;
 
-    SubView initial;
-    SubView currentGameDisplay;
+    private SubView initial;
+    private SubView currentGameDisplay;
 
 
     public BaseDisplayArea(){
         //Initial drawing
-        if(currentGameDisplay != null){remove(currentGameDisplay);}
-        initial = new WorldView(ActionState.IDLE);
+        if(this.currentGameDisplay != null){remove(this.currentGameDisplay);}
+        this.initial = new WorldView(ActionState.IDLE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        add(initial);
-        currentGameDisplay = initial;
+        add(this.initial);
+        this.currentGameDisplay = this.initial;
         updateView();
     }
 
@@ -39,11 +39,11 @@ public class BaseDisplayArea extends JPanel implements IGameView{
     @Override
     public void updateView() {
         if(StateController.getState() == ActionState.DEAD){
-            remove(currentGameDisplay);
-            currentGameDisplay = new DeathScreen();
-            add(currentGameDisplay);
+            remove(this.currentGameDisplay);
+            this.currentGameDisplay = new DeathScreen();
+            add(this.currentGameDisplay);
         }
-        currentGameDisplay.update();
+        this.currentGameDisplay.update();
     }
 
     @Override
