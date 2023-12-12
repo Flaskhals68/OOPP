@@ -3,15 +3,10 @@ package com.group4.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import com.group4.app.controller.ActionController;
 import com.group4.app.controller.HudController;
 import com.group4.app.controller.InventoryController;
 import com.group4.app.controller.StateController;
-import com.group4.app.controller.worldControllers.AWorldController;
-import com.group4.app.controller.worldControllers.PlayerMovementController;
-import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.model.Model;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.AttributePanel;
@@ -20,7 +15,6 @@ import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
 import com.group4.app.view.worldView.BaseDisplayArea;
-import com.group4.app.view.worldView.WorldView;
 
 public class App {
     public static void main(String[] args) {

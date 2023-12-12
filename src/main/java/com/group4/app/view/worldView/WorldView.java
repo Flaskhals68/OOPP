@@ -21,7 +21,6 @@ import com.group4.app.model.IDrawable;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
-import com.group4.app.view.IGameView;
 import com.group4.app.view.SubView;
 
 public class WorldView extends SubView{

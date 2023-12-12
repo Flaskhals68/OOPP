@@ -10,8 +10,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
+
 
 import com.group4.app.controller.DeathScreenController;
 import com.group4.app.view.SubView;
