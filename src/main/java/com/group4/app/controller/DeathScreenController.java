@@ -13,6 +13,5 @@ public class DeathScreenController {
     }
 
     public void restartGame(){
-        StateController.setState(ActionState.IDLE);
     }
 }
