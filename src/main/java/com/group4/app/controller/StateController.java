@@ -3,6 +3,8 @@ package com.group4.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.events.MouseEvent;
+
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.view.ActionState;
@@ -40,6 +42,10 @@ public class StateController implements IModelObserver{
     @Override
     public void update() {
         boolean currentPlayerTurn = Model.getInstance().isPlayerTurn();
+        if(Model.getInstance().isPlayerDead()){
+            setState(ActionState.DEAD);
+        }
+
         if(currentPlayerTurn != isPlayerTurn){
             if(getState() == ActionState.ATTACK){}
             else{

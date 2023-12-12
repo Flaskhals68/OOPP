@@ -4,4 +4,5 @@ public enum ActionState {
     DISABLED,
     ATTACK,
     IDLE,
+    DEAD
 }

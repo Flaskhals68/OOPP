@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
+import com.group4.app.App;
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
@@ -314,11 +316,26 @@ public class Model implements IWorldContainer {
                 break;
             }
         }
+
+    }
+
+    public boolean isPlayerDead(){
+        return this.dead;
     }
 
     public void setPlayerDied() {
         getTile(getPlayerPos()).setId("playerDead");
         dead = true;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Do you want to restart?");
+        String answer = sc.nextLine();
+        if(answer.equals("yes")){
+            System.out.println("We are restarting");
+            dead = false;
+            this.instance = null;
+            App.main(null);
+        }
+        System.out.println("We are closing");
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
