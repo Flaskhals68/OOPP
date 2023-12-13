@@ -370,7 +370,6 @@ public class Model implements IWorldContainer {
     }
 
     public void reset() {
-        System.out.println(Thread.currentThread());
         dead = false;
         turnHandler = new TurnHandler();
         floors.clear();
