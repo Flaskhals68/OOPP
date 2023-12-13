@@ -6,10 +6,10 @@ import java.util.Set;
 import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.creatures.Creature;
 
-public class PlayerEndTurnAction extends Action<ITurnTaker, ITurnTaker>{
+public class EndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 
-    public PlayerEndTurnAction(int maxPlayerAp, String id, Creature player){
-        super(maxPlayerAp, id, player);
+    public EndTurnAction(int maxPlayerAp, String id, Creature creature){
+        super(maxPlayerAp, id, creature);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class PlayerEndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 
 
     @Override
-    public void perform(ITurnTaker player) {
-        player.useAp(player.getAp());
+    public void perform(ITurnTaker creature) {
+        creature.useAp(creature.getAp());
     }
     
 }

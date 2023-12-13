@@ -4,10 +4,10 @@ import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.creatures.Creature;
 
 
-public class PlayerEndTurnActionInput extends ActionInput<Creature>{
+public class EndTurnActionInput extends ActionInput<Creature>{
 
-    public PlayerEndTurnActionInput(Creature player) {
-        super("endTurn", player);
+    public EndTurnActionInput(Creature creature) {
+        super("endTurn", creature);
     }
     
     public String getActionId(){
