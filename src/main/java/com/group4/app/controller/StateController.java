@@ -52,7 +52,7 @@ public class StateController implements IModelObserver{
             setState(ActionState.DEAD);
         }
         else if(currentPlayerTurn != isPlayerTurn){
-            if(state == ActionState.ATTACK || state == ActionState.IDLE){}
+            if(state == ActionState.ATTACK){}
             else{
                 setState(ActionState.IDLE);
             }
