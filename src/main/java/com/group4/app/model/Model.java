@@ -319,6 +319,7 @@ public class Model implements IWorldContainer {
         
         // Wait for restart to be queued
         while (!restartQueued) { }
+        restartQueued = false;
         reset();
     }
 
@@ -374,7 +375,6 @@ public class Model implements IWorldContainer {
         floors.clear();
         currentWorld = null;
         addRandomMap(10);
-        // nextTurn();
         updateObservers();
         enterGameLoop();
     }
