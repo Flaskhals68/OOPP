@@ -4,6 +4,14 @@ import java.util.*;
 import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.*;
+import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.actions.AttackActionInput;
+import com.group4.app.model.actions.IAction;
+import com.group4.app.model.actions.EndTurnAction;
+import com.group4.app.model.actions.EndTurnActionInput;
+import com.group4.app.model.actions.AttackAction;
+import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
 import com.group4.app.model.items.ArmourType;
@@ -39,7 +47,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
         this.invActions = new HashMap<>();
         this.playerEndTurnActions = new HashMap<String, IAction<ITurnTaker>>();
-        this.addPlayerEndTurnAction("endTurn", new PlayerEndTurnAction(ap, "endTurn", this));
+        this.addPlayerEndTurnAction("endTurn", new EndTurnAction(ap, "endTurn", this));
         this.addAttackAction("attack", new AttackAction(1, "attack", this));
 
     }
@@ -51,12 +59,14 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         } else if (attackActions.containsKey(input.getActionId()) && input instanceof AttackActionInput) {
                 ap.reduceCurrent(attackActions.get(input.getActionId()).getApCost());
                 attackActions.get(input.getActionId()).perform(((AttackActionInput)input).getTarget());
-        } else if(input instanceof PlayerEndTurnActionInput){
-                playerEndTurnActions.get(input.getActionId()).perform(((PlayerEndTurnActionInput)input).getTarget());
         } else if (invActions.containsKey(input.getActionId()) && input instanceof ItemActionInput) {
                 invActions.get(input.getActionId()).perform(((ItemActionInput)input).getTarget());
                 ap.reduceCurrent(invActions.get(input.getActionId()).getApCost());
-        } else {
+        } 
+        else if(input instanceof EndTurnActionInput){
+                playerEndTurnActions.get(input.getActionId()).perform(((EndTurnActionInput)input).getTarget());
+        }
+        else {
                 throw new IllegalArgumentException("Action not available");
         }
     }

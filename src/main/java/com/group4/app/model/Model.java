@@ -235,7 +235,7 @@ public class Model implements IWorldContainer {
     }
 
     public void nextTurn(){
-        this.turnHandler.nextTurn();
+        if(!dead){this.turnHandler.nextTurn();}
     }
 
     public void addObserver(IModelObserver observer){
@@ -314,11 +314,18 @@ public class Model implements IWorldContainer {
                 break;
             }
         }
+        updateObservers();
+
+    }
+
+    public boolean isPlayerDead(){
+        return this.dead;
     }
 
     public void setPlayerDied() {
         getTile(getPlayerPos()).setId("playerDead");
         dead = true;
+
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
