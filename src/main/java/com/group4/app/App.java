@@ -31,15 +31,16 @@ public class App {
 
 
         InventoryController inventoryController = new InventoryController();
-        InventoryView inventoryView = new InventoryView(model, inventoryController);
-        
+
         HudController hudController = new HudController();
         IGameView HudView = new HudView(hudController);
         IGameView attrPanel = new AttributePanel(hudController);
+        IGameView inventoryPanel = new InventoryView(model, inventoryController);
 
 
         //TODO add the rest of the views.
         List<IGameView> pl = new ArrayList<IGameView>();
+        pl.add(inventoryPanel);
         pl.add(displayArea);
         pl.add(attrPanel);
         pl.add(HudView);
