@@ -83,7 +83,7 @@ public class DungeonGraphGenerator {
                 Room room = graph.getMatrix()[x][y];
                 if (room == null) continue;
                 while (!DungeonGraphPathfinder.pathExists(start, room)) {
-                    System.out.println("No path to " + room.getX() + ", " + room.getY() + " from start. Adding corridor.");
+                    // System.out.println("No path to " + room.getX() + ", " + room.getY() + " from start. Adding corridor.");
                     Room other = getRandomElement(room.getAdjacent());
                     graph.addCorridor(new Corridor(room, other));
                 }

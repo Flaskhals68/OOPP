@@ -4,6 +4,8 @@ import com.group4.app.model.Model;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.actions.MoveAction;
+import com.group4.app.model.actions.RestartAction;
+import com.group4.app.model.actions.RestartActionInput;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
 
@@ -52,6 +54,13 @@ public class Player extends Creature {
         Model.getInstance().endPlayerTurn();
     }
 
+    @Override
+    public void performAction(ActionInput<?> input) {
+        if (input instanceof RestartActionInput) {
+            new RestartAction(0, null, this).perform(input);
+        }
+        super.performAction(input);
+    }
 
     @Override
     public void death() {

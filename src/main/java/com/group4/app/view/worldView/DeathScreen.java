@@ -40,7 +40,6 @@ public class DeathScreen extends SubView {
         JButton restartButton = createRestartButton();
         addComponent(closeGameBtn, 10);
         addComponent(restartButton, 10);
-        System.out.println("Yes");
     }
 
     public void initScreen(){

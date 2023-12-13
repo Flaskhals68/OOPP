@@ -105,7 +105,7 @@ public class DungeonWorldGenerator {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error adding corridor");
+            // System.out.println("Error adding corridor");
         }
     }
 
@@ -126,7 +126,7 @@ public class DungeonWorldGenerator {
                 try {
                     world.add(new Tile("stone", pos));
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Error adding corridor");
+                    // System.out.println("Error adding corridor");
                 }
             }
         }
