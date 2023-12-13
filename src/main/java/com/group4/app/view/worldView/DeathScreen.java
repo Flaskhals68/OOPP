@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 
 
 import com.group4.app.controller.DeathScreenController;
+import com.group4.app.view.SoundPlayer;
 import com.group4.app.view.SubView;
 
 public class DeathScreen extends SubView {
@@ -95,7 +96,7 @@ public class DeathScreen extends SubView {
     @Override
     public void update() {
         if(!hasPlayedDeathSound){
-            //TODO Play sound upon death
+            SoundPlayer.playSound(deathSoundFilePath);
             hasPlayedDeathSound = true;
         }
         revalidate();
