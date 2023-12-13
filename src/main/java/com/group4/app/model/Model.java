@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.group4.app.controller.ActionController;
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
@@ -31,7 +32,7 @@ public class Model implements IWorldContainer {
     private Boolean isPlayerTurn;
     private Map<String, World> floors;
     private World currentWorld;
-
+    private boolean restartQueued;
     private boolean dead;
 
     private static final String PLAYER_ID = "player";
@@ -308,14 +309,17 @@ public class Model implements IWorldContainer {
 
     public void enterGameLoop() {
         while (true) {
-            nextTurn();
             updateObservers();
+            nextTurn();
             if(dead) {
                 break;
             }
         }
         updateObservers();
-
+        
+        // Wait for restart to be queued
+        while (!restartQueued) { }
+        reset();
     }
 
     public boolean isPlayerDead(){
@@ -358,5 +362,20 @@ public class Model implements IWorldContainer {
      */
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void queueRestart() {
+        restartQueued = true;
+    }
+
+    public void reset() {
+        dead = false;
+        turnHandler = new TurnHandler();
+        floors.clear();
+        currentWorld = null;
+        addRandomMap(10);
+        // nextTurn();
+        updateObservers();
+        enterGameLoop();
     }
 }

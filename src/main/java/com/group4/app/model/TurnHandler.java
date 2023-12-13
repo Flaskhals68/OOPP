@@ -25,6 +25,11 @@ public class TurnHandler {
         endTurn();
     }
 
+    public void clear() {
+        order.clear();
+        current = null;
+    }
+
     private void startTurn(){
         if (this.current == null){
             this.current = this.order.remove();

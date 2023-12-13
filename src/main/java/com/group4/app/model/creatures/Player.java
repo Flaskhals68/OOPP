@@ -55,7 +55,6 @@ public class Player extends Creature {
         Model.getInstance().endPlayerTurn();
     }
 
-
     @Override
     public void death() {
         Model.getInstance().remove(this);
