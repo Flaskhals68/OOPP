@@ -355,6 +355,11 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
         return surrounding.contains(player.getPos());
     }
 
+    @Override
+    public int getPlayerStealthBonus() {
+        return player.getDexBonus();
+    }
+
     /**
      * Required for tests
      * @param player the player object to be set as current player

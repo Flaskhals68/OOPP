@@ -34,14 +34,14 @@ public class Enemy extends Creature {
         Model m = Model.getInstance();
         List<Position> path;
 
-        Position pPos = m.getPlayerPos();
+        Position pPos = manager.getPlayerPos();
         int xDiff = Math.abs(pPos.getX() - getPos().getX());
         int yDiff = Math.abs(pPos.getY() - getPos().getY());
 
-        int pDexBonus = m.getPlayer().getDexBonus();
+        int pStealthBonus = manager.getPlayerStealthBonus();
 
         // if the player is too far away, don't do anything. Depends on players dex stat and enemy perception
-        if(xDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus) || yDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus)) {
+        if(xDiff > (DETECTION_RANGE + getPerceptionBonus() - pStealthBonus) || yDiff > (DETECTION_RANGE + getPerceptionBonus() - pStealthBonus)) {
             return;
         }
         System.out.println(getName() + " is taking a turn");
