@@ -1,6 +1,7 @@
 package com.group4.app.view.worldView;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -21,18 +22,30 @@ public class DeathScreen extends SubView {
     
     public DeathScreen(){
         this.dsc = new DeathScreenController();
+        initScreen();
+        JLabel deathLabel = createDeathJLabel();
+        // divide height by three to get the label to end up in the middle of the screen.
+        addComponent(deathLabel, BaseDisplayArea.getScreenHeight()/3);
+        JButton closeGameBtn = createCloseBtn();
+        JButton restartButton = createRestartButton();
+        addComponent(closeGameBtn, 10);
+        addComponent(restartButton, 10);
+    }
+
+    public void initScreen(){
         setPreferredSize(new Dimension(BaseDisplayArea.getScreenWidth(), BaseDisplayArea.getScreenHeight()));
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel deathLabel = createDeathJLabel();
-        add(Box.createRigidArea(new Dimension(0,(400/2))));
-        add(deathLabel);
-        JButton closeGameBtn = createCloseBtn();
-        JButton restartButton = createRestartButton();
-        add(Box.createRigidArea(new Dimension(0,10)));
-        add(restartButton);
-        add(Box.createRigidArea(new Dimension(0,10)));
-        add(closeGameBtn);
+    }
+
+    /**
+     * Adds a component to a container, along with horizontal space above it.
+     * @param c a component to be added
+     * @param space horizontal space above the component
+     */
+    public void addComponent(Component c, int space){
+        add(Box.createRigidArea(new Dimension(0,space)));
+        add(c);
     }
 
     public JLabel createDeathJLabel(){
@@ -50,7 +63,6 @@ public class DeathScreen extends SubView {
         closeBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TODO make it so that it closes the APP
                 dsc.closeGame();
             }
         });
@@ -63,7 +75,6 @@ public class DeathScreen extends SubView {
         restartButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO RESET GAME
                 dsc.restartGame();
             }
         });
