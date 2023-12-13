@@ -64,26 +64,6 @@ public class TestTurnHandler {
             public boolean hasEndedTurn(){
                 return this.endedTurn;
             }
-
-        @Override
-        public String getFloor() {
-            return null;
-        }
-
-        @Override
-        public Position getPos() {
-            return null;
-        }
-
-        @Override
-        public void setFloor(String floorId) {
-
-        }
-
-        @Override
-        public void setPos(Position pos) {
-
-        }
     }
 
     @Test

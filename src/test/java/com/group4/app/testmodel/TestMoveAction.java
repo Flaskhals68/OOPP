@@ -27,7 +27,7 @@ public class TestMoveAction {
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
         String worldId = Model.getInstance().getCurrentWorldId();
-        Player p = new Player("player", 3, null, new Position(0, 0, worldId));
+        Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         
         Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         HashSet<Position> pos = new HashSet<Position>();
@@ -44,7 +44,7 @@ public class TestMoveAction {
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
         Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
         String worldId = Model.getInstance().getCurrentWorldId();
-        Player p = new Player("player", 3, null, new Position(0, 0, worldId));
+        Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         Position pos = new Position(0, 1, worldId);
         Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         action.perform(pos);
