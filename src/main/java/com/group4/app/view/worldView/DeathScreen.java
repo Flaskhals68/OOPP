@@ -86,6 +86,7 @@ public class DeathScreen extends SubView {
         restartButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                hasPlayedDeathSound = false;
                 dsc.restartGame();
             }
         });
