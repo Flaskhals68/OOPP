@@ -92,8 +92,8 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()), this);
         add(player);
         addToTurnOrder(player);
-        List<ITurnTaker> enemies = DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
-        for (ITurnTaker e : enemies) {
+        List<Creature> enemies = DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
+        for (Creature e : enemies) {
             addToTurnOrder(e);
         }
     }
