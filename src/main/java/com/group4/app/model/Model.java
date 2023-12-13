@@ -318,7 +318,13 @@ public class Model implements IWorldContainer {
         updateObservers();
         
         // Wait for restart to be queued
-        while (!restartQueued) { }
+        while (!restartQueued) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         restartQueued = false;
         reset();
     }
@@ -366,10 +372,12 @@ public class Model implements IWorldContainer {
     }
 
     public void queueRestart() {
+        System.out.println("Restart queued");
         restartQueued = true;
     }
 
     public void reset() {
+        System.out.println("Resetting game");
         dead = false;
         turnHandler = new TurnHandler();
         floors.clear();
