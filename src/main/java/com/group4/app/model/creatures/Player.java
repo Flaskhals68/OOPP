@@ -1,10 +1,10 @@
 package com.group4.app.model.creatures;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
-import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.actions.ItemAction;
 import com.group4.app.model.actions.MoveAction;
+import com.group4.app.model.dungeon.Position;
+import com.group4.app.model.input.ActionInput;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
 import com.group4.app.model.items.WeaponFactory;

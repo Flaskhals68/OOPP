@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.actions.EndTurnActionInput;
 import com.group4.app.model.creatures.AttributeType;
+import com.group4.app.model.input.EndTurnActionInput;
 import com.group4.app.view.ActionState;
 
 public class HudController {

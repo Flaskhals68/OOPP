@@ -1,11 +1,11 @@
 package com.group4.app.model.creatures;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.PathfindingHelper;
-import com.group4.app.model.Position;
-import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.actions.MoveAction;
-import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.dungeon.Position;
+import com.group4.app.model.input.AttackActionInput;
+import com.group4.app.model.input.PositionActionInput;
 import com.group4.app.model.items.Weapon;
 
 import java.util.List;

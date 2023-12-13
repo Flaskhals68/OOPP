@@ -4,8 +4,8 @@ import java.util.Set;
 
 import com.group4.app.controller.ActionController;
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
-import com.group4.app.model.actions.AttackActionInput;
+import com.group4.app.model.dungeon.Position;
+import com.group4.app.model.input.AttackActionInput;
 import com.group4.app.view.ActionState;
 
 

@@ -1,9 +1,10 @@
 package com.group4.app.controller.worldControllers;
 
 import java.util.List;
-import com.group4.app.model.IDrawable;
+
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.IDrawable;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.view.ActionState;
 
 public abstract class AWorldController{

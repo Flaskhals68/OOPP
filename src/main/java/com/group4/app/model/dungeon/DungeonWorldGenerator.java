@@ -1,6 +1,5 @@
 package com.group4.app.model.dungeon;
 
-import com.group4.app.model.Position;
 import com.group4.app.model.dungeon.DungeonGraphGenerator.Corridor;
 import com.group4.app.model.dungeon.DungeonGraphGenerator.DungeonGraph;
 import com.group4.app.model.dungeon.DungeonGraphGenerator.Room;
