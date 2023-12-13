@@ -43,10 +43,10 @@ public class StateController implements IModelObserver{
     public void update() {
         boolean currentPlayerTurn = Model.getInstance().isPlayerTurn();
         if(Model.getInstance().isPlayerDead()){
+            // Sleep to give the user some time to react before the state and view has changed
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             setState(ActionState.DEAD);
