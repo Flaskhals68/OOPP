@@ -14,11 +14,13 @@ public class Enemy extends Creature {
     private final String name;
     private static final int DETECTION_RANGE = 10;
     private final int moveSpeed;
+    private final IEntityManager manager;
 
-    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed) {
+    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed, IEntityManager manager) {
         super(id, pos, maxAp, weapon, attr, level);
         this.name = name;
         this.moveSpeed = moveSpeed;
+        this.manager = manager;
         this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
         Model.getInstance().addToTurnOrder(this);
     }
@@ -71,9 +73,9 @@ public class Enemy extends Creature {
     public void death() {
         // TODO : Implement the rest of enemy death 
         // FIXME: Should death manipulate a tile?
-        Model.getInstance().remove(this);
-        Model.getInstance().getTile(getPos()).setId("deadEnemy");
-        Model.getInstance().removeFromTurnOrder(this);
-        Model.getInstance().giveExperience(1);
+        manager.remove(this);
+        manager.setDeadTile(getPos());
+        manager.removeFromTurnOrder(this);
+        manager.giveExperience(1);
     }
 }

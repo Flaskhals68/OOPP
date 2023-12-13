@@ -116,7 +116,7 @@ public class TestPlayer {
         Model.getInstance().addBasicMap(10, 0);
         String world = Model.getInstance().getCurrentWorldId();
         Player p = Model.getInstance().getPlayer();
-        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world));
+        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world), Model.getInstance());
         for(int i = 0; i<5; i++) {
             p.getAttributes().levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
         }

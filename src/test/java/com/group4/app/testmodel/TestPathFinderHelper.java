@@ -117,7 +117,7 @@ public class TestPathFinderHelper {
         Position start = new Position(0, 0, worldId);
         Position goal = new Position(4, 0, worldId);
         Tile obstacle = model.getTile(new Position(2, 0, worldId));
-        obstacle.add(EnemyFactory.createZombie(obstacle.getPos()));
+        obstacle.add(EnemyFactory.createZombie(obstacle.getPos(), model));
         List<Position> path = PathfindingHelper.pathToClosest(start, goal, model);
         Position finalPosition = path.get(path.size() - 1);
         assertEquals(new Position(1, 0, worldId), finalPosition);

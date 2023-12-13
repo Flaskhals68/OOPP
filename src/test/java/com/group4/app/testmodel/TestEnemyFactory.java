@@ -14,7 +14,7 @@ public class TestEnemyFactory {
     @Test
     public void testCreateZombie() {
         Model.getInstance().addBasicMap(5);
-        Enemy zombie = EnemyFactory.createZombie(new Position(0, 0,  Model.getInstance().getCurrentWorldId()));
+        Enemy zombie = EnemyFactory.createZombie(new Position(0, 0,  Model.getInstance().getCurrentWorldId()), Model.getInstance());
         Weapon zombie_claws = WeaponFactory.createClaws();
         assertEquals(zombie_claws.getAttack() - 2, zombie.getDamage());
         assertEquals("Zombie", zombie.getId());
@@ -22,7 +22,7 @@ public class TestEnemyFactory {
 
     @Test
     public void testCreateSkeleton() {
-        Enemy skeleton = EnemyFactory.createSkeleton(new Position(0, 0,  Model.getInstance().getCurrentWorldId()));
+        Enemy skeleton = EnemyFactory.createSkeleton(new Position(0, 0,  Model.getInstance().getCurrentWorldId()), Model.getInstance());
         Weapon skeleton_sword = WeaponFactory.createRustySword();
         assertEquals(skeleton_sword.getAttack() - 1, skeleton.getDamage());
     }

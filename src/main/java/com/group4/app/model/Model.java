@@ -8,13 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.group4.app.model.actions.ActionInput;
-import com.group4.app.model.creatures.AttributeType;
-import com.group4.app.model.creatures.Enemy;
-import com.group4.app.model.creatures.EnemyFactory;
-import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.creatures.IAttackable;
-import com.group4.app.model.creatures.IPositionable;
-import com.group4.app.model.creatures.Player;
+import com.group4.app.model.creatures.*;
 import com.group4.app.model.dungeon.DungeonEntitySpawner;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
 import com.group4.app.model.dungeon.IWorldContainer;
@@ -22,7 +16,7 @@ import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 import com.group4.app.model.items.WeaponFactory;
 
-public class Model implements IWorldContainer {
+public class Model implements IWorldContainer, IEntityManager {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;
@@ -73,10 +67,10 @@ public class Model implements IWorldContainer {
                         r = Math.random();
                         Enemy e;
                         if(r > 0.5){
-                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()), this);
 
                         } else {
-                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()), this);
                         }
                         add(e);
                         addToTurnOrder(e);
@@ -98,7 +92,7 @@ public class Model implements IWorldContainer {
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
         add(player);
         addToTurnOrder(player);
-        DungeonEntitySpawner.spawnEnemies(world, 0.01);
+        DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
     }
 
     public void add(World world){
@@ -174,6 +168,11 @@ public class Model implements IWorldContainer {
     public void remove(Entity entity){
         this.getWorld(entity.getFloor()).remove(entity);
         updateObservers();
+    }
+
+    @Override
+    public void setDeadTile(Position position) {
+        getTile(position).setId("deadEnemy");
     }
 
     public void remove(IPositionable positionable){
