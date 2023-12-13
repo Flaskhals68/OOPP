@@ -22,7 +22,15 @@ public class StateController implements IModelObserver{
     }
 
     public static void setState(ActionState newState){
-        if(!Model.getInstance().isPlayerTurn()){
+        if (Model.getInstance().isPlayerDead()) {
+            state = ActionState.DEAD;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(!Model.getInstance().isPlayerTurn()){
             state = ActionState.DISABLED;
         }
         else{

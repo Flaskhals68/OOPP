@@ -15,10 +15,13 @@ import com.group4.app.controller.worldControllers.PlayerViewAttackController;
 import com.group4.app.model.Model;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.AttributePanel;
+import com.group4.app.view.GameOverMenu;
 import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
+import com.group4.app.view.MainWindow;
+import com.group4.app.view.SubView;
 import com.group4.app.view.worldView.WorldView;
 
 public class App {
@@ -37,10 +40,13 @@ public class App {
         IGameView HudView = new HudView(hudController);
         IGameView attrPanel = new AttributePanel(hudController);
 
+        MainWindow mainWindow = new MainWindow(worldView);
+        GameOverMenu gameOverMenu = new GameOverMenu(); 
+        mainWindow.registerState(ActionState.DEAD, gameOverMenu);
 
         //TODO add the rest of the views.
         List<IGameView> pl = new ArrayList<IGameView>();
-        pl.add(worldView);
+        pl.add(mainWindow);
         pl.add(attrPanel);
         pl.add(HudView);
 

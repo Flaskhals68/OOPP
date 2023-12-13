@@ -22,8 +22,9 @@ import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
 import com.group4.app.view.IGameView;
+import com.group4.app.view.SubView;
 
-public class WorldView extends JPanel implements IGameView{
+public class WorldView extends SubView{
     private AWorldController controller;
     private WorldViewState drawingState;
     private PositionController posController = new PositionController();
@@ -242,8 +243,25 @@ public class WorldView extends JPanel implements IGameView{
         this.state = StateController.getState();
     }
 
+    // @Override
+    // public void updateView() {
+    //     removeAll();
+    //     addTiles(entityPanelGenerator);
+    //     setState(StateController.getState());
+    //     if(StateController.getState() != ActionState.DISABLED){
+    //         colorBorders();
+    //     }
+    //     revalidate();
+    //     repaint();
+    // }
+
+    // @Override
+    // public JPanel getView(){
+    //     return this;
+    // }
+
     @Override
-    public void updateView() {
+    public void update() {
         removeAll();
         addTiles(entityPanelGenerator);
         setState(StateController.getState());
@@ -254,8 +272,11 @@ public class WorldView extends JPanel implements IGameView{
         repaint();
     }
 
-    @Override
-    public JPanel getView(){
-        return this;
+    public int getHeight(){
+        return HEIGHT;
+    }
+
+    public int getWidth(){
+        return WIDTH;
     }
 }

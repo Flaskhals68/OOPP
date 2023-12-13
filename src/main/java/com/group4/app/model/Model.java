@@ -235,7 +235,9 @@ public class Model implements IWorldContainer {
     }
 
     public void nextTurn(){
-        this.turnHandler.nextTurn();
+        if(!dead) {
+            this.turnHandler.nextTurn();
+        }
     }
 
     public void addObserver(IModelObserver observer){
@@ -314,6 +316,10 @@ public class Model implements IWorldContainer {
                 break;
             }
         }
+    }
+
+    public boolean isPlayerDead() {
+        return dead;
     }
 
     public void setPlayerDied() {

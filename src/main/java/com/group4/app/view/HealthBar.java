@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.JProgressBar;
 
 import com.group4.app.controller.PlayerStatController;
