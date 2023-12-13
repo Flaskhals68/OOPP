@@ -3,8 +3,6 @@ package com.group4.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.events.MouseEvent;
-
 import com.group4.app.model.IModelObserver;
 import com.group4.app.model.Model;
 import com.group4.app.view.ActionState;

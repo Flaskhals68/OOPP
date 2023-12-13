@@ -1,6 +1,5 @@
 package com.group4.app.controller;
 
-import com.group4.app.view.ActionState;
 
 public class DeathScreenController {
 
