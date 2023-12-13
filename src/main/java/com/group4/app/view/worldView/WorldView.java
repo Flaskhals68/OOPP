@@ -21,6 +21,7 @@ import com.group4.app.model.IDrawable;
 import com.group4.app.model.Position;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
+import com.group4.app.view.SoundPlayer;
 import com.group4.app.view.SubView;
 
 public class WorldView extends SubView{
@@ -170,6 +171,8 @@ public class WorldView extends SubView{
         if (drawables.isEmpty() == false) {
             for(int i = drawables.size()-1; i >= 0; i-- ){
                 IDrawable e = drawables.get(i);
+                if(e.getId() == "playerDead"){SoundPlayer.playSound("src\\resources\\403296__matrixxx__retro-explosion-04.wav");}
+                else if(e.getId() == "enemyDead"){SoundPlayer.playSound("src\resources\559621__leadstarson__monster_sound_medium_death.wav");}
                 JPanel p = entityPanelGenerator.getJPanel(e.getId());
                 tileView.add(p, layerIndex++);
                 
