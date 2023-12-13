@@ -18,7 +18,8 @@ public class BaseDisplayArea extends JPanel implements IGameView{
 
 
     public BaseDisplayArea(){
-        //Initial drawing
+        //Used when restarting and there already exists a component here
+        //TODO might need to implement a restart method instead. 
         if(this.currentGameDisplay != null){remove(this.currentGameDisplay);}
         this.initial = new WorldView(ActionState.IDLE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
