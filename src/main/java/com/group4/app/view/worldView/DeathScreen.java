@@ -95,6 +95,7 @@ public class DeathScreen extends SubView {
     @Override
     public void update() {
         if(!hasPlayedDeathSound){
+            //TODO Play sound upon death
             hasPlayedDeathSound = true;
         }
         revalidate();
