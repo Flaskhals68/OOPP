@@ -325,7 +325,6 @@ public class Model implements IWorldContainer {
     public void setPlayerDied() {
         getTile(getPlayerPos()).setId("playerDead");
         dead = true;
-
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
