@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import com.group4.app.model.Position;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.ITurnTaker;
@@ -63,7 +64,27 @@ public class TestTurnHandler {
             public boolean hasEndedTurn(){
                 return this.endedTurn;
             }
+
+        @Override
+        public String getFloor() {
+            return null;
         }
+
+        @Override
+        public Position getPos() {
+            return null;
+        }
+
+        @Override
+        public void setFloor(String floorId) {
+
+        }
+
+        @Override
+        public void setPos(Position pos) {
+
+        }
+    }
 
     @Test
     public void testStartTurn(){

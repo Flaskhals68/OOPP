@@ -1,6 +1,8 @@
 package com.group4.app.model;
 
-public interface ITurnTaker {
+import com.group4.app.model.creatures.IPositionable;
+
+public interface ITurnTaker extends IPositionable {
     void takeTurn();
     int getAp();
     void refillAp();

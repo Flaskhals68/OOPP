@@ -92,7 +92,10 @@ public class Model implements IWorldContainer, IEntityManager {
         this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
         add(player);
         addToTurnOrder(player);
-        DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
+        List<ITurnTaker> enemies = DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
+        for (ITurnTaker e : enemies) {
+            addToTurnOrder(e);
+        }
     }
 
     public void add(World world){

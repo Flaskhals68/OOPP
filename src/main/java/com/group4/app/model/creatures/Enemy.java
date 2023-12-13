@@ -22,7 +22,6 @@ public class Enemy extends Creature {
         this.moveSpeed = moveSpeed;
         this.manager = manager;
         this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
-        Model.getInstance().addToTurnOrder(this);
     }
 
     public String getName() {
@@ -71,8 +70,6 @@ public class Enemy extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement the rest of enemy death 
-        // FIXME: Should death manipulate a tile?
         manager.remove(this);
         manager.setDeadTile(getPos());
         manager.removeFromTurnOrder(this);
