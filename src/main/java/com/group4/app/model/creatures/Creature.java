@@ -47,7 +47,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.attackActions = new HashMap<String, IAction<IAttackable>>();
         this.invActions = new HashMap<>();
         this.playerEndTurnActions = new HashMap<String, IAction<ITurnTaker>>();
-        this.addPlayerEndTurnAction("endTurn", new EndTurnAction(ap, "endTurn", this));
+        this.addEndTurnAction("endTurn", new EndTurnAction(ap, "endTurn", this));
         this.addAttackAction("attack", new AttackAction(1, "attack", this));
 
     }
@@ -88,7 +88,7 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         this.level = lvl;
     }
 
-    public void addPlayerEndTurnAction(String actionId, Action<ITurnTaker, ITurnTaker> action){
+    public void addEndTurnAction(String actionId, Action<ITurnTaker, ITurnTaker> action){
         action.setActionTaker(this);
         playerEndTurnActions.put(actionId, action);
     }
