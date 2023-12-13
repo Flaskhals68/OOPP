@@ -11,4 +11,8 @@ public class DeathScreenController {
     public void restartGame(){
         Model.getInstance().queueRestart();
     }
+
+    public boolean getRestartQueued(){
+        return Model.getInstance().restartQueued();
+    }
 }

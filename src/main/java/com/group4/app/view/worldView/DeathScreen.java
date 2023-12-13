@@ -98,7 +98,7 @@ public class DeathScreen extends SubView {
 
     @Override
     public void update() {
-        if(!hasPlayedDeathSound){
+        if(!hasPlayedDeathSound && !dsc.getRestartQueued()){
             SoundPlayer.playSound(deathSoundFilePath);
             hasPlayedDeathSound = true;
             if(!this.restartButton.isEnabled()){
