@@ -42,7 +42,7 @@ public class StateController implements IModelObserver{
     @Override
     public void update() {
         boolean currentPlayerTurn = Model.getInstance().isPlayerTurn();
-        if(Model.getInstance().isPlayerDead()){
+        if(Model.getInstance().isPlayerDead() && state != ActionState.DEAD){
             // Sleep to give the user some time to react before the state and view has changed
             try {
                 Thread.sleep(1000);
@@ -52,7 +52,7 @@ public class StateController implements IModelObserver{
             setState(ActionState.DEAD);
         }
         else if(currentPlayerTurn != isPlayerTurn){
-            if(getState() == ActionState.ATTACK){}
+            if(state == ActionState.ATTACK || state == ActionState.IDLE){}
             else{
                 setState(ActionState.IDLE);
             }

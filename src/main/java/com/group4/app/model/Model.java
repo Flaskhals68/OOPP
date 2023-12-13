@@ -237,7 +237,7 @@ public class Model implements IWorldContainer {
     }
 
     public void nextTurn(){
-        this.turnHandler.nextTurn();
+        if(!dead){this.turnHandler.nextTurn();}
     }
 
     public void addObserver(IModelObserver observer){
