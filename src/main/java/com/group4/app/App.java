@@ -14,15 +14,20 @@ import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
+import com.group4.app.view.SubView;
 import com.group4.app.view.worldView.BaseGameDisplayArea;
+import com.group4.app.view.worldView.DeathScreen;
 
 public class App {
     public static void main(String[] args) {
         Model model = Model.getInstance();
         model.addRandomMap(10);
 
+        SubView deathScreen = new DeathScreen();
+
         StateController initalStateController = new StateController(ActionState.IDLE);
         BaseGameDisplayArea displayArea = new BaseGameDisplayArea();
+        displayArea.register(ActionState.DEAD, deathScreen);
 
 
         InventoryController inventoryController = new InventoryController();

@@ -6,7 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,8 +26,11 @@ import com.group4.app.view.SubView;
 public class DeathScreen extends SubView {
 
     private DeathScreenController dsc;
+    private static boolean hasPlayedDeathSound;
+    private String deathSoundFilePath = "src\\resources\\646974__huw2k8__yourtimehascome.wav";
     
     public DeathScreen(){
+        hasPlayedDeathSound = false;
         this.dsc = new DeathScreenController();
         initScreen();
         JLabel deathLabel = createDeathJLabel();
@@ -30,6 +40,7 @@ public class DeathScreen extends SubView {
         JButton restartButton = createRestartButton();
         addComponent(closeGameBtn, 10);
         addComponent(restartButton, 10);
+        System.out.println("Yes");
     }
 
     public void initScreen(){
@@ -83,6 +94,9 @@ public class DeathScreen extends SubView {
 
     @Override
     public void update() {
+        if(!hasPlayedDeathSound){
+            hasPlayedDeathSound = true;
+        }
         revalidate();
         repaint();
     }

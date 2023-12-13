@@ -1,6 +1,8 @@
 package com.group4.app.view.worldView;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -16,6 +18,7 @@ public class BaseGameDisplayArea extends JPanel implements IGameView{
     private SubView initialGameDisplay;
     private SubView currentGameDisplay;
 
+    private Map<ActionState, SubView> stateToViewMap = new HashMap<>();
 
     public BaseGameDisplayArea(){
         //Used when restarting and there already exists a component here
@@ -36,15 +39,22 @@ public class BaseGameDisplayArea extends JPanel implements IGameView{
         return WIDTH;
     }
 
+    public void register(ActionState state, SubView view){
+        this.stateToViewMap.put(state, view);
+    }
 
     @Override
     public void updateView() {
-        if(StateController.getState() == ActionState.DEAD){
-            remove(this.currentGameDisplay);
-            this.currentGameDisplay = new DeathScreen();
-            add(this.currentGameDisplay);
+        removeAll();
+        if(stateToViewMap.get(StateController.getState()) != null){
+            this.currentGameDisplay = stateToViewMap.get(StateController.getState());
+            add(currentGameDisplay);
+            this.currentGameDisplay.update();
         }
-        this.currentGameDisplay.update();
+        else{
+            add(initialGameDisplay);
+            initialGameDisplay.update();
+        }
     }
 
     @Override
