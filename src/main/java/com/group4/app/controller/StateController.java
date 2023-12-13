@@ -22,7 +22,7 @@ public class StateController implements IModelObserver{
     }
 
     public static void setState(ActionState newState){
-        if(!Model.getInstance().isPlayerTurn()){
+        if(!Model.getInstance().isPlayerTurn() && !Model.getInstance().isPlayerDead()){
             state = ActionState.DISABLED;
         }
         else{
@@ -40,8 +40,17 @@ public class StateController implements IModelObserver{
     @Override
     public void update() {
         boolean currentPlayerTurn = Model.getInstance().isPlayerTurn();
-        if(currentPlayerTurn != isPlayerTurn){
-            if(getState() == ActionState.ATTACK){}
+        if(Model.getInstance().isPlayerDead()){
+            // Sleep to give the user some time to react before the state and view has changed
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            setState(ActionState.DEAD);
+        }
+        else if(currentPlayerTurn != isPlayerTurn){
+            if(state == ActionState.ATTACK){}
             else{
                 setState(ActionState.IDLE);
             }
