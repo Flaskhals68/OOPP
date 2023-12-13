@@ -2,10 +2,10 @@ package com.group4.app.testmodel;
 
 import org.junit.jupiter.api.Test;
 
+import com.group4.app.model.dungeon.Corridor;
 import com.group4.app.model.dungeon.DungeonGraphGenerator;
-import com.group4.app.model.dungeon.DungeonGraphGenerator.Corridor;
 import com.group4.app.model.dungeon.DungeonGraphGenerator.DungeonGraph;
-import com.group4.app.model.dungeon.DungeonGraphGenerator.Room;
+import com.group4.app.model.dungeon.Room;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -9,9 +9,6 @@ import java.util.Set;
 
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.AttributeType;
-import com.group4.app.model.creatures.Enemy;
-import com.group4.app.model.creatures.EnemyFactory;
-import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
@@ -54,44 +51,44 @@ public class Model implements IWorldContainer {
         this.dead = false;
     }
 
-    public void addBasicMap(int size, double emptyChance){
-        World world = new World(100);
-        currentWorld = world;
-        this.add(currentWorld);
-        world.add(new Tile("stone", new Position(0, 0, world.getId())));
-        for (int x = 0; x<size; x++) {
-            for (int y = 0; y<size; y++) {
-                double r = Math.random();
-                if(r> emptyChance){
-                    try {
-                        world.add(new Tile("stone", new Position(x, y, world.getId())));
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Tile already exists at position: " + x + ", " + y);
-                    }
-                    r = Math.random();
-                    if(r > 0.995){
-                        r = Math.random();
-                        Enemy e;
-                        if(r > 0.5){
-                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+    // public void addBasicMap(int size, double emptyChance){
+    //     World world = new World(100);
+    //     currentWorld = world;
+    //     this.add(currentWorld);
+    //     world.add(new Tile("stone", new Position(0, 0, world.getId())));
+    //     for (int x = 0; x<size; x++) {
+    //         for (int y = 0; y<size; y++) {
+    //             double r = Math.random();
+    //             if(r> emptyChance){
+    //                 try {
+    //                     world.add(new Tile("stone", new Position(x, y, world.getId())));
+    //                 } catch (IllegalArgumentException e) {
+    //                     System.out.println("Tile already exists at position: " + x + ", " + y);
+    //                 }
+    //                 r = Math.random();
+    //                 if(r > 0.995){
+    //                     r = Math.random();
+    //                     Enemy e;
+    //                     if(r > 0.5){
+    //                         e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
 
-                        } else {
-                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
-                        }
-                        add(e);
-                        addToTurnOrder(e);
-                    }
-                }
-            }
-        }
-        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
-        add(player);
-        addToTurnOrder(player);
-    }
+    //                     } else {
+    //                         e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+    //                     }
+    //                     add(e);
+    //                     addToTurnOrder(e);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
+    //     add(player);
+    //     addToTurnOrder(player);
+    // }
 
-    public void addBasicMap(int size) {
-        addBasicMap(size, 0.1);
-    }
+    // public void addBasicMap(int size) {
+    //     addBasicMap(size, 0.1);
+    // }
 
     public void addRandomMap(int size) {
         World world = DungeonWorldGenerator.generate(size, this);
@@ -163,18 +160,18 @@ public class Model implements IWorldContainer {
         this.getWorld(pos.getFloor()).remove(pos);
     }
 
-    public void add(Entity entity){
-        this.getWorld(entity.getFloor()).add(entity);
-    }
+    // public void add(Entity entity){
+    //     this.getWorld(entity.getFloor()).add(entity);
+    // }
 
     public void add(IPositionable positionable){
         this.getWorld(positionable.getFloor()).add(positionable);
     }
 
-    public void remove(Entity entity){
-        this.getWorld(entity.getFloor()).remove(entity);
-        updateObservers();
-    }
+    // public void remove(Entity entity){
+    //     this.getWorld(entity.getFloor()).remove(entity);
+    //     updateObservers();
+    // }
 
     public void remove(IPositionable positionable){
         this.getWorld(positionable.getFloor()).remove(positionable);
