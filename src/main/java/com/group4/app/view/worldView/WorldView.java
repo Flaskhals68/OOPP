@@ -39,8 +39,8 @@ public class WorldView extends SubView{
     private static int MAX_NUMBER_OF_TILES_PER_ROW = (int) (11 * zoom);
 
     // Dimensions of the actual worldView Panel
-    private static final int HEIGHT = BaseDisplayArea.getScreenHeight();
-    private static final int WIDTH = BaseDisplayArea.getScreenWidth();
+    private static final int HEIGHT = BaseGameDisplayArea.getScreenHeight();
+    private static final int WIDTH = BaseGameDisplayArea.getScreenWidth();
 
     // Max dimensions of each tile
     private static final int TILE_WIDTH = WIDTH/MAX_NUMBER_OF_TILES_PER_ROW;

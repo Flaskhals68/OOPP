@@ -9,22 +9,22 @@ import com.group4.app.view.ActionState;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.SubView;
 
-public class BaseDisplayArea extends JPanel implements IGameView{
+public class BaseGameDisplayArea extends JPanel implements IGameView{
     private static final int HEIGHT = 500;
     private static final int WIDTH = 500;
 
-    private SubView initial;
+    private SubView initialGameDisplay;
     private SubView currentGameDisplay;
 
 
-    public BaseDisplayArea(){
+    public BaseGameDisplayArea(){
         //Used when restarting and there already exists a component here
         //TODO might need to implement a restart method instead. 
         if(this.currentGameDisplay != null){remove(this.currentGameDisplay);}
-        this.initial = new WorldView(ActionState.IDLE);
+        this.initialGameDisplay = new WorldView(ActionState.IDLE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        add(this.initial);
-        this.currentGameDisplay = this.initial;
+        add(this.initialGameDisplay);
+        this.currentGameDisplay = this.initialGameDisplay;
         updateView();
     }
 

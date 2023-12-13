@@ -14,7 +14,7 @@ import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
-import com.group4.app.view.worldView.BaseDisplayArea;
+import com.group4.app.view.worldView.BaseGameDisplayArea;
 
 public class App {
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class App {
         model.addRandomMap(10);
 
         StateController initalStateController = new StateController(ActionState.IDLE);
-        BaseDisplayArea displayArea = new BaseDisplayArea();
+        BaseGameDisplayArea displayArea = new BaseGameDisplayArea();
 
 
         InventoryController inventoryController = new InventoryController();

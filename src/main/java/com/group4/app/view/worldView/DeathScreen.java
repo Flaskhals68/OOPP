@@ -25,7 +25,7 @@ public class DeathScreen extends SubView {
         initScreen();
         JLabel deathLabel = createDeathJLabel();
         // divide height by three to get the label to end up in the middle of the screen.
-        addComponent(deathLabel, BaseDisplayArea.getScreenHeight()/3);
+        addComponent(deathLabel, BaseGameDisplayArea.getScreenHeight()/3);
         JButton closeGameBtn = createCloseBtn();
         JButton restartButton = createRestartButton();
         addComponent(closeGameBtn, 10);
@@ -33,7 +33,7 @@ public class DeathScreen extends SubView {
     }
 
     public void initScreen(){
-        setPreferredSize(new Dimension(BaseDisplayArea.getScreenWidth(), BaseDisplayArea.getScreenHeight()));
+        setPreferredSize(new Dimension(BaseGameDisplayArea.getScreenWidth(), BaseGameDisplayArea.getScreenHeight()));
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
