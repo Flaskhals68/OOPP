@@ -317,10 +317,7 @@ public class Model implements IWorldContainer {
         }
         updateObservers();
         
-        // Wait for restart to be queued
-        while (!restartQueued) { }
-        restartQueued = false;
-        reset();
+        
     }
 
     public boolean isPlayerDead(){
@@ -366,16 +363,34 @@ public class Model implements IWorldContainer {
     }
 
     public void queueRestart() {
+        System.out.println("Restart queued");
         restartQueued = true;
     }
 
-    public void reset() {
+    public void start() {
+        while (true) {
+            enterGameLoop();
+
+            // Wait for restart to be queued
+            while (!restartQueued) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            restartQueued = false;
+            reset();
+        }
+    }
+
+    private void reset() {
+        System.out.println("Resetting game");
         dead = false;
         turnHandler = new TurnHandler();
         floors.clear();
         currentWorld = null;
         addRandomMap(10);
         updateObservers();
-        enterGameLoop();
     }
 }
