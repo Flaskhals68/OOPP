@@ -32,7 +32,7 @@ public class Model implements IWorldContainer {
     private Boolean isPlayerTurn;
     private Map<String, World> floors;
     private World currentWorld;
-
+    private boolean restartQueued;
     private boolean dead;
 
     private static final String PLAYER_ID = "player";
@@ -316,12 +316,9 @@ public class Model implements IWorldContainer {
             }
         }
         updateObservers();
-        while (true) {
-            ActionInput input = ActionController.getInstance().getActionInput();
-            if (input.getActionId() == "restart") {
-                break;
-            }
-        }
+        
+        // Wait for restart to be queued
+        while (!restartQueued) { }
         reset();
     }
 
@@ -366,6 +363,10 @@ public class Model implements IWorldContainer {
      */
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void queueRestart() {
+        restartQueued = true;
     }
 
     public void reset() {
