@@ -9,6 +9,7 @@ import javax.swing.JLayeredPane;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
 import com.group4.app.model.Position;
+import com.group4.app.view.SoundPlayer;
 
 public class WorldViewPlayerMoveState extends WorldViewState{
     private boolean movementTimerFlag;
@@ -31,6 +32,7 @@ public class WorldViewPlayerMoveState extends WorldViewState{
 
     private void drawMovementPathIfMoving(){
         if(movementTimerFlag && !controller.getPlayerPosition().equals(mouseClickedPosition)){
+            SoundPlayer.playSound("src\\resources\\walkSound.wav");
             List<Position> path = controller.getPathFromPlayerTo(mouseClickedPosition);
             setHighLightedPositions(new HashSet<>(path));
         }
