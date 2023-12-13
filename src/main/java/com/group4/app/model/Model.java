@@ -16,7 +16,7 @@ import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 import com.group4.app.model.items.WeaponFactory;
 
-public class Model implements IWorldContainer, IEntityManager {
+public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;
@@ -78,7 +78,7 @@ public class Model implements IWorldContainer, IEntityManager {
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()), this);
         add(player);
         addToTurnOrder(player);
     }
@@ -89,7 +89,7 @@ public class Model implements IWorldContainer, IEntityManager {
 
     public void addRandomMap(int size) {
         World world = DungeonWorldGenerator.generate(size, this);
-        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()), this);
         add(player);
         addToTurnOrder(player);
         List<ITurnTaker> enemies = DungeonEntitySpawner.spawnEnemies(world, 0.01, this);

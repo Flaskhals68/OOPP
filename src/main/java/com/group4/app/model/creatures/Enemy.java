@@ -14,9 +14,9 @@ public class Enemy extends Creature {
     private final String name;
     private static final int DETECTION_RANGE = 10;
     private final int moveSpeed;
-    private final IEntityManager manager;
+    private final IEnemyManager manager;
 
-    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed, IEntityManager manager) {
+    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed, IEnemyManager manager) {
         super(id, pos, maxAp, weapon, attr, level);
         this.name = name;
         this.moveSpeed = moveSpeed;
