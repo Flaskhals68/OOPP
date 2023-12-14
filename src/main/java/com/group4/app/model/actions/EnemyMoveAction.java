@@ -1,9 +1,11 @@
 package com.group4.app.model.actions;
 
-import com.group4.app.model.PathfindingHelper;
-import com.group4.app.model.Position;
+
 import com.group4.app.model.creatures.ICreatureManager;
-import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.dungeon.Position;
+
 
 import java.util.List;
 

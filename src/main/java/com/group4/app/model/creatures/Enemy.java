@@ -1,8 +1,6 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.Model;
-import com.group4.app.model.actions.MoveAction;
-import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.actions.EnemyMoveAction;
 import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.input.AttackActionInput;
 import com.group4.app.model.input.PositionActionInput;
@@ -31,7 +29,9 @@ public class Enemy extends Creature {
 
     @Override
     public void takeTurn() {
+
         Position pPos = manager.getPlayerPos();
+
         int xDiff = Math.abs(pPos.getX() - getPos().getX());
         int yDiff = Math.abs(pPos.getY() - getPos().getY());
 

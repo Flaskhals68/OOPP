@@ -1,6 +1,7 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.Position;
+
+import com.group4.app.model.dungeon.Position;
 
 public interface IEnemyManager extends ICreatureManager {
     void giveExperienceToPlayer(int exp);

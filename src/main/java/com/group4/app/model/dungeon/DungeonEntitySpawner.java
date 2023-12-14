@@ -1,6 +1,11 @@
 package com.group4.app.model.dungeon;
 
+import com.group4.app.model.creatures.Creature;
 import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.IEnemyManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DungeonEntitySpawner {
     public static List<Creature> spawnEnemies(World world, double density, IEnemyManager em) {
