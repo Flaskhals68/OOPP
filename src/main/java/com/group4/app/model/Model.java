@@ -379,9 +379,13 @@ public class Model implements IWorldContainer {
                     e.printStackTrace();
                 }
             }
-            restartQueued = false;
             reset();
+            restartQueued = false;
         }
+    }
+
+    public boolean restartQueued(){
+        return restartQueued;
     }
 
     private void reset() {
