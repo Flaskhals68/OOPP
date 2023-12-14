@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 import com.group4.app.controller.ActionController;
+import com.group4.app.model.actions.IAttackable;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.DungeonEntitySpawner;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
