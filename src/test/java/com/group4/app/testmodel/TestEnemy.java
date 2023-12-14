@@ -31,14 +31,14 @@ public class TestEnemy {
         m.setCurrentWorld(world.getId());
         m.add(new Tile("stone", new Position(0, 0, world.getId())));
         m.add(new Tile("stone", new Position(0, 1, world.getId())));
-        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), m);
         m.setPlayer(p);
     }
     @Test
     public void test_constructor(){
         Model.getInstance().addBasicMap(5);
         Position pos = new Position(0, 0, Model.getInstance().getCurrentWorldId());
-        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 30,1,70, 1), 1, 3);
+        Enemy enemy = new Enemy("Zombie", "Bob", pos, WeaponFactory.createClaws(), 10, new Attributes(1, 1, 30,1,70, 1), 1, 3, Model.getInstance());
         assertEquals(enemy.getName(), "Bob");
         assertEquals(2, enemy.getDamage());
         assertEquals(enemy.getHitPoints(), 14);
@@ -48,7 +48,7 @@ public class TestEnemy {
     public void testTakeTurnAttack() {
         int playerHPBefore = m.getPlayer().getHitPoints();
 
-        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world.getId()), Model.getInstance());
         m.add(e);
         e.takeTurn();
         e.takeTurn();
@@ -72,12 +72,12 @@ public class TestEnemy {
             }
         }
 
-        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), m);
         m.setPlayer(p);
 
         int playerHPBefore = p.getHitPoints();
 
-        Enemy e = EnemyFactory.createZombie(new Position(5, 0, world.getId()));
+        Enemy e = EnemyFactory.createZombie(new Position(5, 0, world.getId()), Model.getInstance());
         m.add(e);
         e.takeTurn();
         e.takeTurn();

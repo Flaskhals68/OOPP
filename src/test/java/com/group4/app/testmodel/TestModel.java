@@ -17,7 +17,7 @@ public class TestModel {
         Model m = Model.getInstance();
         m.addBasicMap(5, 0);
         Position pos = new Position(0, 1, m.getCurrentWorldId());
-        Enemy e = EnemyFactory.createZombie(pos);
+        Enemy e = EnemyFactory.createZombie(pos, m);
         m.add(e);
         assertTrue(m.nextToPlayer(e.getPos()));
     }
@@ -27,7 +27,7 @@ public class TestModel {
         Model m = Model.getInstance();
         m.addBasicMap(5, 0);
         Position pos = new Position(0, 2, m.getCurrentWorldId());
-        Enemy e = EnemyFactory.createZombie(pos);
+        Enemy e = EnemyFactory.createZombie(pos, m);
         m.add(e);
         assertFalse(m.nextToPlayer(e.getPos()));
     }
