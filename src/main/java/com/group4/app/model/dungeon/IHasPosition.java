@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.dungeon;
 
 public interface IHasPosition {
     String getFloor();

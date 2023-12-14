@@ -3,9 +3,10 @@ package com.group4.app.testmodel;
 import com.group4.app.model.Model;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.items.Weapon;
 import com.group4.app.model.items.WeaponFactory;
-import com.group4.app.model.Position;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -3,8 +3,8 @@ package com.group4.app.model.actions;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.group4.app.model.ITurnTaker;
 import com.group4.app.model.creatures.Creature;
+import com.group4.app.model.turns.ITurnTaker;
 
 public class EndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 

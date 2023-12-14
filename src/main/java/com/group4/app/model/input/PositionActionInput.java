@@ -1,6 +1,6 @@
-package com.group4.app.model.actions;
+package com.group4.app.model.input;
 
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 
 public class PositionActionInput extends ActionInput<Position>{
     public PositionActionInput(String actionId, Position target) {

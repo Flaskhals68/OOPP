@@ -1,7 +1,4 @@
-package com.group4.app.model.creatures;
-
-import com.group4.app.model.IHasPosition;
-import com.group4.app.model.Position;
+package com.group4.app.model.dungeon;
 
 public interface IPositionable extends IHasPosition {
     void setFloor(String floorId);

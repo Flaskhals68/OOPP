@@ -3,9 +3,6 @@ package com.group4.app.model.dungeon;
 import java.util.Set;
 import java.util.UUID;
 
-import com.group4.app.model.Position;
-import com.group4.app.model.creatures.IPositionable;
-
 public class World implements ITileContainer{
     private String uniqueID;
     private Tile[][] tiles;
