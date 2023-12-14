@@ -1,28 +1,30 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.Model;
 import com.group4.app.model.dungeon.IDrawable;
 import com.group4.app.model.dungeon.Position;
 
 public class Entity implements IDrawable {
     private String id;
     private Position pos;
+    private final IEntityManager manager;
 
-    public Entity(String id) {
+    public Entity(String id, IEntityManager manager) {
         this.id = id;
+        this.manager = manager;
     }
 
-    public Entity(String id, Position pos) {
+    public Entity(String id, Position pos, IEntityManager manager) {
         this.id = id;
         this.pos = pos;
-        Model.getInstance().add(this);
+        this.manager = manager;
+        manager.add(this);
     }
 
     public void setPosition(Position pos) {
         if(getFloor() != null) {
-            Model.getInstance().remove(this);
+            manager.remove(this);
         }
-        Model.getInstance().add(this);
+        manager.add(this);
         this.pos = pos;
     }
 

@@ -7,12 +7,8 @@ import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.turns.ITurnTaker;
 
 
-public interface ICreatureManager extends IModel {
-    void remove(IPositionable e);
+public interface ICreatureManager extends IEntityManager {
+
     void setDeadTile(Position position);
     void removeFromTurnOrder(ITurnTaker taker);
-
-    void add(IPositionable actionTaker);
-
-    ITileContainer getTileContainer();
 }
