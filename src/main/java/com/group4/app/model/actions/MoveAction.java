@@ -36,7 +36,7 @@ public class MoveAction extends Action<IPositionable, Position>{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        };
+        }
     }
 
     public Set<Position> getTargetable() {

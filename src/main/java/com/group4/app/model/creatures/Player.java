@@ -9,7 +9,7 @@ import com.group4.app.model.items.Weapon;
 
 public class Player extends Creature {
 
-    private ResourceBar xp;
+    private final ResourceBar xp;
     private final IPlayerManager manager;
 
     public Player(String id, int ap, Weapon weapon, Position position, IPlayerManager manager) {

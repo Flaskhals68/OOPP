@@ -6,7 +6,6 @@ import com.group4.app.model.creatures.ICreatureManager;
 import com.group4.app.model.creatures.IPositionable;
 
 import java.util.List;
-import java.util.Set;
 
 public class EnemyMoveAction extends MoveAction{
 
@@ -25,7 +24,7 @@ public class EnemyMoveAction extends MoveAction{
         // Limit move length to moveSpeed, so that the enemy doesn't move too far
         path = path.subList(0, Math.min(path.size(), getMoveSpeed()));
 
-        if(path.size()>0) {
+        if(!path.isEmpty()) {
             for(Position p : path) {
                 System.out.println("Moving to " + p.getX() + ", " + p.getY());
                 getManager().remove(getActionTaker());
