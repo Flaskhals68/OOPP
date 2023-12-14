@@ -3,9 +3,9 @@ package com.group4.app.controller;
 import java.util.Iterator;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
 import com.group4.app.model.creatures.IAttackable;
-import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.Position;
 
 public class PositionController {
     public PositionController() {  }

@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.turns;
 import java.util.LinkedList;
 import java.util.Queue;
 

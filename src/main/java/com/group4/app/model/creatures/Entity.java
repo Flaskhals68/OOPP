@@ -1,8 +1,8 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.IDrawable;
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.IDrawable;
+import com.group4.app.model.dungeon.Position;
 
 public class Entity implements IDrawable {
     private String id;

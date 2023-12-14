@@ -8,7 +8,7 @@ import javax.swing.JLayeredPane;
 
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerViewAttackController;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.view.SoundPlayer;
 
 public class WorldViewPlayerAttackState extends WorldViewState{

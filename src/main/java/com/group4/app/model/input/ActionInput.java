@@ -1,4 +1,4 @@
-package com.group4.app.model.actions;
+package com.group4.app.model.input;
 
 public class ActionInput<T> {
     private String actionId;

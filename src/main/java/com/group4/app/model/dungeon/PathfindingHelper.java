@@ -1,11 +1,9 @@
-package com.group4.app.model;
+package com.group4.app.model.dungeon;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 
 import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.dungeon.ITileContainer;
-import com.group4.app.model.dungeon.Tile;
 
 import java.util.List;
 import java.util.PriorityQueue;

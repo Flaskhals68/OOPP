@@ -1,6 +1,6 @@
 package com.group4.app.view.worldView;
 
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 
 public interface IClickableState {
     

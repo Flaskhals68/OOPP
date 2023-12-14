@@ -1,17 +1,14 @@
 package com.group4.app.model.creatures;
 import java.util.*;
 
-import com.group4.app.model.ITurnTaker;
-import com.group4.app.model.Position;
 import com.group4.app.model.actions.*;
-import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.ActionInput;
-import com.group4.app.model.actions.AttackActionInput;
-import com.group4.app.model.actions.IAction;
-import com.group4.app.model.actions.EndTurnAction;
-import com.group4.app.model.actions.EndTurnActionInput;
-import com.group4.app.model.actions.AttackAction;
-import com.group4.app.model.actions.PositionActionInput;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.Position;
+import com.group4.app.model.input.ActionInput;
+import com.group4.app.model.input.AttackActionInput;
+import com.group4.app.model.input.EndTurnActionInput;
+import com.group4.app.model.input.ItemActionInput;
+import com.group4.app.model.input.PositionActionInput;
 import com.group4.app.model.items.Armour;
 import com.group4.app.model.items.ArmourFactory;
 import com.group4.app.model.items.ArmourType;
@@ -19,6 +16,7 @@ import com.group4.app.model.items.IInventoriable;
 import com.group4.app.model.items.IUser;
 import com.group4.app.model.items.Inventory;
 import com.group4.app.model.items.Weapon;
+import com.group4.app.model.turns.ITurnTaker;
 
 public abstract class Creature extends Entity implements IAttackable, ICanAttack, ITurnTaker, IUser {
 

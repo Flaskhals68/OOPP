@@ -11,12 +11,12 @@ import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
-import com.group4.app.model.Position;
 import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 import com.group4.app.model.Model;
-import com.group4.app.model.PathfindingHelper;
 
 public class TestPathFinderHelper {
     // Only for debugging purposes

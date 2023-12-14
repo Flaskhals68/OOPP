@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.group4.app.model.IController;
-import com.group4.app.model.actions.ActionInput;
+import com.group4.app.model.input.ActionInput;
 
 public class ActionController implements IController {
     private BlockingQueue<ActionInput<?>> actionQueue = new LinkedBlockingQueue<>();

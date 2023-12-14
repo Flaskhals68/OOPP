@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.swing.JLayeredPane;
 
 import com.group4.app.controller.worldControllers.AWorldController;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 
 public abstract class WorldViewState implements IClickableState{
     protected Position playerPosition;

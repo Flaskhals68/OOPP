@@ -1,6 +1,5 @@
 package com.group4.app.model.dungeon;
 
-import com.group4.app.model.Position;
 import com.group4.app.model.creatures.EnemyFactory;
 
 public class DungeonEntitySpawner {
