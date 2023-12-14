@@ -19,7 +19,7 @@ public class TestCreature {
     private class ConcreteCreature extends Creature {
 
         public ConcreteCreature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
-            super(id, pos, ap, weapon, attr, level);
+            super(id, pos, ap, weapon, attr, level, Model.getInstance());
         }
 
         @Override

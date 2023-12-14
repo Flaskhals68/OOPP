@@ -14,7 +14,7 @@ public class Player extends Creature {
     private final IPlayerManager manager;
 
     public Player(String id, int ap, Weapon weapon, Position position, IPlayerManager manager) {
-        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1, manager);
         this.xp = new ResourceBar(10);
         this.xp.setCurrent(0);
         this.manager = manager;

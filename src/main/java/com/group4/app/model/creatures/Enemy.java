@@ -15,7 +15,7 @@ public class Enemy extends Creature {
     private final IEnemyManager manager;
 
     public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed, IEnemyManager manager) {
-        super(id, pos, maxAp, weapon, attr, level);
+        super(id, pos, maxAp, weapon, attr, level, manager);
         this.name = name;
         this.moveSpeed = moveSpeed;
         this.manager = manager;

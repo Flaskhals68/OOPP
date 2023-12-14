@@ -32,8 +32,8 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
     private Map<String, IAction<IInventoriable>> invActions;
     private Map<String, IAction<ITurnTaker>> playerEndTurnActions;
 
-    public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level) {
-        super(id, pos);
+    public Creature(String id, Position pos, int ap, Weapon weapon, Attributes attr, int level, ICreatureManager manager) {
+        super(id, pos, manager);
         this.attributes = attr;
         this.hp = new ResourceBar(attributes.getStat(AttributeType.CONSTITUTION)/5);
         this.ap = new ResourceBar(ap);
