@@ -26,6 +26,8 @@ import com.group4.app.view.SubView;
 
 public class DeathScreen extends SubView {
 
+    private JButton restartButton;
+
     private DeathScreenController dsc;
     private static boolean hasPlayedDeathSound;
     private String deathSoundFilePath = "src/resources/646974__huw2k8__yourtimehascome.wav";
@@ -81,13 +83,15 @@ public class DeathScreen extends SubView {
     }
 
     public JButton createRestartButton(){
-        JButton restartButton = new JButton("Restart");
-        restartButton.setAlignmentX(CENTER_ALIGNMENT);
-        restartButton.addMouseListener(new MouseAdapter() {
+        this.restartButton = new JButton("Restart");
+        this.restartButton.setAlignmentX(CENTER_ALIGNMENT);
+        this.restartButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dsc.restartGame();
                 SoundPlayer.playSound("src/resources/game_music.wav", true);
+                restartButton.setEnabled(false);
+                hasPlayedDeathSound = false;
             }
         });
         return restartButton;
@@ -99,6 +103,9 @@ public class DeathScreen extends SubView {
             SoundPlayer.stopSound();
             SoundPlayer.playSound(deathSoundFilePath, false);
             hasPlayedDeathSound = true;
+            if(!this.restartButton.isEnabled()){
+                this.restartButton.setEnabled(true);
+            }
         }
         revalidate();
         repaint();
