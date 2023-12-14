@@ -87,6 +87,7 @@ public class DeathScreen extends SubView {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dsc.restartGame();
+                SoundPlayer.playSound("src/resources/game_music.wav", true);
             }
         });
         return restartButton;
@@ -95,7 +96,8 @@ public class DeathScreen extends SubView {
     @Override
     public void update() {
         if(!hasPlayedDeathSound){
-            SoundPlayer.playSound(deathSoundFilePath);
+            SoundPlayer.stopSound();
+            SoundPlayer.playSound(deathSoundFilePath, false);
             hasPlayedDeathSound = true;
         }
         revalidate();

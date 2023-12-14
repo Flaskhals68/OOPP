@@ -44,7 +44,7 @@ public class InventoryView extends SidePanel implements IGameView{
             jPan.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    SoundPlayer.playSound("src\\resources\\166188__drminky__potion-drink-regen.wav");
+                    SoundPlayer.playSound("src\\resources\\166188__drminky__potion-drink-regen.wav", false);
                     controller.useItem(entry.getKey());
                     initInventory();
                 }
