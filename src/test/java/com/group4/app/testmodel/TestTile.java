@@ -20,17 +20,17 @@ public class TestTile {
     {
         World world = new World(9);
         Model.getInstance().add(world);
-        world.add(new Tile("stone", new Position(0, 0, world.getId())));
-        world.add(new Tile("stone", new Position(0, 1, world.getId())));
-        world.add(new Tile("stone", new Position(0, 2, world.getId())));
+        world.add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(0, 2, world.getId()), Model.getInstance()));
 
-        world.add(new Tile("stone", new Position(1, 0, world.getId())));
-        world.add(new Tile("stone", new Position(1, 1, world.getId())));
-        world.add(new Tile("stone", new Position(1, 2, world.getId())));
+        world.add(new Tile("stone", new Position(1, 0, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(1, 1, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(1, 2, world.getId()), Model.getInstance()));
 
-        world.add(new Tile("stone", new Position(2, 0, world.getId())));
-        world.add(new Tile("stone", new Position(2, 1, world.getId())));
-        world.add(new Tile("stone", new Position(2, 2, world.getId())));
+        world.add(new Tile("stone", new Position(2, 0, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(2, 1, world.getId()), Model.getInstance()));
+        world.add(new Tile("stone", new Position(2, 2, world.getId()), Model.getInstance()));
 
         Set<Tile> tile00Neighbors = world.getTile(new Position(0, 0, world.getId())).getNeighbors();
         Tile tile01 = world.getTile(new Position(0, 1, world.getId()));
@@ -39,7 +39,7 @@ public class TestTile {
 
         World world2 = new World(1);
         Model.getInstance().add(world2);
-        Tile testTile = new Tile("stone", new Position(0, 0, world2.getId()));
+        Tile testTile = new Tile("stone", new Position(0, 0, world2.getId()), Model.getInstance());
         testTile.addNeighbors(new Tile[] {tile01, tile11, tile10});
 
         assertEquals(testTile.getNeighbors(), tile00Neighbors);

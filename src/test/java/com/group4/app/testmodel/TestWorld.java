@@ -23,7 +23,7 @@ public class TestWorld
     {
         World world = new World(101);
         Model.getInstance().add(world);
-        Tile tile = new Tile("stone", new Position(100, 100, world.getId()));
+        Tile tile = new Tile("stone", new Position(100, 100, world.getId()), Model.getInstance());
         world.add(tile);
 
         assertEquals(world.getTile(new Position(100, 100, world.getId())), tile);
@@ -34,7 +34,7 @@ public class TestWorld
     {
         World world = new World(101);
         Model.getInstance().add(world);
-        Tile tile = new Tile("stone", new Position(101, 101, world.getId()));
+        Tile tile = new Tile("stone", new Position(101, 101, world.getId()), Model.getInstance());
 
         assertThrows(ArrayIndexOutOfBoundsException.class, ()->{world.add(tile);});
     }
@@ -44,7 +44,7 @@ public class TestWorld
     {
         World world = new World(101);
         Model.getInstance().add(world);
-        world.add(new Tile("stone", new Position(1, 1, world.getId())));
+        world.add(new Tile("stone", new Position(1, 1, world.getId()), Model.getInstance()));
 
         assertFalse(world.getTile(new Position(1, 1, world.getId())) == null);
     }

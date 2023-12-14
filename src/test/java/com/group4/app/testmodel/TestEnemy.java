@@ -29,8 +29,8 @@ public class TestEnemy {
 
         m.add(world);
         m.setCurrentWorld(world.getId());
-        m.add(new Tile("stone", new Position(0, 0, world.getId())));
-        m.add(new Tile("stone", new Position(0, 1, world.getId())));
+        m.add(new Tile("stone", new Position(0, 0, world.getId()), m));
+        m.add(new Tile("stone", new Position(0, 1, world.getId()), m));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
         m.setPlayer(p);
     }
@@ -65,7 +65,7 @@ public class TestEnemy {
         for (int i = 0; i < 20; i++) {
             for(int j = 0; j < 20; j++) {
                 try {
-                    m.add(new Tile("stone", new Position(i, j, world.getId())));
+                    m.add(new Tile("stone", new Position(i, j, world.getId()), Model.getInstance()));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
