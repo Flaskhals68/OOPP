@@ -9,7 +9,6 @@ import java.util.Set;
 
 import com.group4.app.model.creatures.*;
 import com.group4.app.model.dungeon.*;
-import com.group4.app.controller.ActionController;
 import com.group4.app.model.actions.IAttackable;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
