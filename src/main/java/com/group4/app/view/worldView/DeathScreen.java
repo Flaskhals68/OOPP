@@ -28,7 +28,7 @@ public class DeathScreen extends SubView {
 
     private DeathScreenController dsc;
     private static boolean hasPlayedDeathSound;
-    private String deathSoundFilePath = "src\\resources\\646974__huw2k8__yourtimehascome.wav";
+    private String deathSoundFilePath = "src/resources/646974__huw2k8__yourtimehascome.wav";
     
     public DeathScreen(){
         hasPlayedDeathSound = false;

@@ -32,7 +32,7 @@ public class WorldViewPlayerMoveState extends WorldViewState{
 
     private void drawMovementPathIfMoving(){
         if(movementTimerFlag && !controller.getPlayerPosition().equals(mouseClickedPosition)){
-            SoundPlayer.playSound("src\\resources\\walkSound.wav");
+            SoundPlayer.playSound("src/resources/walkSound.wav");
             List<Position> path = controller.getPathFromPlayerTo(mouseClickedPosition);
             setHighLightedPositions(new HashSet<>(path));
         }
