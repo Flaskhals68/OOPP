@@ -12,6 +12,7 @@ import com.group4.app.controller.PlayerStatController;
 public class HealthBar extends SubView {
     private JProgressBar bar;
     private PlayerStatController psc;
+    private int currentHealth;
 
     public HealthBar(Dimension dimension, int orient) {
         this.setPreferredSize(dimension);
@@ -28,12 +29,15 @@ public class HealthBar extends SubView {
         this.bar.setForeground(Color.RED);
         this.bar.setBorder(null);
         this.bar.setFont(new Font("Arial", Font.BOLD, 16));
+        this.currentHealth = psc.getPlayerMaxHealth();
         updateValues();
         add(this.bar);
     }
 
     private void updateValues() {
         int playerHealth = psc.getPlayerHealth();
+        if(this.currentHealth > playerHealth){SoundPlayer.playSound("src/resources/547042__eponn__hit-impact-sword-3.wav", false);}
+        this.currentHealth = playerHealth;
         bar.setValue(playerHealth);
         bar.setString("HP: " + playerHealth + "/" + psc.getPlayerMaxHealth()); 
     }
