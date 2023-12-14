@@ -53,6 +53,6 @@ public class App {
 
         model.setController(ActionController.getInstance());
 
-        model.enterGameLoop();
+        model.start();
     }
 }

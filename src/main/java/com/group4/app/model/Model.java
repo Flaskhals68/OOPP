@@ -7,10 +7,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.group4.app.model.actions.ActionInput;
-import com.group4.app.model.creatures.*;
-import com.group4.app.model.dungeon.*;
+import com.group4.app.controller.ActionController;
+import com.group4.app.model.creatures.AttributeType;
+import com.group4.app.model.creatures.Enemy;
+import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.creatures.Entity;
+import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.DungeonEntitySpawner;
+import com.group4.app.model.dungeon.DungeonWorldGenerator;
+import com.group4.app.model.dungeon.IDrawable;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.IWorldContainer;
+import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.dungeon.Position;
+import com.group4.app.model.dungeon.Tile;
+import com.group4.app.model.dungeon.World;
+import com.group4.app.model.input.ActionInput;
 import com.group4.app.model.items.WeaponFactory;
+import com.group4.app.model.turns.ITurnTaker;
+import com.group4.app.model.turns.TurnHandler;
 
 public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IModel {
     private static Model instance = null;
@@ -21,7 +37,7 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IM
     private Boolean isPlayerTurn;
     private Map<String, World> floors;
     private World currentWorld;
-
+    private boolean restartQueued;
     private boolean dead;
 
     private static final String PLAYER_ID = "player";
@@ -311,13 +327,14 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IM
 
     public void enterGameLoop() {
         while (true) {
-            nextTurn();
             updateObservers();
+            nextTurn();
             if(dead) {
                 break;
             }
         }
         updateObservers();
+
 
     }
 
@@ -328,7 +345,6 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IM
     public void setPlayerDied() {
         getTile(getPlayerPos()).setId("playerDead");
         dead = true;
-
     }
 
     public List<Position> getPathFromTo(Position startPos, Position targetPos){
@@ -367,5 +383,41 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IM
      */
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void queueRestart() {
+        System.out.println("Restart queued");
+        restartQueued = true;
+    }
+
+    public void start() {
+        while (true) {
+            enterGameLoop();
+
+            // Wait for restart to be queued
+            while (!restartQueued) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            reset();
+            restartQueued = false;
+        }
+    }
+
+    public boolean restartQueued(){
+        return restartQueued;
+    }
+
+    private void reset() {
+        System.out.println("Resetting game");
+        dead = false;
+        turnHandler = new TurnHandler();
+        floors.clear();
+        currentWorld = null;
+        addRandomMap(10);
+        updateObservers();
     }
 }

@@ -21,9 +21,12 @@ import javax.swing.JLabel;
 
 
 import com.group4.app.controller.DeathScreenController;
+import com.group4.app.view.SoundPlayer;
 import com.group4.app.view.SubView;
 
 public class DeathScreen extends SubView {
+
+    private JButton restartButton;
 
     private DeathScreenController dsc;
     private static boolean hasPlayedDeathSound;
@@ -40,7 +43,6 @@ public class DeathScreen extends SubView {
         JButton restartButton = createRestartButton();
         addComponent(closeGameBtn, 10);
         addComponent(restartButton, 10);
-        System.out.println("Yes");
     }
 
     public void initScreen(){
@@ -81,12 +83,14 @@ public class DeathScreen extends SubView {
     }
 
     public JButton createRestartButton(){
-        JButton restartButton = new JButton("Restart");
-        restartButton.setAlignmentX(CENTER_ALIGNMENT);
-        restartButton.addMouseListener(new MouseAdapter() {
+        this.restartButton = new JButton("Restart");
+        this.restartButton.setAlignmentX(CENTER_ALIGNMENT);
+        this.restartButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dsc.restartGame();
+                restartButton.setEnabled(false);
+                hasPlayedDeathSound = false;
             }
         });
         return restartButton;
@@ -94,9 +98,12 @@ public class DeathScreen extends SubView {
 
     @Override
     public void update() {
-        if(!hasPlayedDeathSound){
-            //TODO Play sound upon death
+        if(!hasPlayedDeathSound && !dsc.getRestartQueued()){
+            SoundPlayer.playSound(deathSoundFilePath);
             hasPlayedDeathSound = true;
+            if(!this.restartButton.isEnabled()){
+                this.restartButton.setEnabled(true);
+            }
         }
         revalidate();
         repaint();

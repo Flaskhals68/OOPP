@@ -1,4 +1,4 @@
-package com.group4.app.model;
+package com.group4.app.model.dungeon;
 
 public class Position {
     private int x;

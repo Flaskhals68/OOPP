@@ -8,7 +8,6 @@ import com.group4.app.model.*;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.actions.Action;
-import com.group4.app.model.actions.AttackActionInput;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Creature;
 import com.group4.app.model.creatures.Enemy;
@@ -16,8 +15,10 @@ import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.ICanAttack;
 import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
+import com.group4.app.model.input.AttackActionInput;
 import com.group4.app.model.items.Weapon;
 import com.group4.app.model.items.WeaponFactory;
 

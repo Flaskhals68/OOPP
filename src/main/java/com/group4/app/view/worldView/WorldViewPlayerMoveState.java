@@ -8,7 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
 import com.group4.app.controller.worldControllers.AWorldController;
 import com.group4.app.controller.worldControllers.PlayerMovementController;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 
 public class WorldViewPlayerMoveState extends WorldViewState{
     private boolean movementTimerFlag;

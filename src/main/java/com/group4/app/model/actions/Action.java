@@ -2,9 +2,9 @@ package com.group4.app.model.actions;
 
 import java.util.Set;
 
-import com.group4.app.model.Position;
 import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.Position;
 
 public abstract class Action<A, T> implements IAction<T> {
     private int apCost;

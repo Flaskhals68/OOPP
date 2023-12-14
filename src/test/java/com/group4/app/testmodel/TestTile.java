@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 

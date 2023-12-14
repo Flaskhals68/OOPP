@@ -3,10 +3,10 @@ package com.group4.app.model.actions;
 import java.util.List;
 import java.util.Set;
 
-import com.group4.app.model.PathfindingHelper;
-import com.group4.app.model.Position;
-import com.group4.app.model.creatures.ICreatureManager;
-import com.group4.app.model.creatures.IPositionable;
+import com.group4.app.model.Model;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.dungeon.Position;
 
 public class MoveAction extends Action<IPositionable, Position>{
 

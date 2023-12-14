@@ -7,11 +7,11 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.Position;
 import com.group4.app.model.actions.Action;
 import com.group4.app.model.actions.MoveAction;
-import com.group4.app.model.creatures.IPositionable;
 import com.group4.app.model.creatures.Player;
+import com.group4.app.model.dungeon.IPositionable;
+import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.dungeon.Tile;
 import com.group4.app.model.dungeon.World;
 

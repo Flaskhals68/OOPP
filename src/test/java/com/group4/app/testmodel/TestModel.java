@@ -1,10 +1,10 @@
 package com.group4.app.testmodel;
 
 import com.group4.app.model.*;
-import com.group4.app.model.Position;
-
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
+import com.group4.app.model.dungeon.Position;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
