@@ -1,7 +1,7 @@
 package com.group4.app.controller;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.creatures.IAttackable;
+import com.group4.app.model.actions.IAttackable;
 import com.group4.app.model.dungeon.IPositionable;
 import com.group4.app.model.dungeon.Position;
 

@@ -7,17 +7,18 @@ import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.input.ActionInput;
 import com.group4.app.model.items.PotionFactory;
 import com.group4.app.model.items.Weapon;
-import com.group4.app.model.items.WeaponFactory;
 
 public class Player extends Creature {
 
-    private ResourceBar xp;
+    private final ResourceBar xp;
+    private final IPlayerManager manager;
 
-    public Player(String id, int ap, Weapon weapon, Position position) {
-        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1);
+    public Player(String id, int ap, Weapon weapon, Position position, IPlayerManager manager) {
+        super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1, manager);
         this.xp = new ResourceBar(10);
         this.xp.setCurrent(0);
-        this.addMoveAction("move", new MoveAction(1, "move", this, 5));
+        this.manager = manager;
+        this.addMoveAction("move", new MoveAction(1, "move", this, 5, manager));
         for (int i = 0; i < 3; i++) {
             this.addItemToInventory(PotionFactory.createHealthPotion());
         }
@@ -42,22 +43,21 @@ public class Player extends Creature {
 
     @Override
     public void takeTurn() {
-        Model m = Model.getInstance();
-        m.startPlayerTurn();
+        manager.startPlayerTurn();
         while (this.getAp() > 0) {
-            ActionInput<?> input = Model.getInstance().getActionInput();
+            ActionInput<?> input = manager.getActionInput();
             this.performAction(input);
         }
         endTurn();
     }
 
     public void endTurn() {
-        Model.getInstance().endPlayerTurn();
+        manager.endPlayerTurn();
     }
 
     @Override
     public void death() {
-        Model.getInstance().remove(this);
-        Model.getInstance().setPlayerDied();
+        manager.remove(this);
+        manager.setPlayerDied();
     }
 }

@@ -30,7 +30,7 @@ public class DeathScreen extends SubView {
 
     private DeathScreenController dsc;
     private static boolean hasPlayedDeathSound;
-    private String deathSoundFilePath = "src\\resources\\646974__huw2k8__yourtimehascome.wav";
+    private String deathSoundFilePath = "src/resources/646974__huw2k8__yourtimehascome.wav";
     
     public DeathScreen(){
         hasPlayedDeathSound = false;
@@ -91,6 +91,7 @@ public class DeathScreen extends SubView {
                 dsc.restartGame();
                 restartButton.setEnabled(false);
                 hasPlayedDeathSound = false;
+                SoundPlayer.playSound("src/resources/game_music.wav", true);
             }
         });
         return restartButton;
@@ -98,8 +99,9 @@ public class DeathScreen extends SubView {
 
     @Override
     public void update() {
-        if(!hasPlayedDeathSound && !dsc.getRestartQueued()){
-            SoundPlayer.playSound(deathSoundFilePath);
+        if(!hasPlayedDeathSound){
+            SoundPlayer.stopGameMusic();
+            SoundPlayer.playSound(deathSoundFilePath, false);
             hasPlayedDeathSound = true;
             if(!this.restartButton.isEnabled()){
                 this.restartButton.setEnabled(true);

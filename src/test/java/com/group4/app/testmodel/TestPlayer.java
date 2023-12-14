@@ -8,12 +8,12 @@ import com.group4.app.model.*;
 import org.junit.jupiter.api.Test;
 
 import com.group4.app.model.actions.Action;
+import com.group4.app.model.actions.IAttackable;
+import com.group4.app.model.actions.ICanAttack;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Creature;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
-import com.group4.app.model.creatures.IAttackable;
-import com.group4.app.model.creatures.ICanAttack;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.dungeon.Tile;
@@ -33,7 +33,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
-        Player player = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player player = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
 
@@ -42,7 +42,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
-        player = new Player("player", 3, weapon, new Position(0, 0, world.getId()));
+        player = new Player("player", 3, weapon, new Position(0, 0, world.getId()), Model.getInstance());
         assertEquals("player", player.getId());
         assertEquals(10, player.getHitPoints());
         assertEquals(weapon.getAttack(), player.getDamage());
@@ -55,7 +55,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
-        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
 
         Weapon testItem = WeaponFactory.createSword();
 
@@ -70,7 +70,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
-        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
 
         for(int i = 0; i<4; i++) {
             p.addItemToInventory(WeaponFactory.createSword());
@@ -91,7 +91,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
-        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()), Model.getInstance());
 
         Weapon basic_claws = WeaponFactory.createClaws();
 
@@ -105,7 +105,7 @@ public class TestPlayer {
     public void testLevelUp() {
         Model.getInstance().addBasicMap(10, 0);
         String world = Model.getInstance().getCurrentWorldId();
-        Player p = new Player("player", 3, null, new Position(0, 0, world));
+        Player p = new Player("player", 3, null, new Position(0, 0, world), Model.getInstance());
         for(int i = 0; i<10; i++) {
             p.giveXP(10);
         }
@@ -117,7 +117,7 @@ public class TestPlayer {
         Model.getInstance().addBasicMap(10, 0);
         String world = Model.getInstance().getCurrentWorldId();
         Player p = Model.getInstance().getPlayer();
-        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world));
+        Enemy e = EnemyFactory.createZombie(new Position(0, 1, world), Model.getInstance());
         for(int i = 0; i<5; i++) {
             p.getAttributes().levelUpStat(AttributeType.MELEE_WEAPON_SKILL);
         }
@@ -161,7 +161,7 @@ public class TestPlayer {
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
         Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
-        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()));
+        Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
         TestAction action = new TestAction(1, "testPerformAction", p);
         p.addAttackAction("testPerformAction", action);
         p.performAction(new AttackActionInput("testPerformAction", p));

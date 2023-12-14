@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.group4.app.controller.ActionController;
+import com.group4.app.model.creatures.*;
+import com.group4.app.model.dungeon.*;
+import com.group4.app.model.actions.IAttackable;
 import com.group4.app.model.creatures.AttributeType;
 import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
-import com.group4.app.model.creatures.IAttackable;
 import com.group4.app.model.creatures.Player;
 import com.group4.app.model.dungeon.DungeonEntitySpawner;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
@@ -28,7 +29,7 @@ import com.group4.app.model.items.WeaponFactory;
 import com.group4.app.model.turns.ITurnTaker;
 import com.group4.app.model.turns.TurnHandler;
 
-public class Model implements IWorldContainer {
+public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IModel {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;
@@ -79,10 +80,10 @@ public class Model implements IWorldContainer {
                         r = Math.random();
                         Enemy e;
                         if(r > 0.5){
-                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()));
+                            e = EnemyFactory.createZombie(new Position(x, y, world.getId()), this);
 
                         } else {
-                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()));
+                            e = EnemyFactory.createSkeleton(new Position(x, y, world.getId()), this);
                         }
                         add(e);
                         addToTurnOrder(e);
@@ -90,7 +91,7 @@ public class Model implements IWorldContainer {
                 }
             }
         }
-        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()), this);
         add(player);
         addToTurnOrder(player);
     }
@@ -101,10 +102,13 @@ public class Model implements IWorldContainer {
 
     public void addRandomMap(int size) {
         World world = DungeonWorldGenerator.generate(size, this);
-        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()));
+        this.player = new Player(PLAYER_ID, 3, WeaponFactory.createSword(), new Position(27, 27, world.getId()), this);
         add(player);
         addToTurnOrder(player);
-        DungeonEntitySpawner.spawnEnemies(world, 0.01);
+        List<Creature> enemies = DungeonEntitySpawner.spawnEnemies(world, 0.01, this);
+        for (Creature e : enemies) {
+            addToTurnOrder(e);
+        }
     }
 
     public void add(World world){
@@ -157,6 +161,11 @@ public class Model implements IWorldContainer {
         return drawables;
     }
 
+    @Override
+    public ITileContainer getTileContainer() {
+        return this;
+    }
+
     public void add(Tile tile){
         this.getWorld(tile.getFloor()).add(tile);
     }
@@ -180,6 +189,11 @@ public class Model implements IWorldContainer {
     public void remove(Entity entity){
         this.getWorld(entity.getFloor()).remove(entity);
         updateObservers();
+    }
+
+    @Override
+    public void setDeadTile(Position position) {
+        getTile(position).setId("deadEnemy");
     }
 
     public void remove(IPositionable positionable){
@@ -291,7 +305,7 @@ public class Model implements IWorldContainer {
         return (IAttackable)targetsList.get(0);
     }
 
-    public void giveExperience(int xp) {
+    public void giveExperienceToPlayer(int xp) {
         player.giveXP(xp);
     }
 
@@ -321,8 +335,8 @@ public class Model implements IWorldContainer {
             }
         }
         updateObservers();
-        
-        
+
+
     }
 
     public boolean isPlayerDead(){
@@ -357,6 +371,11 @@ public class Model implements IWorldContainer {
     public boolean nextToPlayer(Position pos){
         Set<Position> surrounding = getEntitiesInRange(pos, 1);
         return surrounding.contains(player.getPos());
+    }
+
+    @Override
+    public int getPlayerStealthBonus() {
+        return player.getDexBonus();
     }
 
     /**

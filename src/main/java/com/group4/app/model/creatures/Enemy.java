@@ -1,8 +1,6 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.Model;
-import com.group4.app.model.actions.MoveAction;
-import com.group4.app.model.dungeon.PathfindingHelper;
+import com.group4.app.model.actions.EnemyMoveAction;
 import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.input.AttackActionInput;
 import com.group4.app.model.input.PositionActionInput;
@@ -14,13 +12,14 @@ public class Enemy extends Creature {
     private final String name;
     private static final int DETECTION_RANGE = 10;
     private final int moveSpeed;
+    private final IEnemyManager manager;
 
-    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed) {
-        super(id, pos, maxAp, weapon, attr, level);
+    public Enemy(String id, String name, Position pos, Weapon weapon, int maxAp, Attributes attr, int level, int moveSpeed, IEnemyManager manager) {
+        super(id, pos, maxAp, weapon, attr, level, manager);
         this.name = name;
         this.moveSpeed = moveSpeed;
-        this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
-        Model.getInstance().addToTurnOrder(this);
+        this.manager = manager;
+        this.addMoveAction("move", new EnemyMoveAction(1, "move", this, moveSpeed, manager));
     }
 
     public String getName() {
@@ -30,38 +29,25 @@ public class Enemy extends Creature {
 
     @Override
     public void takeTurn() {
-        Model m = Model.getInstance();
-        List<Position> path;
 
-        Position pPos = m.getPlayerPos();
+        Position pPos = manager.getPlayerPos();
+
         int xDiff = Math.abs(pPos.getX() - getPos().getX());
         int yDiff = Math.abs(pPos.getY() - getPos().getY());
 
-        int pDexBonus = m.getPlayer().getDexBonus();
+        int pStealthBonus = manager.getPlayerStealthBonus();
 
         // if the player is too far away, don't do anything. Depends on players dex stat and enemy perception
-        if(xDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus) || yDiff > (DETECTION_RANGE + getPerceptionBonus() - pDexBonus)) {
+        if(xDiff > (DETECTION_RANGE + getPerceptionBonus() - pStealthBonus) || yDiff > (DETECTION_RANGE + getPerceptionBonus() - pStealthBonus)) {
             return;
         }
         System.out.println(getName() + " is taking a turn");
         while(getAp() > 0) {
-            if(m.nextToPlayer(this.getPos())){
+            if(manager.nextToPlayer(this.getPos())){
                 System.out.println(getName() + " is attacking player now");
-                performAction(new AttackActionInput("attack", m.getPlayer()));
+                performAction(new AttackActionInput("attack", manager.getPlayer()));
             } else {
-                System.out.println(getName() + " should move now");
-
-                // gives the entire path to the player, irrespective of distance
-                path = PathfindingHelper.pathToClosest(getPos(), m.getPlayerPos(), m.getWorld(m.getPlayerFloor()));
-
-                // Limit move length to moveSpeed, so that the enemy doesn't move too far
-                path = path.subList(0, Math.min(path.size(), moveSpeed));
-
-                if(path.size()>0) {
-                    performAction(new PositionActionInput("move", path.get(path.size()-1)));
-                } else {
-                    performAction(new PositionActionInput("move", getPos()));
-                }
+                performAction(new PositionActionInput("move", manager.getPlayerPos()));
             }
 
         }
@@ -69,11 +55,9 @@ public class Enemy extends Creature {
 
     @Override
     public void death() {
-        // TODO : Implement the rest of enemy death 
-        // FIXME: Should death manipulate a tile?
-        Model.getInstance().remove(this);
-        Model.getInstance().getTile(getPos()).setId("deadEnemy");
-        Model.getInstance().removeFromTurnOrder(this);
-        Model.getInstance().giveExperience(1);
+        manager.remove(this);
+        manager.setDeadTile(getPos());
+        manager.removeFromTurnOrder(this);
+        manager.giveExperienceToPlayer(1);
     }
 }

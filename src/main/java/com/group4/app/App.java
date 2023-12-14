@@ -14,6 +14,7 @@ import com.group4.app.view.GameWindow;
 import com.group4.app.view.HudView;
 import com.group4.app.view.IGameView;
 import com.group4.app.view.InventoryView;
+import com.group4.app.view.SoundPlayer;
 import com.group4.app.view.SubView;
 import com.group4.app.view.worldView.BaseGameDisplayArea;
 import com.group4.app.view.worldView.DeathScreen;
@@ -52,7 +53,6 @@ public class App {
         model.addObserver(gw);
 
         model.setController(ActionController.getInstance());
-
         model.start();
     }
 }

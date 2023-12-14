@@ -8,7 +8,7 @@ import com.group4.app.model.turns.ITurnTaker;
 
 public class EndTurnAction extends Action<ITurnTaker, ITurnTaker>{
 
-    public EndTurnAction(int maxPlayerAp, String id, Creature creature){
+    public EndTurnAction(int maxPlayerAp, String id, ITurnTaker creature){
         super(maxPlayerAp, id, creature);
     }
 
