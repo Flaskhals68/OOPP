@@ -9,14 +9,10 @@ import java.util.Set;
 
 import com.group4.app.model.actions.ActionInput;
 import com.group4.app.model.creatures.*;
-import com.group4.app.model.dungeon.DungeonEntitySpawner;
-import com.group4.app.model.dungeon.DungeonWorldGenerator;
-import com.group4.app.model.dungeon.IWorldContainer;
-import com.group4.app.model.dungeon.Tile;
-import com.group4.app.model.dungeon.World;
+import com.group4.app.model.dungeon.*;
 import com.group4.app.model.items.WeaponFactory;
 
-public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
+public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IModel {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;
@@ -146,6 +142,11 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
             drawables.add(entity);
         }
         return drawables;
+    }
+
+    @Override
+    public ITileContainer getTileContainer() {
+        return this;
     }
 
     public void add(Tile tile){
@@ -287,7 +288,7 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
         return (IAttackable)targetsList.get(0);
     }
 
-    public void giveExperience(int xp) {
+    public void giveExperienceToPlayer(int xp) {
         player.giveXP(xp);
     }
 

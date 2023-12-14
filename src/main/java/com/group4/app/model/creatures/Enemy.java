@@ -1,14 +1,10 @@
 package com.group4.app.model.creatures;
 
-import com.group4.app.model.Model;
-import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.actions.AttackActionInput;
-import com.group4.app.model.actions.MoveAction;
+import com.group4.app.model.actions.EnemyMoveAction;
 import com.group4.app.model.actions.PositionActionInput;
 import com.group4.app.model.items.Weapon;
-
-import java.util.List;
 
 public class Enemy extends Creature {
     private final String name;
@@ -21,7 +17,7 @@ public class Enemy extends Creature {
         this.name = name;
         this.moveSpeed = moveSpeed;
         this.manager = manager;
-        this.addMoveAction("move", new MoveAction(1, "move", this, moveSpeed));
+        this.addMoveAction("move", new EnemyMoveAction(1, "move", this, moveSpeed, manager));
     }
 
     public String getName() {
@@ -31,9 +27,6 @@ public class Enemy extends Creature {
 
     @Override
     public void takeTurn() {
-        Model m = Model.getInstance();
-        List<Position> path;
-
         Position pPos = manager.getPlayerPos();
         int xDiff = Math.abs(pPos.getX() - getPos().getX());
         int yDiff = Math.abs(pPos.getY() - getPos().getY());
@@ -46,23 +39,11 @@ public class Enemy extends Creature {
         }
         System.out.println(getName() + " is taking a turn");
         while(getAp() > 0) {
-            if(m.nextToPlayer(this.getPos())){
+            if(manager.nextToPlayer(this.getPos())){
                 System.out.println(getName() + " is attacking player now");
-                performAction(new AttackActionInput("attack", m.getPlayer()));
+                performAction(new AttackActionInput("attack", manager.getPlayer()));
             } else {
-                System.out.println(getName() + " should move now");
-
-                // gives the entire path to the player, irrespective of distance
-                path = PathfindingHelper.pathToClosest(getPos(), m.getPlayerPos(), m.getWorld(m.getPlayerFloor()));
-
-                // Limit move length to moveSpeed, so that the enemy doesn't move too far
-                path = path.subList(0, Math.min(path.size(), moveSpeed));
-
-                if(path.size()>0) {
-                    performAction(new PositionActionInput("move", path.get(path.size()-1)));
-                } else {
-                    performAction(new PositionActionInput("move", getPos()));
-                }
+                performAction(new PositionActionInput("move", manager.getPlayerPos()));
             }
 
         }
@@ -73,6 +54,6 @@ public class Enemy extends Creature {
         manager.remove(this);
         manager.setDeadTile(getPos());
         manager.removeFromTurnOrder(this);
-        manager.giveExperience(1);
+        manager.giveExperienceToPlayer(1);
     }
 }

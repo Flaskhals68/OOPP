@@ -18,7 +18,7 @@ public class Player extends Creature {
         this.xp = new ResourceBar(10);
         this.xp.setCurrent(0);
         this.manager = manager;
-        this.addMoveAction("move", new MoveAction(1, "move", this, 5));
+        this.addMoveAction("move", new MoveAction(1, "move", this, 5, manager));
         for (int i = 0; i < 3; i++) {
             this.addItemToInventory(PotionFactory.createHealthPotion());
         }
