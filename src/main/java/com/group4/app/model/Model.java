@@ -65,13 +65,13 @@ public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IM
         World world = new World(100);
         currentWorld = world;
         this.add(currentWorld);
-        world.add(new Tile("stone", new Position(0, 0, world.getId())));
+        world.add(new Tile("stone", new Position(0, 0, world.getId()), this));
         for (int x = 0; x<size; x++) {
             for (int y = 0; y<size; y++) {
                 double r = Math.random();
                 if(r> emptyChance){
                     try {
-                        world.add(new Tile("stone", new Position(x, y, world.getId())));
+                        world.add(new Tile("stone", new Position(x, y, world.getId()), this));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Tile already exists at position: " + x + ", " + y);
                     }

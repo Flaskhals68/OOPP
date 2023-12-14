@@ -23,8 +23,8 @@ public class TestMoveAction {
         World world = new World(10);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         
@@ -40,8 +40,8 @@ public class TestMoveAction {
         World world = new World(10);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         Position pos = new Position(0, 1, worldId);

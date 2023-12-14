@@ -31,7 +31,7 @@ public class TestPlayer {
     public void testConstructors() {
         World world = new World(2);
         Model.getInstance().add(world);
-        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
+        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
         Player player = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
         assertEquals("player", player.getId());
@@ -40,7 +40,7 @@ public class TestPlayer {
         Weapon weapon = WeaponFactory.createSword();
         world = new World(2);
         Model.getInstance().add(world);
-        t1 = new Tile("stone", new Position(0, 0, world.getId()));
+        t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
         player = new Player("player", 3, weapon, new Position(0, 0, world.getId()), Model.getInstance());
         assertEquals("player", player.getId());
@@ -53,7 +53,7 @@ public class TestPlayer {
 
         World world = new World(2);
         Model.getInstance().add(world);
-        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
+        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
 
@@ -68,7 +68,7 @@ public class TestPlayer {
     public void testGetInventoryItems() {
         World world = new World(2);
         Model.getInstance().add(world);
-        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
+        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
 
@@ -89,7 +89,7 @@ public class TestPlayer {
     public void testSetWeapon() {
         World world = new World(2);
         Model.getInstance().add(world);
-        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()));
+        Tile t1 = new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance());
         world.add(t1);
         Player p = new Player("player", 3, WeaponFactory.createSword(), new Position(0, 0, world.getId()), Model.getInstance());
 
@@ -160,7 +160,7 @@ public class TestPlayer {
         World world = new World(1);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
         TestAction action = new TestAction(1, "testPerformAction", p);
         p.addAttackAction("testPerformAction", action);

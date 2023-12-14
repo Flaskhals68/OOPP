@@ -26,8 +26,8 @@ public class TestAttackAction {
         World world = new World(10);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, worldId), Model.getInstance());
@@ -41,8 +41,8 @@ public class TestAttackAction {
         World world = new World(10);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         p.setWeapon(WeaponFactory.createSword());
@@ -59,9 +59,9 @@ public class TestAttackAction {
         World world = new World(10);
         Model.getInstance().add(world);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 2, world.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 2, world.getId()), Model.getInstance()));
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         p.setWeapon(WeaponFactory.createSword());
@@ -84,8 +84,8 @@ public class TestAttackAction {
         World world2 = new World(10);
         Model.getInstance().add(world2);
         Model.getInstance().setCurrentWorld(world.getId());
-        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId())));
-        Model.getInstance().add(new Tile("stone", new Position(0, 1, world2.getId())));
+        Model.getInstance().add(new Tile("stone", new Position(0, 0, world.getId()), Model.getInstance()));
+        Model.getInstance().add(new Tile("stone", new Position(0, 1, world2.getId()), Model.getInstance()));
         Player p = new Player("player", 3, null, new Position(0, 0, world.getId()), Model.getInstance());
         p.setWeapon(WeaponFactory.createSword());
         Enemy e = EnemyFactory.createZombie(new Position(0, 1, world2.getId()), Model.getInstance());

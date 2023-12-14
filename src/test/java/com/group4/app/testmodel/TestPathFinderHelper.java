@@ -125,7 +125,7 @@ public class TestPathFinderHelper {
 
     private static void initFlatWorld(int size, World world) {
         for (int i = 0; i < size; i++) {
-            world.add(new Tile(world.getId(), new Position(i, 0, world.getId())));
+            world.add(new Tile(world.getId(), new Position(i, 0, world.getId()), Model.getInstance()));
         }
     }
 }
