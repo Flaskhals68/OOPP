@@ -39,7 +39,7 @@ public class SoundPlayer {
         }
     }
 
-    public static void stopSound() {
+    public static void stopGameMusic() {
         if (game_music != null && game_music.isRunning()) {
             game_music.stop();
         }
