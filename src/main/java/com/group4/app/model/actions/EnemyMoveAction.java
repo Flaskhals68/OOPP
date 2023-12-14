@@ -1,6 +1,5 @@
 package com.group4.app.model.actions;
 
-import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
 import com.group4.app.model.creatures.ICreatureManager;
@@ -20,9 +19,8 @@ public class EnemyMoveAction extends MoveAction{
     public void perform(Position target) {
         System.out.println(getName() + " should move now");
         List<Position> path;
-        Model m = Model.getInstance();
         // gives the entire path to the player, irrespective of distance
-        path = PathfindingHelper.pathToClosest(getActionTaker().getPos(), target, m.getWorld(m.getPlayerFloor()));
+        path = PathfindingHelper.pathToClosest(getActionTaker().getPos(), target, getManager().getTileContainer());
 
         // Limit move length to moveSpeed, so that the enemy doesn't move too far
         path = path.subList(0, Math.min(path.size(), getMoveSpeed()));
@@ -30,10 +28,10 @@ public class EnemyMoveAction extends MoveAction{
         if(path.size()>0) {
             for(Position p : path) {
                 System.out.println("Moving to " + p.getX() + ", " + p.getY());
-                Model.getInstance().remove(getActionTaker());
+                getManager().remove(getActionTaker());
                 getActionTaker().setPos(p);
-                Model.getInstance().add(getActionTaker());
-                Model.getInstance().updateObservers();
+                getManager().add(getActionTaker());
+                getManager().updateObservers();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

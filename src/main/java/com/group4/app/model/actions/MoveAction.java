@@ -3,10 +3,8 @@ package com.group4.app.model.actions;
 import java.util.List;
 import java.util.Set;
 
-import com.group4.app.model.Model;
 import com.group4.app.model.PathfindingHelper;
 import com.group4.app.model.Position;
-import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.ICreatureManager;
 import com.group4.app.model.creatures.IPositionable;
 
@@ -26,7 +24,7 @@ public class MoveAction extends Action<IPositionable, Position>{
             throw new IllegalArgumentException("Illegal move");
         }
 
-        List<Position> path = Model.getInstance().getPathFromTo(getActionTaker().getPos(), target);
+        List<Position> path = PathfindingHelper.getShortestPath(getActionTaker().getPos(), target, manager.getTileContainer());
         for (Position pos : path) {
             manager.remove(getActionTaker());
             getActionTaker().setPos(pos);
@@ -51,5 +49,9 @@ public class MoveAction extends Action<IPositionable, Position>{
 
     public int getMoveSpeed() {
         return moveSpeed;
+    }
+
+    public ICreatureManager getManager() {
+        return manager;
     }
 }
