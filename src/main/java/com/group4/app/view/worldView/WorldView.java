@@ -21,6 +21,7 @@ import com.group4.app.model.dungeon.IDrawable;
 import com.group4.app.model.dungeon.Position;
 import com.group4.app.view.ActionState;
 import com.group4.app.view.EnemyHealthBar;
+import com.group4.app.view.SoundPlayer;
 import com.group4.app.view.SubView;
 
 public class WorldView extends SubView{
@@ -67,6 +68,7 @@ public class WorldView extends SubView{
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
         colorBorders();
+        SoundPlayer.playSound("src/resources/game_music.wav", true);
     }
 
     private void initialState(){
