@@ -2,7 +2,6 @@ package com.group4.app.model.dungeon;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.Random;
 import java.util.Set;
 
 import com.group4.app.model.dungeon.DungeonGraphGenerator.Room;
@@ -76,7 +75,6 @@ public class DungeonGraphPathfinder {
      * Get a list where each element is the next step in order of the shortest path from start to goal
      * @param start
      * @param goal
-     * @param tc
      * @return List representing the shortest path between two tiles
      */
     public static boolean pathExists(Room start, Room goal) {

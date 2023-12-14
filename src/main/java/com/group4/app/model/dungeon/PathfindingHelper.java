@@ -2,9 +2,6 @@ package com.group4.app.model.dungeon;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-
-import com.group4.app.model.creatures.Entity;
-
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;

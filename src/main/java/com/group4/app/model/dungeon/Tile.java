@@ -3,19 +3,19 @@ package com.group4.app.model.dungeon;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.group4.app.model.Model;
-
 
 public class Tile implements IDrawable {
     private String id;
     private Set<Tile> neighbors;
     private Position pos;
     private Set<IPositionable> entities;
+    private final ITileContainer container;
 
-    public Tile(String id, Position pos){
+    public Tile(String id, Position pos, ITileContainer container){
         this.id = id;
         this.pos = pos;
         this.entities = new HashSet<IPositionable>();
+        this.container = container;
         this.calculateNeighbors();
     }
 
@@ -74,8 +74,7 @@ public class Tile implements IDrawable {
         for (int x=-1; x<2; x++){
             for (int y=-1; y<2; y++){
                 try {
-                    // Tile tile = Model.getInstance().getTile(this.floor, this.xPos+x, this.yPos+y);
-                    Tile tile = Model.getInstance().getTile(new Position(getPos().getX()+x, getPos().getY()+y, getFloor()));
+                    Tile tile = container.getTile(new Position(getPos().getX()+x, getPos().getY()+y, getFloor()));
                     if (tile != null){
                         this.addNeighbors(tile);
                         tile.addNeighbors(this);
