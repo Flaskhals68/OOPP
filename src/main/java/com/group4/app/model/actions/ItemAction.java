@@ -4,7 +4,6 @@ import com.group4.app.model.Model;
 import com.group4.app.model.dungeon.Position;
 import com.group4.app.model.items.IInventoriable;
 import com.group4.app.model.items.IUser;
-import com.group4.app.model.items.Inventory;
 
 import java.util.Set;
 

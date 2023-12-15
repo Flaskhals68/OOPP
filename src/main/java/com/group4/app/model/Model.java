@@ -29,7 +29,7 @@ import com.group4.app.model.items.WeaponFactory;
 import com.group4.app.model.turns.ITurnTaker;
 import com.group4.app.model.turns.TurnHandler;
 
-public class Model implements IWorldContainer, IPlayerManager, IEnemyManager, IModel {
+public class Model implements IWorldContainer, IPlayerManager, IEnemyManager {
     private static Model instance = null;
     private List<IModelObserver> observers;
     private IController controller;

@@ -28,7 +28,7 @@ public class TestMoveAction {
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         
-        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5, Model.getInstance());
+        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         HashSet<Position> pos = new HashSet<Position>();
         pos.add(new Position(0, 0, world.getId()));
         pos.add(new Position(0, 1, world.getId()));
@@ -45,7 +45,7 @@ public class TestMoveAction {
         String worldId = Model.getInstance().getCurrentWorldId();
         Player p = new Player("player", 3, null, new Position(0, 0, worldId), Model.getInstance());
         Position pos = new Position(0, 1, worldId);
-        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5, Model.getInstance());
+        Action<IPositionable, Position> action = new MoveAction(1, "action", p, 5);
         action.perform(pos);
     }
 }
