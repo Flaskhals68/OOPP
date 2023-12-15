@@ -22,7 +22,7 @@ import com.group4.app.view.worldView.DeathScreen;
 public class App {
     public static void main(String[] args) {
         Model model = Model.getInstance();
-        model.addRandomMap(10);
+        model.addRandomMap(20);
 
         SubView deathScreen = new DeathScreen();
 

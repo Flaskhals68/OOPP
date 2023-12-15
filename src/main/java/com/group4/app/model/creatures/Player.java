@@ -15,7 +15,7 @@ public class Player extends Creature {
 
     public Player(String id, int ap, Weapon weapon, Position position, IPlayerManager manager) {
         super(id, position, ap, weapon, new Attributes(50, 50, 50, 50, 50, 50), 1, manager);
-        this.xp = new ResourceBar(10);
+        this.xp = new ResourceBar(4);
         this.xp.setCurrent(0);
         this.manager = manager;
         this.addMoveAction("move", new MoveAction(1, "move", this, 5));
@@ -29,6 +29,7 @@ public class Player extends Creature {
         xp.increaseCurrent(amount);
         if (xp.getCurrent() == xp.getMax()) {
             levelUp();
+            xp.setMax(xp.getMax() + 1);
             xp.setCurrent(0);
         }
     }
@@ -39,6 +40,7 @@ public class Player extends Creature {
     private void levelUp() {
         setLevel(getLevel() + 1);
         getAttributes().levelUpRandom();
+        refreshHBasedOnLevel();
     }
 
     @Override
