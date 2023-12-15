@@ -13,3 +13,7 @@ Game music: Erik Berglind
 
 
 Rest of the sounds were found at https://freesound.org, and followed Creative Commons 0.
+
+Sprites were taken from: https://opengameart.org/content/dungeon-crawl-32x32-tiles
+
+Thank you!
