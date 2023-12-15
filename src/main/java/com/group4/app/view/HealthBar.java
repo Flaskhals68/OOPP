@@ -37,7 +37,7 @@ public class HealthBar extends SubView {
     private void updateValues() {
         int playerHealth = psc.getPlayerHealth();
         int maxPlayerHealth = psc.getPlayerMaxHealth();
-        if(this.currentHealth > playerHealth){SoundPlayer.playSound("src/resources/547042__eponn__hit-impact-sword-3.wav", false);}
+        if(this.currentHealth > playerHealth){SoundPlayer.playSound("classes/com/group4/app/resources/547042__eponn__hit-impact-sword-3.wav", false);}
         this.currentHealth = playerHealth;
         bar.setMaximum(maxPlayerHealth);
         bar.setValue(playerHealth);

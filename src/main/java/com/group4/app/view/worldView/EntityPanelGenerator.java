@@ -17,12 +17,13 @@ public class EntityPanelGenerator{
     private Map<String, JPanel> entityPanelMap = new HashMap<>();
     private String[] idArray = {"stone", "Zombie", "Skeleton", "player","deadEnemy", "playerDead"};
     private String[] imagePathArray = {
-        "src/resources/stone_tile2.png",
-        "src/resources/ghoul.png",
-        "src/resources/skeletal_warrior.png",
-        "src/resources/player.png",
-        "src/resources/dead_enemy_stone2.png",
-        "src/resources/dead_player_stone2.png"
+        "classes/com/group4/app/resources/stone_tile2.png",
+        "classes/com/group4/app/resources/ghoul.png",
+        "classes/com/group4/app/resources/skeletal_warrior.png",
+        "classes/com/group4/app/resources/player.png",
+        "classes/com/group4/app/resources/dead_enemy_stone2.png",
+        "classes/com/group4/app/resources/dead_player_stone2.png"
+        
     };
     private int tile_width;
     private int tile_height;

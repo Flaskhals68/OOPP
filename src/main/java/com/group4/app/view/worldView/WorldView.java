@@ -68,7 +68,7 @@ public class WorldView extends SubView{
         setLayout(new GridBagLayout());
         addTiles(entityPanelGenerator);
         colorBorders();
-        SoundPlayer.playSound("src/resources/game_music.wav", true);
+        SoundPlayer.playSound("classes/com/group4/app/resources/game_music.wav", true);
     }
 
     private void initialState(){

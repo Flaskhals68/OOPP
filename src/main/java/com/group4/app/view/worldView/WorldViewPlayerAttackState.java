@@ -33,7 +33,7 @@ public class WorldViewPlayerAttackState extends WorldViewState{
 
     @Override
     public void drawMouseClickedOnTile(Position targetPosition) {
-        SoundPlayer.playSound("src/resources/547042__eponn__hit-impact-sword-3.wav", false);
+        SoundPlayer.playSound("classes/com/group4/app/resources/547042__eponn__hit-impact-sword-3.wav", false);
         controller.mouseClicked(targetPosition);
     }
 

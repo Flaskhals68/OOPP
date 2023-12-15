@@ -4,9 +4,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.group4.app</groupId>
-  <artifactId>oopp</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>com.group4</groupId>
+  <artifactId>XTREME</artifactId>
+  <version>1.0</version>
 
   <name>oopp</name>
   <!-- FIXME change it to the project's website -->
@@ -62,6 +62,15 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>libs/</classpathPrefix>
+              <mainClass>com.group4.app.App</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
