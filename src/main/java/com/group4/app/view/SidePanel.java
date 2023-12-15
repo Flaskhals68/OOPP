@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 public abstract class SidePanel extends JPanel {
     private static final int WIDTH = 100;
-    private static final int HEIGHT = 200;
+    private static final int HEIGHT = 300;
 
     public int getWidth() {
         return WIDTH;

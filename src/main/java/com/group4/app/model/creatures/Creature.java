@@ -79,6 +79,10 @@ public abstract class Creature extends Entity implements IAttackable, ICanAttack
         }
     }
 
+    public void refreshHBasedOnLevel(){
+        this.hp.setMax(attributes.getStat(AttributeType.CONSTITUTION)/5);
+    }
+
     public int getLevel() {
         return level;
     }

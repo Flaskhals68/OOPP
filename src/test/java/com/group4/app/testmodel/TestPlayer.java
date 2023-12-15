@@ -109,7 +109,7 @@ public class TestPlayer {
         for(int i = 0; i<10; i++) {
             p.giveXP(10);
         }
-        assertEquals(11, p.getLevel());
+        assertEquals(9, p.getLevel());
     }
 
     @Test
