@@ -19,7 +19,7 @@ public class Enemy extends Creature {
         this.name = name;
         this.moveSpeed = moveSpeed;
         this.manager = manager;
-        this.addMoveAction("move", new EnemyMoveAction(1, "move", this, moveSpeed, manager));
+        this.addMoveAction("move", new EnemyMoveAction(1, "move", this, moveSpeed));
     }
 
     public String getName() {

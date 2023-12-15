@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.group4.app.model.Model;
-import com.group4.app.model.creatures.ICreatureManager;
 import com.group4.app.model.dungeon.IPositionable;
 import com.group4.app.model.dungeon.PathfindingHelper;
 import com.group4.app.model.dungeon.Position;
@@ -12,26 +11,26 @@ import com.group4.app.model.dungeon.Position;
 public class MoveAction extends Action<IPositionable, Position>{
 
     private final int moveSpeed;
-    private final ICreatureManager manager;
-    public MoveAction(int apCost, String name, IPositionable actionTaker, int moveSpeed, ICreatureManager manager) {
+    public MoveAction(int apCost, String name, IPositionable actionTaker, int moveSpeed) {
         super(apCost, name, actionTaker);
         this.moveSpeed = moveSpeed;
-        this.manager = manager;
+
     }
 
     public void perform(Position target) {
+        Model m = Model.getInstance();
         Set<Position> legalMoves = getTargetablePositions();
         if (!legalMoves.contains(target)) {
             throw new IllegalArgumentException("Illegal move");
         }
 
-        List<Position> path = PathfindingHelper.getShortestPath(getActionTaker().getPos(), target, manager.getTileContainer());
+        List<Position> path = PathfindingHelper.getShortestPath(getActionTaker().getPos(), target, m.getTileContainer());
         for (Position pos : path) {
-            manager.remove(getActionTaker());
+            m.remove(getActionTaker());
             getActionTaker().setPos(pos);
-            manager.add(getActionTaker());
+            m.add(getActionTaker());
             System.out.println("Moving to " + pos.getX() + ", " + pos.getY());
-            manager.updateObservers();
+            m.updateObservers();
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -41,7 +40,7 @@ public class MoveAction extends Action<IPositionable, Position>{
     }
 
     public Set<Position> getTargetable() {
-        return PathfindingHelper.getSurrounding(getActionTaker().getPos(), moveSpeed, manager.getTileContainer());
+        return PathfindingHelper.getSurrounding(getActionTaker().getPos(), moveSpeed, Model.getInstance().getTileContainer());
     }
 
     public Set<Position> getTargetablePositions() {
@@ -52,7 +51,4 @@ public class MoveAction extends Action<IPositionable, Position>{
         return moveSpeed;
     }
 
-    public ICreatureManager getManager() {
-        return manager;
-    }
 }
