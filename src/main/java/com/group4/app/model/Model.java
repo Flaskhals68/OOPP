@@ -15,7 +15,6 @@ import com.group4.app.model.creatures.Enemy;
 import com.group4.app.model.creatures.EnemyFactory;
 import com.group4.app.model.creatures.Entity;
 import com.group4.app.model.creatures.Player;
-import com.group4.app.model.dungeon.DungeonEntitySpawner;
 import com.group4.app.model.dungeon.DungeonWorldGenerator;
 import com.group4.app.model.dungeon.IDrawable;
 import com.group4.app.model.dungeon.IPositionable;
