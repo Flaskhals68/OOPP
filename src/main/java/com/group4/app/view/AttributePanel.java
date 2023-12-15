@@ -31,7 +31,7 @@ public class AttributePanel extends SidePanel implements IGameView {
     }
     
     private void initComponents() {
-        setPreferredSize(new Dimension(100, 250));
+        setPreferredSize(new Dimension(getWidth(), getHeight()));
         
         setLayout(new GridLayout(7, 1));
         bindStats();

@@ -16,7 +16,7 @@ public class GameWindow extends JFrame implements IModelObserver, IStateControll
     private static GameWindow instance = null;
     private static int SCREEN_WIDTH = 1280;
     private static int SCREEN_HEIGHT = 720;
-    private static String title = "THE DUNGEON CRAWLER GAME EXTREME";
+    private static String title = "THE DUNGEON CRAWLER GAME XTREME";
     private static Color backGroundColor = Color.black;
 
     private GameWindow(List<IGameView> viewList) {
